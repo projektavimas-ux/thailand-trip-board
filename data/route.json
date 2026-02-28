@@ -1,0 +1,9 @@
+{
+  "days": [
+    {"day":"D1","plan":"Atvykimas į pietų Tailandą (HKT/KBV), pervežimas į viešbutį"},
+    {"day":"D2-D5","plan":"Pietų regionas: paplūdimiai, salų turai"},
+    {"day":"D6-D9","plan":"Perkėlimas į kitą pietų tašką (pvz. Krabi/Phuket)"},
+    {"day":"D10-D13","plan":"Persikėlimas į Bangkoką"},
+    {"day":"Grįžimas","plan":"BKK → VNO/RIX (2027-01-01..03)"}
+  ]
+}

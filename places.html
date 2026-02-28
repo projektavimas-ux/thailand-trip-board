@@ -1,0 +1,52 @@
+<!doctype html><html lang="lt"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lankytinos vietos</title><style>
+:root{--bg:#f4f7fb;--card:#ffffff;--text:#1f2a37;--muted:#5b6b80;--line:#dbe5f1;--accent:#2563eb}
+body{font-family:Inter,Arial,sans-serif;margin:0;background:linear-gradient(180deg,#f8fbff 0%,#f3f7fc 100%);color:var(--text)}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 6px 20px rgba(31,42,55,.06)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+button,input,textarea{font:inherit}
+button{padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:#fff;cursor:pointer}
+input,textarea{padding:10px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--text)}
+.muted{color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.hidden{display:none}
+
+p a{display:inline-block;padding:6px 8px;border:1px solid var(--line);border-radius:8px;margin:4px 6px 4px 0;background:#fff}
+@media (max-width:600px){.wrap{padding:14px}h1{font-size:24px}h2{font-size:18px}.card{padding:12px}.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap"><h1>📍 Lankytinos vietos pagal etapus</h1><p>Kelionė: <b>2026-12-11 → 2027-01-02</b> · kryptis nuo pietų į Bankoką</p><p><a href="./index.html">Pradžia</a> · <a href="./flights.html">Skrydžiai</a> · <a href="./plan.html">Kelionės planas</a></p><div class="card"><p>Pažymėkite dominančias vietas. Išsaugotos vietos bus perkeltos į „Kelionės planą“.</p><div id="stages"></div><p><button id="save">Įkelti į kelionės planą</button></p><p id="msg"></p></div></div><script>
+const current = new Set(JSON.parse(localStorage.getItem('thai_trip_selected_places')||'[]'));
+const root=document.getElementById('stages');
+
+const fallbackData={stages:[{id:'fallback',title:'Vietos (atsarginis režimas)',items:[{name:'Phang Nga Bay',image:'https://images.unsplash.com/photo-1528127269322-539801943592?q=80&w=1200&auto=format&fit=crop',desc:'Įlanka ir kalkakmenio uolos.'},{name:'Railay Beach',image:'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop',desc:'Krabi regiono paplūdimys.'},{name:'Phi Phi salos',image:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop',desc:'Dienos turas laivu.'}]}]};
+
+function render(data){
+  data.stages.forEach(s=>{
+    const sec=document.createElement('div'); sec.className='stage';
+    sec.innerHTML=`<h2>${s.title}</h2><div class='grid' id='g_${s.id}'></div>`;
+    root.appendChild(sec);
+    const g=sec.querySelector('#g_'+s.id);
+    s.items.forEach(o=>{
+      const id='p_'+o.name.replace(/\W+/g,'_');
+      const d=document.createElement('div'); d.className='place';
+      d.innerHTML=`<img src="${o.image}" alt="${o.name}"/><div class='p'><label><input type='checkbox' id='${id}' ${current.has(o.name)?'checked':''}/> <b>${o.name}</b></label><p>${o.desc}</p></div>`;
+      g.appendChild(d);
+    });
+  });
+
+  document.getElementById('save').onclick=()=>{
+    const picked=[];
+    data.stages.forEach(s=>s.items.forEach(o=>{const id='p_'+o.name.replace(/\W+/g,'_');if(document.getElementById(id)?.checked)picked.push(o.name);}));
+    localStorage.setItem('thai_trip_selected_places',JSON.stringify(picked));
+    document.getElementById('msg').textContent='Išsaugota. Atidarykite „Kelionės planas“. '; 
+  };
+}
+
+fetch('./data/places_catalog.json')
+  .then(r=>r.ok ? r.json() : Promise.reject(new Error('Nepavyko gauti katalogo')))
+  .then(render)
+  .catch(()=>{
+    document.getElementById('msg').textContent='Nepavyko užkrauti pilno katalogo, rodomas atsarginis sąrašas.';
+    render(fallbackData);
+  });
+</script></body></html>

@@ -1,0 +1,16 @@
+{
+  "items": [
+    {
+      "title": "1-STOP RIX → HKT (2026-12-11)",
+      "price": "$523 / asm (už 4: $2,092)",
+      "url": "https://www.expedia.com/Flights-Search?trip=oneway&leg1=from%3ARiga%2Cto%3APhuket%2Cdeparture%3A2026-12-11TANYT&passengers=adults%3A4&mode=search&pwaDialog=FLIGHTS_DETAILS_AND_FARES-index-1-leg-0-fsr",
+      "status": "VERIFIED"
+    },
+    {
+      "title": "1-STOP VNO → HKT (2026-12-11)",
+      "price": "$522 / asm (už 4: $2,088)",
+      "url": "https://www.expedia.com/Flights-Search?trip=oneway&leg1=from%3AVilnius%2Cto%3APhuket%2Cdeparture%3A2026-12-11TANYT&passengers=adults%3A4&mode=search&pwaDialog=FLIGHTS_DETAILS_AND_FARES-index-2-leg-0-fsr",
+      "status": "VERIFIED"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+<!doctype html><html lang="lt"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skrydžiai</title><style>
+:root{--bg:#f4f7fb;--card:#ffffff;--text:#1f2a37;--muted:#5b6b80;--line:#dbe5f1;--accent:#2563eb}
+body{font-family:Inter,Arial,sans-serif;margin:0;background:linear-gradient(180deg,#f8fbff 0%,#f3f7fc 100%);color:var(--text)}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 6px 20px rgba(31,42,55,.06)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+button,input,textarea{font:inherit}
+button{padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:#fff;cursor:pointer}
+input,textarea{padding:10px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--text)}
+.muted{color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.hidden{display:none}
+
+p a{display:inline-block;padding:6px 8px;border:1px solid var(--line);border-radius:8px;margin:4px 6px 4px 0;background:#fff}
+@media (max-width:600px){.wrap{padding:14px}h1{font-size:24px}h2{font-size:18px}.card{padding:12px}.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap"><h1>✈️ Skrydžių pasiūlymai</h1><p><a href="./index.html">Pradžia</a> · <a href="./plan.html">Kelionės planas</a> · <a href="./places.html">Lankytinos vietos</a></p><div class="card" id="list"></div></div><script>
+fetch('./data/flights.json').then(r=>r.json()).then(d=>{document.getElementById('list').innerHTML=d.items.map(i=>`<p><b>${i.title}</b><br>${i.price}<br><a href='${i.url}' target='_blank'>Atidaryti</a><br>${i.status}</p>`).join('')});
+</script></body></html>
