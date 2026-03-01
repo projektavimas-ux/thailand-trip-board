@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tailandas 2026/2027 – Privatus planas</title>
+  <style>
+:root{--bg:#f4f7fb;--card:#ffffff;--text:#1f2a37;--muted:#5b6b80;--line:#dbe5f1;--accent:#2563eb}
+body{font-family:Inter,Arial,sans-serif;margin:0;background:linear-gradient(180deg,#f8fbff 0%,#f3f7fc 100%);color:var(--text)}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 6px 20px rgba(31,42,55,.06)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+button,input,textarea{font:inherit}
+button{padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:#fff;cursor:pointer}
+input,textarea{padding:10px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--text)}
+.muted{color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.hidden{display:none}
+
+p a{display:inline-block;padding:6px 8px;border:1px solid var(--line);border-radius:8px;margin:4px 6px 4px 0;background:#fff}
+@media (max-width:600px){.wrap{padding:14px}h1{font-size:24px}h2{font-size:18px}.card{padding:12px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="wrap" id="loginBox">
+    <h1>Privati kelionės platforma</h1>
+    <p class="muted">Įveskite bendrą slaptažodį</p>
+    <input id="pwd" type="password" placeholder="Slaptažodis" />
+    <button id="enterBtn">Prisijungti</button>
+  </div>
+
+  <div class="wrap hidden" id="app">
+    <h1>🇹🇭 Tailandas 2026/2027</h1>
+    <p class="muted">OUT: VNO/RIX → Pietų Tailandas • IN: BKK → VNO/RIX • 4 suaugę</p>
+    <p><a href="./flights.html">Skrydžiai</a> · <a href="./places.html">Lankytinos vietos</a> · <a href="./plan.html">Kelionės planas</a></p>
+
+    <div class="grid">
+      <div class="card">
+        <h2>✈️ Skrydžių suvestinė</h2>
+        <div id="flights"></div>
+      </div>
+      <div class="card">
+        <h2>🗺️ Maršrutas</h2>
+        <ul id="route"></ul>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>📍 Lankytinos vietos</h2>
+        <ul id="places"></ul>
+      </div>
+      <div class="card">
+        <h2>💶 Biudžetas</h2>
+        <div id="budget"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>✅ Užduotys komandai</h2>
+      <ul id="todos"></ul>
+    </div>
+  </div>
+
+<script>
+const PASS_HASH = 'Thai-o5YhfP89Ta';
+
+async function loadJson(path){ const r = await fetch(path); return r.json(); }
+function li(t){ const x=document.createElement('li'); x.textContent=t; return x; }
+
+async function openApp(){
+  document.getElementById('loginBox').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+
+  const flights = await loadJson('./data/flights.json');
+  const route = await loadJson('./data/route.json');
+  const places = await loadJson('./data/places.json');
+  const budget = await loadJson('./data/budget.json');
+  const todos = await loadJson('./data/todos.json');
+
+  document.getElementById('flights').innerHTML = flights.items.map(i =>
+    `<p><b>${i.title}</b><br>${i.price}<br><a href="${i.url}" target="_blank">Atidaryti pasiūlymą</a><br><span class='muted'>${i.status}</span></p>`).join('');
+
+  route.days.forEach(d=>document.getElementById('route').appendChild(li(`${d.day}: ${d.plan}`)));
+  places.items.forEach(p=>document.getElementById('places').appendChild(li(`${p.name} — ${p.note}`)));
+  document.getElementById('budget').innerHTML = budget.lines.map(l=>`<p>${l.name}: <b>${l.amount}</b></p>`).join('');
+  todos.items.forEach(t=>document.getElementById('todos').appendChild(li(t)));
+}
+
+document.getElementById('enterBtn').onclick = async () => {
+  const p = document.getElementById('pwd').value.trim();
+  if (p !== PASS_HASH){ alert('Neteisingas slaptažodis'); return; }
+  localStorage.setItem('thai_trip_auth','ok');
+  await openApp();
+};
+
+document.getElementById('pwd').addEventListener('keydown', async (e) => {
+  if (e.key === 'Enter') document.getElementById('enterBtn').click();
+});
+
+if (localStorage.getItem('thai_trip_auth') === 'ok') {
+  openApp();
+}
+</script>
+</body>
+</html>
