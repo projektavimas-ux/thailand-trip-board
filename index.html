@@ -41,8 +41,7 @@
     <input id="email" placeholder="El. paštas"/>
     <input id="pass" type="password" placeholder="Slaptažodis"/>
     <button id="login">Prisijungti</button>
-    <button id="signup">Registruotis</button>
-    <p class="muted">Kiekvienas draugas turi savo paskyrą.</p>
+    <p class="muted">Naujų paskyrų kūrimą atlieka Ernestas. Jei reikia prieigos, parašyk administratoriui.</p>
   </div>
 
   <div id="app" style="display:none">
@@ -117,10 +116,13 @@ async function refresh(){
 document.getElementById('login').onclick=async()=>{
   await sb.auth.signInWithPassword({email:email.value,password:pass.value}); refresh();
 };
-document.getElementById('signup').onclick=async()=>{
-  const r=await sb.auth.signUp({email:email.value,password:pass.value});
-  alert('Registracija išsiųsta / sukurta. Jei reikia, patvirtink el. paštą.'); refresh();
-};
+const signupBtn=document.getElementById('signup');
+if(signupBtn){
+  signupBtn.onclick=async()=>{
+    const r=await sb.auth.signUp({email:email.value,password:pass.value});
+    alert('Registracija išsiųsta / sukurta. Jei reikia, patvirtink el. paštą.'); refresh();
+  };
+}
 document.getElementById('logout').onclick=async()=>{await sb.auth.signOut(); refresh();};
 document.getElementById('addPlace').onclick=async()=>{
   const { data: { user } } = await sb.auth.getUser();
