@@ -114,7 +114,13 @@ async function refresh(){
 }
 
 document.getElementById('login').onclick=async()=>{
-  await sb.auth.signInWithPassword({email:email.value,password:pass.value}); refresh();
+  try{
+    const { error } = await sb.auth.signInWithPassword({email:email.value,password:pass.value});
+    if(error) throw error;
+  }catch(err){
+    alert('Prisijungti nepavyko: '+(err.message||err));
+  }
+  refresh();
 };
 const signupBtn=document.getElementById('signup');
 if(signupBtn){
