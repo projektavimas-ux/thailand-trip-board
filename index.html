@@ -18,6 +18,7 @@
     *{box-sizing:border-box;font-family:"Inter",Arial,sans-serif}
     body{margin:0;background:var(--bg);color:var(--text)}
     h1{margin:24px 0 8px;font-size:28px}
+    h2{margin:0 0 8px;font-size:20px}
     .wrap{max-width:1100px;margin:0 auto;padding:0 16px 48px}
     .muted{color:var(--muted);font-size:14px;margin:4px 0}
     .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:16px 0;box-shadow:0 6px 30px rgba(20,33,61,.07)}
@@ -31,7 +32,9 @@
     .place-card .body{padding:14px}
     .tag{display:inline-block;background:var(--accent-soft);color:var(--accent);padding:2px 10px;border-radius:50px;font-size:12px;margin-bottom:6px}
     .place-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
-    .plan-line{padding:6px 0;border-bottom:1px dashed var(--line)}
+    .plan-stage{border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0;background:#fbfcff}
+    .plan-stage h4{margin:0 0 6px;font-size:16px}
+    .plan-line{padding:4px 0;border-bottom:1px dashed var(--line)}
     .plan-line:last-child{border-bottom:none}
     .hidden{display:none}
     @media(max-width:640px){.topbar{flex-direction:column;align-items:flex-start;gap:12px}}
@@ -56,7 +59,7 @@
     </div>
 
     <div id="app" class="hidden">
-      <div class="card topbar" style="display:flex;justify-content:space-between;align-items:center">
+      <div class="card topbar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
         <div>
           <div><strong id="who">Prisijungęs</strong></div>
           <p class="muted">Įrašai ir balsai saugomi Supabase (Places + Votes lentelės).</p>
@@ -66,41 +69,48 @@
 
       <div class="card" id="alert" style="display:none"></div>
 
-      <div class="grid-3">
-        <div class="card" style="grid-column:span 2" id="placesCard">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-            <div>
-              <h3>Siūlomos vietos</h3>
-              <p class="muted">Kortelės generuojamos tiesiai iš Supabase `places` lentelės.</p>
-            </div>
-            <button id="refreshBtn" class="secondary">Atnaujinti</button>
-          </div>
-          <div id="places" class="grid-2"></div>
-        </div>
-
-        <div class="card" id="summaryCard">
-          <h3>Planų reitingas</h3>
-          <div id="plan"></div>
+      <!-- 1. Skrydžių informacijos skyrius -->
+      <div class="card" id="flightsCard">
+        <h2>1. Skrydžių informacija</h2>
+        <p class="muted">Tikslas: 329–431 EUR/asm., ≤1 sustojimas. Cron’as tikrina Skyscanner · Google Flights · Expedia · Kayak.</p>
+        <div id="flightLog">
+          <p><strong>2026-02-28 bazė</strong> – eDreams teaser 329 EUR/asm., Opodo 431 EUR/asm. (≤1 stop).</p>
+          <p id="flightStatus">Šiuo metu naršyklės cron’as nepasileidžia (Google Flights timeout). Kai tik atsigaus, čia matysis nauji log’ai.</p>
         </div>
       </div>
 
-      <div class="grid-2">
-        <div class="card">
-          <h3>Skrydžių pastabos</h3>
-          <p class="muted">Tikslas: 329–431 EUR/asm., ≤1 sustojimas. Cron’as kasdien tikrina Skyscanner / Google Flights / Expedia / Kayak.</p>
-          <ul id="notes">
-            <li>Pradinis etalonas (2026‑02‑28): eDreams 329 EUR/asm. teaser + Opodo 431 EUR/asm. (≤1 stop).</li>
-            <li>Šiuo metu naršyklės cron’as laikinai neveikia – kai tik pasileis, čia matysis nauji įrašai.</li>
-          </ul>
+      <!-- 2. Kelionės planas etapais -->
+      <div class="card" id="planStagesCard">
+        <h2>2. Kelionės planas pagal etapus</h2>
+        <p class="muted">Vietos grupuojamos pagal `stage` lauką Supabase lentelėje. Eiliškumas: 1 ETAPAS → 2 ETAPAS → Finalas.</p>
+        <div id="planStages"></div>
+      </div>
+
+      <!-- 3. Siūlomos lankytinos vietos -->
+      <div class="card" id="placesCard">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+          <div>
+            <h2>3. Siūlomos lankytinos vietos</h2>
+            <p class="muted">Kortelės generuojamos tiesiai iš Supabase `places` lentelės, balsai iš `votes`.</p>
+          </div>
+          <button id="refreshBtn" class="secondary">Atnaujinti</button>
         </div>
+        <div id="places" class="grid-2"></div>
+      </div>
+
+      <div class="grid-2">
         <div class="card" id="addCard">
           <h3>Įkelti naują vietą (demo)</h3>
-          <p class="muted">Ši forma rašo į `places` lentelę. Užpildyk trumpai ir matysi kortą aukščiau.</p>
+          <p class="muted">Ši forma rašo į `places` lentelę. Užpildyk trumpai ir korta atsiras aukščiau.</p>
           <input id="pname" placeholder="Pavadinimas (pvz., Koh Lanta)"/>
           <input id="pstage" placeholder="Etapas (pvz., 2 ETAPAS)"/>
           <input id="pimg" placeholder="Nuotraukos URL"/>
           <textarea id="pdesc" placeholder="Trumpas aprašymas" rows="3"></textarea>
           <button id="addPlace">Pridėti</button>
+        </div>
+        <div class="card" id="planSummaryCard">
+          <h3>Bendra balsų lentelė</h3>
+          <div id="plan"></div>
         </div>
       </div>
     </div>
@@ -112,6 +122,7 @@
     const authEl=document.getElementById('auth');
     const appEl=document.getElementById('app');
     const alertEl=document.getElementById('alert');
+    const stagesBox=document.getElementById('planStages');
     let sb=null;
 
     if(window.SUPABASE_URL && window.SUPABASE_ANON_KEY){
@@ -139,7 +150,7 @@
       alertEl.style.display='none';
       const placesBox=document.getElementById('places');
       placesBox.innerHTML='<p class="muted">Kraunama...</p>';
-      const { data: places, error } = await sb.from('places').select('*').order('created_at',{ascending:false});
+      const { data: places, error } = await sb.from('places').select('*').order('stage',{ascending:true}).order('created_at',{ascending:false});
       if(error){
         alertEl.textContent='Nepavyko gauti vietų: '+error.message;
         alertEl.style.display='block';
@@ -148,37 +159,44 @@
       }
       const { data: votes } = await sb.from('votes').select('place_id,user_id');
       const voteMap={}; (votes||[]).forEach(v=>{voteMap[v.place_id]=(voteMap[v.place_id]||0)+1});
-      const myVotes=new Set((votes||[]).filter(v=>v.user_id===user.id).map(v=>v.place_id));
-      if(!places || !places.length){
-        placesBox.innerHTML='<p class="muted">Dar nėra vietų. Užpildyk formą dešinėje.</p>';
-      }else{
-        placesBox.innerHTML='';
-        places.forEach(p=>{
-          const card=document.createElement('div');
-          card.className='place-card';
-          card.innerHTML=`${p.image_url?`<img src="${p.image_url}" alt="${p.name}">`:''}
-            <div class="body">
-              <div class="tag">${p.stage||'Etapas nenurodytas'}</div>
-              <h4 style="margin:4px 0 6px">${p.name}</h4>
-              <p class="muted" style="min-height:48px">${p.description||''}</p>
-              <div class="place-footer">
-                <span class="muted">Balsai: ${voteMap[p.id]||0}</span>
-                <button data-id="${p.id}" class="secondary place-vote">${myVotes.has(p.id)?'Atimti':'Balsuoti'}</button>
-              </div>
-            </div>`;
-          placesBox.appendChild(card);
-        });
-        document.querySelectorAll('.place-vote').forEach(btn=>{
-          btn.onclick=()=>toggleVote(btn.dataset.id,myVotes.has(Number(btn.dataset.id)));
-        });
-      }
-      renderPlan(places||[],voteMap);
+      const { data: { user: current } } = await sb.auth.getUser();
+      const myVotes=new Set((votes||[]).filter(v=>v.user_id===current?.id).map(v=>v.place_id));
+      renderPlaces(places||[],voteMap,myVotes);
+      renderPlanByStages(places||[],voteMap);
+      renderPlanBoard(places||[],voteMap);
     }
 
-    async function toggleVote(placeId,hasVote){
+    function renderPlaces(places,voteMap,myVotes){
+      const placesBox=document.getElementById('places');
+      if(!places.length){
+        placesBox.innerHTML='<p class="muted">Dar nėra vietų. Užpildyk formą dešinėje.</p>';
+        return;
+      }
+      placesBox.innerHTML='';
+      places.forEach(p=>{
+        const card=document.createElement('div');
+        card.className='place-card';
+        card.innerHTML=`${p.image_url?`<img src="${p.image_url}" alt="${p.name}">`:''}
+          <div class="body">
+            <div class="tag">${p.stage||'Etapas nenurodytas'}</div>
+            <h4 style="margin:4px 0 6px">${p.name}</h4>
+            <p class="muted" style="min-height:48px">${p.description||''}</p>
+            <div class="place-footer">
+              <span class="muted">Balsai: ${voteMap[p.id]||0}</span>
+              <button data-id="${p.id}" class="secondary place-vote">${myVotes.has(p.id)?'Atimti':'Balsuoti'}</button>
+            </div>
+          </div>`;
+        placesBox.appendChild(card);
+      });
+      document.querySelectorAll('.place-vote').forEach(btn=>{
+        btn.onclick=()=>toggleVote(Number(btn.dataset.id),btn.textContent==='Atimti');
+      });
+    }
+
+    async function toggleVote(placeId,remove){
       const { data: { user } } = await sb.auth.getUser();
       if(!user) return;
-      if(hasVote){
+      if(remove){
         await sb.from('votes').delete().eq('place_id',placeId).eq('user_id',user.id);
       }else{
         await sb.from('votes').insert({place_id:placeId,user_id:user.id});
@@ -186,11 +204,35 @@
       loadPlaces(user);
     }
 
-    function renderPlan(places,voteMap){
+    function renderPlanByStages(places,voteMap){
+      const stageOrder=["1 ETAPAS","2 ETAPAS","Finalas","Kita"];
+      const grouped={};
+      stageOrder.forEach(k=>grouped[k]=[]);
+      (places||[]).forEach(p=>{
+        const key=stageOrder.includes(p.stage)?p.stage:"Kita";
+        grouped[key].push(p);
+      });
+      stagesBox.innerHTML='';
+      stageOrder.forEach(stage=>{
+        if(!grouped[stage].length) return;
+        const block=document.createElement('div');
+        block.className='plan-stage';
+        block.innerHTML=`<h4>${stage}</h4>`;
+        grouped[stage].sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0)).forEach((p,i)=>{
+          const line=document.createElement('div');
+          line.className='plan-line';
+          line.innerHTML=`<strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMap[p.id]||0} bals.</span>`;
+          block.appendChild(line);
+        });
+        stagesBox.appendChild(block);
+      });
+    }
+
+    function renderPlanBoard(places,voteMap){
       const planBox=document.getElementById('plan');
       if(!places.length){planBox.innerHTML='<p class="muted">Nėra duomenų.</p>';return;}
-      const sorted=[...places].sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0));
-      planBox.innerHTML=sorted.slice(0,6).map((p,i)=>`<div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMap[p.id]||0} bals.</span></div>`).join('');
+      const sorted=[...places].sort((a,b) => (voteMap[b.id]||0)-(voteMap[a.id]||0));
+      planBox.innerHTML=sorted.map((p,i)=>`<div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMap[p.id]||0} bals.</span></div>`).join('');
     }
 
     document.getElementById('login').onclick=async()=>{
