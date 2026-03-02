@@ -3,139 +3,217 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Thailand Plan V2 (Balsavimas)</title>
+  <title>Thailand Control · Demo</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    body{font-family:Inter,Arial;background:#f4f7fb;color:#1f2a37;margin:0}
-    .wrap{max-width:980px;margin:0 auto;padding:16px}
-    .card{background:#fff;border:1px solid #dbe5f1;border-radius:12px;padding:14px;margin:10px 0}
-    input,button,select,textarea{padding:10px;border-radius:10px;border:1px solid #dbe5f1}
-    button{background:#2563eb;color:#fff;border:none;cursor:pointer}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .muted{color:#5b6b80;font-size:14px}
-    @media(max-width:760px){.grid{grid-template-columns:1fr}}
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --line:#e1e7f0;
+      --text:#1f2a37;
+      --muted:#5b6b80;
+      --accent:#2563eb;
+      --accent-soft:#dbe7ff;
+    }
+    *{box-sizing:border-box;font-family:"Inter",Arial,sans-serif}
+    body{margin:0;background:var(--bg);color:var(--text)}
+    h1{margin:24px 0 8px;font-size:28px}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 16px 48px}
+    .muted{color:var(--muted);font-size:14px;margin:4px 0}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:16px 0;box-shadow:0 6px 30px rgba(20,33,61,.07)}
+    input,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 0;background:#fff;color:var(--text)}
+    button{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer}
+    button.secondary{background:#fff;color:var(--accent);border:1px solid var(--accent)}
+    .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+    .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+    .place-card{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:12px 0;background:#fafcff}
+    .place-card img{width:100%;height:180px;object-fit:cover}
+    .place-card .body{padding:14px}
+    .tag{display:inline-block;background:var(--accent-soft);color:var(--accent);padding:2px 10px;border-radius:50px;font-size:12px;margin-bottom:6px}
+    .place-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+    .plan-line{padding:6px 0;border-bottom:1px dashed var(--line)}
+    .plan-line:last-child{border-bottom:none}
+    .hidden{display:none}
+    @media(max-width:640px){.topbar{flex-direction:column;align-items:flex-start;gap:12px}}
   </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>🇹🇭 Kelionės planas V2 (su balsavimu)</h1>
-  <p class="muted">Atvykimas į pietus, grįžimas iš BKK • visi dalyviai balsuoja</p>
+  <div class="wrap">
+    <h1>Thailand Control</h1>
+    <p class="muted">VNO/RIX → pietų Tailandas · 2026‑12‑11 → 2027‑01‑02 · live balsai iš Supabase</p>
 
-  <div class="card">
-    <h3>Greitos nuorodos (senasis turinys)</h3>
-    <ul>
-      <li><a href="flights.html">✈️ Lėktuvų bilietų sekimas</a></li>
-      <li><a href="places.html">📍 Lankytinos vietos</a></li>
-      <li><a href="plan.html">🗺️ Kelionės planas</a></li>
-      <li><a href="index_v1.html">🕰️ Sena V1 pradžios versija</a></li>
-    </ul>
-    <p class="muted">Šios nuorodos lieka aktyvios, kad neprarastume ankstesnės informacijos.</p>
-  </div>
-
-  <div id="setup" class="card">
-    <b>Setup reikalingas:</b> įrašyk Supabase duomenis faile <code>supabase-config.js</code>.
-  </div>
-
-  <div id="auth" class="card" style="display:none">
-    <h3>Prisijungimas</h3>
-    <input id="email" placeholder="El. paštas"/>
-    <input id="pass" type="password" placeholder="Slaptažodis"/>
-    <button id="login">Prisijungti</button>
-    <p class="muted">Naujų paskyrų kūrimą atlieka Ernestas. Jei reikia prieigos, parašyk administratoriui.</p>
-  </div>
-
-  <div id="app" style="display:none">
-    <div class="card">
-      <button id="logout">Atsijungti</button>
-      <span id="who" class="muted"></span>
+    <div id="setup" class="card">
+      <strong>Reikia Supabase rakto.</strong> Įrašyk <code>SUPABASE_URL</code> ir <code>SUPABASE_ANON_KEY</code> faile <code>supabase-config.v2.js</code>.
     </div>
 
-    <div class="grid">
-      <div class="card">
-        <h3>Siūlomos vietos</h3>
-        <div id="places"></div>
+    <div id="auth" class="card hidden">
+      <h3>Prisijunk</h3>
+      <p class="muted">Tik registruoti dalyviai gali matyti turinį ir balsuoti.</p>
+      <input id="email" placeholder="El. paštas"/>
+      <input id="pass" type="password" placeholder="Slaptažodis"/>
+      <button id="login">Prisijungti</button>
+      <p class="muted" style="margin-top:10px">Jei reikia prieigos, parašyk Ernestui.</p>
+    </div>
+
+    <div id="app" class="hidden">
+      <div class="card topbar" style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div><strong id="who">Prisijungęs</strong></div>
+          <p class="muted">Įrašai ir balsai saugomi Supabase (Places + Votes lentelės).</p>
+        </div>
+        <button id="logout" class="secondary">Atsijungti</button>
       </div>
-      <div class="card">
-        <h3>Pridėti vietą</h3>
-        <input id="pname" placeholder="Pavadinimas"/><br/><br/>
-        <input id="pstage" placeholder="Etapas (pvz. 1 ETAPAS)"/><br/><br/>
-        <input id="pimg" placeholder="Nuotraukos URL"/><br/><br/>
-        <textarea id="pdesc" placeholder="Trumpas aprašymas"></textarea><br/><br/>
-        <button id="addPlace">Pridėti</button>
+
+      <div class="card" id="alert" style="display:none"></div>
+
+      <div class="grid-3">
+        <div class="card" style="grid-column:span 2" id="placesCard">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+            <div>
+              <h3>Siūlomos vietos</h3>
+              <p class="muted">Kortelės generuojamos tiesiai iš Supabase `places` lentelės.</p>
+            </div>
+            <button id="refreshBtn" class="secondary">Atnaujinti</button>
+          </div>
+          <div id="places" class="grid-2"></div>
+        </div>
+
+        <div class="card" id="summaryCard">
+          <h3>Planų reitingas</h3>
+          <div id="plan"></div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Skrydžių pastabos</h3>
+          <p class="muted">Tikslas: 329–431 EUR/asm., ≤1 sustojimas. Cron’as kasdien tikrina Skyscanner / Google Flights / Expedia / Kayak.</p>
+          <ul id="notes">
+            <li>Pradinis etalonas (2026‑02‑28): eDreams 329 EUR/asm. teaser + Opodo 431 EUR/asm. (≤1 stop).</li>
+            <li>Šiuo metu naršyklės cron’as laikinai neveikia – kai tik pasileis, čia matysis nauji įrašai.</li>
+          </ul>
+        </div>
+        <div class="card" id="addCard">
+          <h3>Įkelti naują vietą (demo)</h3>
+          <p class="muted">Ši forma rašo į `places` lentelę. Užpildyk trumpai ir matysi kortą aukščiau.</p>
+          <input id="pname" placeholder="Pavadinimas (pvz., Koh Lanta)"/>
+          <input id="pstage" placeholder="Etapas (pvz., 2 ETAPAS)"/>
+          <input id="pimg" placeholder="Nuotraukos URL"/>
+          <textarea id="pdesc" placeholder="Trumpas aprašymas" rows="3"></textarea>
+          <button id="addPlace">Pridėti</button>
+        </div>
       </div>
     </div>
-
-    <div class="card">
-      <h3>Kelionės planas pagal balsus</h3>
-      <div id="plan"></div>
-    </div>
   </div>
-</div>
 
-<script src="./supabase-config.v2.js"></script>
-<script>
-let sb = null;
-if (window.SUPABASE_URL && window.SUPABASE_ANON_KEY && !window.SUPABASE_URL.includes('YOUR_')) {
-  sb = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
-  document.getElementById('setup').style.display='none';
-  document.getElementById('auth').style.display='block';
-}
+  <script src="./supabase-config.v2.js"></script>
+  <script>
+    const setupEl=document.getElementById('setup');
+    const authEl=document.getElementById('auth');
+    const appEl=document.getElementById('app');
+    const alertEl=document.getElementById('alert');
+    let sb=null;
 
-async function refresh(){
-  const { data: { user } } = await sb.auth.getUser();
-  if(!user){ document.getElementById('auth').style.display='block'; document.getElementById('app').style.display='none'; return; }
-  document.getElementById('auth').style.display='none';
-  document.getElementById('app').style.display='block';
-  document.getElementById('who').textContent = 'Prisijungęs: '+user.email;
+    if(window.SUPABASE_URL && window.SUPABASE_ANON_KEY){
+      sb=supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+      setupEl.classList.add('hidden');
+      authEl.classList.remove('hidden');
+      refresh();
+    }
 
-  const {data: places}=await sb.from('places').select('*').order('created_at',{ascending:false});
-  const {data: votes}=await sb.from('votes').select('place_id,user_id');
+    async function refresh(){
+      if(!sb) return;
+      const { data: { user } } = await sb.auth.getUser();
+      if(!user){
+        authEl.classList.remove('hidden');
+        appEl.classList.add('hidden');
+        return;
+      }
+      authEl.classList.add('hidden');
+      appEl.classList.remove('hidden');
+      document.getElementById('who').textContent=user.email;
+      loadPlaces(user);
+    }
 
-  const voteMap={}; (votes||[]).forEach(v=>{voteMap[v.place_id]=(voteMap[v.place_id]||0)+1});
-  const myVotes=new Set((votes||[]).filter(v=>v.user_id===user.id).map(v=>v.place_id));
+    async function loadPlaces(user){
+      alertEl.style.display='none';
+      const placesBox=document.getElementById('places');
+      placesBox.innerHTML='<p class="muted">Kraunama...</p>';
+      const { data: places, error } = await sb.from('places').select('*').order('created_at',{ascending:false});
+      if(error){
+        alertEl.textContent='Nepavyko gauti vietų: '+error.message;
+        alertEl.style.display='block';
+        placesBox.innerHTML='';
+        return;
+      }
+      const { data: votes } = await sb.from('votes').select('place_id,user_id');
+      const voteMap={}; (votes||[]).forEach(v=>{voteMap[v.place_id]=(voteMap[v.place_id]||0)+1});
+      const myVotes=new Set((votes||[]).filter(v=>v.user_id===user.id).map(v=>v.place_id));
+      if(!places || !places.length){
+        placesBox.innerHTML='<p class="muted">Dar nėra vietų. Užpildyk formą dešinėje.</p>';
+      }else{
+        placesBox.innerHTML='';
+        places.forEach(p=>{
+          const card=document.createElement('div');
+          card.className='place-card';
+          card.innerHTML=`${p.image_url?`<img src="${p.image_url}" alt="${p.name}">`:''}
+            <div class="body">
+              <div class="tag">${p.stage||'Etapas nenurodytas'}</div>
+              <h4 style="margin:4px 0 6px">${p.name}</h4>
+              <p class="muted" style="min-height:48px">${p.description||''}</p>
+              <div class="place-footer">
+                <span class="muted">Balsai: ${voteMap[p.id]||0}</span>
+                <button data-id="${p.id}" class="secondary place-vote">${myVotes.has(p.id)?'Atimti':'Balsuoti'}</button>
+              </div>
+            </div>`;
+          placesBox.appendChild(card);
+        });
+        document.querySelectorAll('.place-vote').forEach(btn=>{
+          btn.onclick=()=>toggleVote(btn.dataset.id,myVotes.has(Number(btn.dataset.id)));
+        });
+      }
+      renderPlan(places||[],voteMap);
+    }
 
-  const root=document.getElementById('places'); root.innerHTML='';
-  (places||[]).forEach(p=>{
-    const div=document.createElement('div');
-    div.style.border='1px solid #dbe5f1'; div.style.borderRadius='10px'; div.style.padding='10px'; div.style.margin='8px 0';
-    div.innerHTML=`<b>${p.name}</b> <span class='muted'>(${p.stage||'-'})</span><br>${p.description||''}<br><span class='muted'>Balsai: ${voteMap[p.id]||0}</span><br>`;
-    const b=document.createElement('button'); b.textContent=myVotes.has(p.id)?'Atimti balsą':'Balsuoti';
-    b.onclick=async()=>{
-      if(myVotes.has(p.id)) await sb.from('votes').delete().eq('place_id',p.id).eq('user_id',user.id);
-      else await sb.from('votes').insert({place_id:p.id,user_id:user.id});
+    async function toggleVote(placeId,hasVote){
+      const { data: { user } } = await sb.auth.getUser();
+      if(!user) return;
+      if(hasVote){
+        await sb.from('votes').delete().eq('place_id',placeId).eq('user_id',user.id);
+      }else{
+        await sb.from('votes').insert({place_id:placeId,user_id:user.id});
+      }
+      loadPlaces(user);
+    }
+
+    function renderPlan(places,voteMap){
+      const planBox=document.getElementById('plan');
+      if(!places.length){planBox.innerHTML='<p class="muted">Nėra duomenų.</p>';return;}
+      const sorted=[...places].sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0));
+      planBox.innerHTML=sorted.slice(0,6).map((p,i)=>`<div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMap[p.id]||0} bals.</span></div>`).join('');
+    }
+
+    document.getElementById('login').onclick=async()=>{
+      if(!sb) return;
+      const { error } = await sb.auth.signInWithPassword({email:email.value,password:pass.value});
+      if(error){
+        alert('Prisijungti nepavyko: '+error.message);
+        return;
+      }
       refresh();
     };
-    div.appendChild(b); root.appendChild(div);
-  });
+    document.getElementById('logout').onclick=async()=>{await sb.auth.signOut();refresh();};
+    document.getElementById('refreshBtn').onclick=()=>refresh();
 
-  const sorted=[...(places||[])].sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0));
-  const plan=document.getElementById('plan');
-  plan.innerHTML = sorted.map((p,i)=>`${i+1}. ${p.name} — ${voteMap[p.id]||0} bals.`).join('<br>') || 'Kol kas tuščia';
-}
-
-document.getElementById('login').onclick=async()=>{
-  try{
-    const { error } = await sb.auth.signInWithPassword({email:email.value,password:pass.value});
-    if(error) throw error;
-  }catch(err){
-    alert('Prisijungti nepavyko: '+(err.message||err));
-  }
-  refresh();
-};
-const signupBtn=document.getElementById('signup');
-if(signupBtn){
-  signupBtn.onclick=async()=>{
-    const r=await sb.auth.signUp({email:email.value,password:pass.value});
-    alert('Registracija išsiųsta / sukurta. Jei reikia, patvirtink el. paštą.'); refresh();
-  };
-}
-document.getElementById('logout').onclick=async()=>{await sb.auth.signOut(); refresh();};
-document.getElementById('addPlace').onclick=async()=>{
-  const { data: { user } } = await sb.auth.getUser();
-  await sb.from('places').insert({name:pname.value,stage:pstage.value,image_url:pimg.value,description:pdesc.value,created_by:user.id});
-  pname.value=pstage.value=pimg.value=pdesc.value=''; refresh();
-};
-if(sb) refresh();
-</script>
+    document.getElementById('addPlace').onclick=async()=>{
+      const { data: { user } } = await sb.auth.getUser();
+      if(!user){alert('Reikia prisijungti');return;}
+      const payload={name:pname.value.trim(),stage:pstage.value.trim(),image_url:pimg.value.trim(),description:pdesc.value.trim(),created_by:user.id};
+      if(!payload.name){alert('Įvesk pavadinimą');return;}
+      await sb.from('places').insert(payload);
+      pname.value=pstage.value=pimg.value=pdesc.value='';
+      loadPlaces(user);
+    };
+  </script>
 </body>
 </html>
