@@ -22,6 +22,8 @@
     .wrap{max-width:1100px;margin:0 auto;padding:0 16px 48px}
     .muted{color:var(--muted);font-size:14px;margin:4px 0}
     .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:16px 0;box-shadow:0 6px 30px rgba(20,33,61,.07)}
+    .nav-link{padding:8px 14px;border-radius:12px;border:1px solid var(--line);color:var(--accent);text-decoration:none;font-weight:600}
+    .nav-link:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
     input,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 0;background:#fff;color:var(--text)}
     button{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer}
     button.secondary{background:#fff;color:var(--accent);border:1px solid var(--accent)}
@@ -44,6 +46,12 @@
   <div class="wrap">
     <h1>Thailand Control</h1>
     <p class="muted">VNO/RIX → pietų Tailandas · 2026‑12‑11 → 2027‑01‑02 · live balsai iš Supabase</p>
+
+    <nav class="card" style="display:flex;gap:12px;flex-wrap:wrap">
+      <a class="nav-link" href="#flightsCard">1. Skrydžiai</a>
+      <a class="nav-link" href="#planStagesCard">2. Kelionės planas</a>
+      <a class="nav-link" href="#placesCard">3. Vietos</a>
+    </nav>
 
     <div id="setup" class="card">
       <strong>Reikia Supabase rakto.</strong> Įrašyk <code>SUPABASE_URL</code> ir <code>SUPABASE_ANON_KEY</code> faile <code>supabase-config.v2.js</code>.
