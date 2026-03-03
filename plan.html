@@ -10,7 +10,7 @@
 <body>
   <div class="wrap">
     <h1>🗺️ Kelionės planas pagal etapus</h1>
-    <p class="muted">Suskirstyta pagal `stage` lauką Supabase lentelėje („1 ETAPAS“ → „2 ETAPAS“ → „Finalas“).</p>
+    <p class="muted">`stage` laukas Supabase lentelėje – 1 ETAPAS → 2 ETAPAS → 3 ETAPAS → Finalas.</p>
 
     <nav class="links">
       <a href="./index.html">Apžvalga</a>
@@ -44,7 +44,7 @@
 
       <div class="card">
         <h2>Automatinė statuso lenta</h2>
-        <p class="muted">Kai kas nors prideda naują vietą arba pabalsuoja, vaizdas atsinaujina paspaudus „Atnaujinti planą“.</p>
+        <p class="muted">Spausk „Atnaujinti planą“ po naujų balsavimų ar vietų kūrimo.</p>
         <button id="refreshBtn" class="secondary" style="width:auto">Atnaujinti planą</button>
       </div>
 
@@ -54,7 +54,17 @@
           <div id="stagesBox" class="plan-stage"></div>
         </div>
         <div class="card">
-          <h2>Bendra lentelė</h2>
+          <div class="topbar">
+            <h2>Bendra lentelė</h2>
+            <select id="boardStageFilter">
+              <option value="all">Visi etapai</option>
+              <option value="1 ETAPAS">1 ETAPAS</option>
+              <option value="2 ETAPAS">2 ETAPAS</option>
+              <option value="3 ETAPAS">3 ETAPAS</option>
+              <option value="Finalas">Finalas</option>
+              <option value="Kita">Kita</option>
+            </select>
+          </div>
           <div id="boardBox"></div>
         </div>
       </div>
@@ -62,9 +72,9 @@
       <div class="card">
         <h3>Pastabos</h3>
         <ul>
-          <li>Etapų pavadinimai gali būti bet kokie (pvz., „1 ETAPAS“, „Naktinis traukinys“, „Finalas“).</li>
+          <li>Etapų pavadinimai gali būti bet kokie (pvz., „Naktinis traukinys“), svarbu juos įvesti vienodai.</li>
           <li>Jei etapas nenurodytas, jis patenka į skiltį „Kita“.</li>
-          <li>Šis puslapis yra „skaitymo“ režimas – vietų kūrimas ir balsavimas atliekamas skiltyje „Vietos“.</li>
+          <li>Pats balsavimas vyksta puslapyje „Vietos ir balsai“.</li>
         </ul>
       </div>
     </div>
@@ -73,46 +83,54 @@
   <script src="./supabase-config.v2.js"></script>
   <script src="./scripts/supabase-page.js"></script>
   <script>
-    const stageOrder = ['1 ETAPAS', '2 ETAPAS', '3 ETAPAS', 'Finalas', 'Kita'];
+    const stageOrder = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','Finalas','Kita'];
+    let currentClient = null;
+    let lastPlaces = [];
+    let lastVoteMap = {};
+    let boardFilter = 'all';
 
-    function renderStages(places, voteMap){
+    function renderStages(places,voteMap){
       const box = document.getElementById('stagesBox');
       if (!places.length){
         box.innerHTML = '<p class="muted">Dar nėra pasiūlymų.</p>';
         return;
       }
-      const grouped = {};
-      stageOrder.forEach(key => grouped[key] = []);
-      places.forEach(p => {
+      const grouped={};
+      stageOrder.forEach(key=>grouped[key]=[]);
+      places.forEach(p=>{
         const key = stageOrder.includes(p.stage) ? p.stage : (p.stage || 'Kita');
-        if (!grouped[key]) grouped[key] = [];
         grouped[key].push(p);
       });
-      box.innerHTML = '';
-      Object.entries(grouped).forEach(([stage, items]) => {
-        if (!items.length) return;
-        const wrapper = document.createElement('div');
-        wrapper.className = 'plan-stage';
-        wrapper.innerHTML = `<h3>${stage}</h3>`;
+      box.innerHTML='';
+      Object.entries(grouped).forEach(([stage,items])=>{
+        if(!items.length) return;
+        const wrapper=document.createElement('div');
+        wrapper.className='plan-stage';
+        wrapper.innerHTML=`<h3>${stage}</h3>`;
         items.sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0)).forEach((p,i)=>{
-          const line = document.createElement('div');
-          line.className = 'plan-line';
-          line.innerHTML = `<strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMap[p.id]||0} bals.</span>`;
+          const line=document.createElement('div');
+          line.className='plan-line';
+          line.innerHTML=`<strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMap[p.id]||0} bals.</span>`;
           wrapper.appendChild(line);
         });
         box.appendChild(wrapper);
       });
     }
 
-    function renderBoard(places, voteMap){
-      const box = document.getElementById('boardBox');
-      if (!places.length){
-        box.innerHTML = '<p class="muted">Kol kas tuščia.</p>';
+    function renderBoard(){
+      const box=document.getElementById('boardBox');
+      if(!lastPlaces.length){
+        box.innerHTML='<p class="muted">Kol kas tuščia.</p>';
         return;
       }
-      const sorted = [...places].sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0));
+      const filtered = boardFilter==='all' ? lastPlaces : lastPlaces.filter(p => (p.stage || 'Kita')===boardFilter);
+      if(!filtered.length){
+        box.innerHTML='<p class="muted">Šiame etape dar nėra vietų.</p>';
+        return;
+      }
+      const sorted=[...filtered].sort((a,b)=>(lastVoteMap[b.id]||0)-(lastVoteMap[a.id]||0));
       box.innerHTML = sorted.map((p,i)=>`
-        <div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMap[p.id]||0} bals.</span></div>`).join('');
+        <div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="muted">${lastVoteMap[p.id]||0} bals.</span></div>`).join('');
     }
 
     function refreshData(client){
@@ -125,17 +143,14 @@
           document.getElementById('boardBox').innerHTML = '';
           return;
         }
-        const voteMap = {};
-        (votesRes.data||[]).forEach(v => {
-          voteMap[v.place_id] = (voteMap[v.place_id]||0) + 1;
-        });
-        const places = placesRes.data || [];
-        renderStages(places, voteMap);
-        renderBoard(places, voteMap);
+        lastVoteMap = {};
+        (votesRes.data||[]).forEach(v=>{ lastVoteMap[v.place_id] = (lastVoteMap[v.place_id]||0)+1; });
+        lastPlaces = placesRes.data || [];
+        renderStages(lastPlaces, lastVoteMap);
+        renderBoard();
       });
     }
 
-    let currentClient = null;
     initSupabasePage({
       onReady: ({ client }) => {
         currentClient = client;
@@ -143,6 +158,8 @@
       },
       onSignedOut: () => {
         currentClient = null;
+        lastPlaces = [];
+        lastVoteMap = {};
         document.getElementById('stagesBox').innerHTML = '';
         document.getElementById('boardBox').innerHTML = '';
       }
@@ -150,6 +167,11 @@
 
     document.getElementById('refreshBtn').addEventListener('click', () => {
       if (currentClient) refreshData(currentClient);
+    });
+
+    document.getElementById('boardStageFilter').addEventListener('change', (e) => {
+      boardFilter = e.target.value;
+      renderBoard();
     });
   </script>
 </body>

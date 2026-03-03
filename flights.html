@@ -9,8 +9,8 @@
 </head>
 <body>
   <div class="wrap">
-    <h1>✈️ Skrydžių suvestinė</h1>
-    <p class="muted">Tikslas: OPEN-JAW (OUT VNO/RIX → HKT, IN BKK → VNO/RIX), ≤1 sustojimas kiekviename segmente.</p>
+    <h1>✈️ Skrydžių ir paketų kontrolė</h1>
+    <p class="muted">Tikslas: OPEN-JAW (OUT VNO/RIX → HKT/KBV/USM/HDY, IN BKK → VNO/RIX), ≤1 sustojimas kiekviename segmente, 4 suaugę.</p>
 
     <nav class="links">
       <a href="./index.html">Apžvalga</a>
@@ -20,7 +20,7 @@
     </nav>
 
     <div id="configBox" class="card">
-      <strong>Reikia Supabase konfigūracijos.</strong> Kadangi ši suvestinė yra privati, puslapis rodomas tik prisijungusiems.</div>
+      <strong>Reikia Supabase konfigūracijos.</strong> Kadangi ši suvestinė privati, rodoma tik prisijungus.</div>
 
     <div id="authBox" class="card hidden">
       <h3>Prisijunk</h3>
@@ -37,28 +37,39 @@
       <div class="card topbar">
         <div>
           <div id="who"></div>
-          <p class="muted">Logai atnaujinami rankiniu būdu arba CRON pranešimų pagrindu.</p>
+          <p class="muted">Cron’ai: OPEN-JAW paieška + LT charter/paketų stebėsena.</p>
         </div>
         <button id="logoutBtn" class="secondary">Atsijungti</button>
       </div>
 
       <div class="grid-2">
         <div class="card">
-          <h2>Šiandienos statusas</h2>
-          <div id="todayStatus"></div>
+          <h2>„Best today“ (OPEN-JAW)</h2>
+          <div id="bestOpenJaw"></div>
         </div>
         <div class="card">
-          <h2>Istorinės nuorodos</h2>
-          <p class="muted">Žemiau – paskutiniai rasti ≤1 stop pasiūlymai (fail"ų <code>data/flights.json</code> turinys).</p>
-          <div id="flightList"></div>
+          <h2>Charter/Paketų monitorius</h2>
+          <div id="charterSnapshot"></div>
         </div>
       </div>
 
       <div class="card">
-        <h3>Pastabos</h3>
+        <div class="topbar">
+          <div>
+            <h2>Visi užfiksuoti pasiūlymai</h2>
+            <p class="muted">`data/flights.json` – gali būti tiek atviri OPEN-JAW variantai, tiek katės iš TEZ TOUR.</p>
+          </div>
+          <button id="refreshBtn" class="secondary" style="width:auto">Atnaujinti</button>
+        </div>
+        <div id="flightList"></div>
+      </div>
+
+      <div class="card">
+        <h3>Prioritetai analizei</h3>
         <ul>
-          <li>Cron pranešimai talpinami <code>travel-thailand-site/data/flights.json</code> (tas pats formatas naudojamas šiame puslapyje).</li>
-          <li>Jei norisi pridėti komentarą, atnaujink JSON įrašą su <code>status</code> reikšme (pvz., „VERIFIED“, „NOT VERIFIED“).</li>
+          <li>Skrydžiai: Skyscanner · Google Flights · Expedia · Kayak · Kiwi/Opodo/eDreams (kai prieinama).</li>
+          <li>Charter/paketai: TEZ TOUR + kiti LT organizatoriai (Kelionių akademija ir pan.).</li>
+          <li>Ataskaitoje visada nurodyti kainą už 1 asmenį ir sumą už 4, taip pat nuorodą su data + keleiviais.</li>
         </ul>
       </div>
     </div>
@@ -67,27 +78,73 @@
   <script src="./supabase-config.v2.js"></script>
   <script src="./scripts/supabase-page.js"></script>
   <script>
-    function loadFlights(){
-      return fetch('./data/flights.json').then(r => r.json()).catch(() => ({ items: [] }));
+    let latestData = null;
+
+    function renderLists(){
+      const list = document.getElementById('flightList');
+      const bestBox = document.getElementById('bestOpenJaw');
+      const charterBox = document.getElementById('charterSnapshot');
+      if (!latestData || !latestData.items || !latestData.items.length){
+        list.innerHTML = '<p class="muted">Šiandien naujų įrašų nėra.</p>';
+        bestBox.innerHTML = '<p class="muted">Laukiame naujų OPEN-JAW rezultatų.</p>';
+        charterBox.innerHTML = '<p class="muted">Naujų charter pasiūlymų nenustatyta.</p>';
+        return;
+      }
+
+      const items = latestData.items;
+      list.innerHTML = items.map(item => `
+        <div class="plan-line">
+          <strong>${item.title}</strong><br>
+          ${item.price}<br>
+          <a href="${item.url}" target="_blank">Nuoroda</a><br>
+          <span class="muted">${item.status}</span>
+        </div>
+      `).join('');
+
+      const openJaw = items.filter(i => /VNO|RIX/i.test(i.title || ''));
+      if (openJaw.length){
+        const best = openJaw[0];
+        bestBox.innerHTML = `
+          <div class="plan-line">
+            <strong>${best.title}</strong><br>
+            ${best.price}<br>
+            <a href="${best.url}" target="_blank">Atidaryti</a><br>
+            <span class="muted">${best.status}</span>
+          </div>
+        `;
+      } else {
+        bestBox.innerHTML = '<p class="muted">Nėra OPEN-JAW įrašų.</p>';
+      }
+
+      const charter = items.filter(i => /TEZ TOUR|Tez|paketas/i.test(i.title || '') || /hotel|resort/i.test(i.title || ''));
+      if (charter.length){
+        charterBox.innerHTML = charter.slice(0,2).map(item => `
+          <div class="plan-line">
+            <strong>${item.title}</strong><br>
+            ${item.price}<br>
+            <a href="${item.url}" target="_blank">Nuoroda</a><br>
+            <span class="muted">${item.status}</span>
+          </div>
+        `).join('');
+      } else {
+        charterBox.innerHTML = '<p class="muted">Charter/paketų įrašų dar nėra.</p>';
+      }
     }
 
+    function loadFlights(){
+      return fetch('./data/flights.json').then(r=>r.json()).catch(()=>({items:[]}));
+    }
+
+    async function refreshFlights(){
+      latestData = await loadFlights();
+      renderLists();
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', refreshFlights);
+
     initSupabasePage({
-      onReady: async () => {
-        const data = await loadFlights();
-        const list = document.getElementById('flightList');
-        if (!data.items?.length){
-          list.innerHTML = '<p class="muted">Kol kas nėra pasiūlymų.</p>';
-        } else {
-          list.innerHTML = data.items.map(i => `
-            <div class="plan-line">
-              <strong>${i.title}</strong><br>
-              ${i.price}<br>
-              <a href="${i.url}" target="_blank">Atidaryti</a><br>
-              <span class="muted">${i.status}</span>
-            </div>
-          `).join('');
-        }
-        document.getElementById('todayStatus').innerHTML = '<p>Šiuo metu cron dirba rankiniu režimu – naujausi rezultatai siunčiami WhatsApp.</p>';
+      onReady: () => {
+        refreshFlights();
       }
     });
   </script>

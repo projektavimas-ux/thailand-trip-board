@@ -46,25 +46,61 @@
 
       <div class="grid-2">
         <div class="card">
-          <h2>Top balsai</h2>
-          <p class="muted">Automatiškai rikiuojama pagal gyvus balsus.</p>
+          <div class="topbar">
+            <div>
+              <h2>Top balsai</h2>
+              <p class="muted">Automatiškai rikiuojama pagal balsų skaičių.</p>
+            </div>
+            <a class="nav-link" href="./places.html">Valdyti vietas</a>
+          </div>
           <div id="topPlaces"></div>
         </div>
         <div class="card">
-          <h2>Etapų santrauka</h2>
-          <p class="muted">Per kiekvieną etapą rodomi balsų skaičiai.</p>
+          <div class="topbar">
+            <div>
+              <h2>Etapų santrauka</h2>
+              <p class="muted">Gyvas vaizdas pagal `stage` lauką.</p>
+            </div>
+            <a class="nav-link" href="./plan.html">Žiūrėti planą</a>
+          </div>
           <div id="stageSummary"></div>
         </div>
       </div>
 
+      <div class="grid-2">
+        <div class="card">
+          <h2>Kelionės ašis</h2>
+          <p class="muted">`data/route.json` – visada matomas naujausias kelionės stuburas.</p>
+          <div id="routeList"></div>
+        </div>
+        <div class="card">
+          <h2>Komandos užduotys</h2>
+          <p class="muted">Stipriausių prioritetų sąrašas iš `data/todos.json`.</p>
+          <div id="todoList"></div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h2>Biudžetas</h2>
+          <p class="muted">Rezervai patikslinami prieš pirkimus.</p>
+          <div id="budgetList"></div>
+        </div>
+        <div class="card">
+          <h2>Skrydžių monitorius</h2>
+          <p class="muted">Trumpa ištrauka iš „Skrydžių“ puslapio.</p>
+          <div id="flightSnapshot"></div>
+          <a class="nav-link" href="./flights.html" style="margin-top:12px;display:inline-block">Pilna suvestinė</a>
+        </div>
+      </div>
+
       <div class="card">
-        <h2>Workflow būsena</h2>
+        <h2>Workflow taisyklės</h2>
         <ul>
-          <li>Cron: tikrinami Skyscanner · Google Flights · Expedia · Kayak (tikėtina 2x per dieną).</li>
-          <li>„Kelionės planas“ puslapyje – automatinis etapų reitingas pagal balsus.</li>
-          <li>„Vietos ir balsai“ puslapyje – kortelių valdymas + balsavimas + formos.</li>
+          <li>Cron tikrina OPEN-JAW pasiūlymus (Skyscanner · Google Flights · Expedia · Kayak) ir charterių rinką (TEZ TOUR, kiti LT organizatoriai).</li>
+          <li>Vietos ir balsai laikomi Supabase; planas generuojamas automatiškai pagal balsus.</li>
+          <li>Biudžetas, maršrutas ir užduotys laikomi versijuotose JSON failuose – pokyčiai atsispindi čia ir Word dokumentuose.</li>
         </ul>
-        <p class="muted">Naujienos rašomos tiesiai į duomenų bazę, todėl visi puslapiai rodo tą pačią bazę.</p>
       </div>
     </div>
   </div>
@@ -95,7 +131,7 @@
       const grouped = {};
       places.forEach(p=>{
         const key = p.stage || 'Nepriskirta';
-        grouped[key] = (grouped[key]||{count:0,balsai:0});
+        grouped[key] = grouped[key] || {count:0,balsai:0};
         grouped[key].count += 1;
         grouped[key].balsai += voteMap[p.id]||0;
       });
@@ -106,8 +142,62 @@
         </div>`).join('');
     }
 
+    function renderRoute(route){
+      const box = document.getElementById('routeList');
+      if (!route?.days?.length){ box.innerHTML='<p class="muted">Maršrutas dar nepateiktas.</p>'; return; }
+      box.innerHTML = route.days.map(d=>`
+        <div class="plan-line"><strong>${d.day}</strong><br>${d.plan}</div>
+      `).join('');
+    }
+
+    function renderTodos(todos){
+      const box = document.getElementById('todoList');
+      if (!todos?.items?.length){ box.innerHTML='<p class="muted">Užduočių nėra.</p>'; return; }
+      box.innerHTML = todos.items.map(item=>`<div class="plan-line">${item}</div>`).join('');
+    }
+
+    function renderBudget(budget){
+      const box = document.getElementById('budgetList');
+      if (!budget?.lines?.length){ box.innerHTML='<p class="muted">Biudžetas nepateiktas.</p>'; return; }
+      box.innerHTML = budget.lines.map(line=>`
+        <div class="plan-line"><strong>${line.name}</strong><br><span class="muted">${line.amount}</span></div>
+      `).join('');
+    }
+
+    function renderFlightSnapshot(data){
+      const box = document.getElementById('flightSnapshot');
+      if (!data?.items?.length){ box.innerHTML='<p class="muted">Nėra pasiūlymų.</p>'; return; }
+      const top = data.items.slice(0,2);
+      box.innerHTML = top.map(item=>`
+        <div class="plan-line">
+          <strong>${item.title}</strong><br>
+          ${item.price}<br>
+          <a href="${item.url}" target="_blank">Nuoroda</a><br>
+          <span class="muted">${item.status}</span>
+        </div>
+      `).join('');
+    }
+
+    let staticLoaded = false;
+    function loadStaticBlocks(){
+      if (staticLoaded) return;
+      staticLoaded = true;
+      Promise.all([
+        fetch('./data/route.json').then(r=>r.json()).catch(()=>null),
+        fetch('./data/todos.json').then(r=>r.json()).catch(()=>null),
+        fetch('./data/budget.json').then(r=>r.json()).catch(()=>null),
+        fetch('./data/flights.json').then(r=>r.json()).catch(()=>null)
+      ]).then(([route,todos,budget,flights])=>{
+        renderRoute(route);
+        renderTodos(todos);
+        renderBudget(budget);
+        renderFlightSnapshot(flights);
+      });
+    }
+
     initSupabasePage({
       onReady: async ({ client }) => {
+        loadStaticBlocks();
         const [{ data: places, error: pErr }, { data: votes, error: vErr }] = await Promise.all([
           client.from('places').select('*').order('created_at', { ascending: false }),
           client.from('votes').select('place_id')

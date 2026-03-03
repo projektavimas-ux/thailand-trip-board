@@ -10,7 +10,7 @@
 <body>
   <div class="wrap">
     <h1>📍 Vietos ir balsavimas</h1>
-    <p class="muted">Kortelės generuojamos iš Supabase lentelės „places“, balsai – iš „votes“.</p>
+    <p class="muted">Kortelės generuojamos iš Supabase „places“ lentelės, balsai – „votes“.</p>
 
     <nav class="links">
       <a href="./index.html">Apžvalga</a>
@@ -45,6 +45,26 @@
         </div>
       </div>
 
+      <div class="card">
+        <div class="grid-2">
+          <div>
+            <h3>Paieška ir filtrai</h3>
+            <input id="searchBox" placeholder="Ieškoti pagal pavadinimą ar aprašą" />
+          </div>
+          <div>
+            <h3>Etapas</h3>
+            <select id="stageSelect">
+              <option value="all">Visi</option>
+              <option value="1 ETAPAS">1 ETAPAS</option>
+              <option value="2 ETAPAS">2 ETAPAS</option>
+              <option value="3 ETAPAS">3 ETAPAS</option>
+              <option value="Finalas">Finalas</option>
+              <option value="Kita">Kita / neapibrėžta</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
       <div id="alertBox" class="card hidden"></div>
 
       <div class="card">
@@ -63,7 +83,10 @@
           <p id="formStatus" class="muted"></p>
         </div>
         <div class="card">
-          <h3>Balsų lenta</h3>
+          <div class="topbar">
+            <h3>Balsų lenta</h3>
+            <small class="muted">Generuojama pagal filtrų rezultatus</small>
+          </div>
           <div id="planBoard"></div>
         </div>
       </div>
@@ -75,22 +98,40 @@
   <script>
     let currentClient = null;
     let cachedVotes = [];
+    let placesCache = [];
+    let voteMapCache = {};
+    let userVotes = new Set();
+
+    const alertBox = document.getElementById('alertBox');
+    const stageSelect = document.getElementById('stageSelect');
+    const searchBox = document.getElementById('searchBox');
 
     function setAlert(msg){
-      const box = document.getElementById('alertBox');
-      if (!msg){ box.classList.add('hidden'); box.textContent=''; return; }
-      box.textContent = msg;
-      box.classList.remove('hidden');
+      if (!msg){ alertBox.classList.add('hidden'); alertBox.textContent=''; return; }
+      alertBox.textContent = msg;
+      alertBox.classList.remove('hidden');
     }
 
-    function renderPlaces(places, voteMap, userVotes){
+    function applyFilters(){
+      const query = searchBox.value.trim().toLowerCase();
+      const stage = stageSelect.value;
+      const filtered = placesCache.filter(p => {
+        const matchesStage = stage === 'all' ? true : ((p.stage || 'Kita') === stage || (stage === 'Kita' && !p.stage));
+        const matchesQuery = !query || `${p.name} ${p.description||''}`.toLowerCase().includes(query);
+        return matchesStage && matchesQuery;
+      });
+      renderPlaces(filtered);
+      renderBoard(filtered);
+    }
+
+    function renderPlaces(list){
       const container = document.getElementById('placesList');
-      if (!places.length){
-        container.innerHTML = '<p class="muted">Dar nėra vietų. Pridėk pirmąją.</p>';
+      if (!list.length){
+        container.innerHTML = '<p class="muted">Atitinkančių vietų nėra.</p>';
         return;
       }
       container.innerHTML = '';
-      places.forEach(p => {
+      list.forEach(p => {
         const card = document.createElement('div');
         card.className = 'place-card';
         card.innerHTML = `
@@ -100,7 +141,7 @@
             <h3 style="margin:4px 0 6px">${p.name}</h3>
             <p class="muted">${p.description || ''}</p>
             <div class="footer">
-              <span class="muted">${voteMap[p.id]||0} bals.</span>
+              <span class="muted">${voteMapCache[p.id]||0} bals.</span>
               <button class="secondary" data-place="${p.id}">${userVotes.has(p.id)?'Atimti':'Balsuoti'}</button>
             </div>
           </div>`;
@@ -111,15 +152,15 @@
       });
     }
 
-    function renderBoard(places, voteMap){
+    function renderBoard(list){
       const box = document.getElementById('planBoard');
-      if (!places.length){
-        box.innerHTML = '<p class="muted">Tuščia.</p>';
+      if (!list.length){
+        box.innerHTML = '<p class="muted">Nėra duomenų.</p>';
         return;
       }
-      const sorted = [...places].sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0));
+      const sorted = [...list].sort((a,b)=>(voteMapCache[b.id]||0)-(voteMapCache[a.id]||0));
       box.innerHTML = sorted.map((p,i)=>`
-        <div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMap[p.id]||0} bals.</span></div>`).join('');
+        <div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMapCache[p.id]||0} bals.</span></div>`).join('');
     }
 
     async function toggleVote(placeId, remove){
@@ -145,15 +186,15 @@
         setAlert('Nepavyko gauti duomenų: ' + (pErr?.message || vErr?.message));
         return;
       }
+      placesCache = places || [];
       cachedVotes = votes || [];
-      const voteMap = {};
+      voteMapCache = {};
       cachedVotes.forEach(v => {
-        voteMap[v.place_id] = (voteMap[v.place_id]||0) + 1;
+        voteMapCache[v.place_id] = (voteMapCache[v.place_id]||0) + 1;
       });
       const { data: { user } } = await currentClient.auth.getUser();
-      const userVotes = new Set((cachedVotes||[]).filter(v => v.user_id === user?.id).map(v => v.place_id));
-      renderPlaces(places||[], voteMap, userVotes);
-      renderBoard(places||[], voteMap);
+      userVotes = new Set((cachedVotes||[]).filter(v => v.user_id === user?.id).map(v => v.place_id));
+      applyFilters();
     }
 
     async function addPlace(){
@@ -183,6 +224,8 @@
 
     document.getElementById('addPlace').addEventListener('click', addPlace);
     document.getElementById('refreshPlaces').addEventListener('click', loadPlaces);
+    searchBox.addEventListener('input', applyFilters);
+    stageSelect.addEventListener('change', applyFilters);
 
     initSupabasePage({
       onReady: ({ client }) => {
@@ -191,6 +234,8 @@
       },
       onSignedOut: () => {
         currentClient = null;
+        placesCache = [];
+        voteMapCache = {};
         document.getElementById('placesList').innerHTML = '';
         document.getElementById('planBoard').innerHTML = '';
       }
