@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Thailand Control · Kelionės planas</title>
   <link rel="stylesheet" href="./styles/site.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-sA+e2atnCo1hNWeSSz0pQ8U4C1uMBaDZI8q9d2LFw2g=" crossorigin="" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-o9N1j7kGStGkG2JxG2fE9JteLo75fW9n4nDYn7J4kL8=" crossorigin=""></script>
 </head>
 <body>
   <div class="wrap">
@@ -48,6 +50,20 @@
         <button id="refreshBtn" class="secondary" style="width:auto">Atnaujinti planą</button>
       </div>
 
+      <div class="card">
+        <div class="topbar">
+          <h2>Interaktyvus maršrutas</h2>
+          <a class="nav-link" id="googleMapLink" href="https://www.google.com/maps/dir/Kata+Beach,+Karon,+Phuket/Railay+Beach,+Krabi/Koh+Lanta,+Krabi/Bangkok+Old+Town/" target="_blank" rel="noopener">Google Maps</a>
+        </div>
+        <div id="routeMap"></div>
+        <p class="muted">Žemėlapyje parodyti pagrindiniai etapai nuo Phuketo iki Bankoko.</p>
+      </div>
+
+      <div class="card">
+        <h2>Vidiniai pervažiavimai / perskridimai</h2>
+        <div id="transferList"></div>
+      </div>
+
       <div class="grid-2">
         <div class="card">
           <h2>Etapai</h2>
@@ -84,10 +100,26 @@
   <script src="./scripts/supabase-page.js"></script>
   <script>
     const stageOrder = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','Finalas','Kita'];
+    const mapStops = [
+      { name: 'Kata · Phuket', window: 'D1–D4', coords: [7.821, 98.296], note: 'Starto bazė pietuose' },
+      { name: 'Railay · Krabi', window: 'D5–D7', coords: [8.012, 98.839], note: 'Kalkakmenio įlankos' },
+      { name: 'Koh Lanta', window: 'D8–D10', coords: [7.514, 99.093], note: 'Ramesni paplūdimiai' },
+      { name: 'Bangkok Old Town', window: 'D11–D13', coords: [13.751, 100.491], note: 'Finalas + skrydis namo' }
+    ];
+    const transferPlan = [
+      { leg: 'OUT · VNO/RIX → Phuket (HKT) 2026-12-09..12', detail: 'OPEN-JAW 1 sustojimo skrydis (Qatar/Turkish). Nusileidus – privatus minivanas (45 min) iki Kata/Karon.' },
+      { leg: 'Phuket (Kata) → Railay Beach', detail: 'Privatus minivanas iki Ao Nang (~2h40) + long-tail valtis į Railay (15 min). Alternatyva: intermodalinis perkėlimas per Phuket Ferry.' },
+      { leg: 'Railay → Koh Lanta', detail: 'Greitaeigė valtis nuo Ao Nang Pier (70 min) arba kombinuotas minivanas + keltas per Saladan.' },
+      { leg: 'Koh Lanta → Bangkok', detail: 'Pervežimas į Krabi oro uostą (2h) + AirAsia/Thai VietJet skrydis į DMK/BKK; iš oro uosto – „Grab“ ar MRT į Old Town.' },
+      { leg: 'IN · Bangkok → VNO/RIX 2027-01-01..03', detail: 'BKK → VNO/RIX 1 sustojimo kryptis (Turkish/Qatar). Įtraukti papildomą 3h „bufferį“ skrydžio dieną.' }
+    ];
+    const googleMapLink = 'https://www.google.com/maps/dir/Kata+Beach,+Karon,+Phuket/Railay+Beach,+Krabi/Koh+Lanta,+Krabi/Bangkok+Old+Town/';
+
     let currentClient = null;
     let lastPlaces = [];
     let lastVoteMap = {};
     let boardFilter = 'all';
+    let mapInstance = null;
 
     function renderStages(places,voteMap){
       const box = document.getElementById('stagesBox');
@@ -133,6 +165,31 @@
         <div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="muted">${lastVoteMap[p.id]||0} bals.</span></div>`).join('');
     }
 
+    function renderTransfers(){
+      const box = document.getElementById('transferList');
+      box.innerHTML = transferPlan.map(item=>`
+        <div class="plan-line">
+          <strong>${item.leg}</strong><br>
+          <span class="muted">${item.detail}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderMap(){
+      if (mapInstance || !document.getElementById('routeMap')) return;
+      mapInstance = L.map('routeMap', { scrollWheelZoom: false }).setView(mapStops[0].coords, 6);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+      }).addTo(mapInstance);
+      const coords = mapStops.map(stop => stop.coords);
+      const poly = L.polyline(coords, { color: '#2563eb', weight: 3, opacity: 0.9 }).addTo(mapInstance);
+      mapStops.forEach((stop, idx) => {
+        L.marker(stop.coords).addTo(mapInstance)
+          .bindPopup(`<strong>${idx+1}. ${stop.name}</strong><br>${stop.window || ''}<br>${stop.note || ''}`);
+      });
+      mapInstance.fitBounds(poly.getBounds(), { padding: [20,20] });
+    }
+
     function refreshData(client){
       return Promise.all([
         client.from('places').select('*').order('created_at',{ascending:false}),
@@ -154,6 +211,9 @@
     initSupabasePage({
       onReady: ({ client }) => {
         currentClient = client;
+        document.getElementById('googleMapLink').href = googleMapLink;
+        renderMap();
+        renderTransfers();
         refreshData(client);
       },
       onSignedOut: () => {
