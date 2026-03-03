@@ -1,269 +1,128 @@
 <!doctype html>
 <html lang="lt">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Thailand Control · Demo</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thailand Control · Apžvalga</title>
+  <link rel="stylesheet" href="./styles/site.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    :root{
-      --bg:#f5f7fb;
-      --card:#ffffff;
-      --line:#e1e7f0;
-      --text:#1f2a37;
-      --muted:#5b6b80;
-      --accent:#2563eb;
-      --accent-soft:#dbe7ff;
-    }
-    *{box-sizing:border-box;font-family:"Inter",Arial,sans-serif}
-    body{margin:0;background:var(--bg);color:var(--text)}
-    h1{margin:24px 0 8px;font-size:28px}
-    h2{margin:0 0 8px;font-size:20px}
-    .wrap{max-width:1100px;margin:0 auto;padding:0 16px 48px}
-    .muted{color:var(--muted);font-size:14px;margin:4px 0}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:16px 0;box-shadow:0 6px 30px rgba(20,33,61,.07)}
-    .nav-link{padding:8px 14px;border-radius:12px;border:1px solid var(--line);color:var(--accent);text-decoration:none;font-weight:600}
-    .nav-link:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
-    input,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 0;background:#fff;color:var(--text)}
-    button{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer}
-    button.secondary{background:#fff;color:var(--accent);border:1px solid var(--accent)}
-    .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-    .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
-    .place-card{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:12px 0;background:#fafcff}
-    .place-card img{width:100%;height:180px;object-fit:cover}
-    .place-card .body{padding:14px}
-    .tag{display:inline-block;background:var(--accent-soft);color:var(--accent);padding:2px 10px;border-radius:50px;font-size:12px;margin-bottom:6px}
-    .place-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
-    .plan-stage{border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0;background:#fbfcff}
-    .plan-stage h4{margin:0 0 6px;font-size:16px}
-    .plan-line{padding:4px 0;border-bottom:1px dashed var(--line)}
-    .plan-line:last-child{border-bottom:none}
-    .hidden{display:none}
-    @media(max-width:640px){.topbar{flex-direction:column;align-items:flex-start;gap:12px}}
-  </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Thailand Control</h1>
-    <p class="muted">VNO/RIX → pietų Tailandas · 2026‑12‑11 → 2027‑01‑02 · live balsai iš Supabase</p>
+    <h1>🇹🇭 Thailand Control · Apžvalga</h1>
+    <p class="muted">OUT: VNO/RIX → Pietų Tailandas · IN: BKK → VNO/RIX · 2026‑12‑11 → 2027‑01‑02 · 4 suaugę</p>
 
-    <nav class="card" style="display:flex;gap:12px;flex-wrap:wrap">
-      <a class="nav-link" href="#flightsCard">1. Skrydžiai</a>
-      <a class="nav-link" href="#planStagesCard">2. Kelionės planas</a>
-      <a class="nav-link" href="#placesCard">3. Vietos</a>
+    <nav class="links">
+      <a class="active" href="./index.html">Apžvalga</a>
+      <a href="./flights.html">Skrydžiai</a>
+      <a href="./plan.html">Kelionės planas</a>
+      <a href="./places.html">Vietos ir balsai</a>
     </nav>
 
-    <div id="setup" class="card">
-      <strong>Reikia Supabase rakto.</strong> Įrašyk <code>SUPABASE_URL</code> ir <code>SUPABASE_ANON_KEY</code> faile <code>supabase-config.v2.js</code>.
+    <div id="configBox" class="card">
+      <strong>Supabase konfigūracija reikalinga.</strong> Įrašyk <code>window.SUPABASE_URL</code> ir <code>window.SUPABASE_ANON_KEY</code> faile <code>supabase-config.v2.js</code>.
     </div>
 
-    <div id="auth" class="card hidden">
-      <h3>Prisijunk</h3>
-      <p class="muted">Tik registruoti dalyviai gali matyti turinį ir balsuoti.</p>
-      <input id="email" placeholder="El. paštas"/>
-      <input id="pass" type="password" placeholder="Slaptažodis"/>
-      <button id="login">Prisijungti</button>
-      <p class="muted" style="margin-top:10px">Jei reikia prieigos, parašyk Ernestui.</p>
+    <div id="authBox" class="card hidden">
+      <h3>Prisijungimas</h3>
+      <p class="muted">Ši platforma skirta tik komandai. Naudok tą patį Supabase el. paštą.</p>
+      <input id="emailInput" placeholder="El. paštas" />
+      <input id="passInput" type="password" placeholder="Slaptažodis" />
+      <div class="grid-2">
+        <button id="loginBtn">Prisijungti</button>
+        <button id="signupBtn" class="secondary">Registruoti</button>
+      </div>
+      <p id="authStatus" class="muted"></p>
     </div>
 
-    <div id="app" class="hidden">
-      <div class="card topbar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <div id="appBox" class="hidden">
+      <div class="card topbar">
         <div>
-          <div><strong id="who">Prisijungęs</strong></div>
-          <p class="muted">Įrašai ir balsai saugomi Supabase (Places + Votes lentelės).</p>
+          <div id="who"></div>
+          <p class="muted">Visi balsai ir pasiūlymai saugomi Supabase lentelėse „places“ ir „votes“.</p>
         </div>
-        <button id="logout" class="secondary">Atsijungti</button>
-      </div>
-
-      <div class="card" id="alert" style="display:none"></div>
-
-      <!-- 1. Skrydžių informacijos skyrius -->
-      <div class="card" id="flightsCard">
-        <h2>1. Skrydžių informacija</h2>
-        <p class="muted">Tikslas: 329–431 EUR/asm., ≤1 sustojimas. Cron’as tikrina Skyscanner · Google Flights · Expedia · Kayak.</p>
-        <div id="flightLog">
-          <p><strong>2026-02-28 bazė</strong> – eDreams teaser 329 EUR/asm., Opodo 431 EUR/asm. (≤1 stop).</p>
-          <p id="flightStatus">Šiuo metu naršyklės cron’as nepasileidžia (Google Flights timeout). Kai tik atsigaus, čia matysis nauji log’ai.</p>
-        </div>
-      </div>
-
-      <!-- 2. Kelionės planas etapais -->
-      <div class="card" id="planStagesCard">
-        <h2>2. Kelionės planas pagal etapus</h2>
-        <p class="muted">Vietos grupuojamos pagal `stage` lauką Supabase lentelėje. Eiliškumas: 1 ETAPAS → 2 ETAPAS → Finalas.</p>
-        <div id="planStages"></div>
-      </div>
-
-      <!-- 3. Siūlomos lankytinos vietos -->
-      <div class="card" id="placesCard">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-          <div>
-            <h2>3. Siūlomos lankytinos vietos</h2>
-            <p class="muted">Kortelės generuojamos tiesiai iš Supabase `places` lentelės, balsai iš `votes`.</p>
-          </div>
-          <button id="refreshBtn" class="secondary">Atnaujinti</button>
-        </div>
-        <div id="places" class="grid-2"></div>
+        <button id="logoutBtn" class="secondary">Atsijungti</button>
       </div>
 
       <div class="grid-2">
-        <div class="card" id="addCard">
-          <h3>Įkelti naują vietą (demo)</h3>
-          <p class="muted">Ši forma rašo į `places` lentelę. Užpildyk trumpai ir korta atsiras aukščiau.</p>
-          <input id="pname" placeholder="Pavadinimas (pvz., Koh Lanta)"/>
-          <input id="pstage" placeholder="Etapas (pvz., 2 ETAPAS)"/>
-          <input id="pimg" placeholder="Nuotraukos URL"/>
-          <textarea id="pdesc" placeholder="Trumpas aprašymas" rows="3"></textarea>
-          <button id="addPlace">Pridėti</button>
+        <div class="card">
+          <h2>Top balsai</h2>
+          <p class="muted">Automatiškai rikiuojama pagal gyvus balsus.</p>
+          <div id="topPlaces"></div>
         </div>
-        <div class="card" id="planSummaryCard">
-          <h3>Bendra balsų lentelė</h3>
-          <div id="plan"></div>
+        <div class="card">
+          <h2>Etapų santrauka</h2>
+          <p class="muted">Per kiekvieną etapą rodomi balsų skaičiai.</p>
+          <div id="stageSummary"></div>
         </div>
+      </div>
+
+      <div class="card">
+        <h2>Workflow būsena</h2>
+        <ul>
+          <li>Cron: tikrinami Skyscanner · Google Flights · Expedia · Kayak (tikėtina 2x per dieną).</li>
+          <li>„Kelionės planas“ puslapyje – automatinis etapų reitingas pagal balsus.</li>
+          <li>„Vietos ir balsai“ puslapyje – kortelių valdymas + balsavimas + formos.</li>
+        </ul>
+        <p class="muted">Naujienos rašomos tiesiai į duomenų bazę, todėl visi puslapiai rodo tą pačią bazę.</p>
       </div>
     </div>
   </div>
 
   <script src="./supabase-config.v2.js"></script>
+  <script src="./scripts/supabase-page.js"></script>
   <script>
-    const setupEl=document.getElementById('setup');
-    const authEl=document.getElementById('auth');
-    const appEl=document.getElementById('app');
-    const alertEl=document.getElementById('alert');
-    const stagesBox=document.getElementById('planStages');
-    let sb=null;
-
-    if(window.SUPABASE_URL && window.SUPABASE_ANON_KEY){
-      sb=supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
-      setupEl.classList.add('hidden');
-      authEl.classList.remove('hidden');
-      refresh();
-    }
-
-    async function refresh(){
-      if(!sb) return;
-      const { data: { user } } = await sb.auth.getUser();
-      if(!user){
-        authEl.classList.remove('hidden');
-        appEl.classList.add('hidden');
+    function renderTop(places, voteMap){
+      const box = document.getElementById('topPlaces');
+      if (!places.length){
+        box.innerHTML = '<p class="muted">Dar nėra įrašų.</p>';
         return;
       }
-      authEl.classList.add('hidden');
-      appEl.classList.remove('hidden');
-      document.getElementById('who').textContent=user.email;
-      loadPlaces(user);
+      const sorted = [...places].sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0)).slice(0,5);
+      box.innerHTML = sorted.map((p,i)=>`
+        <div class="plan-line">
+          <strong>${i+1}.</strong> ${p.name}<br/>
+          <span class="muted">${voteMap[p.id]||0} bals.</span>
+        </div>`).join('');
     }
 
-    async function loadPlaces(user){
-      alertEl.style.display='none';
-      const placesBox=document.getElementById('places');
-      placesBox.innerHTML='<p class="muted">Kraunama...</p>';
-      const { data: places, error } = await sb.from('places').select('*').order('stage',{ascending:true}).order('created_at',{ascending:false});
-      if(error){
-        alertEl.textContent='Nepavyko gauti vietų: '+error.message;
-        alertEl.style.display='block';
-        placesBox.innerHTML='';
+    function renderStages(places, voteMap){
+      const box = document.getElementById('stageSummary');
+      if (!places.length){
+        box.innerHTML = '<p class="muted">Nėra duomenų.</p>';
         return;
       }
-      const { data: votes } = await sb.from('votes').select('place_id,user_id');
-      const voteMap={}; (votes||[]).forEach(v=>{voteMap[v.place_id]=(voteMap[v.place_id]||0)+1});
-      const { data: { user: current } } = await sb.auth.getUser();
-      const myVotes=new Set((votes||[]).filter(v=>v.user_id===current?.id).map(v=>v.place_id));
-      renderPlaces(places||[],voteMap,myVotes);
-      renderPlanByStages(places||[],voteMap);
-      renderPlanBoard(places||[],voteMap);
-    }
-
-    function renderPlaces(places,voteMap,myVotes){
-      const placesBox=document.getElementById('places');
-      if(!places.length){
-        placesBox.innerHTML='<p class="muted">Dar nėra vietų. Užpildyk formą dešinėje.</p>';
-        return;
-      }
-      placesBox.innerHTML='';
+      const grouped = {};
       places.forEach(p=>{
-        const card=document.createElement('div');
-        card.className='place-card';
-        card.innerHTML=`${p.image_url?`<img src="${p.image_url}" alt="${p.name}">`:''}
-          <div class="body">
-            <div class="tag">${p.stage||'Etapas nenurodytas'}</div>
-            <h4 style="margin:4px 0 6px">${p.name}</h4>
-            <p class="muted" style="min-height:48px">${p.description||''}</p>
-            <div class="place-footer">
-              <span class="muted">Balsai: ${voteMap[p.id]||0}</span>
-              <button data-id="${p.id}" class="secondary place-vote">${myVotes.has(p.id)?'Atimti':'Balsuoti'}</button>
-            </div>
-          </div>`;
-        placesBox.appendChild(card);
+        const key = p.stage || 'Nepriskirta';
+        grouped[key] = (grouped[key]||{count:0,balsai:0});
+        grouped[key].count += 1;
+        grouped[key].balsai += voteMap[p.id]||0;
       });
-      document.querySelectorAll('.place-vote').forEach(btn=>{
-        btn.onclick=()=>toggleVote(Number(btn.dataset.id),btn.textContent==='Atimti');
-      });
+      box.innerHTML = Object.entries(grouped).map(([stage,data])=>`
+        <div class="plan-line">
+          <strong>${stage}</strong><br/>
+          <span class="muted">Vietų: ${data.count} · Balsų: ${data.balsai}</span>
+        </div>`).join('');
     }
 
-    async function toggleVote(placeId,remove){
-      const { data: { user } } = await sb.auth.getUser();
-      if(!user) return;
-      if(remove){
-        await sb.from('votes').delete().eq('place_id',placeId).eq('user_id',user.id);
-      }else{
-        await sb.from('votes').insert({place_id:placeId,user_id:user.id});
+    initSupabasePage({
+      onReady: async ({ client }) => {
+        const [{ data: places, error: pErr }, { data: votes, error: vErr }] = await Promise.all([
+          client.from('places').select('*').order('created_at', { ascending: false }),
+          client.from('votes').select('place_id')
+        ]);
+        if (pErr || vErr){
+          document.getElementById('topPlaces').innerHTML = '<p class="muted">Nepavyko gauti duomenų.</p>';
+          document.getElementById('stageSummary').innerHTML = '';
+          return;
+        }
+        const voteMap = {};
+        (votes||[]).forEach(v=>{ voteMap[v.place_id] = (voteMap[v.place_id]||0)+1; });
+        renderTop(places||[], voteMap);
+        renderStages(places||[], voteMap);
       }
-      loadPlaces(user);
-    }
-
-    function renderPlanByStages(places,voteMap){
-      const stageOrder=["1 ETAPAS","2 ETAPAS","Finalas","Kita"];
-      const grouped={};
-      stageOrder.forEach(k=>grouped[k]=[]);
-      (places||[]).forEach(p=>{
-        const key=stageOrder.includes(p.stage)?p.stage:"Kita";
-        grouped[key].push(p);
-      });
-      stagesBox.innerHTML='';
-      stageOrder.forEach(stage=>{
-        if(!grouped[stage].length) return;
-        const block=document.createElement('div');
-        block.className='plan-stage';
-        block.innerHTML=`<h4>${stage}</h4>`;
-        grouped[stage].sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0)).forEach((p,i)=>{
-          const line=document.createElement('div');
-          line.className='plan-line';
-          line.innerHTML=`<strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMap[p.id]||0} bals.</span>`;
-          block.appendChild(line);
-        });
-        stagesBox.appendChild(block);
-      });
-    }
-
-    function renderPlanBoard(places,voteMap){
-      const planBox=document.getElementById('plan');
-      if(!places.length){planBox.innerHTML='<p class="muted">Nėra duomenų.</p>';return;}
-      const sorted=[...places].sort((a,b) => (voteMap[b.id]||0)-(voteMap[a.id]||0));
-      planBox.innerHTML=sorted.map((p,i)=>`<div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMap[p.id]||0} bals.</span></div>`).join('');
-    }
-
-    document.getElementById('login').onclick=async()=>{
-      if(!sb) return;
-      const { error } = await sb.auth.signInWithPassword({email:email.value,password:pass.value});
-      if(error){
-        alert('Prisijungti nepavyko: '+error.message);
-        return;
-      }
-      refresh();
-    };
-    document.getElementById('logout').onclick=async()=>{await sb.auth.signOut();refresh();};
-    document.getElementById('refreshBtn').onclick=()=>refresh();
-
-    document.getElementById('addPlace').onclick=async()=>{
-      const { data: { user } } = await sb.auth.getUser();
-      if(!user){alert('Reikia prisijungti');return;}
-      const payload={name:pname.value.trim(),stage:pstage.value.trim(),image_url:pimg.value.trim(),description:pdesc.value.trim(),created_by:user.id};
-      if(!payload.name){alert('Įvesk pavadinimą');return;}
-      await sb.from('places').insert(payload);
-      pname.value=pstage.value=pimg.value=pdesc.value='';
-      loadPlaces(user);
-    };
+    });
   </script>
 </body>
 </html>

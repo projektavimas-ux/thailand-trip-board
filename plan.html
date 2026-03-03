@@ -1,21 +1,156 @@
-<!doctype html><html lang="lt"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kelionės planas</title><style>
-:root{--bg:#f4f7fb;--card:#ffffff;--text:#1f2a37;--muted:#5b6b80;--line:#dbe5f1;--accent:#2563eb}
-body{font-family:Inter,Arial,sans-serif;margin:0;background:linear-gradient(180deg,#f8fbff 0%,#f3f7fc 100%);color:var(--text)}
-.wrap{max-width:1100px;margin:0 auto;padding:24px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 6px 20px rgba(31,42,55,.06)}
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
-button,input,textarea{font:inherit}
-button{padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:#fff;cursor:pointer}
-input,textarea{padding:10px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--text)}
-.muted{color:var(--muted);font-size:14px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
-.hidden{display:none}
+<!doctype html>
+<html lang="lt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thailand Control · Kelionės planas</title>
+  <link rel="stylesheet" href="./styles/site.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="wrap">
+    <h1>🗺️ Kelionės planas pagal etapus</h1>
+    <p class="muted">Suskirstyta pagal `stage` lauką Supabase lentelėje („1 ETAPAS“ → „2 ETAPAS“ → „Finalas“).</p>
 
-p a{display:inline-block;padding:6px 8px;border:1px solid var(--line);border-radius:8px;margin:4px 6px 4px 0;background:#fff}
-@media (max-width:600px){.wrap{padding:14px}h1{font-size:24px}h2{font-size:18px}.card{padding:12px}.grid{grid-template-columns:1fr}}
-</style></head><body><div class="wrap"><h1>🗓️ Kelionės planas</h1><p><a href="./index.html">Pradžia</a> · <a href="./flights.html">Skrydžiai</a> · <a href="./places.html">Lankytinos vietos</a></p><div class="card"><h2>Pasirinktos vietos</h2><ul id="chosen"></ul></div></div><script>
-const chosen = JSON.parse(localStorage.getItem('thai_trip_selected_places')||'[]');
-const ul=document.getElementById('chosen');
-if(!chosen.length){ul.innerHTML='<li>Kol kas nepasirinkta nė viena vieta.</li>';} else {chosen.forEach(x=>{const li=document.createElement('li');li.textContent=x;ul.appendChild(li);});}
-</script></body></html>
+    <nav class="links">
+      <a href="./index.html">Apžvalga</a>
+      <a href="./flights.html">Skrydžiai</a>
+      <a class="active" href="./plan.html">Kelionės planas</a>
+      <a href="./places.html">Vietos ir balsai</a>
+    </nav>
+
+    <div id="configBox" class="card">
+      <strong>Reikia Supabase rakto.</strong> Įrašyk duomenis faile <code>supabase-config.v2.js</code>.</div>
+
+    <div id="authBox" class="card hidden">
+      <h3>Prisijunk</h3>
+      <input id="emailInput" placeholder="El. paštas" />
+      <input id="passInput" type="password" placeholder="Slaptažodis" />
+      <div class="grid-2">
+        <button id="loginBtn">Prisijungti</button>
+        <button id="signupBtn" class="secondary">Registruoti</button>
+      </div>
+      <p id="authStatus" class="muted"></p>
+    </div>
+
+    <div id="appBox" class="hidden">
+      <div class="card topbar">
+        <div>
+          <div id="who"></div>
+          <p class="muted">Vietos ir balsai kraunami tiesiai iš Supabase.</p>
+        </div>
+        <button id="logoutBtn" class="secondary">Atsijungti</button>
+      </div>
+
+      <div class="card">
+        <h2>Automatinė statuso lenta</h2>
+        <p class="muted">Kai kas nors prideda naują vietą arba pabalsuoja, vaizdas atsinaujina paspaudus „Atnaujinti planą“.</p>
+        <button id="refreshBtn" class="secondary" style="width:auto">Atnaujinti planą</button>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h2>Etapai</h2>
+          <div id="stagesBox" class="plan-stage"></div>
+        </div>
+        <div class="card">
+          <h2>Bendra lentelė</h2>
+          <div id="boardBox"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Pastabos</h3>
+        <ul>
+          <li>Etapų pavadinimai gali būti bet kokie (pvz., „1 ETAPAS“, „Naktinis traukinys“, „Finalas“).</li>
+          <li>Jei etapas nenurodytas, jis patenka į skiltį „Kita“.</li>
+          <li>Šis puslapis yra „skaitymo“ režimas – vietų kūrimas ir balsavimas atliekamas skiltyje „Vietos“.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="./supabase-config.v2.js"></script>
+  <script src="./scripts/supabase-page.js"></script>
+  <script>
+    const stageOrder = ['1 ETAPAS', '2 ETAPAS', '3 ETAPAS', 'Finalas', 'Kita'];
+
+    function renderStages(places, voteMap){
+      const box = document.getElementById('stagesBox');
+      if (!places.length){
+        box.innerHTML = '<p class="muted">Dar nėra pasiūlymų.</p>';
+        return;
+      }
+      const grouped = {};
+      stageOrder.forEach(key => grouped[key] = []);
+      places.forEach(p => {
+        const key = stageOrder.includes(p.stage) ? p.stage : (p.stage || 'Kita');
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push(p);
+      });
+      box.innerHTML = '';
+      Object.entries(grouped).forEach(([stage, items]) => {
+        if (!items.length) return;
+        const wrapper = document.createElement('div');
+        wrapper.className = 'plan-stage';
+        wrapper.innerHTML = `<h3>${stage}</h3>`;
+        items.sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0)).forEach((p,i)=>{
+          const line = document.createElement('div');
+          line.className = 'plan-line';
+          line.innerHTML = `<strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMap[p.id]||0} bals.</span>`;
+          wrapper.appendChild(line);
+        });
+        box.appendChild(wrapper);
+      });
+    }
+
+    function renderBoard(places, voteMap){
+      const box = document.getElementById('boardBox');
+      if (!places.length){
+        box.innerHTML = '<p class="muted">Kol kas tuščia.</p>';
+        return;
+      }
+      const sorted = [...places].sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0));
+      box.innerHTML = sorted.map((p,i)=>`
+        <div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMap[p.id]||0} bals.</span></div>`).join('');
+    }
+
+    function refreshData(client){
+      return Promise.all([
+        client.from('places').select('*').order('created_at',{ascending:false}),
+        client.from('votes').select('place_id,user_id')
+      ]).then(([placesRes,votesRes])=>{
+        if (placesRes.error || votesRes.error){
+          document.getElementById('stagesBox').innerHTML = '<p class="muted">Nepavyko gauti duomenų.</p>';
+          document.getElementById('boardBox').innerHTML = '';
+          return;
+        }
+        const voteMap = {};
+        (votesRes.data||[]).forEach(v => {
+          voteMap[v.place_id] = (voteMap[v.place_id]||0) + 1;
+        });
+        const places = placesRes.data || [];
+        renderStages(places, voteMap);
+        renderBoard(places, voteMap);
+      });
+    }
+
+    let currentClient = null;
+    initSupabasePage({
+      onReady: ({ client }) => {
+        currentClient = client;
+        refreshData(client);
+      },
+      onSignedOut: () => {
+        currentClient = null;
+        document.getElementById('stagesBox').innerHTML = '';
+        document.getElementById('boardBox').innerHTML = '';
+      }
+    });
+
+    document.getElementById('refreshBtn').addEventListener('click', () => {
+      if (currentClient) refreshData(currentClient);
+    });
+  </script>
+</body>
+</html>
