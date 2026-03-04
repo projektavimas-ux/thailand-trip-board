@@ -21,7 +21,7 @@
       <a href="./places.html">Vietos ir balsai</a>
     </nav>
 
-    <div id="configBox" class="card">
+    <div id="configBox" class="card hidden">
       <strong>Reikia Supabase rakto.</strong> Įrašyk duomenis faile <code>supabase-config.v2.js</code>.</div>
 
     <div id="authBox" class="card hidden">
@@ -99,6 +99,7 @@
   <script src="./supabase-config.v2.js"></script>
   <script src="./scripts/supabase-page.js"></script>
   <script>
+    window.addEventListener('DOMContentLoaded', () => {
     const stageOrder = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','Finalas','Kita'];
     const mapStops = [
       { name: 'Kata · Phuket', window: 'D1–D4', coords: [7.821, 98.296], note: 'Starto bazė pietuose' },
@@ -232,6 +233,7 @@
     document.getElementById('boardStageFilter').addEventListener('change', (e) => {
       boardFilter = e.target.value;
       renderBoard();
+    });
     });
   </script>
 </body>

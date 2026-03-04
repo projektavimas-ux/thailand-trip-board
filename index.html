@@ -19,7 +19,7 @@
       <a href="./places.html">Vietos ir balsai</a>
     </nav>
 
-    <div id="configBox" class="card">
+    <div id="configBox" class="card hidden">
       <strong>Supabase konfigūracija reikalinga.</strong> Įrašyk <code>window.SUPABASE_URL</code> ir <code>window.SUPABASE_ANON_KEY</code> faile <code>supabase-config.v2.js</code>.
     </div>
 
@@ -119,6 +119,7 @@
   <script src="./supabase-config.v2.js"></script>
   <script src="./scripts/supabase-page.js"></script>
   <script>
+    window.addEventListener('DOMContentLoaded', () => {
     function renderTop(places, voteMap){
       const box = document.getElementById('topPlaces');
       if (!places.length){
@@ -269,6 +270,7 @@
         renderTop(places||[], voteMap);
         renderStages(places||[], voteMap);
       }
+    });
     });
   </script>
 </body>

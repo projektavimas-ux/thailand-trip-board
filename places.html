@@ -30,7 +30,7 @@
       <div id="previewStages" class="preview-grid"></div>
     </div>
 
-    <div id="configBox" class="card">
+    <div id="configBox" class="card hidden">
       <strong>Trūksta Supabase konfigūracijos.</strong> Papildyk <code>supabase-config.v2.js</code>.</div>
 
     <div id="authBox" class="card hidden">
@@ -107,182 +107,186 @@
   <script src="./supabase-config.v2.js"></script>
   <script src="./scripts/supabase-page.js"></script>
   <script>
-    let currentClient = null;
-    let cachedVotes = [];
-    let placesCache = [];
-    let voteMapCache = {};
-    let userVotes = new Set();
+    window.addEventListener('DOMContentLoaded', () => {
+      let currentClient = null;
+      let cachedVotes = [];
+      let placesCache = [];
+      let voteMapCache = {};
+      let userVotes = new Set();
 
-    const alertBox = document.getElementById('alertBox');
-    const stageSelect = document.getElementById('stageSelect');
-    const searchBox = document.getElementById('searchBox');
+      const alertBox = document.getElementById('alertBox');
+      const stageSelect = document.getElementById('stageSelect');
+      const searchBox = document.getElementById('searchBox');
 
-    function setAlert(msg){
-      if (!msg){ alertBox.classList.add('hidden'); alertBox.textContent=''; return; }
-      alertBox.textContent = msg;
-      alertBox.classList.remove('hidden');
-    }
-
-    const previewBox = document.getElementById('previewBox');
-    const previewStagesBox = document.getElementById('previewStages');
-
-    function renderPreview(data){
-      if (!previewStagesBox) return;
-      const stages = data?.stages || [];
-      if (!stages.length){
-        previewStagesBox.innerHTML = '<p class=\"muted\">Nėra duomenų.</p>';&#92;n        return;
+      function setAlert(msg){
+        if (!msg){ alertBox.classList.add('hidden'); alertBox.textContent=''; return; }
+        alertBox.textContent = msg;
+        alertBox.classList.remove('hidden');
       }
-      previewStagesBox.innerHTML = stages.map(stage => `
-        <div class=\"preview-stage\">
-          <h4>${stage.title}</h4>
-          ${(stage.items||[]).slice(0,3).map(item=>`<div class=\"spot\"><strong>${item.name}</strong><br><span class=\"muted\">${item.desc}</span></div>`).join('')}
-        </div>
-      `).join('');
-      const stamp = document.getElementById('previewStamp');
-      if (stamp){
-        stamp.textContent = 'Demo modas · ' + new Date().toLocaleTimeString('lt-LT',{hour:'2-digit',minute:'2-digit'});
+
+      const previewBox = document.getElementById('previewBox');
+      const previewStagesBox = document.getElementById('previewStages');
+
+      function renderPreview(data){
+        if (!previewStagesBox) return;
+        const stages = data?.stages || [];
+        if (!stages.length){
+          previewStagesBox.innerHTML = '<p class="muted">Nėra duomenų.</p>';
+          return;
+        }
+        previewStagesBox.innerHTML = stages.map(stage => `
+          <div class="preview-stage">
+            <h4>${stage.title}</h4>
+            ${(stage.items||[]).slice(0,3).map(item=>`<div class="spot"><strong>${item.name}</strong><br><span class="muted">${item.desc}</span></div>`).join('')}
+          </div>
+        `).join('');
+        const stamp = document.getElementById('previewStamp');
+        if (stamp){
+          stamp.textContent = 'Demo modas · ' + new Date().toLocaleTimeString('lt-LT',{hour:'2-digit',minute:'2-digit'});
+        }
       }
-    }
 
-    function bootPreviewMode(){
-      fetch('./data/places_catalog.json').then(r=>r.json()).then(renderPreview);
-      if (previewBox) previewBox.classList.remove('hidden');
-      const config = document.getElementById('configBox');
-      if (config) config.classList.add('hidden');
-    }
-
-    function applyFilters(){
-      const query = searchBox.value.trim().toLowerCase();
-      const stage = stageSelect.value;
-      const filtered = placesCache.filter(p => {
-        const matchesStage = stage === 'all' ? true : ((p.stage || 'Kita') === stage || (stage === 'Kita' && !p.stage));
-        const matchesQuery = !query || `${p.name} ${p.description||''}`.toLowerCase().includes(query);
-        return matchesStage && matchesQuery;
-      });
-      renderPlaces(filtered);
-      renderBoard(filtered);
-    }
-
-    function renderPlaces(list){
-      const container = document.getElementById('placesList');
-      if (!list.length){
-        container.innerHTML = '<p class="muted">Atitinkančių vietų nėra.</p>';
-        return;
+      function bootPreviewMode(){
+        fetch('./data/places_catalog.json').then(r=>r.json()).then(renderPreview);
+        if (previewBox) previewBox.classList.remove('hidden');
+        const config = document.getElementById('configBox');
+        if (config) config.classList.add('hidden');
       }
-      container.innerHTML = '';
-      list.forEach(p => {
-        const card = document.createElement('div');
-        card.className = 'place-card';
-        card.innerHTML = `
-          ${p.image_url ? `<img src="${p.image_url}" alt="${p.name}" />` : ''}
-          <div class="body">
-            <div class="tag">${p.stage || 'Etapas nenurodytas'}</div>
-            <h3 style="margin:4px 0 6px">${p.name}</h3>
-            <p class="muted">${p.description || ''}</p>
-            <div class="footer">
-              <span class="muted">${voteMapCache[p.id]||0} bals.</span>
-              <button class="secondary" data-place="${p.id}">${userVotes.has(p.id)?'Atimti':'Balsuoti'}</button>
-            </div>
-          </div>`;
-        container.appendChild(card);
-      });
-      container.querySelectorAll('button[data-place]').forEach(btn => {
-        btn.addEventListener('click', () => toggleVote(Number(btn.dataset.place), btn.textContent === 'Atimti'));
-      });
-    }
 
-    function renderBoard(list){
-      const box = document.getElementById('planBoard');
-      if (!list.length){
-        box.innerHTML = '<p class="muted">Nėra duomenų.</p>';
-        return;
+      function applyFilters(){
+        const query = searchBox.value.trim().toLowerCase();
+        const stage = stageSelect.value;
+        const filtered = placesCache.filter(p => {
+          const matchesStage = stage === 'all' ? true : ((p.stage || 'Kita') === stage || (stage === 'Kita' && !p.stage));
+          const matchesQuery = !query || `${p.name} ${p.description||''}`.toLowerCase().includes(query);
+          return matchesStage && matchesQuery;
+        });
+        renderPlaces(filtered);
+        renderBoard(filtered);
       }
-      const sorted = [...list].sort((a,b)=>(voteMapCache[b.id]||0)-(voteMapCache[a.id]||0));
-      box.innerHTML = sorted.map((p,i)=>`
-        <div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMapCache[p.id]||0} bals.</span></div>`).join('');
-    }
 
-    async function toggleVote(placeId, remove){
-      if (!currentClient) return;
-      const { data: { user } } = await currentClient.auth.getUser();
-      if (!user){ setAlert('Reikia prisijungti.'); return; }
-      if (remove){
-        await currentClient.from('votes').delete().eq('place_id', placeId).eq('user_id', user.id);
-      } else {
-        await currentClient.from('votes').insert({ place_id: placeId, user_id: user.id });
+      function renderPlaces(list){
+        const container = document.getElementById('placesList');
+        if (!list.length){
+          container.innerHTML = '<p class="muted">Atitinkančių vietų nėra.</p>';
+          return;
+        }
+        container.innerHTML = '';
+        list.forEach(p => {
+          const card = document.createElement('div');
+          card.className = 'place-card';
+          card.innerHTML = `
+            ${p.image_url ? `<img src="${p.image_url}" alt="${p.name}" />` : ''}
+            <div class="body">
+              <div class="tag">${p.stage || 'Etapas nenurodytas'}</div>
+              <h3 style="margin:4px 0 6px">${p.name}</h3>
+              <p class="muted">${p.description || ''}</p>
+              <div class="footer">
+                <span class="muted">${voteMapCache[p.id]||0} bals.</span>
+                <button class="secondary" data-place="${p.id}">${userVotes.has(p.id)?'Atimti':'Balsuoti'}</button>
+              </div>
+            </div>`;
+          container.appendChild(card);
+        });
+        container.querySelectorAll('button[data-place]').forEach(btn => {
+          btn.addEventListener('click', () => toggleVote(Number(btn.dataset.place), btn.textContent === 'Atimti'));
+        });
       }
-      loadPlaces();
-    }
 
-    async function loadPlaces(){
-      if (!currentClient) return;
-      setAlert('');
-      const [{ data: places, error: pErr }, { data: votes, error: vErr }] = await Promise.all([
-        currentClient.from('places').select('*').order('created_at',{ascending:false}),
-        currentClient.from('votes').select('place_id,user_id')
-      ]);
-      if (pErr || vErr){
-        setAlert('Nepavyko gauti duomenų: ' + (pErr?.message || vErr?.message));
-        return;
+      function renderBoard(list){
+        const box = document.getElementById('planBoard');
+        if (!list.length){
+          box.innerHTML = '<p class="muted">Nėra duomenų.</p>';
+          return;
+        }
+        const sorted = [...list].sort((a,b)=>(voteMapCache[b.id]||0)-(voteMapCache[a.id]||0));
+        box.innerHTML = sorted.map((p,i)=>`
+          <div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMapCache[p.id]||0} bals.</span></div>`).join('');
       }
-      placesCache = places || [];
-      cachedVotes = votes || [];
-      voteMapCache = {};
-      cachedVotes.forEach(v => {
-        voteMapCache[v.place_id] = (voteMapCache[v.place_id]||0) + 1;
-      });
-      const { data: { user } } = await currentClient.auth.getUser();
-      userVotes = new Set((cachedVotes||[]).filter(v => v.user_id === user?.id).map(v => v.place_id));
-      applyFilters();
-    }
 
-    async function addPlace(){
-      if (!currentClient) return;
-      const name = document.getElementById('pname').value.trim();
-      const stage = document.getElementById('pstage').value.trim();
-      const image = document.getElementById('pimg').value.trim();
-      const desc = document.getElementById('pdesc').value.trim();
-      const msg = document.getElementById('formStatus');
-      msg.textContent='';
-      if (!name){
-        msg.textContent = 'Įvesk pavadinimą.';
-        return;
-      }
-      const { data: { user } } = await currentClient.auth.getUser();
-      if (!user){ msg.textContent = 'Reikia prisijungti.'; return; }
-      const payload = { name, stage, image_url: image, description: desc, created_by: user.id };
-      const { error } = await currentClient.from('places').insert(payload);
-      if (error){ msg.textContent = error.message; return; }
-      document.getElementById('pname').value = '';
-      document.getElementById('pstage').value = '';
-      document.getElementById('pimg').value = '';
-      document.getElementById('pdesc').value = '';
-      msg.textContent = 'Išsaugota.';
-      loadPlaces();
-    }
-
-    document.getElementById('addPlace').addEventListener('click', addPlace);
-    document.getElementById('refreshPlaces').addEventListener('click', loadPlaces);
-    searchBox.addEventListener('input', applyFilters);
-    stageSelect.addEventListener('change', applyFilters);
-
-    const supabaseCtx = initSupabasePage({
-      onReady: ({ client }) => {
-        currentClient = client;
+      async function toggleVote(placeId, remove){
+        if (!currentClient) return;
+        const { data: { user } } = await currentClient.auth.getUser();
+        if (!user){ setAlert('Reikia prisijungti.'); return; }
+        if (remove){
+          await currentClient.from('votes').delete().eq('place_id', placeId).eq('user_id', user.id);
+        } else {
+          await currentClient.from('votes').insert({ place_id: placeId, user_id: user.id });
+        }
         loadPlaces();
-      },
-      onSignedOut: () => {
-        currentClient = null;
-        placesCache = [];
+      }
+
+      async function loadPlaces(){
+        if (!currentClient) return;
+        setAlert('');
+        const [{ data: places, error: pErr }, { data: votes, error: vErr }] = await Promise.all([
+          currentClient.from('places').select('*').order('created_at',{ascending:false}),
+          currentClient.from('votes').select('place_id,user_id')
+        ]);
+        if (pErr || vErr){
+          setAlert('Nepavyko gauti duomenų: ' + (pErr?.message || vErr?.message));
+          return;
+        }
+        placesCache = places || [];
+        cachedVotes = votes || [];
         voteMapCache = {};
-        document.getElementById('placesList').innerHTML = '';
-        document.getElementById('planBoard').innerHTML = '';
+        cachedVotes.forEach(v => {
+          voteMapCache[v.place_id] = (voteMapCache[v.place_id]||0) + 1;
+        });
+        const { data: { user } } = await currentClient.auth.getUser();
+        userVotes = new Set((cachedVotes||[]).filter(v => v.user_id === user?.id).map(v => v.place_id));
+        applyFilters();
+      }
+
+      async function addPlace(){
+        if (!currentClient) return;
+        const name = document.getElementById('pname').value.trim();
+        const stage = document.getElementById('pstage').value.trim();
+        const image = document.getElementById('pimg').value.trim();
+        const desc = document.getElementById('pdesc').value.trim();
+        const msg = document.getElementById('formStatus');
+        msg.textContent='';
+        if (!name){
+          msg.textContent = 'Įvesk pavadinimą.';
+          return;
+        }
+        const { data: { user } } = await currentClient.auth.getUser();
+        if (!user){ msg.textContent = 'Reikia prisijungti.'; return; }
+        const payload = { name, stage, image_url: image, description: desc, created_by: user.id };
+        const { error } = await currentClient.from('places').insert(payload);
+        if (error){ msg.textContent = error.message; return; }
+        document.getElementById('pname').value = '';
+        document.getElementById('pstage').value = '';
+        document.getElementById('pimg').value = '';
+        document.getElementById('pdesc').value = '';
+        msg.textContent = 'Išsaugota.';
+        loadPlaces();
+      }
+
+      document.getElementById('addPlace').addEventListener('click', addPlace);
+      document.getElementById('refreshPlaces').addEventListener('click', loadPlaces);
+      searchBox.addEventListener('input', applyFilters);
+      stageSelect.addEventListener('change', applyFilters);
+
+      const supabaseCtx = initSupabasePage({
+        onReady: ({ client }) => {
+          currentClient = client;
+          loadPlaces();
+        },
+        onSignedOut: () => {
+          currentClient = null;
+          placesCache = [];
+          voteMapCache = {};
+          document.getElementById('placesList').innerHTML = '';
+          document.getElementById('planBoard').innerHTML = '';
+        }
+      });
+
+      if (!supabaseCtx){
+        bootPreviewMode();
       }
     });
-
-    if (!supabaseCtx){
-      bootPreviewMode();
-    }
+  </script>
   </script>
 </body>
 </html>

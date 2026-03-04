@@ -19,7 +19,7 @@
       <a href="./places.html">Vietos ir balsai</a>
     </nav>
 
-    <div id="configBox" class="card">
+    <div id="configBox" class="card hidden">
       <strong>Reikia Supabase konfigūracijos.</strong> Kadangi ši suvestinė privati, rodoma tik prisijungus.</div>
 
     <div id="authBox" class="card hidden">
@@ -78,6 +78,7 @@
   <script src="./supabase-config.v2.js"></script>
   <script src="./scripts/supabase-page.js"></script>
   <script>
+    window.addEventListener('DOMContentLoaded', () => {
     let latestData = null;
 
     function renderLists(){
@@ -146,6 +147,7 @@
       onReady: () => {
         refreshFlights();
       }
+    });
     });
   </script>
 </body>
