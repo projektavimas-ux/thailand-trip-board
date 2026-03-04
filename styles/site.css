@@ -212,3 +212,46 @@ button.secondary {
     width: 100%;
   }
 }
+.intel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.intel-chip {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px;
+  background: #f9fbff;
+}
+
+.intel-chip strong {
+  font-size: 26px;
+  display: block;
+  color: var(--accent);
+}
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.preview-stage {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px;
+  background: #fff;
+}
+
+.preview-stage h4 {
+  margin: 0 0 6px;
+}
+
+.preview-stage .spot {
+  border-top: 1px dashed var(--line);
+  padding: 6px 0;
+}
+
+.preview-stage .spot:first-of-type {
+  border-top: none;
+}

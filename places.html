@@ -19,6 +19,17 @@
       <a class="active" href="./places.html">Vietos ir balsai</a>
     </nav>
 
+    <div id="previewBox" class="card hidden">
+      <div class="topbar">
+        <div>
+          <h2>Peržiūros režimas</h2>
+          <p class="muted">Supabase neaktyvus – rodoma iš `data/places_catalog.json`.</p>
+        </div>
+        <span id="previewStamp" class="muted"></span>
+      </div>
+      <div id="previewStages" class="preview-grid"></div>
+    </div>
+
     <div id="configBox" class="card">
       <strong>Trūksta Supabase konfigūracijos.</strong> Papildyk <code>supabase-config.v2.js</code>.</div>
 
@@ -110,6 +121,34 @@
       if (!msg){ alertBox.classList.add('hidden'); alertBox.textContent=''; return; }
       alertBox.textContent = msg;
       alertBox.classList.remove('hidden');
+    }
+
+    const previewBox = document.getElementById('previewBox');
+    const previewStagesBox = document.getElementById('previewStages');
+
+    function renderPreview(data){
+      if (!previewStagesBox) return;
+      const stages = data?.stages || [];
+      if (!stages.length){
+        previewStagesBox.innerHTML = '<p class=\"muted\">Nėra duomenų.</p>';&#92;n        return;
+      }
+      previewStagesBox.innerHTML = stages.map(stage => `
+        <div class=\"preview-stage\">
+          <h4>${stage.title}</h4>
+          ${(stage.items||[]).slice(0,3).map(item=>`<div class=\"spot\"><strong>${item.name}</strong><br><span class=\"muted\">${item.desc}</span></div>`).join('')}
+        </div>
+      `).join('');
+      const stamp = document.getElementById('previewStamp');
+      if (stamp){
+        stamp.textContent = 'Demo modas · ' + new Date().toLocaleTimeString('lt-LT',{hour:'2-digit',minute:'2-digit'});
+      }
+    }
+
+    function bootPreviewMode(){
+      fetch('./data/places_catalog.json').then(r=>r.json()).then(renderPreview);
+      if (previewBox) previewBox.classList.remove('hidden');
+      const config = document.getElementById('configBox');
+      if (config) config.classList.add('hidden');
     }
 
     function applyFilters(){
@@ -227,7 +266,7 @@
     searchBox.addEventListener('input', applyFilters);
     stageSelect.addEventListener('change', applyFilters);
 
-    initSupabasePage({
+    const supabaseCtx = initSupabasePage({
       onReady: ({ client }) => {
         currentClient = client;
         loadPlaces();
@@ -240,6 +279,10 @@
         document.getElementById('planBoard').innerHTML = '';
       }
     });
+
+    if (!supabaseCtx){
+      bootPreviewMode();
+    }
   </script>
 </body>
 </html>

@@ -80,6 +80,17 @@
         </div>
       </div>
 
+      <div class="card">
+        <div class="topbar">
+          <div>
+            <h2>Signalų radaras</h2>
+            <p class="muted">Skaičiuojama lokaliai iš `data/*.json`.</p>
+          </div>
+          <span id="intelStamp" class="muted"></span>
+        </div>
+        <div id="intelBox" class="intel-grid"></div>
+      </div>
+
       <div class="grid-2">
         <div class="card">
           <h2>Biudžetas</h2>
@@ -178,6 +189,45 @@
       `).join('');
     }
 
+    function extractCheapestFlight(flights){
+      if (!flights?.items?.length) return null;
+      let best = null;
+      flights.items.forEach(item => {
+        const match = (item.price || '').replace(/,/g,'').match(/(\d+(?:\.\d+)?)/);
+        const value = match ? Number(match[1]) : null;
+        if (!value) return;
+        if (!best || value < best.value){
+          best = { value, title: item.title }
+        }
+      });
+      return best;
+    }
+
+    function renderIntel(meta){
+      const box = document.getElementById('intelBox');
+      if (!box) return;
+      const chips = [];
+      chips.push({ label: 'Maršruto dienų', value: meta.routeDays ?? '–', note: 'route.json' });
+      chips.push({ label: 'Užduotys', value: meta.todoCount ?? '–', note: 'todos.json' });
+      chips.push({ label: 'Biudžeto eilutės', value: meta.budgetLines ?? '–', note: 'budget.json' });
+      chips.push({ label: 'Skrydžių pasiūlymai', value: meta.flightCount ?? '–', note: 'flights.json' });
+      if (meta.cheapest){
+        chips.push({ label: 'Pigiausias OUT', value: `$${meta.cheapest.value}`, note: meta.cheapest.title });
+      }
+      box.innerHTML = chips.map(chip => `
+        <div class="intel-chip">
+          <strong>${chip.value}</strong>
+          <span class="muted">${chip.label}</span>
+          ${chip.note ? `<br><small class="muted">${chip.note}</small>` : ''}
+        </div>
+      `).join('');
+      const stamp = document.getElementById('intelStamp');
+      if (stamp){
+        const now = new Date();
+        stamp.textContent = `Atnaujinta ${now.toLocaleTimeString('lt-LT',{hour:'2-digit',minute:'2-digit'})}`;
+      }
+    }
+
     let staticLoaded = false;
     function loadStaticBlocks(){
       if (staticLoaded) return;
@@ -192,6 +242,13 @@
         renderTodos(todos);
         renderBudget(budget);
         renderFlightSnapshot(flights);
+        renderIntel({
+          routeDays: route?.days?.length || 0,
+          todoCount: todos?.items?.length || 0,
+          budgetLines: budget?.lines?.length || 0,
+          flightCount: flights?.items?.length || 0,
+          cheapest: extractCheapestFlight(flights)
+        });
       });
     }
 
