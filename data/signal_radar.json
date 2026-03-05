@@ -1,0 +1,33 @@
+{
+  "generated_at": "2026-03-05T12:05:00+02:00",
+  "signals": [
+    {
+      "id": "ttf-2026-qsncc",
+      "type": "event",
+      "priority": "medium",
+      "title": "Thailand Tourism Festival 2026",
+      "location": "Bangkok · Queen Sirikit National Convention Center",
+      "window": "2026-03-25 → 2026-03-29",
+      "summary": "QSNCC talpins 44-ąjį TTF: visų 5 regionų stendai, kulinariniai šou ir kelionių paketai, įskaitant pietų (Phuket/Krabi) maršrutus.",
+      "actions": [
+        "Rezervuoti 0.5 dienos langą Bankoko etape (12-31 → 01-02) apsilankymui ir ekskliuzių pasiūlymų medžioklei.",
+        "Surinkti operatorių kontaktus dėl salų paketų ir įtraukti į Supabase `places` kaip papildomus variantus."
+      ],
+      "source": "https://www.travelandtourworld.com/news/article/dive-into-thailands-diverse-regions-at-the-44th-thailand-tourism-festival-2026-experience-bangkok-phuket-chiang-mai-krabi-and-more-heres-everything-you-need-to-know/"
+    },
+    {
+      "id": "hidden-beaches-2026",
+      "type": "destination",
+      "priority": "high",
+      "title": "Phuket/Krabi hidden beaches įtraukiamos į 2026 top sąrašus",
+      "location": "Phuket (Nai Harn, Freedom) · Krabi (Railay kompleksas)",
+      "window": "2026-11 → 2027-04 (sausas sezonas)",
+      "summary": "Lonely Planet / TripAdvisor rekomenduoja tyliau lankomas vietas (Nai Harn, Freedom, Railay) kaip 2026 m. prioritetą dėl ekologiškų poilsių.",
+      "actions": [
+        "Papildyti `places_catalog` / Supabase `places` naujomis kortomis su logistika (valtis ar hiking takas).",
+        "Į planą įtraukti ankstyvo ryto slotus snorkelinimui prieš mases, aptarti su komanda logistiką iki Freedom Beach."
+      ],
+      "source": "https://www.theasianaffairs.com/thailand-hidden-beaches-2026/"
+    }
+  ]
+}

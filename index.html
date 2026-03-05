@@ -80,6 +80,27 @@
         </div>
       </div>
 
+      <div class="grid-2">
+        <div class="card">
+          <div class="topbar">
+            <div>
+              <h2>Naujausi pasiūlymai</h2>
+              <p class="muted">Pagal `places.created_at` lauką Supabase.</p>
+            </div>
+          </div>
+          <div id="recentPlaces"></div>
+        </div>
+        <div class="card">
+          <div class="topbar">
+            <div>
+              <h2>Balsų pulsas</h2>
+              <p class="muted">Apibendrinama iš `votes` lentelės.</p>
+            </div>
+          </div>
+          <div id="voteAnalytics"></div>
+        </div>
+      </div>
+
       <div class="card">
         <div class="topbar">
           <div>
@@ -120,6 +141,18 @@
   <script src="./scripts/supabase-page.js"></script>
   <script>
     window.addEventListener('DOMContentLoaded', () => {
+    function truncate(text = '', limit = 120){
+      if (!text) return '';
+      return text.length > limit ? text.slice(0, limit).trim() + '…' : text;
+    }
+
+    function formatTimestamp(value){
+      if (!value) return 'Nenurodytas laikas';
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return 'Nenurodytas laikas';
+      return date.toLocaleString('lt-LT', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
     function renderTop(places, voteMap){
       const box = document.getElementById('topPlaces');
       if (!places.length){
@@ -152,6 +185,54 @@
           <strong>${stage}</strong><br/>
           <span class="muted">Vietų: ${data.count} · Balsų: ${data.balsai}</span>
         </div>`).join('');
+    }
+
+    function renderRecent(places){
+      const box = document.getElementById('recentPlaces');
+      if (!box) return;
+      if (!places.length){
+        box.innerHTML = '<p class="muted">Dar nėra pasiūlymų.</p>';
+        return;
+      }
+      const sorted = [...places]
+        .sort((a,b)=> new Date(b.created_at || 0) - new Date(a.created_at || 0))
+        .slice(0,5);
+      box.innerHTML = sorted.map(p=>`
+        <div class="plan-line">
+          <strong>${p.name}</strong><br/>
+          <span class="muted">${p.stage || 'Etapas nenurodytas'} · ${formatTimestamp(p.created_at)}</span><br/>
+          ${p.description ? `<small>${truncate(p.description, 140)}</small>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function renderVotePulse(places, votes, voteMap){
+      const box = document.getElementById('voteAnalytics');
+      if (!box) return;
+      if (!votes.length){
+        box.innerHTML = '<p class="muted">Dar niekas nebalsavo.</p>';
+        return;
+      }
+      const totalVotes = votes.length;
+      const uniqueVoters = new Set(votes.map(v=>v.user_id).filter(Boolean)).size;
+      const avgVotes = places.length ? (totalVotes / places.length).toFixed(1) : '0';
+      const stageScores = {};
+      places.forEach(p => {
+        const key = p.stage || 'Kita';
+        stageScores[key] = (stageScores[key] || 0) + (voteMap[p.id] || 0);
+      });
+      const topStage = Object.entries(stageScores).sort((a,b)=>b[1]-a[1])[0];
+      const lastVoteTs = votes.reduce((latest, vote) => {
+        const ts = vote.created_at ? new Date(vote.created_at).getTime() : 0;
+        return ts > latest ? ts : latest;
+      }, 0);
+      box.innerHTML = `
+        <div class="plan-line"><strong>${totalVotes}</strong><br><span class="muted">Viso balsų</span></div>
+        <div class="plan-line"><strong>${uniqueVoters || '–'}</strong><br><span class="muted">Aktyvūs dalyviai</span></div>
+        <div class="plan-line"><strong>${avgVotes}</strong><br><span class="muted">Balsų / vietą</span></div>
+        ${topStage ? `<div class="plan-line"><strong>${topStage[0]}</strong><br><span class="muted">${topStage[1]} bals. šiame etape</span></div>` : ''}
+        <div class="plan-line"><strong>${lastVoteTs ? formatTimestamp(lastVoteTs) : '–'}</strong><br><span class="muted">Paskutinis balsas</span></div>
+      `;
     }
 
     function renderRoute(route){
@@ -258,7 +339,7 @@
         loadStaticBlocks();
         const [{ data: places, error: pErr }, { data: votes, error: vErr }] = await Promise.all([
           client.from('places').select('*').order('created_at', { ascending: false }),
-          client.from('votes').select('place_id')
+          client.from('votes').select('place_id,user_id,created_at')
         ]);
         if (pErr || vErr){
           document.getElementById('topPlaces').innerHTML = '<p class="muted">Nepavyko gauti duomenų.</p>';
@@ -267,8 +348,12 @@
         }
         const voteMap = {};
         (votes||[]).forEach(v=>{ voteMap[v.place_id] = (voteMap[v.place_id]||0)+1; });
-        renderTop(places||[], voteMap);
-        renderStages(places||[], voteMap);
+        const placeList = places || [];
+        const voteList = votes || [];
+        renderTop(placeList, voteMap);
+        renderStages(placeList, voteMap);
+        renderRecent(placeList);
+        renderVotePulse(placeList, voteList, voteMap);
       }
     });
     });

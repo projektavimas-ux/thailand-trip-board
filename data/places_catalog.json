@@ -28,6 +28,16 @@
           "name": "Ao Nang promenada",
           "image": "https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?q=80&w=1200&auto=format&fit=crop",
           "desc": "Patogi bazė vakarams, maistui ir trumpiems turams aplink Krabi."
+        },
+        {
+          "name": "Nai Harn Beach",
+          "image": "https://images.unsplash.com/photo-1504494683949-7319a9ba12c7?q=80&w=1200&auto=format&fit=crop",
+          "desc": "Ramesnis pietinis Phuket paplūdimys; 2026 m. rekomenduojamas dėl ramių vandenų ir saulėlydžių jogų (The Asian Affairs, 2026-03)."
+        },
+        {
+          "name": "Freedom Beach",
+          "image": "https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1200&auto=format&fit=crop",
+          "desc": "Pasiekiamas tik valtimi ar taku iš Patong – 2026 m. top sąrašuose kaip tylus snorkelingo taškas."
         }
       ]
     },
