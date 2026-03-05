@@ -80,6 +80,17 @@
         </div>
       </div>
 
+      <div class="card" id="itineraryPreviewCard">
+        <div class="topbar">
+          <div>
+            <h2>13 d. planas</h2>
+            <p class="muted">Trumpa ištrauka iš `data/itinerary.json`.</p>
+          </div>
+          <a class="nav-link" href="./plan.html">Rodyti viską</a>
+        </div>
+        <div id="itineraryPreview"></div>
+      </div>
+
       <div class="grid-2">
         <div class="card">
           <div class="topbar">
@@ -257,6 +268,22 @@
       `).join('');
     }
 
+    function renderItineraryPreview(plan){
+      const box = document.getElementById('itineraryPreview');
+      if (!box) return;
+      if (!plan?.days?.length){
+        box.innerHTML = '<p class="muted">13 d. planas ruošiamas.</p>';
+        return;
+      }
+      const preview = plan.days.slice(0,4);
+      box.innerHTML = preview.map(day=>`
+        <div class="plan-line">
+          <strong>${day.day}</strong><br/>
+          <span class="muted">${day.area || ''}${day.theme ? ' · '+day.theme : ''}</span>
+        </div>
+      `).join('');
+    }
+
     function renderFlightSnapshot(data){
       const box = document.getElementById('flightSnapshot');
       if (!data?.items?.length){ box.innerHTML='<p class="muted">Nėra pasiūlymų.</p>'; return; }
@@ -290,6 +317,7 @@
       if (!box) return;
       const chips = [];
       chips.push({ label: 'Maršruto dienų', value: meta.routeDays ?? '–', note: 'route.json' });
+      chips.push({ label: 'Itinerario dienų', value: meta.itineraryDays ?? '–', note: 'itinerary.json' });
       chips.push({ label: 'Užduotys', value: meta.todoCount ?? '–', note: 'todos.json' });
       chips.push({ label: 'Biudžeto eilutės', value: meta.budgetLines ?? '–', note: 'budget.json' });
       chips.push({ label: 'Skrydžių pasiūlymai', value: meta.flightCount ?? '–', note: 'flights.json' });
@@ -318,17 +346,20 @@
         fetch('./data/route.json').then(r=>r.json()).catch(()=>null),
         fetch('./data/todos.json').then(r=>r.json()).catch(()=>null),
         fetch('./data/budget.json').then(r=>r.json()).catch(()=>null),
-        fetch('./data/flights.json').then(r=>r.json()).catch(()=>null)
-      ]).then(([route,todos,budget,flights])=>{
+        fetch('./data/flights.json').then(r=>r.json()).catch(()=>null),
+        fetch('./data/itinerary.json').then(r=>r.json()).catch(()=>null)
+      ]).then(([route,todos,budget,flights,itinerary])=>{
         renderRoute(route);
         renderTodos(todos);
         renderBudget(budget);
         renderFlightSnapshot(flights);
+        renderItineraryPreview(itinerary);
         renderIntel({
           routeDays: route?.days?.length || 0,
           todoCount: todos?.items?.length || 0,
           budgetLines: budget?.lines?.length || 0,
           flightCount: flights?.items?.length || 0,
+          itineraryDays: itinerary?.days?.length || 0,
           cheapest: extractCheapestFlight(flights)
         });
       });

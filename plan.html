@@ -21,6 +21,18 @@
       <a href="./places.html">Vietos ir balsai</a>
     </nav>
 
+    <div class="card" id="publicPlan">
+      <div class="topbar">
+        <div>
+          <h2>13 dienų kelionės stuburas</h2>
+          <p class="muted" id="itinerarySummary">Kraunama…</p>
+        </div>
+        <a id="downloadItinerary" class="nav-link" href="./data/itinerary.json" download>Parsisiųsti JSON</a>
+      </div>
+      <div id="itineraryList" class="plan-stage"></div>
+      <div class="card" style="margin-top:14px;background:#f8fafc;border-style:dashed" id="nextActionsBox"></div>
+    </div>
+
     <div id="configBox" class="card hidden">
       <strong>Reikia Supabase rakto.</strong> Įrašyk duomenis faile <code>supabase-config.v2.js</code>.</div>
 
@@ -116,11 +128,65 @@
     ];
     const googleMapLink = 'https://www.google.com/maps/dir/Kata+Beach,+Karon,+Phuket/Railay+Beach,+Krabi/Koh+Lanta,+Krabi/Bangkok+Old+Town/';
 
+    const itinerarySummaryEl = document.getElementById('itinerarySummary');
+    const itineraryListEl = document.getElementById('itineraryList');
+    const nextActionsEl = document.getElementById('nextActionsBox');
+
     let currentClient = null;
     let lastPlaces = [];
     let lastVoteMap = {};
     let boardFilter = 'all';
     let mapInstance = null;
+
+    function renderItinerary(data){
+      if (!itinerarySummaryEl) return;
+      if (!data){
+        itinerarySummaryEl.textContent = 'Nepavyko įkelti plano.';
+        itineraryListEl.innerHTML = '<p class="muted">Patikrink failą data/itinerary.json</p>';
+        if (nextActionsEl) nextActionsEl.innerHTML = '';
+        return;
+      }
+      const summaryParts = [];
+      if (data.summary?.outbound) summaryParts.push(data.summary.outbound);
+      if (data.summary?.inbound) summaryParts.push(data.summary.inbound);
+      if (data.summary?.team) summaryParts.push(data.summary.team);
+      itinerarySummaryEl.textContent = summaryParts.join(' • ');
+      const days = data.days || [];
+      if (!days.length){
+        itineraryListEl.innerHTML = '<p class="muted">Nėra dienų.</p>';
+      } else {
+        itineraryListEl.innerHTML = days.map(day => `
+          <div class="plan-line">
+            <strong>${day.day || ''}</strong> · ${day.area || ''}<br/>
+            ${day.theme ? `<span class="muted">${day.theme}</span><br/>` : ''}
+            ${(day.blocks || []).map(block => `<div class="muted">• ${block}</div>`).join('')}
+            ${day.notes ? `<small class="muted">${day.notes}</small>` : ''}
+          </div>
+        `).join('');
+      }
+      if (nextActionsEl){
+        const acts = data.next_actions || [];
+        nextActionsEl.innerHTML = acts.length ? `
+          <h3 style="margin-top:0">Kiti veiksmai</h3>
+          <ul>${acts.map(item => `<li>${item}</li>`).join('')}</ul>
+        ` : '<p class="muted">Papildomų veiksmų kol kas nėra.</p>';
+      }
+    }
+
+    function loadItinerary(){
+      if (!itinerarySummaryEl) return;
+      if (nextActionsEl) nextActionsEl.innerHTML = '<p class="muted">Kraunama…</p>';
+      fetch('./data/itinerary.json')
+        .then(res => res.json())
+        .then(renderItinerary)
+        .catch(() => {
+          itinerarySummaryEl.textContent = 'Nepavyko įkelti plano.';
+          itineraryListEl.innerHTML = '<p class="muted">Patikrink failą data/itinerary.json</p>';
+          if (nextActionsEl) nextActionsEl.innerHTML = '';
+        });
+    }
+
+    loadItinerary();
 
     function renderStages(places,voteMap){
       const box = document.getElementById('stagesBox');
