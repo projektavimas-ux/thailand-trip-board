@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-05T12:05:00+02:00",
+  "generated_at": "2026-03-07T12:20:00+02:00",
   "signals": [
     {
       "id": "ttf-2026-qsncc",
@@ -28,6 +28,48 @@
         "Į planą įtraukti ankstyvo ryto slotus snorkelinimui prieš mases, aptarti su komanda logistiką iki Freedom Beach."
       ],
       "source": "https://www.theasianaffairs.com/thailand-hidden-beaches-2026/"
+    },
+    {
+      "id": "krabi-ferry-2026",
+      "type": "logistics",
+      "priority": "medium",
+      "title": "Ferryhopper skelbia 2026 m. Krabi jungčių tvarkaraščius",
+      "location": "Klong Jilard Pier (Krabi) → Phi Phi · Koh Lanta · Phuket",
+      "window": "2026-12 sezonas (kasdienės jungtys)",
+      "summary": "Ferryhopper naujienų puslapis atnaujintas su 2026 m. visus metus veikiančiais reisais iš Krabi į Phi Phi, Koh Lantą ir Phuketą – nurodomi keli išvykimai per dieną, įskaitant ~11:30 reisą patogiam perėjimui tarp Etapo 1 ir Etapo 2.",
+      "actions": [
+        "Rezervuoti gruodžio 17 d. pietinį (~11:30) Klong Jilard → Phi Phi reisą, kad spėtume į salų etapą be nakvynės Krabi mieste.",
+        "Į `plan.html` pridėti logistinę pastabą apie atnaujintą tvarkaraštį ir kontaktus bilietų platformai."
+      ],
+      "source": "https://www.ferryhopper.com/en/ferries/thailand/krabi"
+    },
+    {
+      "id": "hua-hin-run-2026",
+      "type": "event",
+      "priority": "medium",
+      "title": "Nakhon Hua Hin Run 2026 paskelbtas",
+      "location": "Hua Hin · Khao Tao Reservoir",
+      "window": "2026-03-29",
+      "summary": "Hua Hin Sports Association patvirtino bėgimo renginį su 5 km, 10.5 km ir VIP 3 km trasomis; spaudos konferencija numatyta 2026-03-13, registracija vyksta per FB.",
+      "actions": [
+        "Užfiksuoti kontaktus su organizatoriais – naudinga, jei gruodį reikės vietinio gido ar savanorių komandai Hua Hin etape.",
+        "Etapo 3 planavime numatyti treniruočių maršrutą aplink Khao Tao rezervuarą kaip rytinę aktyvaus poilsio opciją."
+      ],
+      "source": "https://huahin.localplus.city/2026/03/06/hua-hin-sports-association-announces-nakhon-hua-hin-run-2026-event/"
+    },
+    {
+      "id": "songkran-pran-beach-2026",
+      "type": "event",
+      "priority": "low",
+      "title": "Songkran Pran Beach festivalis ir Bikini Run",
+      "location": "Pran Buri estuarija",
+      "window": "2026-04-11",
+      "summary": "Pranešta apie 5 km Bikini Run ir muzikos festivalį (bilietai 699–1,299 THB) su DJ linija ir vandens fiestomis – naudinga stebėti renginių kokybę pajūrio lokacijose.",
+      "actions": [
+        "Sekti VIP/regular bilietų struktūrą – galima pritaikyti kuriant savo renginio dieną Hua Hin etape (pvz., privataus kruizo).",
+        "Papildyti rizikų sąrašą dėl galimų Songkran transporto spūsčių, jei komanda lankysis Tailande balandį."
+      ],
+      "source": "https://huahin.localplus.city/2026/03/05/songkran-pran-beach-music-bikini-run-and-water-splashing-celebration/"
     }
   ]
 }

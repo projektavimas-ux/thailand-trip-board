@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="lt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thailand Control · Maršruto tinklas</title>
+  <link rel="stylesheet" href="./styles/site.css" />
+  <style>
+    .timeline-card {
+      overflow: visible;
+    }
+    .timeline {
+      position: relative;
+      padding: 12px 0 12px 70px;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 44px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(37, 99, 235, 0.15);
+    }
+    #connectorSvg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    #timelineBody {
+      position: relative;
+      z-index: 1;
+    }
+    .node-card {
+      position: relative;
+      margin: 0 0 18px;
+      padding: 16px 18px 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 8px 30px rgba(15, 23, 42, 0.05);
+      margin-left: calc(40px + var(--depth, 0) * 32px);
+      transition: box-shadow .15s ease, transform .15s ease;
+    }
+    .node-card::before {
+      content: "";
+      position: absolute;
+      left: -26px;
+      top: 50%;
+      width: 20px;
+      height: 2px;
+      background: rgba(37, 99, 235, 0.35);
+    }
+    .node-card[data-depth="0"]::before {
+      width: 0;
+    }
+    .node-card:hover {
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.12);
+      transform: translateY(-2px);
+    }
+    .node-card.is-dimmed {
+      opacity: 0.45;
+      filter: grayscale(0.15);
+    }
+    .node-card.is-highlighted {
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+    }
+    .node-card.stage-card {
+      border-left: 4px solid var(--accent);
+      background: #f4f8ff;
+    }
+    .node-card.day-card {
+      border-left: 4px solid #fb923c;
+      background: #fffaf5;
+    }
+    .node-card.flight-card {
+      border-left: 4px solid #0ea5e9;
+      background: #f0fbff;
+    }
+    .node-card.legs-card {
+      border-left: 4px solid #7c3aed;
+      background: #faf5ff;
+    }
+    .node-card.trip-card {
+      border-left: 4px solid #22c55e;
+      background: #f2fff5;
+    }
+    .node-card .node-header {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .node-pill {
+      display: inline-flex;
+      align-self: flex-start;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: #e7efff;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .node-card.day-card .node-pill { color: #c2410c; background: #ffead8; }
+    .node-card.flight-card .node-pill { color: #0369a1; background: #dff6ff; }
+    .node-card.legs-card .node-pill { color: #6d28d9; background: #efe4ff; }
+    .node-card.trip-card .node-pill { color: #15803d; background: #e1ffe9; }
+    .node-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin: 8px 0;
+    }
+    .meta-item {
+      background: rgba(15, 23, 42, 0.02);
+      border-radius: 10px;
+      padding: 8px 10px;
+    }
+    .meta-item span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .meta-item strong {
+      display: block;
+      margin-top: 2px;
+      font-size: 15px;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 12px 0 4px;
+    }
+    .stage-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0 4px;
+    }
+    .stage-chip {
+      border: 1px solid rgba(37, 99, 235, 0.25);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      background: #fff;
+      color: var(--accent);
+      cursor: pointer;
+      transition: all .15s ease;
+    }
+    .stage-chip:hover {
+      border-color: rgba(37, 99, 235, 0.45);
+      background: rgba(37, 99, 235, 0.05);
+    }
+    .stage-chip.active {
+      background: rgba(37, 99, 235, 0.12);
+      border-color: rgba(37, 99, 235, 0.65);
+      color: #1d4ed8;
+      font-weight: 600;
+      box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.08);
+    }
+    .summary-chip {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 14px;
+      background: #f8fbff;
+    }
+    .summary-chip span {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+    .summary-chip strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 16px;
+    }
+    .actions-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text);
+    }
+    .actions-list li {
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    .actions-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .node-cover {
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 10px 0;
+      height: 180px;
+      background: #000;
+    }
+    .node-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .node-gallery {
+    .signal-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .day-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .day-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: #fff;
+    }
+    .day-card strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+    .day-card span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .day-card ul {
+      padding-left: 18px;
+      margin: 8px 0 0;
+    }
+    .day-card ul li {
+      margin-bottom: 4px;
+    }
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .gallery-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .gallery-card img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-card .gallery-body {
+      padding: 8px 10px 10px;
+    }
+    .gallery-card strong {
+      display: block;
+      font-size: 14px;
+    }
+    .gallery-card span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .node-options {
+      margin: 6px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .option-chip {
+      background: #fff;
+      border: 1px dashed var(--line);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .ghost-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      border: 1px solid rgba(37,99,235,0.35);
+      background: #fff;
+      padding: 6px 12px;
+      border-radius: 999px;
+      margin-top: 10px;
+    }
+    .ghost-link::after {
+      content: "→";
+      font-size: 13px;
+    }
+    .node-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    @media (max-width: 640px) {
+      .timeline {
+        padding-left: 38px;
+      }
+      .timeline::before {
+        left: 26px;
+      }
+      .node-card {
+        margin-left: calc(10px + var(--depth, 0) * 24px);
+      }
+      .node-card::before {
+        left: -18px;
+        width: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>🌴 Maršruto tinklas</h1>
+    <p class="muted">Hierarchinis kelionės stuburas nuo skrydžių iki dienų plano. Duomenys kraunami iš <code>data/routes-tree.json</code>, kortelės susietos su vietų katalogu.</p>
+
+    <nav class="links">
+      <a href="./index.html">Apžvalga</a>
+      <a href="./flights.html">Skrydžiai</a>
+      <a href="./plan.html">Kelionės planas</a>
+      <a class="active" href="./routes-vertical.html">Maršruto tinklas</a>
+      <a href="./places.html">Vietos ir balsai</a>
+    </nav>
+
+    <div class="card timeline-card">
+      <div class="topbar">
+        <div>
+          <h2>Hierarchinė lenta</h2>
+          <p class="muted" id="timelineStatus">Kraunama…</p>
+        </div>
+        <button id="resetView" class="secondary" style="width:auto">Perbraižyti jungtis</button>
+      </div>
+      <div class="summary-grid" id="tripSummary"></div>
+      <div class="stage-filter" id="stageFilter"></div>
+      <div class="timeline" id="timeline">
+        <svg id="connectorSvg"></svg>
+        <div id="timelineBody"></div>
+      </div>
+    </div>
+
+    <div class="card" id="actionsCard">
+      <div class="topbar">
+        <div>
+          <h2>Artimiausi darbai</h2>
+          <p class="muted">Pagal 13 d. planą</p>
+        </div>
+        <span class="muted" id="actionsStamp"></span>
+      </div>
+      <ol class="actions-list" id="actionsList"></ol>
+    </div>
+
+    <div class="card" id="signalsCard">
+      <div class="topbar">
+        <div>
+          <h2>Signalų radaras</h2>
+          <p class="muted">Vieši įvykiai ir logistika</p>
+        </div>
+      </div>
+      <div class="signal-stack" id="signalStack"></div>
+    </div>
+
+    <div class="card" id="daysCard">
+      <div class="topbar">
+        <div>
+          <h2>Dienų vaizdas</h2>
+          <p class="muted">Iš `data/itinerary.json`</p>
+        </div>
+        <button id="toggleDays" class="secondary" style="width:auto">Rodyti daugiau</button>
+      </div>
+      <div class="day-grid" id="dayGrid"></div>
+    </div>
+  </div>
+
+  <script>
+    const typeLabels = {
+      trip: 'Kelionė',
+      legs: 'Segmentai',
+      stage: 'Etapas',
+      day: 'Diena',
+      flight: 'Skrydis',
+      node: 'Mazgas'
+    };
+    const typeFallbackCovers = {
+      trip: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop',
+      legs: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1600&auto=format&fit=crop',
+      flight: 'https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?q=80&w=1600&auto=format&fit=crop'
+    };
+
+    const bodyEl = document.getElementById('timelineBody');
+    const timelineEl = document.getElementById('timeline');
+    const svgEl = document.getElementById('connectorSvg');
+    const statusEl = document.getElementById('timelineStatus');
+    const resetBtn = document.getElementById('resetView');
+    window.addEventListener('error', (event) => {
+      if (event.target !== window) return;
+      if (statusEl) statusEl.textContent = `Klaida: ${event.message}`;
+    });
+    const summaryEl = document.getElementById('tripSummary');
+    const actionsListEl = document.getElementById('actionsList');
+    const actionsStampEl = document.getElementById('actionsStamp');
+    const signalStackEl = document.getElementById('signalStack');
+    const dayGridEl = document.getElementById('dayGrid');
+    const toggleDaysBtn = document.getElementById('toggleDays');
+    const stageFilterEl = document.getElementById('stageFilter');
+
+    let flattenedNodes = [];
+    let stageCatalogMap = {};
+    let showAllDays = false;
+    let cachedDays = [];
+    let activeStageFilter = '';
+    let nodeById = new Map();
+    let activeStageAncestors = new Set();
+
+    function deriveStageFilter(label){
+      if (!label) return null;
+      const match = label.match(/^(\d+\s*ETAPAS)/i);
+      if (!match) return null;
+      return match[1].replace(/etapas/i, 'ETAPAS').trim();
+    }
+
+    function flattenTree(data){
+      const result = [];
+      function walk(node, depth = 0, parentId = null, stageCtx = null){
+        const nodeId = node.id || `node-${result.length}`;
+        const currentStage = node.type === 'stage' ? (deriveStageFilter(node.label) || stageCtx) : stageCtx;
+        const entry = {
+          id: nodeId,
+          label: node.label,
+          type: node.type || 'node',
+          meta: node.meta || null,
+          options: node.options || null,
+          parentId,
+          depth,
+          stageFilter: currentStage,
+          cover: node.cover || null,
+          description: node.description || ''
+        };
+        result.push(entry);
+        (node.children || []).forEach(child => walk(child, depth + 1, nodeId, currentStage));
+      }
+      walk(data);
+      return result;
+    }
+
+    function buildStageCatalogMap(catalog){
+      const map = {};
+      if (!catalog || !Array.isArray(catalog.stages)) return map;
+      catalog.stages.forEach(stage => {
+        const stageKey = deriveStageFilter(stage.title || '');
+        if (!stageKey) return;
+        map[stageKey] = stage.items || [];
+      });
+      return map;
+    }
+
+    function getStageCover(stageKey){
+      if (!stageKey) return null;
+      const entries = stageCatalogMap[stageKey];
+      if (!entries || !entries.length) return null;
+      const withImage = entries.find(item => item.image);
+      return withImage?.image || null;
+    }
+
+    function renderSummary(tree){
+      if (!summaryEl || !tree) return;
+      const meta = tree.meta || {};
+      const blocks = [
+        { label: 'Langas', value: tree.label || '–' },
+        { label: 'Komanda', value: meta.komanda || '–' },
+        { label: 'Statusas', value: meta.statusas || '–' },
+        { label: 'Prioritetas', value: meta.prioritetas || '–' }
+      ];
+      summaryEl.innerHTML = blocks.map(block => `
+        <div class="summary-chip">
+          <span>${block.label}</span>
+          <strong>${block.value}</strong>
+        </div>`).join('');
+    }
+
+    function getStageNodes(nodes){
+      return nodes.filter(node => node.type === 'stage' && node.stageFilter);
+    }
+
+    function renderStageFilter(nodes){
+      if (!stageFilterEl) return;
+      const stages = getStageNodes(nodes);
+      if (!stages.length){
+        stageFilterEl.innerHTML = '';
+        stageFilterEl.style.display = 'none';
+        return;
+      }
+      stageFilterEl.style.display = 'flex';
+      const chips = [{ label: 'Visi etapai', stageKey: '', target: '' }, ...stages.map(stage => ({
+        label: stage.label || stage.stageFilter,
+        stageKey: stage.stageFilter,
+        target: stage.id
+      }))];
+      stageFilterEl.innerHTML = chips.map(chip => `
+        <button class="stage-chip" data-stage-key="${chip.stageKey}" data-target-id="${chip.target}">
+          ${chip.label}
+        </button>`).join('');
+      stageFilterEl.querySelectorAll('.stage-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const key = chip.dataset.stageKey || '';
+          const nextKey = activeStageFilter === key ? '' : key;
+          const targetId = nextKey ? chip.dataset.targetId || '' : '';
+          setActiveStageFilter(nextKey, targetId);
+        });
+      });
+      updateStageFilterChips();
+    }
+
+    function updateStageFilterChips(){
+      if (!stageFilterEl) return;
+      stageFilterEl.querySelectorAll('.stage-chip').forEach(chip => {
+        const key = chip.dataset.stageKey || '';
+        chip.classList.toggle('active', key === activeStageFilter);
+      });
+    }
+
+    function setActiveStageFilter(key = '', targetId = ''){
+      activeStageFilter = key;
+      activeStageAncestors = new Set();
+      if (activeStageFilter){
+        const stageNode = flattenedNodes.find(node => node.type === 'stage' && node.stageFilter === activeStageFilter);
+        let current = stageNode;
+        while (current && current.parentId){
+          activeStageAncestors.add(current.parentId);
+          current = nodeById.get(current.parentId);
+        }
+      }
+      updateStageFilterChips();
+      applyStageFilter();
+      if (activeStageFilter && targetId){
+        scrollToStage(targetId);
+      }
+    }
+
+    function applyStageFilter(){
+      if (!bodyEl) return;
+      const cards = bodyEl.querySelectorAll('.node-card');
+      cards.forEach(card => {
+        const isRoot = !card.dataset.parentId;
+        const stageKey = card.dataset.stageFilter || '';
+        const isStageMatch = stageKey && stageKey === activeStageFilter;
+        const isAncestor = activeStageAncestors.has(card.dataset.nodeId);
+        const matches = !activeStageFilter || isRoot || isStageMatch || isAncestor;
+        if (!activeStageFilter){
+          card.classList.remove('is-dimmed');
+        } else if (matches){
+          card.classList.remove('is-dimmed');
+        } else {
+          card.classList.add('is-dimmed');
+        }
+      });
+    }
+
+    function scrollToStage(nodeId){
+      if (!nodeId) return;
+      const target = bodyEl?.querySelector(`.node-card[data-node-id=\"${nodeId}\"]`);
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.classList.add('is-highlighted');
+      setTimeout(() => target.classList.remove('is-highlighted'), 1800);
+    }
+
+    function renderActions(actions, stamp){
+      if (!actionsListEl) return;
+      if (!actions || !actions.length){
+        actionsListEl.innerHTML = '<li class="muted">Papildomų veiksmų nėra.</li>';
+      } else {
+        actionsListEl.innerHTML = actions.map(item => `<li>${item}</li>`).join('');
+      }
+      if (actionsStampEl){
+        actionsStampEl.textContent = stamp ? new Date(stamp).toLocaleDateString('lt-LT') : '';
+      }
+    }
+
+    function renderSignals(signals){
+      if (!signalStackEl) return;
+      if (!signals || !signals.length){
+        signalStackEl.innerHTML = '<p class="muted">Naujų signalų nėra.</p>';
+        return;
+      }
+      signalStackEl.innerHTML = signals.map(signal => `
+        <div class="signal-card">
+          <div class="signal-meta">
+            <span>${signal.type || 'signal'}</span>
+            <span>Prioritetas: ${signal.priority || '–'}</span>
+            <span>${signal.window || ''}</span>
+          </div>
+          <strong>${signal.title || 'Be pavadinimo'}</strong>
+          <p class="muted">${signal.location || ''}</p>
+          <p>${signal.summary || ''}</p>
+          ${signal.actions && signal.actions.length ? `<ul class="signal-actions">${signal.actions.map(act => `<li>${act}</li>`).join('')}</ul>` : ''}
+          ${signal.source ? `<a href="${signal.source}" target="_blank" rel="noopener">Šaltinis</a>` : ''}
+        </div>`).join('');
+    }
+
+    function renderDays(days){
+      cachedDays = Array.isArray(days) ? days : [];
+      updateDayGrid();
+    }
+
+    function updateDayGrid(){
+      if (!dayGridEl) return;
+      if (!cachedDays.length){
+        dayGridEl.innerHTML = '<p class="muted">13 d. planas dar nepateiktas.</p>';
+        if (toggleDaysBtn) toggleDaysBtn.disabled = true;
+        return;
+      }
+      const slice = showAllDays ? cachedDays : cachedDays.slice(0,4);
+      dayGridEl.innerHTML = slice.map(day => `
+        <div class="day-card">
+          <strong>${day.day || ''}</strong>
+          <span>${day.area || ''} · ${day.theme || ''}</span>
+          ${day.blocks && day.blocks.length ? `<ul>${day.blocks.map(block => `<li>${block}</li>`).join('')}</ul>` : ''}
+        </div>`).join('');
+      if (toggleDaysBtn){
+        toggleDaysBtn.disabled = cachedDays.length <= 4;
+        toggleDaysBtn.textContent = showAllDays ? 'Rodyti mažiau' : 'Rodyti daugiau';
+      }
+    }
+
+    function formatMetaKey(key){
+      return key
+        .replace(/([A-Z])/g, ' $1')
+        .replace(/^./, c => c.toUpperCase())
+        .replace(/_/g, ' ')
+        .trim();
+    }
+
+    function formatMetaValue(value){
+      if (Array.isArray(value)) return value.join(', ');
+      if (typeof value === 'object' && value !== null) {
+        return Object.values(value).join(', ');
+      }
+      return value;
+    }
+
+    function buildCard(node){
+      const card = document.createElement('div');
+      card.className = `node-card ${node.type}-card`;
+      card.dataset.nodeId = node.id;
+      card.dataset.depth = node.depth;
+      card.dataset.nodeType = node.type;
+      if (node.stageFilter) card.dataset.stageFilter = node.stageFilter;
+      if (node.parentId) card.dataset.parentId = node.parentId;
+
+      const badge = typeLabels[node.type] || 'Mazgas';
+      const header = document.createElement('div');
+      header.className = 'node-header';
+      header.innerHTML = `<span class="node-pill">${badge}</span><h3>${node.label || 'Be pavadinimo'}</h3>`;
+      card.appendChild(header);
+
+      if (node.stageFilter && node.type !== 'stage') {
+        const stageNote = document.createElement('div');
+        stageNote.className = 'node-note';
+        stageNote.textContent = `Priklauso etapui: ${node.stageFilter}`;
+        card.appendChild(stageNote);
+      }
+
+      const coverUrl = node.cover || getStageCover(node.stageFilter) || typeFallbackCovers[node.type] || null;
+      if (coverUrl) {
+        const media = document.createElement('div');
+        media.className = 'node-cover';
+        media.innerHTML = `<img src="${coverUrl}" alt="${node.label || 'Maršruto nuotrauka'}" />`;
+        card.appendChild(media);
+      }
+
+      if (node.meta && Object.keys(node.meta).length){
+        const metaBox = document.createElement('div');
+        metaBox.className = 'node-meta';
+        Object.entries(node.meta).forEach(([key, value]) => {
+          const item = document.createElement('div');
+          item.className = 'meta-item';
+          item.innerHTML = `<span>${formatMetaKey(key)}</span><strong>${formatMetaValue(value)}</strong>`;
+          metaBox.appendChild(item);
+        });
+        card.appendChild(metaBox);
+      }
+
+      if (node.options && node.options.length){
+        const optionsBox = document.createElement('div');
+        optionsBox.className = 'node-options';
+        node.options.forEach(opt => {
+          const chip = document.createElement('span');
+          chip.className = 'option-chip';
+          chip.textContent = opt;
+          optionsBox.appendChild(chip);
+        });
+        card.appendChild(optionsBox);
+      }
+
+      if (node.type === 'stage') {
+        const galleryItems = stageCatalogMap[node.stageFilter];
+        if (galleryItems && galleryItems.length) {
+          const gallery = document.createElement('div');
+          gallery.className = 'node-gallery';
+          gallery.innerHTML = galleryItems.slice(0,3).map(item => `
+            <div class="gallery-card">
+              ${item.image ? `<img src="${item.image}" alt="${item.name || ''}" />` : ''}
+              <div class="gallery-body">
+                <strong>${item.name || 'Be pavadinimo'}</strong>
+                ${item.desc ? `<span>${item.desc}</span>` : ''}
+              </div>
+            </div>`).join('');
+          card.appendChild(gallery);
+        }
+      }
+
+      if (node.type === 'stage' && node.stageFilter){
+        const link = document.createElement('a');
+        link.className = 'ghost-link';
+        link.href = `./places.html?stage=${encodeURIComponent(node.stageFilter)}`;
+        link.textContent = `Atverti „${node.stageFilter}“ vietas`;
+        card.appendChild(link);
+      }
+
+      return card;
+    }
+
+    function renderTimeline(nodes){
+      bodyEl.innerHTML = '';
+      nodeById = new Map(nodes.map(node => [node.id, node]));
+      nodes.forEach(node => {
+        const card = buildCard(node);
+        bodyEl.appendChild(card);
+      });
+      statusEl.textContent = `Mazgų: ${nodes.length}`;
+      renderStageFilter(nodes);
+      applyStageFilter();
+      requestAnimationFrame(drawConnectors);
+    }
+
+    function drawConnectors(){
+      if (!timelineEl || !svgEl) return;
+      const cards = timelineEl.querySelectorAll('.node-card');
+      const coords = {};
+      cards.forEach(card => {
+        const id = card.dataset.nodeId;
+        const top = card.offsetTop + card.offsetHeight / 2;
+        const style = window.getComputedStyle(card);
+        const marginLeft = parseFloat(style.marginLeft) || 0;
+        const anchorX = Math.max(marginLeft - 18, 20);
+        coords[id] = { x: anchorX, y: top };
+      });
+      const height = timelineEl.scrollHeight;
+      const width = timelineEl.clientWidth;
+      svgEl.setAttribute('width', width);
+      svgEl.setAttribute('height', height);
+      svgEl.setAttribute('viewBox', `0 0 ${width} ${height}`);
+      svgEl.innerHTML = '';
+      const NS = 'http://www.w3.org/2000/svg';
+      flattenedNodes.forEach(node => {
+        if (!node.parentId) return;
+        const from = coords[node.parentId];
+        const to = coords[node.id];
+        if (!from || !to) return;
+        const path = document.createElementNS(NS, 'path');
+        const midX = Math.max(Math.min(from.x, to.x) - 30, 10);
+        path.setAttribute('d', `M ${from.x} ${from.y} C ${midX} ${from.y}, ${midX} ${to.y}, ${to.x} ${to.y}`);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', node.type === 'day' ? 'rgba(251, 146, 60, 0.6)' : 'rgba(37, 99, 235, 0.55)');
+        path.setAttribute('stroke-width', node.type === 'day' ? 1.4 : 2);
+        path.setAttribute('stroke-linecap', 'round');
+        svgEl.appendChild(path);
+      });
+    }
+
+    function init(){
+      if (statusEl) statusEl.textContent = 'Duomenys kraunami…';
+      Promise.all([
+        fetch('./data/routes-tree.json').then(res => res.json()),
+        fetch('./data/places_catalog.json').then(res => res.json()).catch(() => null),
+        fetch('./data/itinerary.json').then(res => res.json()).catch(() => null),
+        fetch('./data/signal_radar.json').then(res => res.json()).catch(() => null)
+      ])
+        .then(([tree, catalog, itinerary, signals]) => {
+          stageCatalogMap = buildStageCatalogMap(catalog);
+          flattenedNodes = flattenTree(tree);
+          renderSummary(tree);
+          renderTimeline(flattenedNodes);
+          renderActions(itinerary?.next_actions || [], itinerary?.generated_at);
+          renderDays(itinerary?.days || []);
+          renderSignals(signals?.signals || []);
+        })
+        .catch(err => {
+          console.error(err);
+          statusEl.textContent = 'Nepavyko įkelti maršruto/katalogo, 13 d. plano ar signalų (patikrink data/*.json)';
+        });
+    }
+
+    resetBtn.addEventListener('click', () => {
+      requestAnimationFrame(drawConnectors);
+    });
+
+    if ('ResizeObserver' in window){
+      const ro = new ResizeObserver(() => drawConnectors());
+      ro.observe(bodyEl);
+    }
+    window.addEventListener('resize', () => {
+      requestAnimationFrame(drawConnectors);
+    });
+
+    if (toggleDaysBtn){
+      toggleDaysBtn.addEventListener('click', () => {
+        showAllDays = !showAllDays;
+        updateDayGrid();
+      });
+    }
+
+    window.__routeTimelineReady = 'script-loaded';
+    const start = () => init();
+    start();
+    window.addEventListener('load', start);
+    setTimeout(start, 600);
+  </script>
+</body>
+</html>

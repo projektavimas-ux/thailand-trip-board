@@ -1,7 +1,32 @@
 {
   "lines": [
-    {"name":"Skrydžiai (4 asm)","amount":"~1,900–2,400 €"},
-    {"name":"Viešbučiai","amount":"pagal pasirinkimą"},
-    {"name":"Vidaus pervežimai","amount":"rezervas 300–600 €"}
+    {
+      "name": "OPEN-JAW skrydžiai (4 asm)",
+      "amount": "€2,100–2,400 (tikslas: ≤€2,300)"
+    },
+    {
+      "name": "Pietų Tailando apgyvendinimas (9 n.)",
+      "amount": "€1,500–1,800 (2 kamb.)"
+    },
+    {
+      "name": "Bangkok apgyvendinimas (4 n.)",
+      "amount": "€640–800"
+    },
+    {
+      "name": "Vidaus skrydis + pervežimai",
+      "amount": "€420 (AirAsia/Thai VietJet + 2 priv. van'ai)"
+    },
+    {
+      "name": "Salų turai ir veiklos",
+      "amount": "€1,000 rezervas (snorkel, kayak, laipiojimas)"
+    },
+    {
+      "name": "Maistas / pramogos",
+      "amount": "€1,200 (vid. €30/asm/d.)"
+    },
+    {
+      "name": "Nenumatytos išlaidos",
+      "amount": "€400 (medicina, upgrade'ai)"
+    }
   ]
 }

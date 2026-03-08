@@ -111,10 +111,20 @@ button {
   font-weight: 600;
 }
 
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 button.secondary {
   background: #fff;
   color: var(--accent);
   border: 1px solid var(--accent);
+}
+
+.topbar button {
+  width: auto;
+  min-width: 150px;
 }
 
 .grid-2 {
@@ -230,6 +240,50 @@ button.secondary {
   display: block;
   color: var(--accent);
 }
+
+.intel-signals {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.signal-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  background: #fdfefe;
+}
+
+.signal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  margin: 6px 0 10px;
+}
+
+.signal-actions {
+  margin-top: 8px;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.signal-actions li {
+  margin-bottom: 4px;
+}
+
+.signal-card a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.signal-card a:hover {
+  text-decoration: underline;
+}
+
 .preview-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -254,4 +308,71 @@ button.secondary {
 
 .preview-stage .spot:first-of-type {
   border-top: none;
+}
+
+.pulse-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.spark-rows {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.spark-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.spark-header strong {
+  font-size: 16px;
+}
+
+.spark-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.spark-day {
+  width: 56px;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.spark-bar {
+  flex: 1;
+  background: #eff4ff;
+  border-radius: 999px;
+  height: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.spark-bar span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+.spark-count {
+  width: 32px;
+  text-align: right;
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.spark-empty {
+  margin: 6px 0 0;
 }

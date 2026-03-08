@@ -16,6 +16,7 @@
       <a class="active" href="./index.html">Apžvalga</a>
       <a href="./flights.html">Skrydžiai</a>
       <a href="./plan.html">Kelionės planas</a>
+      <a href="./routes-vertical.html">Maršruto tinklas</a>
       <a href="./places.html">Vietos ir balsai</a>
     </nav>
 
@@ -107,6 +108,7 @@
               <h2>Balsų pulsas</h2>
               <p class="muted">Apibendrinama iš `votes` lentelės.</p>
             </div>
+            <button id="exportVotesBtn" class="secondary" disabled>Eksportas (JSON)</button>
           </div>
           <div id="voteAnalytics"></div>
         </div>
@@ -116,11 +118,12 @@
         <div class="topbar">
           <div>
             <h2>Signalų radaras</h2>
-            <p class="muted">Skaičiuojama lokaliai iš `data/*.json`.</p>
+            <p class="muted">Automatiškai kraunama iš `data/signal_radar.json`.</p>
           </div>
           <span id="intelStamp" class="muted"></span>
         </div>
         <div id="intelBox" class="intel-grid"></div>
+        <div id="intelSignals" class="intel-signals"></div>
       </div>
 
       <div class="grid-2">
@@ -162,6 +165,61 @@
       const date = new Date(value);
       if (Number.isNaN(date.getTime())) return 'Nenurodytas laikas';
       return date.toLocaleString('lt-LT', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
+    const weekdayFormatter = new Intl.DateTimeFormat('lt-LT', { weekday: 'short' });
+    const dayMonthFormatter = new Intl.DateTimeFormat('lt-LT', { month: 'short', day: 'numeric' });
+
+    function buildDailyVoteSeries(votes){
+      const series = [];
+      const indexMap = {};
+      const today = new Date();
+      for (let i = 6; i >= 0; i -= 1){
+        const d = new Date(today);
+        d.setHours(0,0,0,0);
+        d.setDate(d.getDate() - i);
+        const key = d.toISOString().slice(0,10);
+        series.push({ key, label: weekdayFormatter.format(d).toUpperCase(), full: dayMonthFormatter.format(d), count: 0 });
+        indexMap[key] = series.length - 1;
+      }
+      (votes || []).forEach(vote => {
+        if (!vote.created_at) return;
+        const date = new Date(vote.created_at);
+        if (Number.isNaN(date.getTime())) return;
+        const key = date.toISOString().slice(0,10);
+        const idx = indexMap[key];
+        if (idx === undefined) return;
+        series[idx].count += 1;
+      });
+      return series;
+    }
+
+    function downloadJson(payload, filename){
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    let latestVoteSummary = null;
+    const exportBtn = document.getElementById('exportVotesBtn');
+    function toggleExportAvailability(enabled){
+      if (exportBtn){
+        exportBtn.disabled = !enabled;
+      }
+    }
+    toggleExportAvailability(false);
+    if (exportBtn){
+      exportBtn.addEventListener('click', () => {
+        if (!latestVoteSummary) return;
+        const stamp = new Date().toISOString().slice(0,10);
+        downloadJson(latestVoteSummary, `vote-pulse-${stamp}.json`);
+      });
     }
 
     function renderTop(places, voteMap){
@@ -226,7 +284,8 @@
       }
       const totalVotes = votes.length;
       const uniqueVoters = new Set(votes.map(v=>v.user_id).filter(Boolean)).size;
-      const avgVotes = places.length ? (totalVotes / places.length).toFixed(1) : '0';
+      const avgVotesValue = places.length ? (totalVotes / places.length) : 0;
+      const avgVotes = avgVotesValue.toFixed(1);
       const stageScores = {};
       places.forEach(p => {
         const key = p.stage || 'Kita';
@@ -237,13 +296,48 @@
         const ts = vote.created_at ? new Date(vote.created_at).getTime() : 0;
         return ts > latest ? ts : latest;
       }, 0);
-      box.innerHTML = `
+      const dailySeries = buildDailyVoteSeries(votes);
+      const maxDaily = Math.max(...dailySeries.map(row => row.count), 1);
+      const statsHtml = `
         <div class="plan-line"><strong>${totalVotes}</strong><br><span class="muted">Viso balsų</span></div>
         <div class="plan-line"><strong>${uniqueVoters || '–'}</strong><br><span class="muted">Aktyvūs dalyviai</span></div>
         <div class="plan-line"><strong>${avgVotes}</strong><br><span class="muted">Balsų / vietą</span></div>
         ${topStage ? `<div class="plan-line"><strong>${topStage[0]}</strong><br><span class="muted">${topStage[1]} bals. šiame etape</span></div>` : ''}
         <div class="plan-line"><strong>${lastVoteTs ? formatTimestamp(lastVoteTs) : '–'}</strong><br><span class="muted">Paskutinis balsas</span></div>
       `;
+      const sparkContent = dailySeries.some(row => row.count > 0)
+        ? dailySeries.map(row => `
+          <div class="spark-row">
+            <span class="spark-day" title="${row.full}">${row.label}</span>
+            <div class="spark-bar"><span style="width:${(row.count / maxDaily) * 100}%"></span></div>
+            <span class="spark-count">${row.count}</span>
+          </div>
+        `).join('')
+        : '<p class="muted spark-empty">Per paskutines 7 dienas balsų nefiksuota.</p>';
+      box.innerHTML = `
+        <div class="pulse-stats">${statsHtml}</div>
+        <div class="spark-rows">
+          <div class="spark-header">
+            <strong>Balsų dinamika (7 d.)</strong>
+            <span class="muted">Pagal votes.created_at</span>
+          </div>
+          ${sparkContent}
+        </div>
+      `;
+      const summary = {
+        generated_at: new Date().toISOString(),
+        totals: {
+          votes: totalVotes,
+          uniqueVoters,
+          avgPerPlace: avgVotesValue,
+          lastVoteIso: lastVoteTs ? new Date(lastVoteTs).toISOString() : null,
+          placesTracked: places.length
+        },
+        topStage: topStage ? { name: topStage[0], votes: topStage[1] } : null,
+        stageScores,
+        daily: dailySeries.map(row => ({ date: row.key, label: row.label, full: row.full, count: row.count }))
+      };
+      return summary;
     }
 
     function renderRoute(route){
@@ -321,6 +415,9 @@
       chips.push({ label: 'Užduotys', value: meta.todoCount ?? '–', note: 'todos.json' });
       chips.push({ label: 'Biudžeto eilutės', value: meta.budgetLines ?? '–', note: 'budget.json' });
       chips.push({ label: 'Skrydžių pasiūlymai', value: meta.flightCount ?? '–', note: 'flights.json' });
+      if (typeof meta.signalCount === 'number'){
+        chips.push({ label: 'Signalų radaras', value: meta.signalCount, note: 'signal_radar.json' });
+      }
       if (meta.cheapest){
         chips.push({ label: 'Pigiausias OUT', value: `$${meta.cheapest.value}`, note: meta.cheapest.title });
       }
@@ -333,9 +430,35 @@
       `).join('');
       const stamp = document.getElementById('intelStamp');
       if (stamp){
-        const now = new Date();
-        stamp.textContent = `Atnaujinta ${now.toLocaleTimeString('lt-LT',{hour:'2-digit',minute:'2-digit'})}`;
+        const sourceDate = meta.generatedAt ? new Date(meta.generatedAt) : new Date();
+        stamp.textContent = `Atnaujinta ${sourceDate.toLocaleString('lt-LT',{month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'})}`;
       }
+    }
+
+    function renderSignals(payload){
+      const box = document.getElementById('intelSignals');
+      if (!box) return;
+      const signals = payload?.signals || [];
+      if (!signals.length){
+        box.innerHTML = '<p class="muted">Naujų signalų išorės šaltiniuose nėra. Tikrinama kelis kartus per dieną.</p>';
+        return;
+      }
+      box.innerHTML = signals.map(signal => {
+        const metaTags = [signal.location, signal.window, signal.priority ? `prioritetas: ${signal.priority}` : null]
+          .filter(Boolean)
+          .map(item => `<span>${item}</span>`)
+          .join('');
+        const actions = (signal.actions || []).map(item => `<li>${item}</li>`).join('');
+        return `
+          <div class="signal-card">
+            <h3>${signal.title || 'Nenumatyta antraštė'}</h3>
+            ${metaTags ? `<div class="signal-meta">${metaTags}</div>` : ''}
+            <p class="muted">${signal.summary || ''}</p>
+            ${actions ? `<ul class="signal-actions">${actions}</ul>` : ''}
+            ${signal.source ? `<a href="${signal.source}" target="_blank" rel="noopener">Šaltinis</a>` : ''}
+          </div>
+        `;
+      }).join('');
     }
 
     let staticLoaded = false;
@@ -347,8 +470,9 @@
         fetch('./data/todos.json').then(r=>r.json()).catch(()=>null),
         fetch('./data/budget.json').then(r=>r.json()).catch(()=>null),
         fetch('./data/flights.json').then(r=>r.json()).catch(()=>null),
-        fetch('./data/itinerary.json').then(r=>r.json()).catch(()=>null)
-      ]).then(([route,todos,budget,flights,itinerary])=>{
+        fetch('./data/itinerary.json').then(r=>r.json()).catch(()=>null),
+        fetch('./data/signal_radar.json').then(r=>r.json()).catch(()=>null)
+      ]).then(([route,todos,budget,flights,itinerary,signals])=>{
         renderRoute(route);
         renderTodos(todos);
         renderBudget(budget);
@@ -360,8 +484,11 @@
           budgetLines: budget?.lines?.length || 0,
           flightCount: flights?.items?.length || 0,
           itineraryDays: itinerary?.days?.length || 0,
-          cheapest: extractCheapestFlight(flights)
+          cheapest: extractCheapestFlight(flights),
+          signalCount: signals?.signals?.length || 0,
+          generatedAt: signals?.generated_at || null
         });
+        renderSignals(signals);
       });
     }
 
@@ -384,7 +511,9 @@
         renderTop(placeList, voteMap);
         renderStages(placeList, voteMap);
         renderRecent(placeList);
-        renderVotePulse(placeList, voteList, voteMap);
+        const pulseSummary = renderVotePulse(placeList, voteList, voteMap);
+        latestVoteSummary = pulseSummary;
+        toggleExportAvailability(Boolean(pulseSummary));
       }
     });
     });

@@ -11,6 +11,24 @@
       "price": "$522 / asm (už 4: $2,088)",
       "url": "https://www.expedia.com/Flights-Search?trip=oneway&leg1=from%3AVilnius%2Cto%3APhuket%2Cdeparture%3A2026-12-11TANYT&passengers=adults%3A4&mode=search&pwaDialog=FLIGHTS_DETAILS_AND_FARES-index-2-leg-0-fsr",
       "status": "VERIFIED"
+    },
+    {
+      "title": "BKK → VNO (2027-01-02) Qatar",
+      "price": "€615 / asm (4 asm: €2,460)",
+      "url": "https://www.skyscanner.net/transport/flights/bkkt/vno/270102/?adultsv2=4",
+      "status": "WATCH"
+    },
+    {
+      "title": "BKK → RIX (2027-01-02) Turkish",
+      "price": "€598 / asm (4 asm: €2,392)",
+      "url": "https://www.skyscanner.net/transport/flights/bkkt/rix/270102/?adultsv2=4",
+      "status": "WATCH"
+    },
+    {
+      "title": "TEZ TOUR paketai (VNO → HKT, 7 n.)",
+      "price": "nuo €1,299 / asm",
+      "url": "https://www.teztour.lt/lt/viesbuciai/thailand/phuket/?date_from=2026-12-10&nights=7&adults=2",
+      "status": "INFO"
     }
   ]
 }

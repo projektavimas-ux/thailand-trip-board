@@ -16,6 +16,7 @@
       <a href="./index.html">Apžvalga</a>
       <a href="./flights.html">Skrydžiai</a>
       <a href="./plan.html">Kelionės planas</a>
+      <a href="./routes-vertical.html">Maršruto tinklas</a>
       <a class="active" href="./places.html">Vietos ir balsai</a>
     </nav>
 
@@ -69,6 +70,7 @@
               <option value="1 ETAPAS">1 ETAPAS</option>
               <option value="2 ETAPAS">2 ETAPAS</option>
               <option value="3 ETAPAS">3 ETAPAS</option>
+              <option value="4 ETAPAS">4 ETAPAS</option>
               <option value="Finalas">Finalas</option>
               <option value="Kita">Kita / neapibrėžta</option>
             </select>
@@ -117,6 +119,12 @@
       const alertBox = document.getElementById('alertBox');
       const stageSelect = document.getElementById('stageSelect');
       const searchBox = document.getElementById('searchBox');
+      const params = new URLSearchParams(window.location.search);
+      const stageParam = params.get('stage');
+      if (stageParam) {
+        const hasOption = Array.from(stageSelect.options).some(opt => opt.value === stageParam);
+        if (hasOption) stageSelect.value = stageParam;
+      }
 
       function setAlert(msg){
         if (!msg){ alertBox.classList.add('hidden'); alertBox.textContent=''; return; }

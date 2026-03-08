@@ -32,12 +32,20 @@
         {
           "name": "Nai Harn Beach",
           "image": "https://images.unsplash.com/photo-1504494683949-7319a9ba12c7?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Ramesnis pietinis Phuket paplūdimys; 2026 m. rekomenduojamas dėl ramių vandenų ir saulėlydžių jogų (The Asian Affairs, 2026-03)."
+          "desc": "Ramesnis pietinis Phuket paplūdimys; 2026 m. rekomenduojamas dėl ramių vandenų ir saulėlydžių jogų (The Asian Affairs, 2026-03).",
+          "source": "https://www.theasianaffairs.com/thailand-hidden-beaches-2026/"
         },
         {
           "name": "Freedom Beach",
           "image": "https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Pasiekiamas tik valtimi ar taku iš Patong – 2026 m. top sąrašuose kaip tylus snorkelingo taškas."
+          "desc": "Pasiekiamas tik valtimi ar taku iš Patong – 2026 m. top sąrašuose kaip tylus snorkelingo taškas.",
+          "source": "https://www.theasianaffairs.com/thailand-hidden-beaches-2026/"
+        },
+        {
+          "name": "Lard Yai sekmadienio walking street",
+          "image": "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?q=80&w=1200&auto=format&fit=crop",
+          "desc": "Phuket Old Town \"Lard Yai\" turgus (sekmadieniais 16:00–22:00) tapo 2025 m. akcentu – Phuket Dream Company renginių kalendorius rekomenduoja rezervuoti vakarą vietinei virtuvei, rankdarbiams ir gyvai muzikai (2025-04-06).",
+          "source": "https://www.phuketdreamcompany.asia/event/sunday-walking-street-market-phuket-town-lard-yai/2025-12-28/"
         }
       ]
     },
@@ -90,6 +98,18 @@
           "name": "Khao Sam Roi Yot NP",
           "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop",
           "desc": "Nacionalinis parkas su apžvalgos taškais ir gamtos maršrutais."
+        },
+        {
+          "name": "Bueng Bua Boardwalk",
+          "image": "https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1200&auto=format&fit=crop",
+          "desc": "1 km ilgio medinis takas virš Thung Sam Roi Yot pelkių – Hua Hin Today (2023-07) pranešė apie oficialų atnaujinimą, todėl galima planuoti rytinį paukščių stebėjimą tarp 12-23 → 12-30 pervažiavimo.",
+          "source": "https://huahintoday.com/hua-hin-news/khao-sam-roi-yot-national-parks-iconic-bueng-bua-boardwalk-reopens/"
+        },
+        {
+          "name": "Nakhon Hua Hin Run 2026",
+          "image": "https://images.unsplash.com/photo-1508609349937-5ec4ae374ebf?q=80&w=1200&auto=format&fit=crop",
+          "desc": "Hua Hin Sports Association rengiamas 2026-03-29 bėgimas (5 km, 10.5 km, VIP 3 km) aplink Khao Tao rezervuarą; proga ištestuoti Hua Hin trasą ir susitikti su vietos savanoriais prieš ilgesnį buvimą.",
+          "source": "https://huahin.localplus.city/2026/03/06/hua-hin-sports-association-announces-nakhon-hua-hin-run-2026-event/"
         }
       ]
     },
