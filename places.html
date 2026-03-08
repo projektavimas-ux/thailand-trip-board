@@ -31,6 +31,28 @@
       <div id="previewStages" class="preview-grid"></div>
     </div>
 
+    <div id=\"offlineBox\" class=\"card hidden\">
+      <div class=\"topbar\">
+        <div>
+          <h2>Etapo vietos (skaitymo režimas)</h2>
+          <p class=\"muted\">Kai Supabase neveikia, čia matosi `data/places_catalog.json` turinys.</p>
+        </div>
+      </div>
+      <div class=\"grid-2\">
+        <div>
+          <h3>Paieška</h3>
+          <input id=\"offlineSearch\" placeholder=\"Ieškoti pagal pavadinimą ar aprašą\" />
+        </div>
+        <div>
+          <h3>Etapas</h3>
+          <select id=\"offlineStage\">
+            <option value=\"all\">Visi</option>
+          </select>
+        </div>
+      </div>
+      <div id=\"offlineList\" style=\"margin-top:16px\"></div>
+    </div>
+
     <div id="configBox" class="card hidden">
       <strong>Trūksta Supabase konfigūracijos.</strong> Papildyk <code>supabase-config.v2.js</code>.</div>
 
@@ -126,10 +148,81 @@
         if (hasOption) stageSelect.value = stageParam;
       }
 
+      const offlineBox = document.getElementById('offlineBox');
+      const offlineSearch = document.getElementById('offlineSearch');
+      const offlineStage = document.getElementById('offlineStage');
+      const offlineList = document.getElementById('offlineList');
+      let offlineCatalog = [];
+
       function setAlert(msg){
         if (!msg){ alertBox.classList.add('hidden'); alertBox.textContent=''; return; }
         alertBox.textContent = msg;
         alertBox.classList.remove('hidden');
+      }
+
+      function deriveStageKey(label){
+        if (!label) return '';
+        const match = label.match(/^(\d+\s*ETAPAS)/i);
+        if (match) return match[1].replace(/etapas/i, 'ETAPAS').trim();
+        return label.trim();
+      }
+
+      function initOfflineCatalog(catalog){
+        if (!offlineBox || !offlineList) return;
+        const items = [];
+        (catalog?.stages || []).forEach(stage => {
+          const stageKey = deriveStageKey(stage.title || stage.id || '');
+          (stage.items || []).forEach((item, idx) => {
+            items.push({
+              id: `${stageKey || 'stage'}-${idx}`,
+              name: item.name || '',
+              desc: item.desc || '',
+              image: item.image || '',
+              stage: stageKey || stage.title || 'Kita',
+              source: item.source || ''
+            });
+          });
+        });
+        offlineCatalog = items;
+        buildOfflineFilters([...new Set(items.map(i => i.stage).filter(Boolean))]);
+        offlineBox.classList.remove('hidden');
+        renderOfflineList();
+      }
+
+      function buildOfflineFilters(stageKeys){
+        if (!offlineStage) return;
+        const options = ['<option value='all'>Visi</option>'].concat(stageKeys.map(key => `<option value="${key}">${key}</option>`));
+        offlineStage.innerHTML = options.join('');
+        if (stageParam && stageKeys.includes(stageParam)) offlineStage.value = stageParam;
+        if (offlineSearch){
+          offlineSearch.addEventListener('input', renderOfflineList);
+        }
+        offlineStage.addEventListener('change', renderOfflineList);
+      }
+
+      function renderOfflineList(){
+        if (!offlineList) return;
+        const query = (offlineSearch?.value || '').trim().toLowerCase();
+        const stageValue = offlineStage?.value || 'all';
+        const filtered = offlineCatalog.filter(item => {
+          const stageOk = stageValue === 'all' ? true : item.stage === stageValue;
+          const queryOk = !query || `${item.name} ${item.desc}`.toLowerCase().includes(query);
+          return stageOk && queryOk;
+        });
+        if (!filtered.length){
+          offlineList.innerHTML = '<p class="muted">Atitinkančių vietų nėra.</p>';
+          return;
+        }
+        offlineList.innerHTML = filtered.map(item => `
+          <div class="place-card">
+            ${item.image ? `<img src="${item.image}" alt="${item.name}" />` : ''}
+            <div class="body">
+              <div class="tag">${item.stage || 'Etapas nenurodytas'}</div>
+              <h3>${item.name}</h3>
+              <p class="muted">${item.desc || ''}</p>
+              ${item.source ? `<a class="ghost-link" href="${item.source}" target="_blank" rel="noopener">Šaltinis</a>` : ''}
+            </div>
+          </div>`).join('');
       }
 
       const previewBox = document.getElementById('previewBox');
@@ -155,7 +248,16 @@
       }
 
       function bootPreviewMode(){
-        fetch('./data/places_catalog.json').then(r=>r.json()).then(renderPreview);
+        fetch('./data/places_catalog.json')
+          .then(r => r.json())
+          .then(data => {
+            renderPreview(data);
+            initOfflineCatalog(data);
+          })
+          .catch(err => {
+            console.error(err);
+            if (offlineList) offlineList.innerHTML = '<p class=\"muted\">Nepavyko įkelti vietų katalogo.</p>';
+          });
         if (previewBox) previewBox.classList.remove('hidden');
         const config = document.getElementById('configBox');
         if (config) config.classList.add('hidden');
