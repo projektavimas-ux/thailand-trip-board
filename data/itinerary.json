@@ -1,156 +1,168 @@
 {
-  "generated_at": "2026-03-05T19:10:00+02:00",
-  "title": "Thailand South + Bangkok 13 d. stuburas",
+  "generated_at": "2026-03-08T11:20:00+02:00",
+  "title": "Thailand 2026-27: Pietūs → Šiaurė (4 Etapai)",
   "summary": {
-    "outbound": "2026-12-11 · VNO/RIX → Phuket (HKT) 1 stop",
+    "outbound": "2026-12-11 · VNO/RIX → Phuket (HKT)",
     "inbound": "2027-01-02 · Bangkok (BKK) → VNO/RIX",
-    "team": "4 suaugę, kelionė padalinta į 3 etapus pietuose + finalinis Bangkok blokas"
+    "team": "4 suaugę · Aktyvus poilsis + Kultūra"
   },
   "days": [
     {
-      "day": "D1 · Gruodžio 11",
-      "area": "Phuket · Kata",
-      "theme": "Atvykimas ir apsistojimas",
+      "day": "D1 · Gruodžio 11 (Pn)",
+      "area": "Phuket Old Town",
+      "theme": "Atvykimas ir adaptacija",
       "blocks": [
-        "Skrydis VNO/RIX → HKT (per DOH/IST). Nusileidimas 08:30–10:00 vietos laiku.",
-        "Privatus minivanas į Kata/Karon (45 min) – check-in 14:00.",
-        "Popietė: lengvas paplūdimio pasivaikščiojimas, vakare – vakarienė Kata Night Market."
+        "Nusileidimas HKT (popietė). Privatus pervežimas į Old Town (45 min).",
+        "Vakarienė: Tu Kab Khao (Michelin Plate) – pietietiška virtuvė.",
+        "Nakvynė: Sino-portugalų stiliaus boutique viešbutis (pvz., The Memory at On On)."
       ],
-      "notes": "Iš anksto užsakyti SIM (dtac Happy Tourist) ir pasikeisti grynuosius HKT oro uoste."
+      "notes": "Pirmas vakaras ramus, be didelių žygių."
     },
     {
-      "day": "D2 · Gruodžio 12",
-      "area": "Phuket · Kata / Nai Harn",
-      "theme": "Paplūdimiai + Freedom trail",
+      "day": "D2 · Gruodžio 12 (Št)",
+      "area": "Phuket South",
+      "theme": "Panoramos ir šventyklos",
       "blocks": [
-        "Rytas: Tuk-tuk iki Nai Harn Beach – rytinis maudymasis ir SUP nuoma.",
-        "Pietūs: žygis arba long-tail valtis į Freedom Beach (45 min).",
-        "Vakare: grįžimas į Kata, rooftop kokteiliai (The Boathouse)."
+        "06:30 Rytas prie Big Buddha (vengiant karščio ir minių).",
+        "Wat Chalong lankymas (08:30–09:30).",
+        "Popietė: Nai Harn Beach (maudynės + saulėlydis prie Promthep Cape)."
       ],
-      "notes": "Į planą įtraukti snorkelinimo maske pastoviam naudojimui."
+      "notes": "Big Buddha apranga: dengti pečiai ir keliai."
     },
     {
-      "day": "D3 · Gruodžio 13",
-      "area": "Phuket · Phang Nga",
-      "theme": "Žemai sklandančios salos",
+      "day": "D3 · Gruodžio 13 (Sk)",
+      "area": "Phuket Town",
+      "theme": "Lard Yai Turgus",
       "blocks": [
-        "06:30 išvykimas į Ao Po Pier.",
-        "James Bond Island + Hong lagoons dienos turas (Sea Canoe).",
-        "Vakare – grįžimas į Kata, masažas + seafood vakarienė."
+        "Rytas: Laisvas laikas / masažas.",
+        "16:00 – Startuoja „Lard Yai“ pėsčiųjų turgus Thalang gatvėje.",
+        "Street food degustacija + suvenyrai."
       ],
-      "notes": "Susidėti sausas maišas kameroms + tiksliai paskirstyti arbatpinigius gidui."
+      "notes": "Sekmadienis – vienintelė diena Lard Yai turgui."
     },
     {
-      "day": "D4 · Gruodžio 14",
-      "area": "Phuket",
-      "theme": "Laisva diena / papildomi turai",
+      "day": "D4 · Gruodžio 14 (Pr)",
+      "area": "Phuket → Ao Nang",
+      "theme": "Persikėlimas į žemyną",
       "blocks": [
-        "Variantai: Cooking class (Blue Elephant) arba ATV/zipline kupolas.",
-        "Rezervas netikėtai informacijai (Signalų radaras).",
-        "Vakare – pasiruošti perkėlimui į Krabi."
+        "10:00 Pervežimas į Ao Nang (minivanas ~3 val. arba keltas).",
+        "Įsikūrimas Ao Nang (patogi bazė logistikai).",
+        "Vakaras: Ao Nang Landmark Night Market (gyva muzika)."
       ],
-      "notes": "Iki 18:00 pasiruošti lagaminus, nes kitą rytą startuoja pervežimas."
+      "notes": "Ao Nang promenada patogi vakarienei ir turų užsakymui."
     },
     {
-      "day": "D5 · Gruodžio 15",
-      "area": "Phuket → Krabi (Railay)",
-      "theme": "Perkėlimas ir Railay atidarymas",
-      "blocks": [
-        "08:00 minivanas iš Kata į Ao Nang (2 h 30 min).",
-        "11:00 long-tail valtis į Railay East, check-in popietę (Rayavadee / Sand Sea).",
-        "Saulėlydis prie Phra Nang Cave Beach + Diamond Cave vizitas."
-      ],
-      "notes": "Vakarui rezervuoti staliuką „The Grotto“ jei norima ypatingos vakarienės."
-    },
-    {
-      "day": "D6 · Gruodžio 16",
+      "day": "D5 · Gruodžio 15 (An)",
       "area": "Railay",
-      "theme": "Laipiojimas ir lagūnos",
+      "theme": "Uolos ir urvai",
       "blocks": [
-        "Rytas: 2 h laipiojimo pamoka (Railay Rock Climbing).",
-        "Vidurdienis: Railay Viewpoint + Lagoon žygis (reikalingi batai).",
-        "Vakare: masažas ir sunset kokteiliai prie West Beach."
+        "09:00 Longtail valtis į Railay West (200 THB/asm).",
+        "Phra Nang Cave Beach ir Diamond Cave lankymas.",
+        "Pietūs „The Grotto“ arba vietinėse kavinėse.",
+        "Vakaras: Saulėlydis Railay West."
       ],
-      "notes": "Pasirūpinti magnezija ir guoliais – laipiojimo instruktoriai suteiks įrangą."
+      "notes": "Paskutinė valtis į Ao Nang grįžta apie 18:00 (vėliau – brangiau)."
     },
     {
-      "day": "D7 · Gruodžio 17",
-      "area": "Railay → Koh Lanta",
-      "theme": "Snorkeling & bioluminescencija",
+      "day": "D6 · Gruodžio 16 (Tr)",
+      "area": "Hong Islands",
+      "theme": "Lagūnos ir apžvalga",
       "blocks": [
-        "09:00 greitaeigė valtis į Koh Lanta (Saladan Pier).",
-        "Check-in pvz. Layana / Long Beach vila.",
-        "Popietė: 4 Islands turas arba Lanta Old Town; vakare – bioluminescent plankton trip nuo Klong Khong."
+        "08:30 Privatus longtail turas į Hong salyną.",
+        "Hong Lagoon („Kambarys“) – plaukimas tarp uolų.",
+        "360° apžvalgos aikštelė (laiptai į viršų).",
+        "Snorkelingas ramiose įlankose."
       ],
-      "notes": "Planktono turui būtini rashguard'ai ir vandeniui atsparūs krepšiai."
+      "notes": "Hong saloje nėra maisto prekybos – pasiimti pietų dėžutes."
     },
     {
-      "day": "D8 · Gruodžio 18",
-      "area": "Koh Lanta",
-      "theme": "Kajakai ir mangrovės",
+      "day": "D7 · Gruodžio 17 (Kt)",
+      "area": "Phi Phi",
+      "theme": "Ankstyvas startas",
       "blocks": [
-        "Rytas: Thung Yee Peng mangrove kajakinimas (vietinis gidas).",
-        "Pietūs: žuvies BBQ ant pontono.",
-        "Vakare: chill Long Beach / Secret Beach, naktinė turgavietė."
+        "07:00 Išvykimas į Phi Phi (speedboat), kad Maya Bay pasiekti pirmiesiems.",
+        "Maya Bay (tik nuotraukos/braidymas, maudytis draudžiama).",
+        "Pileh Lagoon (maudynės iš valties).",
+        "Pietūs Bamboo Island."
       ],
-      "notes": "Įtraukti drone slotą (gauti leidimą) virš mangrovių."
+      "notes": "Nacionalinio parko mokestis (~400 THB) mokamas grynais."
     },
     {
-      "day": "D9 · Gruodžio 19",
-      "area": "Koh Lanta",
-      "theme": "Apsaugotos salos",
+      "day": "D8 · Gruodžio 18 (Pn)",
+      "area": "Phang Nga Bay",
+      "theme": "James Bond ir kanojos",
       "blocks": [
-        "Dienos turas į Koh Haa arba Koh Rok (snorkeling).",
-        "Alternatyva: Koh Lao Liang ekspedicija (jei leidžia oras).",
-        "Vakare: projektinė vakarienė – aptarti tolimesnį maršrutą."
+        "Vėlyvesnis startas (apie 10:00) arba „Hong by Starlight“ turas (13:00–20:00).",
+        "Kanojos per urvus į uždaras lagūnas.",
+        "James Bond sala (Ko Tapu).",
+        "Vakarienė laive stebint saulėlydį/bioluminescenciją."
       ],
-      "notes": "Reikia rezervuoti turą bent 48 h iš anksto (didelė paklausa sezono metu)."
+      "notes": "John Gray Sea Canoe – rekomenduojamas operatorius."
     },
     {
-      "day": "D10 · Gruodžio 20",
-      "area": "Koh Lanta → Bangkok",
-      "theme": "Perskridimas",
+      "day": "D9-12 · Gruodis 19-22",
+      "area": "Laisvas / Rezervas",
+      "theme": "Poilsis ar papildomi turai",
       "blocks": [
-        "Ryte: pervežimas į Krabi oro uostą (2 h) per minivaną.",
-        "Popietinis Thai VietJet / AirAsia skrydis į DMK ar BKK.",
-        "Vakare: check-in Old Town (Riva Surya / Sala Rattanakosin), Chao Phraya vakarienė."],
-      "notes": "Iš anksto užsisakyti Grab Premium / viešbučio privatus pervežimas dėl lagaminų kiekio."
+        "Galimybė nuvykti į Freedom Beach (sunkus priėjimas/valtis).",
+        "Tiger Cave Temple (Krabi) – 1237 laipteliai.",
+        "Emerald Pool & Blue Pool karštosios versmės."
+      ]
     },
     {
-      "day": "D11 · Gruodžio 21",
+      "day": "D13 · Gruodžio 23 (Tr)",
+      "area": "Krabi → Hua Hin",
+      "theme": "Kelionė į šiaurę",
+      "blocks": [
+        "Skrydis KBV → BKK (arba pervežimas sausuma su sustojimais).",
+        "Pervežimas į Hua Hin kurortą.",
+        "Vakaras: Cicada Market (tik savaitgaliais) arba Night Market."
+      ]
+    },
+    {
+      "day": "D14-20 · Gruodis 24-30",
+      "area": "Hua Hin / Phetchaburi",
+      "theme": "Karališkasis kurortas",
+      "blocks": [
+        "Khao Sam Roi Yot NP (Phraya Nakhon urvas).",
+        "Bueng Bua Boardwalk (lotosų pelkė).",
+        "Monsoon Valley vynuogynas."
+      ]
+    },
+    {
+      "day": "D21 · Gruodžio 31 (Kt)",
       "area": "Bangkok",
-      "theme": "Klasikiniai objektai",
+      "theme": "Naujieji metai",
       "blocks": [
-        "Rytas: Grand Palace + Wat Phra Kaew (08:30 startas, kad išvengtum minios).",
-        "Vidurdienis: Wat Pho + masažas (1 h).",
-        "Vakare: Chinatown maisto turas arba rooftop (Mahanakhon)."
-      ],
-      "notes": "Aprangos kodas šventykloms – pečiai ir keliai uždengti."
+        "Atvykimas į Bangkoką.",
+        "Vakarienė prie upės (Riverside).",
+        "Fejerverkai prie ICONSIAM / Wat Arun."
+      ]
     },
     {
-      "day": "D12 · Gruodžio 22",
+      "day": "D22 · Sausio 01 (Pn)",
       "area": "Bangkok",
-      "theme": "Modernus miestas",
+      "theme": "Ramus startas",
       "blocks": [
-        "Rytas: Bang Krachao dviračių turas (žalioji sala).",
-        "Pietūs: ICONSIAM + River Park.",
-        "Vakare: Asiatique naktinis turgus, paruošti dovanas."],
-      "notes": "Bang Krachao dviračius rezervuoti online; reikia cash depozito."
+        "Vėlyvi pusryčiai.",
+        "Grand Palace ir Wat Pho (jei atidaryta/mažiau žmonių).",
+        "Chinatown vakarienė."
+      ]
     },
     {
-      "day": "D13 · Gruodžio 23",
-      "area": "Bangkok",
-      "theme": "Rezervas + išvykimas",
+      "day": "D23 · Sausio 02 (Št)",
+      "area": "Bangkok → Namo",
+      "theme": "Paskutinė diena",
       "blocks": [
-        "Rytas: laisvas laikas paskutinėms apsipirkimo / SPA sesijoms.",
-        "Popietė: checkout iki 12:00, lagaminai viešbučio saugykloje.",
-        "Vakare: išvykimas į BKK oro uostą 4 h iki skrydžio."],
-      "notes": "Pasitikrinti Qatar/Turkish check-in laikus; turėti spausdintą boarding pass backup."
+        "Chatuchak savaitgalio turgus (nes tai šeštadienis!).",
+        "Paskutinis masažas.",
+        "Pervežimas į BKK oro uostą."
+      ]
     }
   ],
   "next_actions": [
-    "Rezervuoti privatų minivaną Phuket → Ao Nang (D5) ir Koh Lanta → Krabi (D10).",
-    "Iki balandžio 1 d. užblokuoti koh Lanta apgyvendinimą (aukšta paklausa).",
-    "Patvirtinti, kurie dalyviai nori laipiojimo pamokos Railay (vietų limitas)."
+    "Patvirtinti „Hong by Starlight“ turo datą (populiarus).",
+    "Rezervuoti 12-13 d. (sekmadienio) nakvynę Phuket Town dėl Lard Yai.",
+    "Pasitikrinti vidaus skrydžių kainas KBV → BKK gruodžio 23 d."
   ]
 }

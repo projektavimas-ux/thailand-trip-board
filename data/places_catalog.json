@@ -6,46 +6,45 @@
       "items": [
         {
           "name": "Old Phuket Town",
-          "image": "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Senoji miesto dalis, kavinės ir vakaro pasivaikščiojimas po atvykimo dienos."
+          "image": "https://upload.wikimedia.org/wikipedia/commons/3/31/Thalang_Road%2C_Old_Phuket_Town.jpg",
+          "desc": "Istorinis kvartalas su spalvingais sino-portugalų stiliaus pastatais. Sekmadieniais (16:00–22:00) Thalang gatvė tampa „Lard Yai“ pėsčiųjų turgumi su gatvės maistu ir amatais.",
+          "source": "https://www.tourismthailand.org/Attraction/phuket-old-town"
         },
         {
           "name": "Big Buddha (Phuket)",
-          "image": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Panoraminis taškas su vaizdu į salą. Tinka pirmai pilnai dienai."
+          "image": "https://upload.wikimedia.org/wikipedia/commons/7/73/Big_Buddha_von_Phuket_02.jpg",
+          "desc": "45 m aukščio balto marmuro statula ant Nakkerd kalvos. Geriausias laikas – saulei tekant (06:30) arba leidžiantis, vengiant vidurdienio kaitros. Įėjimas nemokamas, būtina dengti pečius/kelius.",
+          "source": "https://phuketelephantnaturereserve.com/visiting-the-big-buddha-in-phuket/"
         },
         {
           "name": "Wat Chalong",
-          "image": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Svarbiausia Phuket šventykla, lengvai derinama su Big Buddha maršrutu."
+          "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Phuket_Thailand_Wat-Chalong-01.jpg",
+          "desc": "Svarbiausia Phuket šventykla su 60 m aukščio stupa (Chedi), saugančia Budos relikviją. Atidaryta 07:00–17:00. Galima užlipti į viršų panoramai.",
+          "source": "https://www.thethaipass.com/attractions/wat-chalong-phuket"
+        },
+        {
+          "name": "Ao Nang Promenada",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Ao_Nang_Beach.jpg/1280px-Ao_Nang_Beach.jpg",
+          "desc": "Pagrindinis Krabi logistinis centras. Vakarais atgyja „Landmark Night Market“ (prie Noppharat Thara) su gyva muzika ir 100+ maisto kioskų.",
+          "source": "https://www.weseektravel.com/ao-nang-night-market/"
         },
         {
           "name": "Railay Beach",
-          "image": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Vienas gražiausių Krabi taškų, pasiekiamas laivu iš Ao Nang."
-        },
-        {
-          "name": "Ao Nang promenada",
-          "image": "https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Patogi bazė vakarams, maistui ir trumpiems turams aplink Krabi."
+          "image": "https://upload.wikimedia.org/wikipedia/commons/b/be/West_Railay_Beach_%2830880433234%29.jpg",
+          "desc": "Pasiekiamas tik valtimi iš Ao Nang (100–200 THB). Garsėja kalkakmenio uolomis (meka laipiotojams) ir Phra Nang urvu. Vakarinė pusė ideali saulėlydžiams.",
+          "source": "https://shippedaway.com/rock-climbing-railay-beach-krabi/"
         },
         {
           "name": "Nai Harn Beach",
-          "image": "https://images.unsplash.com/photo-1504494683949-7319a9ba12c7?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Ramesnis pietinis Phuket paplūdimys; 2026 m. rekomenduojamas dėl ramių vandenų ir saulėlydžių jogų (The Asian Affairs, 2026-03).",
-          "source": "https://www.theasianaffairs.com/thailand-hidden-beaches-2026/"
+          "image": "https://upload.wikimedia.org/wikipedia/commons/6/66/Nai_harn_beach_phuket_%2845%29.jpg",
+          "desc": "Ramesnis paplūdimys pietuose, mėgstamas vietinių. Puikus saulėlydžiams, šalia yra vėjo malūnų apžvalgos aikštelė ir Phromthep Cape.",
+          "source": "https://snorkelingthailand.com/nai-harn-beach/"
         },
         {
           "name": "Freedom Beach",
-          "image": "https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Pasiekiamas tik valtimi ar taku iš Patong – 2026 m. top sąrašuose kaip tylus snorkelingo taškas.",
-          "source": "https://www.theasianaffairs.com/thailand-hidden-beaches-2026/"
-        },
-        {
-          "name": "Lard Yai sekmadienio walking street",
-          "image": "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Phuket Old Town \"Lard Yai\" turgus (sekmadieniais 16:00–22:00) tapo 2025 m. akcentu – Phuket Dream Company renginių kalendorius rekomenduoja rezervuoti vakarą vietinei virtuvei, rankdarbiams ir gyvai muzikai (2025-04-06).",
-          "source": "https://www.phuketdreamcompany.asia/event/sunday-walking-street-market-phuket-town-lard-yai/2025-12-28/"
+          "image": "https://upload.wikimedia.org/wikipedia/commons/4/44/Freedom_beach_-_Karon%2C_Phuket%2C_Thailand_-_panoramio.jpg",
+          "desc": "Sunkiau pasiekiamas (status takas arba valtis už ~1500 THB), bet vertas dėl balto smėlio ir ramybės. Įėjimo mokestis dažnai taikomas (~200 THB).",
+          "source": "https://phuket-tropic-tours.com/blog/freedom-beach"
         }
       ]
     },
@@ -54,29 +53,22 @@
       "title": "2 ETAPAS (12-17 → 12-22): Salos ir įlankos",
       "items": [
         {
-          "name": "Phi Phi salos",
-          "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Pilnos dienos turas su maudynėmis ir snorkeling."
+          "name": "Phi Phi (Maya Bay)",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/6/64/Playa_Maya%2C_Ko_Phi_Phi%2C_Tailandia%2C_2013-08-19%2C_DD_04.JPG",
+          "desc": "„The Beach“ filmo įlanka. Atidaryta 07:00–17:00. Maudytis pačioje įlankoje draudžiama (tik braidymai) saugant koralus. Geriausia atvykti anksti ryte (iki 09:00).",
+          "source": "https://www.qbictravel.com/how-to-visit-maya-bay-in-2025-entry-rules-best-time-travel-tips/"
         },
         {
-          "name": "Maya Bay",
-          "image": "https://images.unsplash.com/photo-1528127269322-539801943592?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Dažnai įtraukta į Phi Phi turus; verta tikrinti lankymo langus ir ribojimus."
-        },
-        {
-          "name": "Phang Nga Bay",
-          "image": "https://images.unsplash.com/photo-1472396961693-142e6e269027?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Kalkakmenio salos ir ramus plaukimas laivu/kajakais."
-        },
-        {
-          "name": "James Bond Island",
-          "image": "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Ikoninis taškas Phang Nga įlankoje, dažniausiai su organizuotu turu."
+          "name": "Phang Nga Bay (James Bond)",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/James_Bond_Felsen_phang_nga_bay_DSC02997.JPG",
+          "desc": "Įspūdingos kalkakmenio salos. „James Bond“ sala (Ko Tapu) geriausiai aplankoma ryte. Populiarūs kanojų turai per urvus į lagūnas (pvz., John Gray).",
+          "source": "https://johngray-seacanoe.com/"
         },
         {
           "name": "Hong Islands",
-          "image": "https://images.unsplash.com/photo-1531168556467-80aace4d76d2?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Ramesnės salos nei Phi Phi, geras variantas lėtesnei dienai."
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ko_Hong_Than_Bok_Khorani.jpg/1280px-Ko_Hong_Than_Bok_Khorani.jpg",
+          "desc": "Krabi perlas su paslėpta lagūna („Hong“ = kambarys). Yra 360° apžvalgos aikštelė (laiptai). Puiki vieta snorkelingui ir pietums, mažiau žmonių nei Phi Phi.",
+          "source": "https://whereintheworldisnina.com/hong-island-krabi-thailand/"
         }
       ]
     },
@@ -102,14 +94,8 @@
         {
           "name": "Bueng Bua Boardwalk",
           "image": "https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1200&auto=format&fit=crop",
-          "desc": "1 km ilgio medinis takas virš Thung Sam Roi Yot pelkių – Hua Hin Today (2023-07) pranešė apie oficialų atnaujinimą, todėl galima planuoti rytinį paukščių stebėjimą tarp 12-23 → 12-30 pervažiavimo.",
+          "desc": "1 km ilgio medinis takas virš Thung Sam Roi Yot pelkių – oficialiai atnaujintas, todėl galima planuoti rytinį paukščių stebėjimą.",
           "source": "https://huahintoday.com/hua-hin-news/khao-sam-roi-yot-national-parks-iconic-bueng-bua-boardwalk-reopens/"
-        },
-        {
-          "name": "Nakhon Hua Hin Run 2026",
-          "image": "https://images.unsplash.com/photo-1508609349937-5ec4ae374ebf?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Hua Hin Sports Association rengiamas 2026-03-29 bėgimas (5 km, 10.5 km, VIP 3 km) aplink Khao Tao rezervuarą; proga ištestuoti Hua Hin trasą ir susitikti su vietos savanoriais prieš ilgesnį buvimą.",
-          "source": "https://huahin.localplus.city/2026/03/06/hua-hin-sports-association-announces-nakhon-hua-hin-run-2026-event/"
         }
       ]
     },
