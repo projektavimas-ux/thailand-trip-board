@@ -254,6 +254,13 @@
       border-radius: 14px;
       overflow: hidden;
       background: #fff;
+      cursor: pointer;
+      position: relative;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .gallery-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.15);
     }
     .gallery-card img {
       width: 100%;
@@ -273,6 +280,18 @@
       font-size: 12px;
       color: var(--muted);
     }
+    .gallery-hint {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(15, 23, 42, 0.75);
+      color: #fff;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
 
     .node-options {
       margin: 6px 0;
@@ -287,6 +306,16 @@
       padding: 4px 10px;
       font-size: 12px;
       color: var(--muted);
+    }
+    .option-chip.is-link {
+      border-style: solid;
+      color: var(--accent);
+      cursor: pointer;
+      transition: background .15s ease, border-color .15s ease;
+    }
+    .option-chip.is-link:hover {
+      background: rgba(37, 99, 235, 0.08);
+      border-color: rgba(37, 99, 235, 0.45);
     }
     .ghost-link {
       display: inline-flex;
@@ -311,7 +340,100 @@
       color: var(--muted);
       margin-top: 4px;
     }
+    body.modal-open {
+      overflow: hidden;
+    }
+    .place-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+    .place-modal.is-visible {
+      display: flex;
+    }
+    .place-modal__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(2px);
+    }
+    .place-modal__dialog {
+      position: relative;
+      background: #fff;
+      border-radius: 22px;
+      padding: 24px;
+      max-width: 640px;
+      width: 100%;
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.35);
+      z-index: 1;
+    }
+    .place-modal__close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      border: none;
+      background: rgba(15, 23, 42, 0.06);
+      border-radius: 999px;
+      width: 32px;
+      height: 32px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .place-modal__content h3 {
+      margin: 0 0 6px;
+    }
+    .place-modal__media {
+      border-radius: 18px;
+      overflow: hidden;
+      margin: 10px 0 16px;
+      max-height: 260px;
+    }
+    .place-modal__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .place-modal__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .place-modal__meta span {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      display: block;
+    }
+    .place-modal__meta strong {
+      font-size: 15px;
+      display: block;
+    }
+    .place-modal__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .place-modal__actions a {
+      border: 1px solid rgba(37, 99, 235, 0.35);
+      border-radius: 999px;
+      padding: 6px 14px;
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: 600;
+    }
     @media (max-width: 640px) {
+      .place-modal__dialog {
+        padding: 18px;
+        border-radius: 18px;
+      }
       .timeline {
         padding-left: 38px;
       }
@@ -390,6 +512,14 @@
     </div>
   </div>
 
+  <div class="place-modal" id="placeModal" aria-hidden="true">
+    <div class="place-modal__backdrop" id="placeModalBackdrop"></div>
+    <div class="place-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="placeModalTitle">
+      <button id="placeModalClose" class="place-modal__close" type="button" aria-label="Uždaryti">×</button>
+      <div id="placeModalContent" class="place-modal__content"></div>
+    </div>
+  </div>
+
   <script>
     const typeLabels = {
       trip: 'Kelionė',
@@ -399,11 +529,58 @@
       flight: 'Skrydis',
       node: 'Mazgas'
     };
-    const typeFallbackCovers = {
-      trip: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop',
-      legs: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1600&auto=format&fit=crop',
-      flight: 'https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?q=80&w=1600&auto=format&fit=crop'
+    const typeFallbackPools = {
+      trip: [
+        'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1600&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1500534320945-93519e822c44?q=80&w=1600&auto=format&fit=crop'
+      ],
+      legs: [
+        'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1505761671935-60b3a7427bad?q=80&w=1600&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop'
+      ],
+      stage: [
+        'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1600&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop'
+      ],
+      day: [
+        'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1600&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1600&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=1600&auto=format&fit=crop'
+      ],
+      flight: [
+        'https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?q=80&w=1600&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1600&auto=format&fit=crop'
+      ],
+      node: [
+        'https://images.unsplash.com/photo-1500534320945-93519e822c44?q=80&w=1600&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=1600&auto=format&fit=crop'
+      ]
     };
+
+    function hashString(input = ''){
+      return Array.from(input).reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+    }
+
+    function pickFallbackCover(type, id){
+      const pool = typeFallbackPools[type] || typeFallbackPools.node;
+      if (!pool || !pool.length) return null;
+      const hash = hashString(`${type}-${id || ''}`);
+      return pool[hash % pool.length];
+    }
+
+    function slugify(text = ''){
+      return text.toString().toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'item';
+    }
+
+    function buildPlaceId(stageKey, name, index = 0){
+      const stageSlug = slugify(stageKey || 'global');
+      const nameSlug = slugify(name || `vietove-${index}`);
+      return `${stageSlug}__${nameSlug}`;
+    }
 
     const bodyEl = document.getElementById('timelineBody');
     const timelineEl = document.getElementById('timeline');
@@ -424,11 +601,17 @@
 
     let flattenedNodes = [];
     let stageCatalogMap = {};
+    let placeIndex = new Map();
     let showAllDays = false;
     let cachedDays = [];
     let activeStageFilter = '';
     let nodeById = new Map();
     let activeStageAncestors = new Set();
+
+    const placeModalEl = document.getElementById('placeModal');
+    const placeModalContentEl = document.getElementById('placeModalContent');
+    const placeModalBackdropEl = document.getElementById('placeModalBackdrop');
+    const placeModalCloseBtn = document.getElementById('placeModalClose');
 
     function deriveStageFilter(label){
       if (!label) return null;
@@ -462,14 +645,35 @@
     }
 
     function buildStageCatalogMap(catalog){
+      placeIndex = new Map();
       const map = {};
       if (!catalog || !Array.isArray(catalog.stages)) return map;
       catalog.stages.forEach(stage => {
-        const stageKey = deriveStageFilter(stage.title || '');
+        const stageKey = deriveStageFilter(stage.title || '') || slugify(stage.title || '');
         if (!stageKey) return;
-        map[stageKey] = stage.items || [];
+        const items = stage.items || [];
+        map[stageKey] = items;
+        items.forEach((item, idx) => {
+          const placeId = buildPlaceId(stageKey, item?.name, idx);
+          placeIndex.set(placeId, {
+            ...item,
+            id: placeId,
+            stageKey,
+            stageTitle: stage.title || stageKey,
+            ordinal: idx + 1
+          });
+        });
       });
       return map;
+    }
+
+    function getSourceHost(url){
+      if (!url) return '';
+      try {
+        return new URL(url).hostname.replace(/^www\./, '');
+      } catch (err) {
+        return 'Nuoroda';
+      }
     }
 
     function getStageCover(stageKey){
@@ -679,7 +883,7 @@
         card.appendChild(stageNote);
       }
 
-      const coverUrl = node.cover || getStageCover(node.stageFilter) || typeFallbackCovers[node.type] || null;
+      const coverUrl = node.cover || getStageCover(node.stageFilter) || pickFallbackCover(node.type, node.id);
       if (coverUrl) {
         const media = document.createElement('div');
         media.className = 'node-cover';
@@ -702,10 +906,16 @@
       if (node.options && node.options.length){
         const optionsBox = document.createElement('div');
         optionsBox.className = 'node-options';
-        node.options.forEach(opt => {
-          const chip = document.createElement('span');
-          chip.className = 'option-chip';
+        node.options.forEach((opt, idx) => {
+          const placeId = node.stageFilter ? buildPlaceId(node.stageFilter, opt, idx) : '';
+          const hasDetail = placeId && placeIndex.has(placeId);
+          const chip = document.createElement(hasDetail ? 'button' : 'span');
+          chip.className = 'option-chip' + (hasDetail ? ' is-link' : '');
           chip.textContent = opt;
+          if (hasDetail){
+            chip.type = 'button';
+            chip.dataset.placeId = placeId;
+          }
           optionsBox.appendChild(chip);
         });
         card.appendChild(optionsBox);
@@ -716,14 +926,19 @@
         if (galleryItems && galleryItems.length) {
           const gallery = document.createElement('div');
           gallery.className = 'node-gallery';
-          gallery.innerHTML = galleryItems.slice(0,3).map(item => `
-            <div class="gallery-card">
+          gallery.innerHTML = galleryItems.slice(0,3).map((item, idx) => {
+            const placeId = buildPlaceId(node.stageFilter, item?.name, idx);
+            const hasDetail = placeIndex.has(placeId);
+            return `
+            <div class="gallery-card"${hasDetail ? ` data-place-id="${placeId}"` : ''}>
               ${item.image ? `<img src="${item.image}" alt="${item.name || ''}" />` : ''}
               <div class="gallery-body">
                 <strong>${item.name || 'Be pavadinimo'}</strong>
                 ${item.desc ? `<span>${item.desc}</span>` : ''}
               </div>
-            </div>`).join('');
+              ${hasDetail ? '<span class="gallery-hint">Plačiau</span>' : ''}
+            </div>`;
+          }).join('');
           card.appendChild(gallery);
         }
       }
@@ -737,6 +952,24 @@
       }
 
       return card;
+    }
+
+    if (bodyEl){
+      bodyEl.addEventListener('click', handlePlaceClick);
+    }
+
+    function handlePlaceClick(event){
+      const galleryCard = event.target.closest('.gallery-card[data-place-id]');
+      if (galleryCard){
+        event.preventDefault();
+        openPlaceModal(galleryCard.dataset.placeId);
+        return;
+      }
+      const optionChip = event.target.closest('.option-chip[data-place-id]');
+      if (optionChip){
+        event.preventDefault();
+        openPlaceModal(optionChip.dataset.placeId);
+      }
     }
 
     function renderTimeline(nodes){
@@ -786,6 +1019,56 @@
         svgEl.appendChild(path);
       });
     }
+
+    function openPlaceModal(placeId){
+      if (!placeModalEl || !placeModalContentEl) return;
+      const place = placeIndex.get(placeId);
+      if (!place) return;
+      placeModalContentEl.innerHTML = buildPlaceModalContent(place);
+      placeModalEl.classList.add('is-visible');
+      placeModalEl.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+    }
+
+    function closePlaceModal(){
+      if (!placeModalEl) return;
+      placeModalEl.classList.remove('is-visible');
+      placeModalEl.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+    }
+
+    function buildPlaceModalContent(place){
+      const image = place.image || getStageCover(place.stageKey) || pickFallbackCover('stage', place.stageKey || place.id);
+      const stageLink = place.stageKey ? `./places.html?stage=${encodeURIComponent(place.stageKey)}` : '';
+      const host = place.source ? getSourceHost(place.source) : '';
+      return `
+        ${place.stageKey ? `<span class="node-pill">${place.stageKey}</span>` : ''}
+        <h3 id="placeModalTitle">${place.name || 'Be pavadinimo'}</h3>
+        <div class="place-modal__meta">
+          ${place.stageTitle ? `<div><span>Etapas</span><strong>${place.stageTitle}</strong></div>` : ''}
+          ${place.ordinal ? `<div><span>Pozicija</span><strong>#${place.ordinal}</strong></div>` : ''}
+          ${host ? `<div><span>Šaltinis</span><strong>${host}</strong></div>` : ''}
+        </div>
+        ${image ? `<div class="place-modal__media"><img src="${image}" alt="${place.name || ''}" /></div>` : ''}
+        ${place.desc ? `<p>${place.desc}</p>` : '<p class="muted">Papildomas aprašas ruošiamas.</p>'}
+        ${place.source ? `<p><a href="${place.source}" target="_blank" rel="noopener">Pirminis šaltinis</a></p>` : ''}
+        <div class="place-modal__actions">
+          ${stageLink ? `<a href="${stageLink}">Atverti etapą</a>` : ''}
+          <a href="./plan.html">Kelionės planas</a>
+        </div>`;
+    }
+
+    [placeModalBackdropEl, placeModalCloseBtn].forEach(el => {
+      if (el){
+        el.addEventListener('click', () => closePlaceModal());
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && placeModalEl?.classList.contains('is-visible')){
+        closePlaceModal();
+      }
+    });
 
     function init(){
       if (statusEl) statusEl.textContent = 'Duomenys kraunami…';
