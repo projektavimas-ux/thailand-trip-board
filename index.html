@@ -4,518 +4,564 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Thailand Control · Apžvalga</title>
-  <link rel="stylesheet" href="./styles/site.css" />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              500: '#14b8a6', // Teal
+              600: '#0d9488',
+              900: '#134e4a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Paslepiame elementus pagal nutylėjimą, kol Supabase nuspręs auth būseną */
+    .hidden { display: none !important; }
+    
+    /* Hover ir transition efektai */
+    .nav-link { transition: all 0.2s; }
+    .nav-link.active { border-bottom: 2px solid #14b8a6; color: #14b8a6; font-weight: 500; }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+  </style>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body>
-  <div class="wrap">
-    <h1>🇹🇭 Thailand Control · Apžvalga</h1>
-    <p class="muted">OUT: VNO/RIX → Pietų Tailandas · IN: BKK → VNO/RIX · 2026‑12‑11 → 2027‑01‑02 · 4 suaugę</p>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased min-h-screen">
 
-    <nav class="links">
-      <a class="active" href="./index.html">Apžvalga</a>
-      <a href="./flights.html">Skrydžiai</a>
-      <a href="./plan.html">Kelionės planas</a>
-      <a href="./routes-vertical.html">Maršruto tinklas</a>
-      <a href="./places.html">Vietos ir balsai</a>
-    </nav>
-
-    <div id="configBox" class="card hidden">
-      <strong>Supabase konfigūracija reikalinga.</strong> Įrašyk <code>window.SUPABASE_URL</code> ir <code>window.SUPABASE_ANON_KEY</code> faile <code>supabase-config.v2.js</code>.
-    </div>
-
-    <div id="authBox" class="card hidden">
-      <h3>Prisijungimas</h3>
-      <p class="muted">Ši platforma skirta tik komandai. Naudok tą patį Supabase el. paštą.</p>
-      <input id="emailInput" placeholder="El. paštas" />
-      <input id="passInput" type="password" placeholder="Slaptažodis" />
-      <div class="grid-2">
-        <button id="loginBtn">Prisijungti</button>
-        <button id="signupBtn" class="secondary">Registruoti</button>
-      </div>
-      <p id="authStatus" class="muted"></p>
-    </div>
-
-    <div id="appBox" class="hidden">
-      <div class="card topbar">
-        <div>
-          <div id="who"></div>
-          <p class="muted">Visi balsai ir pasiūlymai saugomi Supabase lentelėse „places“ ir „votes“.</p>
-        </div>
-        <button id="logoutBtn" class="secondary">Atsijungti</button>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <div class="topbar">
-            <div>
-              <h2>Top balsai</h2>
-              <p class="muted">Automatiškai rikiuojama pagal balsų skaičių.</p>
-            </div>
-            <a class="nav-link" href="./places.html">Valdyti vietas</a>
-          </div>
-          <div id="topPlaces"></div>
-        </div>
-        <div class="card">
-          <div class="topbar">
-            <div>
-              <h2>Etapų santrauka</h2>
-              <p class="muted">Gyvas vaizdas pagal `stage` lauką.</p>
-            </div>
-            <a class="nav-link" href="./plan.html">Žiūrėti planą</a>
-          </div>
-          <div id="stageSummary"></div>
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <h2>Kelionės ašis</h2>
-          <p class="muted">`data/route.json` – visada matomas naujausias kelionės stuburas.</p>
-          <div id="routeList"></div>
-        </div>
-        <div class="card">
-          <h2>Komandos užduotys</h2>
-          <p class="muted">Stipriausių prioritetų sąrašas iš `data/todos.json`.</p>
-          <div id="todoList"></div>
-        </div>
-      </div>
-
-      <div class="card" id="itineraryPreviewCard">
-        <div class="topbar">
-          <div>
-            <h2>13 d. planas</h2>
-            <p class="muted">Trumpa ištrauka iš `data/itinerary.json`.</p>
-          </div>
-          <a class="nav-link" href="./plan.html">Rodyti viską</a>
-        </div>
-        <div id="itineraryPreview"></div>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <div class="topbar">
-            <div>
-              <h2>Naujausi pasiūlymai</h2>
-              <p class="muted">Pagal `places.created_at` lauką Supabase.</p>
-            </div>
-          </div>
-          <div id="recentPlaces"></div>
-        </div>
-        <div class="card">
-          <div class="topbar">
-            <div>
-              <h2>Balsų pulsas</h2>
-              <p class="muted">Apibendrinama iš `votes` lentelės.</p>
-            </div>
-            <button id="exportVotesBtn" class="secondary" disabled>Eksportas (JSON)</button>
-          </div>
-          <div id="voteAnalytics"></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="topbar">
-          <div>
-            <h2>Signalų radaras</h2>
-            <p class="muted">Automatiškai kraunama iš `data/signal_radar.json`.</p>
-          </div>
-          <span id="intelStamp" class="muted"></span>
-        </div>
-        <div id="intelBox" class="intel-grid"></div>
-        <div id="intelSignals" class="intel-signals"></div>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <h2>Biudžetas</h2>
-          <p class="muted">Rezervai patikslinami prieš pirkimus.</p>
-          <div id="budgetList"></div>
-        </div>
-        <div class="card">
-          <h2>Skrydžių monitorius</h2>
-          <p class="muted">Trumpa ištrauka iš „Skrydžių“ puslapio.</p>
-          <div id="flightSnapshot"></div>
-          <a class="nav-link" href="./flights.html" style="margin-top:12px;display:inline-block">Pilna suvestinė</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Workflow taisyklės</h2>
-        <ul>
-          <li>Cron tikrina OPEN-JAW pasiūlymus (Skyscanner · Google Flights · Expedia · Kayak) ir charterių rinką (TEZ TOUR, kiti LT organizatoriai).</li>
-          <li>Vietos ir balsai laikomi Supabase; planas generuojamas automatiškai pagal balsus.</li>
-          <li>Biudžetas, maršrutas ir užduotys laikomi versijuotose JSON failuose – pokyčiai atsispindi čia ir Word dokumentuose.</li>
-        </ul>
-      </div>
+  <!-- Hero Section -->
+  <div class="relative bg-brand-900 h-64 sm:h-80 w-full overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=1920&q=80" alt="Thailand" class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay">
+    <div class="absolute inset-0 bg-gradient-to-t from-brand-900/90 to-transparent"></div>
+    
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-10">
+      <h1 class="text-4xl sm:text-5xl font-display font-bold text-white mb-2 drop-shadow-md">🇹🇭 Thailand Control</h1>
+      <p class="text-brand-100 text-sm sm:text-base font-medium max-w-2xl drop-shadow">
+        OUT: VNO/RIX → Pietų Tailandas <span class="mx-2 opacity-50">•</span> IN: BKK → VNO/RIX <span class="mx-2 opacity-50">•</span> 2026‑12‑11 → 2027‑01‑02 <span class="mx-2 opacity-50">•</span> 4 suaugę
+      </p>
     </div>
   </div>
 
+  <!-- Navigation -->
+  <div class="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex overflow-x-auto py-4 space-x-8 text-sm sm:text-base font-medium text-gray-500 whitespace-nowrap">
+        <a class="nav-link active pb-1 text-gray-900" href="./index.html">Apžvalga</a>
+        <a class="nav-link hover:text-gray-900 pb-1" href="./flights.html">Skrydžiai</a>
+        <a class="nav-link hover:text-gray-900 pb-1" href="./plan.html">Kelionės planas</a>
+        <a class="nav-link hover:text-gray-900 pb-1" href="./routes-vertical.html">Maršruto tinklas</a>
+        <a class="nav-link hover:text-gray-900 pb-1" href="./places.html">Vietos ir balsai</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Main Content Wrap -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+
+    <!-- Config Alert -->
+    <div id="configBox" class="hidden mb-6 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-md shadow-sm">
+      <div class="flex">
+        <div class="ml-3">
+          <p class="text-sm text-yellow-700">
+            <strong class="font-medium text-yellow-800">Supabase konfigūracija reikalinga.</strong> Įrašyk <code>window.SUPABASE_URL</code> ir <code>window.SUPABASE_ANON_KEY</code> faile <code>supabase-config.v2.js</code>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Auth Box -->
+    <div id="authBox" class="hidden max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 p-8 mt-10">
+      <h3 class="text-2xl font-display font-bold text-gray-900 mb-2">Prisijungimas</h3>
+      <p class="text-sm text-gray-500 mb-6">Ši platforma skirta tik komandai. Naudok tą patį Supabase el. paštą.</p>
+      
+      <div class="space-y-4">
+        <div>
+          <input id="emailInput" type="email" placeholder="El. paštas" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" />
+        </div>
+        <div>
+          <input id="passInput" type="password" placeholder="Slaptažodis" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" />
+        </div>
+        <div class="flex space-x-3 pt-2">
+          <button id="loginBtn" class="flex-1 bg-brand-600 hover:bg-brand-500 text-white font-medium py-3 px-4 rounded-lg transition-colors shadow-sm">Prisijungti</button>
+          <button id="signupBtn" class="flex-1 bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-gray-300 transition-colors shadow-sm">Registruoti</button>
+        </div>
+        <p id="authStatus" class="text-sm text-center text-red-500 mt-2 min-h-[20px]"></p>
+      </div>
+    </div>
+
+    <!-- App Box -->
+    <div id="appBox" class="hidden space-y-6 sm:space-y-8">
+      
+      <!-- Topbar / User info -->
+      <div class="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div id="who" class="text-lg font-display font-semibold text-gray-900"></div>
+          <p class="text-sm text-gray-500 mt-1">Visi balsai ir pasiūlymai saugomi Supabase lentelėse.</p>
+        </div>
+        <button id="logoutBtn" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-lg transition-colors">Atsijungti</button>
+      </div>
+
+      <!-- Two Col Grid 1 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        <!-- Top Places -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+          <div class="p-5 border-b border-gray-100 bg-gray-50/50 flex justify-between items-start">
+            <div>
+              <h2 class="text-lg font-display font-semibold text-gray-900">Top balsai</h2>
+              <p class="text-xs text-gray-500 mt-1">Automatiškai rikiuojama.</p>
+            </div>
+            <a href="./places.html" class="text-sm font-medium text-brand-600 hover:text-brand-500">Valdyti &rarr;</a>
+          </div>
+          <div id="topPlaces" class="p-5 flex-1 overflow-y-auto max-h-80"></div>
+        </div>
+
+        <!-- Stage Summary -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+          <div class="p-5 border-b border-gray-100 bg-gray-50/50 flex justify-between items-start">
+            <div>
+              <h2 class="text-lg font-display font-semibold text-gray-900">Etapų santrauka</h2>
+              <p class="text-xs text-gray-500 mt-1">Gyvas vaizdas pagal sritis.</p>
+            </div>
+            <a href="./plan.html" class="text-sm font-medium text-brand-600 hover:text-brand-500">Planas &rarr;</a>
+          </div>
+          <div id="stageSummary" class="p-5 flex-1 overflow-y-auto max-h-80"></div>
+        </div>
+      </div>
+
+      <!-- Two Col Grid 2 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        <!-- Route List -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+          <div class="p-5 border-b border-gray-100 bg-gray-50/50">
+            <h2 class="text-lg font-display font-semibold text-gray-900">Kelionės ašis</h2>
+            <p class="text-xs text-gray-500 mt-1">`data/route.json` – kelionės stuburas.</p>
+          </div>
+          <div id="routeList" class="p-5 flex-1 overflow-y-auto max-h-80"></div>
+        </div>
+
+        <!-- Todos -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+          <div class="p-5 border-b border-gray-100 bg-gray-50/50">
+            <h2 class="text-lg font-display font-semibold text-gray-900">Komandos užduotys</h2>
+            <p class="text-xs text-gray-500 mt-1">Prioritetai iš `data/todos.json`.</p>
+          </div>
+          <div id="todoList" class="p-5 flex-1 overflow-y-auto max-h-80 space-y-2"></div>
+        </div>
+      </div>
+
+      <!-- Itinerary Preview -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-5 border-b border-gray-100 bg-gray-50/50 flex justify-between items-start">
+          <div>
+            <h2 class="text-lg font-display font-semibold text-gray-900">13 d. planas</h2>
+            <p class="text-xs text-gray-500 mt-1">Ištrauka iš `data/itinerary.json`.</p>
+          </div>
+          <a href="./plan.html" class="text-sm font-medium text-brand-600 hover:text-brand-500">Visi &rarr;</a>
+        </div>
+        <div id="itineraryPreview" class="p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+      </div>
+
+      <!-- Two Col Grid 3 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        <!-- Recent Places -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+          <div class="p-5 border-b border-gray-100 bg-gray-50/50">
+            <h2 class="text-lg font-display font-semibold text-gray-900">Naujausi pasiūlymai</h2>
+            <p class="text-xs text-gray-500 mt-1">Paskutiniai įrašai Supabase.</p>
+          </div>
+          <div id="recentPlaces" class="p-5 flex-1 overflow-y-auto max-h-80"></div>
+        </div>
+
+        <!-- Vote Analytics -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+          <div class="p-5 border-b border-gray-100 bg-gray-50/50 flex justify-between items-start">
+            <div>
+              <h2 class="text-lg font-display font-semibold text-gray-900">Balsų pulsas</h2>
+              <p class="text-xs text-gray-500 mt-1">Apibendrinama iš lentelės.</p>
+            </div>
+            <button id="exportVotesBtn" class="text-xs font-medium px-3 py-1.5 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 disabled:opacity-50 transition-colors" disabled>JSON</button>
+          </div>
+          <div id="voteAnalytics" class="p-5 flex-1"></div>
+        </div>
+      </div>
+
+      <!-- Intel Radar -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-5 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center">
+          <div>
+            <h2 class="text-lg font-display font-semibold text-gray-900">Signalų radaras</h2>
+            <p class="text-xs text-gray-500 mt-1">Kraunama iš `data/signal_radar.json`.</p>
+          </div>
+          <span id="intelStamp" class="text-xs text-gray-400 font-medium"></span>
+        </div>
+        <div class="p-5 bg-brand-50/30 border-b border-gray-100">
+          <div id="intelBox" class="flex flex-wrap gap-3"></div>
+        </div>
+        <div id="intelSignals" class="p-5 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"></div>
+      </div>
+
+      <!-- Two Col Grid 4 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        <!-- Budget -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+          <div class="p-5 border-b border-gray-100 bg-gray-50/50">
+            <h2 class="text-lg font-display font-semibold text-gray-900">Biudžetas</h2>
+            <p class="text-xs text-gray-500 mt-1">Rezervai patikslinami prieš pirkimus.</p>
+          </div>
+          <div id="budgetList" class="p-5 flex-1 overflow-y-auto max-h-80 space-y-3"></div>
+        </div>
+
+        <!-- Flights Monitor -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+          <div class="p-5 border-b border-gray-100 bg-gray-50/50 flex justify-between items-start">
+            <div>
+              <h2 class="text-lg font-display font-semibold text-gray-900">Skrydžių monitorius</h2>
+              <p class="text-xs text-gray-500 mt-1">Trumpa ištrauka.</p>
+            </div>
+            <a href="./flights.html" class="text-sm font-medium text-brand-600 hover:text-brand-500">Visi &rarr;</a>
+          </div>
+          <div id="flightSnapshot" class="p-5 flex-1 overflow-y-auto max-h-80 space-y-4"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
   <script src="./supabase-config.v2.js"></script>
   <script src="./scripts/supabase-page.js"></script>
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-    function truncate(text = '', limit = 120){
-      if (!text) return '';
-      return text.length > limit ? text.slice(0, limit).trim() + '…' : text;
-    }
-
-    function formatTimestamp(value){
-      if (!value) return 'Nenurodytas laikas';
-      const date = new Date(value);
-      if (Number.isNaN(date.getTime())) return 'Nenurodytas laikas';
-      return date.toLocaleString('lt-LT', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-    }
-
-    const weekdayFormatter = new Intl.DateTimeFormat('lt-LT', { weekday: 'short' });
-    const dayMonthFormatter = new Intl.DateTimeFormat('lt-LT', { month: 'short', day: 'numeric' });
-
-    function buildDailyVoteSeries(votes){
-      const series = [];
-      const indexMap = {};
-      const today = new Date();
-      for (let i = 6; i >= 0; i -= 1){
-        const d = new Date(today);
-        d.setHours(0,0,0,0);
-        d.setDate(d.getDate() - i);
-        const key = d.toISOString().slice(0,10);
-        series.push({ key, label: weekdayFormatter.format(d).toUpperCase(), full: dayMonthFormatter.format(d), count: 0 });
-        indexMap[key] = series.length - 1;
+      function truncate(text = '', limit = 120){
+        if (!text) return '';
+        return text.length > limit ? text.slice(0, limit).trim() + '…' : text;
       }
-      (votes || []).forEach(vote => {
-        if (!vote.created_at) return;
-        const date = new Date(vote.created_at);
-        if (Number.isNaN(date.getTime())) return;
-        const key = date.toISOString().slice(0,10);
-        const idx = indexMap[key];
-        if (idx === undefined) return;
-        series[idx].count += 1;
-      });
-      return series;
-    }
 
-    function downloadJson(payload, filename){
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    }
-
-    let latestVoteSummary = null;
-    const exportBtn = document.getElementById('exportVotesBtn');
-    function toggleExportAvailability(enabled){
-      if (exportBtn){
-        exportBtn.disabled = !enabled;
+      function formatTimestamp(value){
+        if (!value) return 'Nenurodytas laikas';
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return 'Nenurodytas laikas';
+        return date.toLocaleString('lt-LT', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
       }
-    }
-    toggleExportAvailability(false);
-    if (exportBtn){
-      exportBtn.addEventListener('click', () => {
-        if (!latestVoteSummary) return;
-        const stamp = new Date().toISOString().slice(0,10);
-        downloadJson(latestVoteSummary, `vote-pulse-${stamp}.json`);
-      });
-    }
 
-    function renderTop(places, voteMap){
-      const box = document.getElementById('topPlaces');
-      if (!places.length){
-        box.innerHTML = '<p class="muted">Dar nėra įrašų.</p>';
-        return;
-      }
-      const sorted = [...places].sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0)).slice(0,5);
-      box.innerHTML = sorted.map((p,i)=>`
-        <div class="plan-line">
-          <strong>${i+1}.</strong> ${p.name}<br/>
-          <span class="muted">${voteMap[p.id]||0} bals.</span>
-        </div>`).join('');
-    }
+      const weekdayFormatter = new Intl.DateTimeFormat('lt-LT', { weekday: 'short' });
+      const dayMonthFormatter = new Intl.DateTimeFormat('lt-LT', { month: 'short', day: 'numeric' });
 
-    function renderStages(places, voteMap){
-      const box = document.getElementById('stageSummary');
-      if (!places.length){
-        box.innerHTML = '<p class="muted">Nėra duomenų.</p>';
-        return;
-      }
-      const grouped = {};
-      places.forEach(p=>{
-        const key = p.stage || 'Nepriskirta';
-        grouped[key] = grouped[key] || {count:0,balsai:0};
-        grouped[key].count += 1;
-        grouped[key].balsai += voteMap[p.id]||0;
-      });
-      box.innerHTML = Object.entries(grouped).map(([stage,data])=>`
-        <div class="plan-line">
-          <strong>${stage}</strong><br/>
-          <span class="muted">Vietų: ${data.count} · Balsų: ${data.balsai}</span>
-        </div>`).join('');
-    }
-
-    function renderRecent(places){
-      const box = document.getElementById('recentPlaces');
-      if (!box) return;
-      if (!places.length){
-        box.innerHTML = '<p class="muted">Dar nėra pasiūlymų.</p>';
-        return;
-      }
-      const sorted = [...places]
-        .sort((a,b)=> new Date(b.created_at || 0) - new Date(a.created_at || 0))
-        .slice(0,5);
-      box.innerHTML = sorted.map(p=>`
-        <div class="plan-line">
-          <strong>${p.name}</strong><br/>
-          <span class="muted">${p.stage || 'Etapas nenurodytas'} · ${formatTimestamp(p.created_at)}</span><br/>
-          ${p.description ? `<small>${truncate(p.description, 140)}</small>` : ''}
-        </div>
-      `).join('');
-    }
-
-    function renderVotePulse(places, votes, voteMap){
-      const box = document.getElementById('voteAnalytics');
-      if (!box) return;
-      if (!votes.length){
-        box.innerHTML = '<p class="muted">Dar niekas nebalsavo.</p>';
-        return;
-      }
-      const totalVotes = votes.length;
-      const uniqueVoters = new Set(votes.map(v=>v.user_id).filter(Boolean)).size;
-      const avgVotesValue = places.length ? (totalVotes / places.length) : 0;
-      const avgVotes = avgVotesValue.toFixed(1);
-      const stageScores = {};
-      places.forEach(p => {
-        const key = p.stage || 'Kita';
-        stageScores[key] = (stageScores[key] || 0) + (voteMap[p.id] || 0);
-      });
-      const topStage = Object.entries(stageScores).sort((a,b)=>b[1]-a[1])[0];
-      const lastVoteTs = votes.reduce((latest, vote) => {
-        const ts = vote.created_at ? new Date(vote.created_at).getTime() : 0;
-        return ts > latest ? ts : latest;
-      }, 0);
-      const dailySeries = buildDailyVoteSeries(votes);
-      const maxDaily = Math.max(...dailySeries.map(row => row.count), 1);
-      const statsHtml = `
-        <div class="plan-line"><strong>${totalVotes}</strong><br><span class="muted">Viso balsų</span></div>
-        <div class="plan-line"><strong>${uniqueVoters || '–'}</strong><br><span class="muted">Aktyvūs dalyviai</span></div>
-        <div class="plan-line"><strong>${avgVotes}</strong><br><span class="muted">Balsų / vietą</span></div>
-        ${topStage ? `<div class="plan-line"><strong>${topStage[0]}</strong><br><span class="muted">${topStage[1]} bals. šiame etape</span></div>` : ''}
-        <div class="plan-line"><strong>${lastVoteTs ? formatTimestamp(lastVoteTs) : '–'}</strong><br><span class="muted">Paskutinis balsas</span></div>
-      `;
-      const sparkContent = dailySeries.some(row => row.count > 0)
-        ? dailySeries.map(row => `
-          <div class="spark-row">
-            <span class="spark-day" title="${row.full}">${row.label}</span>
-            <div class="spark-bar"><span style="width:${(row.count / maxDaily) * 100}%"></span></div>
-            <span class="spark-count">${row.count}</span>
-          </div>
-        `).join('')
-        : '<p class="muted spark-empty">Per paskutines 7 dienas balsų nefiksuota.</p>';
-      box.innerHTML = `
-        <div class="pulse-stats">${statsHtml}</div>
-        <div class="spark-rows">
-          <div class="spark-header">
-            <strong>Balsų dinamika (7 d.)</strong>
-            <span class="muted">Pagal votes.created_at</span>
-          </div>
-          ${sparkContent}
-        </div>
-      `;
-      const summary = {
-        generated_at: new Date().toISOString(),
-        totals: {
-          votes: totalVotes,
-          uniqueVoters,
-          avgPerPlace: avgVotesValue,
-          lastVoteIso: lastVoteTs ? new Date(lastVoteTs).toISOString() : null,
-          placesTracked: places.length
-        },
-        topStage: topStage ? { name: topStage[0], votes: topStage[1] } : null,
-        stageScores,
-        daily: dailySeries.map(row => ({ date: row.key, label: row.label, full: row.full, count: row.count }))
-      };
-      return summary;
-    }
-
-    function renderRoute(route){
-      const box = document.getElementById('routeList');
-      if (!route?.days?.length){ box.innerHTML='<p class="muted">Maršrutas dar nepateiktas.</p>'; return; }
-      box.innerHTML = route.days.map(d=>`
-        <div class="plan-line"><strong>${d.day}</strong><br>${d.plan}</div>
-      `).join('');
-    }
-
-    function renderTodos(todos){
-      const box = document.getElementById('todoList');
-      if (!todos?.items?.length){ box.innerHTML='<p class="muted">Užduočių nėra.</p>'; return; }
-      box.innerHTML = todos.items.map(item=>`<div class="plan-line">${item}</div>`).join('');
-    }
-
-    function renderBudget(budget){
-      const box = document.getElementById('budgetList');
-      if (!budget?.lines?.length){ box.innerHTML='<p class="muted">Biudžetas nepateiktas.</p>'; return; }
-      box.innerHTML = budget.lines.map(line=>`
-        <div class="plan-line"><strong>${line.name}</strong><br><span class="muted">${line.amount}</span></div>
-      `).join('');
-    }
-
-    function renderItineraryPreview(plan){
-      const box = document.getElementById('itineraryPreview');
-      if (!box) return;
-      if (!plan?.days?.length){
-        box.innerHTML = '<p class="muted">13 d. planas ruošiamas.</p>';
-        return;
-      }
-      const preview = plan.days.slice(0,4);
-      box.innerHTML = preview.map(day=>`
-        <div class="plan-line">
-          <strong>${day.day}</strong><br/>
-          <span class="muted">${day.area || ''}${day.theme ? ' · '+day.theme : ''}</span>
-        </div>
-      `).join('');
-    }
-
-    function renderFlightSnapshot(data){
-      const box = document.getElementById('flightSnapshot');
-      if (!data?.items?.length){ box.innerHTML='<p class="muted">Nėra pasiūlymų.</p>'; return; }
-      const top = data.items.slice(0,2);
-      box.innerHTML = top.map(item=>`
-        <div class="plan-line">
-          <strong>${item.title}</strong><br>
-          ${item.price}<br>
-          <a href="${item.url}" target="_blank">Nuoroda</a><br>
-          <span class="muted">${item.status}</span>
-        </div>
-      `).join('');
-    }
-
-    function extractCheapestFlight(flights){
-      if (!flights?.items?.length) return null;
-      let best = null;
-      flights.items.forEach(item => {
-        const match = (item.price || '').replace(/,/g,'').match(/(\d+(?:\.\d+)?)/);
-        const value = match ? Number(match[1]) : null;
-        if (!value) return;
-        if (!best || value < best.value){
-          best = { value, title: item.title }
+      function buildDailyVoteSeries(votes){
+        const series = [];
+        const indexMap = {};
+        const today = new Date();
+        for (let i = 6; i >= 0; i -= 1){
+          const d = new Date(today);
+          d.setHours(0,0,0,0);
+          d.setDate(d.getDate() - i);
+          const key = d.toISOString().slice(0,10);
+          series.push({ key, label: weekdayFormatter.format(d).toUpperCase(), full: dayMonthFormatter.format(d), count: 0 });
+          indexMap[key] = series.length - 1;
         }
-      });
-      return best;
-    }
+        (votes || []).forEach(vote => {
+          if (!vote.created_at) return;
+          const date = new Date(vote.created_at);
+          if (Number.isNaN(date.getTime())) return;
+          const key = date.toISOString().slice(0,10);
+          const idx = indexMap[key];
+          if (idx === undefined) return;
+          series[idx].count += 1;
+        });
+        return series;
+      }
 
-    function renderIntel(meta){
-      const box = document.getElementById('intelBox');
-      if (!box) return;
-      const chips = [];
-      chips.push({ label: 'Maršruto dienų', value: meta.routeDays ?? '–', note: 'route.json' });
-      chips.push({ label: 'Itinerario dienų', value: meta.itineraryDays ?? '–', note: 'itinerary.json' });
-      chips.push({ label: 'Užduotys', value: meta.todoCount ?? '–', note: 'todos.json' });
-      chips.push({ label: 'Biudžeto eilutės', value: meta.budgetLines ?? '–', note: 'budget.json' });
-      chips.push({ label: 'Skrydžių pasiūlymai', value: meta.flightCount ?? '–', note: 'flights.json' });
-      if (typeof meta.signalCount === 'number'){
-        chips.push({ label: 'Signalų radaras', value: meta.signalCount, note: 'signal_radar.json' });
+      function downloadJson(payload, filename){
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
       }
-      if (meta.cheapest){
-        chips.push({ label: 'Pigiausias OUT', value: `$${meta.cheapest.value}`, note: meta.cheapest.title });
-      }
-      box.innerHTML = chips.map(chip => `
-        <div class="intel-chip">
-          <strong>${chip.value}</strong>
-          <span class="muted">${chip.label}</span>
-          ${chip.note ? `<br><small class="muted">${chip.note}</small>` : ''}
-        </div>
-      `).join('');
-      const stamp = document.getElementById('intelStamp');
-      if (stamp){
-        const sourceDate = meta.generatedAt ? new Date(meta.generatedAt) : new Date();
-        stamp.textContent = `Atnaujinta ${sourceDate.toLocaleString('lt-LT',{month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'})}`;
-      }
-    }
 
-    function renderSignals(payload){
-      const box = document.getElementById('intelSignals');
-      if (!box) return;
-      const signals = payload?.signals || [];
-      if (!signals.length){
-        box.innerHTML = '<p class="muted">Naujų signalų išorės šaltiniuose nėra. Tikrinama kelis kartus per dieną.</p>';
-        return;
+      let latestVoteSummary = null;
+      const exportBtn = document.getElementById('exportVotesBtn');
+      function toggleExportAvailability(enabled){
+        if (exportBtn) exportBtn.disabled = !enabled;
       }
-      box.innerHTML = signals.map(signal => {
-        const metaTags = [signal.location, signal.window, signal.priority ? `prioritetas: ${signal.priority}` : null]
-          .filter(Boolean)
-          .map(item => `<span>${item}</span>`)
-          .join('');
-        const actions = (signal.actions || []).map(item => `<li>${item}</li>`).join('');
-        return `
-          <div class="signal-card">
-            <h3>${signal.title || 'Nenumatyta antraštė'}</h3>
-            ${metaTags ? `<div class="signal-meta">${metaTags}</div>` : ''}
-            <p class="muted">${signal.summary || ''}</p>
-            ${actions ? `<ul class="signal-actions">${actions}</ul>` : ''}
-            ${signal.source ? `<a href="${signal.source}" target="_blank" rel="noopener">Šaltinis</a>` : ''}
+      
+      if (exportBtn){
+        exportBtn.addEventListener('click', () => {
+          if (!latestVoteSummary) return;
+          const stamp = new Date().toISOString().slice(0,10);
+          downloadJson(latestVoteSummary, `vote-pulse-${stamp}.json`);
+        });
+      }
+
+      function renderTop(places, voteMap){
+        const box = document.getElementById('topPlaces');
+        if (!places.length){ box.innerHTML = '<p class="text-sm text-gray-500">Dar nėra įrašų.</p>'; return; }
+        const sorted = [...places].sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0)).slice(0,5);
+        box.innerHTML = sorted.map((p,i)=>`
+          <div class="py-3 border-b border-gray-100 last:border-0 flex justify-between items-center">
+            <div>
+              <strong class="text-gray-900 font-medium">${i+1}. ${p.name}</strong>
+            </div>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-brand-100 text-brand-800">
+              ${voteMap[p.id]||0} bals.
+            </span>
+          </div>`).join('');
+      }
+
+      function renderStages(places, voteMap){
+        const box = document.getElementById('stageSummary');
+        if (!places.length){ box.innerHTML = '<p class="text-sm text-gray-500">Nėra duomenų.</p>'; return; }
+        const grouped = {};
+        places.forEach(p=>{
+          const key = p.stage || 'Nepriskirta';
+          grouped[key] = grouped[key] || {count:0,balsai:0};
+          grouped[key].count += 1;
+          grouped[key].balsai += voteMap[p.id]||0;
+        });
+        box.innerHTML = Object.entries(grouped).map(([stage,data])=>`
+          <div class="py-3 border-b border-gray-100 last:border-0 flex justify-between items-center">
+            <strong class="text-gray-900 font-medium">${stage}</strong>
+            <div class="text-right text-xs">
+              <span class="block text-gray-500">${data.count} viet.</span>
+              <span class="block font-medium text-brand-600">${data.balsai} bals.</span>
+            </div>
+          </div>`).join('');
+      }
+
+      function renderRecent(places){
+        const box = document.getElementById('recentPlaces');
+        if (!box) return;
+        if (!places.length){ box.innerHTML = '<p class="text-sm text-gray-500">Dar nėra pasiūlymų.</p>'; return; }
+        const sorted = [...places]
+          .sort((a,b)=> new Date(b.created_at || 0) - new Date(a.created_at || 0))
+          .slice(0,5);
+        box.innerHTML = sorted.map(p=>`
+          <div class="py-3 border-b border-gray-100 last:border-0">
+            <strong class="text-gray-900 font-medium block">${p.name}</strong>
+            <div class="text-xs text-gray-500 mt-1 flex gap-2">
+              <span class="bg-gray-100 px-2 py-0.5 rounded">${p.stage || 'Nenurodyta'}</span>
+              <span class="py-0.5">${formatTimestamp(p.created_at)}</span>
+            </div>
+            ${p.description ? `<p class="text-sm text-gray-600 mt-2 leading-relaxed">${truncate(p.description, 100)}</p>` : ''}
+          </div>
+        `).join('');
+      }
+
+      function renderVotePulse(places, votes, voteMap){
+        const box = document.getElementById('voteAnalytics');
+        if (!box) return;
+        if (!votes.length){ box.innerHTML = '<p class="text-sm text-gray-500">Dar niekas nebalsavo.</p>'; return; }
+        const totalVotes = votes.length;
+        const uniqueVoters = new Set(votes.map(v=>v.user_id).filter(Boolean)).size;
+        const avgVotesValue = places.length ? (totalVotes / places.length) : 0;
+        const stageScores = {};
+        places.forEach(p => {
+          const key = p.stage || 'Kita';
+          stageScores[key] = (stageScores[key] || 0) + (voteMap[p.id] || 0);
+        });
+        const topStage = Object.entries(stageScores).sort((a,b)=>b[1]-a[1])[0];
+        
+        const statsHtml = `
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
+              <span class="block text-2xl font-display font-bold text-gray-900">${totalVotes}</span>
+              <span class="text-xs text-gray-500 uppercase tracking-wide">Viso balsų</span>
+            </div>
+            <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
+              <span class="block text-2xl font-display font-bold text-gray-900">${uniqueVoters || '–'}</span>
+              <span class="text-xs text-gray-500 uppercase tracking-wide">Dalyviai</span>
+            </div>
+            <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
+              <span class="block text-2xl font-display font-bold text-gray-900">${avgVotesValue.toFixed(1)}</span>
+              <span class="text-xs text-gray-500 uppercase tracking-wide">Vid. vietai</span>
+            </div>
+            ${topStage ? `
+            <div class="bg-brand-50 p-3 rounded-lg border border-brand-100">
+              <span class="block text-2xl font-display font-bold text-brand-700">${topStage[1]}</span>
+              <span class="text-xs text-brand-600 uppercase tracking-wide overflow-hidden text-ellipsis whitespace-nowrap">${topStage[0]}</span>
+            </div>` : ''}
           </div>
         `;
-      }).join('');
-    }
-
-    let staticLoaded = false;
-    function loadStaticBlocks(){
-      if (staticLoaded) return;
-      staticLoaded = true;
-      Promise.all([
-        fetch('./data/route.json').then(r=>r.json()).catch(()=>null),
-        fetch('./data/todos.json').then(r=>r.json()).catch(()=>null),
-        fetch('./data/budget.json').then(r=>r.json()).catch(()=>null),
-        fetch('./data/flights.json').then(r=>r.json()).catch(()=>null),
-        fetch('./data/itinerary.json').then(r=>r.json()).catch(()=>null),
-        fetch('./data/signal_radar.json').then(r=>r.json()).catch(()=>null)
-      ]).then(([route,todos,budget,flights,itinerary,signals])=>{
-        renderRoute(route);
-        renderTodos(todos);
-        renderBudget(budget);
-        renderFlightSnapshot(flights);
-        renderItineraryPreview(itinerary);
-        renderIntel({
-          routeDays: route?.days?.length || 0,
-          todoCount: todos?.items?.length || 0,
-          budgetLines: budget?.lines?.length || 0,
-          flightCount: flights?.items?.length || 0,
-          itineraryDays: itinerary?.days?.length || 0,
-          cheapest: extractCheapestFlight(flights),
-          signalCount: signals?.signals?.length || 0,
-          generatedAt: signals?.generated_at || null
-        });
-        renderSignals(signals);
-      });
-    }
-
-    initSupabasePage({
-      onReady: async ({ client }) => {
-        loadStaticBlocks();
-        const [{ data: places, error: pErr }, { data: votes, error: vErr }] = await Promise.all([
-          client.from('places').select('*').order('created_at', { ascending: false }),
-          client.from('votes').select('place_id,user_id,created_at')
-        ]);
-        if (pErr || vErr){
-          document.getElementById('topPlaces').innerHTML = '<p class="muted">Nepavyko gauti duomenų.</p>';
-          document.getElementById('stageSummary').innerHTML = '';
-          return;
-        }
-        const voteMap = {};
-        (votes||[]).forEach(v=>{ voteMap[v.place_id] = (voteMap[v.place_id]||0)+1; });
-        const placeList = places || [];
-        const voteList = votes || [];
-        renderTop(placeList, voteMap);
-        renderStages(placeList, voteMap);
-        renderRecent(placeList);
-        const pulseSummary = renderVotePulse(placeList, voteList, voteMap);
-        latestVoteSummary = pulseSummary;
-        toggleExportAvailability(Boolean(pulseSummary));
+        box.innerHTML = statsHtml;
+        return { votes: totalVotes };
       }
-    });
+
+      function renderRoute(route){
+        const box = document.getElementById('routeList');
+        if (!route?.days?.length){ box.innerHTML='<p class="text-sm text-gray-500">Maršrutas dar nepateiktas.</p>'; return; }
+        box.innerHTML = route.days.map(d=>`
+          <div class="py-3 border-b border-gray-100 last:border-0 flex gap-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-brand-50 rounded-lg flex flex-col items-center justify-center text-brand-700 border border-brand-100">
+              <span class="text-xs font-bold uppercase">${d.day.split(' ')[0] || 'D'}</span>
+              <span class="text-sm font-bold">${d.day.split(' ')[1] || ''}</span>
+            </div>
+            <div class="flex-1 text-sm text-gray-700 flex items-center">
+              ${d.plan}
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderTodos(todos){
+        const box = document.getElementById('todoList');
+        if (!todos?.items?.length){ box.innerHTML='<p class="text-sm text-gray-500">Užduočių nėra.</p>'; return; }
+        box.innerHTML = todos.items.map(item=>`
+          <div class="flex items-start gap-3 py-2">
+            <input type="checkbox" disabled class="mt-1 h-4 w-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500">
+            <span class="text-sm text-gray-700">${item}</span>
+          </div>
+        `).join('');
+      }
+
+      function renderBudget(budget){
+        const box = document.getElementById('budgetList');
+        if (!budget?.lines?.length){ box.innerHTML='<p class="text-sm text-gray-500">Biudžetas nepateiktas.</p>'; return; }
+        box.innerHTML = budget.lines.map(line=>`
+          <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+            <strong class="text-sm font-medium text-gray-900">${line.name}</strong>
+            <span class="text-sm font-bold text-brand-700 bg-brand-50 px-2 py-1 rounded">${line.amount}</span>
+          </div>
+        `).join('');
+      }
+
+      function renderItineraryPreview(plan){
+        const box = document.getElementById('itineraryPreview');
+        if (!box) return;
+        if (!plan?.days?.length){ box.innerHTML = '<p class="text-sm text-gray-500">13 d. planas ruošiamas.</p>'; return; }
+        box.innerHTML = plan.days.slice(0,4).map(day=>`
+          <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden group hover:border-brand-300 transition-colors">
+            <div class="absolute top-0 left-0 w-1 h-full bg-brand-500"></div>
+            <strong class="block text-gray-900 font-display font-semibold mb-1">${day.day}</strong>
+            <span class="text-xs text-gray-500 block mb-2">${day.area || ''}</span>
+            ${day.theme ? `<span class="inline-block text-xs font-medium text-brand-700 bg-brand-50 px-2 py-1 rounded-full">${day.theme}</span>` : ''}
+          </div>
+        `).join('');
+      }
+
+      function renderFlightSnapshot(data){
+        const box = document.getElementById('flightSnapshot');
+        if (!data?.items?.length){ box.innerHTML='<p class="text-sm text-gray-500">Nėra pasiūlymų.</p>'; return; }
+        box.innerHTML = data.items.slice(0,2).map(item=>`
+          <div class="p-4 border border-gray-100 rounded-lg bg-white shadow-sm hover:shadow transition-shadow">
+            <div class="flex justify-between items-start mb-2">
+              <strong class="text-sm text-gray-900 font-medium">${item.title}</strong>
+              <span class="text-lg font-bold text-emerald-600">${item.price}</span>
+            </div>
+            <div class="flex justify-between items-center mt-3">
+              <span class="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">${item.status}</span>
+              <a href="${item.url}" target="_blank" class="text-xs font-medium text-brand-600 hover:text-brand-800">Tikrinti bilietą &rarr;</a>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderIntel(meta){
+        const box = document.getElementById('intelBox');
+        if (!box) return;
+        const chips = [
+          { label: 'Maršruto d.', value: meta.routeDays ?? '0' },
+          { label: 'Itinerario d.', value: meta.itineraryDays ?? '0' },
+          { label: 'Užduotys', value: meta.todoCount ?? '0' },
+          { label: 'Skrydžiai', value: meta.flightCount ?? '0' }
+        ];
+        box.innerHTML = chips.map(chip => `
+          <div class="bg-white border border-brand-100/50 px-4 py-2 rounded-lg shadow-sm flex flex-col items-center min-w-[90px]">
+            <strong class="text-xl font-display font-bold text-brand-700">${chip.value}</strong>
+            <span class="text-[10px] uppercase tracking-wider text-brand-600/70 mt-1">${chip.label}</span>
+          </div>
+        `).join('');
+      }
+
+      function renderSignals(payload){
+        const box = document.getElementById('intelSignals');
+        if (!box) return;
+        const signals = payload?.signals || [];
+        if (!signals.length){ box.innerHTML = '<p class="text-sm text-gray-500">Naujų signalų išorės šaltiniuose nėra.</p>'; return; }
+        box.innerHTML = signals.map(signal => `
+          <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm flex flex-col h-full">
+            <div class="flex-1">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-sm font-semibold text-gray-900">${signal.title || 'Signal'}</h3>
+                ${signal.priority ? `<span class="bg-red-50 text-red-700 text-[10px] px-2 py-0.5 rounded uppercase font-bold tracking-wide">${signal.priority}</span>` : ''}
+              </div>
+              <p class="text-sm text-gray-600 mb-4 leading-relaxed">${signal.summary || ''}</p>
+            </div>
+            ${signal.source ? `<a href="${signal.source}" target="_blank" class="mt-4 text-xs font-medium text-brand-600 hover:text-brand-500">Skaityti daugiau &rarr;</a>` : ''}
+          </div>
+        `).join('');
+      }
+
+      let staticLoaded = false;
+      function loadStaticBlocks(){
+        if (staticLoaded) return;
+        staticLoaded = true;
+        Promise.all([
+          fetch('./data/route.json').then(r=>r.json()).catch(()=>null),
+          fetch('./data/todos.json').then(r=>r.json()).catch(()=>null),
+          fetch('./data/budget.json').then(r=>r.json()).catch(()=>null),
+          fetch('./data/flights.json').then(r=>r.json()).catch(()=>null),
+          fetch('./data/itinerary.json').then(r=>r.json()).catch(()=>null),
+          fetch('./data/signal_radar.json').then(r=>r.json()).catch(()=>null)
+        ]).then(([route,todos,budget,flights,itinerary,signals])=>{
+          renderRoute(route);
+          renderTodos(todos);
+          renderBudget(budget);
+          renderFlightSnapshot(flights);
+          renderItineraryPreview(itinerary);
+          renderIntel({
+            routeDays: route?.days?.length, todoCount: todos?.items?.length, flightCount: flights?.items?.length, itineraryDays: itinerary?.days?.length
+          });
+          renderSignals(signals);
+        });
+      }
+
+      initSupabasePage({
+        onReady: async ({ client }) => {
+          loadStaticBlocks();
+          const [{ data: places, error: pErr }, { data: votes, error: vErr }] = await Promise.all([
+            client.from('places').select('*').order('created_at', { ascending: false }),
+            client.from('votes').select('place_id,user_id,created_at')
+          ]);
+          if (pErr || vErr){
+            document.getElementById('topPlaces').innerHTML = '<p class="text-sm text-red-500">Nepavyko gauti duomenų.</p>';
+            return;
+          }
+          const voteMap = {};
+          (votes||[]).forEach(v=>{ voteMap[v.place_id] = (voteMap[v.place_id]||0)+1; });
+          renderTop(places || [], voteMap);
+          renderStages(places || [], voteMap);
+          renderRecent(places || []);
+          latestVoteSummary = renderVotePulse(places || [], votes || [], voteMap);
+          toggleExportAvailability(Boolean(latestVoteSummary));
+        }
+      });
     });
   </script>
 </body>
