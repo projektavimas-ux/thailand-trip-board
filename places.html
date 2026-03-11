@@ -322,6 +322,40 @@
       applyFilters();
     }
 
+    function buildRoutePlaces(tree){
+      const items = [];
+      function metaToText(meta){
+        if (!meta) return '';
+        return Object.entries(meta).map(([key,value]) => `${formatMetaKey(key)}: ${formatMetaValue(value)}`).join(' · ');
+      }
+      function walk(node, stageKey){
+        const currentStage = node.type === 'stage' ? (deriveStageFilter(node.label) || stageKey) : stageKey;
+        if (node.options && currentStage){
+          node.options.forEach((opt, idx) => {
+            items.push({
+              id: buildPlaceId(currentStage, opt, idx),
+              name: opt,
+              desc: node.description || '',
+              image: node.cover || '',
+              stage: currentStage
+            });
+          });
+        }
+        if (node.type === 'day'){
+          items.push({
+            id: node.id || slugify(node.label || `day-${items.length}`),
+            name: node.label || 'Diena',
+            desc: node.description || metaToText(node.meta) || '',
+            image: node.cover || '',
+            stage: currentStage || 'Kita'
+          });
+        }
+        (node.children || []).forEach(child => walk(child, currentStage));
+      }
+      (tree.children || []).forEach(child => walk(child, null));
+      return items;
+    }
+
     function renderOfflineList(){
         if (!offlineList) return;
         const query = (offlineSearch?.value || '').trim().toLowerCase();
@@ -462,12 +496,16 @@
         userVotes = new Set((cachedVotes||[]).filter(v => v.user_id === user?.id).map(v => v.place_id));
         if (!placesCache.length){
           setAlert('Supabase `places` lentelė tuščia – rodome demo katalogą.');
-          fetch('./data/places_catalog.json')
+          fetch('./data/routes-tree.json')
             .then(r => r.json())
-            .then(data => {
-              initOfflineCatalog(data);
+            .then(tree => {
+              const routeItems = buildRoutePlaces(tree);
+              offlineCatalog = routeItems;
+              const stageKeys = [...new Set(routeItems.map(item => item.stage).filter(Boolean))];
+              buildOfflineFilters(stageKeys);
               previewBox?.classList.remove('hidden');
               offlineBox?.classList.remove('hidden');
+              renderOfflineList();
               syncPreviewToMain();
             })
             .catch(() => { setAlert('Nepavyko įkrauti demo katalogo.'); });
