@@ -460,6 +460,22 @@
         cachedVotes.forEach(v => { voteMapCache[v.place_id] = (voteMapCache[v.place_id]||0) + 1; });
         const { data: { user } } = await currentClient.auth.getUser();
         userVotes = new Set((cachedVotes||[]).filter(v => v.user_id === user?.id).map(v => v.place_id));
+        if (!placesCache.length){
+          setAlert('Supabase `places` lentelė tuščia – rodome demo katalogą.');
+          fetch('./data/places_catalog.json')
+            .then(r => r.json())
+            .then(data => {
+              initOfflineCatalog(data);
+              previewBox?.classList.remove('hidden');
+              offlineBox?.classList.remove('hidden');
+              syncPreviewToMain();
+            })
+            .catch(() => { setAlert('Nepavyko įkrauti demo katalogo.'); });
+          return;
+        }
+        previewBox?.classList.add('hidden');
+        offlineBox?.classList.add('hidden');
+        setAlert('');
         applyFilters();
       }
 
