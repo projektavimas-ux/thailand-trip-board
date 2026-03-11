@@ -252,7 +252,7 @@
       const stageSelect = document.getElementById('stageSelect');
       const searchBox = document.getElementById('searchBox');
       const params = new URLSearchParams(window.location.search);
-      const stageSequence = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','4 ETAPAS','5 ETAPAS','Finalas','Kita'];
+      const stageSequence = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','4 ETAPAS','5 ETAPAS','Finalas','Papildomos idėjos','Kita'];
       const stageParam = params.get('stage');
       if (stageParam) {
         const hasOption = Array.from(stageSelect.options).some(opt => opt.value === stageParam);
@@ -315,7 +315,8 @@
         name: item.name,
         stage: item.stage,
         description: item.desc,
-        image_url: item.image
+        image_url: item.image,
+        status: item.status || 'idea'
       }));
       voteMapCache = {};
       placesCache.forEach((item, idx) => { voteMapCache[item.id] = 0; });
@@ -337,7 +338,8 @@
               name: opt,
               desc: node.description || '',
               image: node.cover || '',
-              stage: currentStage
+              stage: currentStage,
+              status: 'plan'
             });
           });
         }
@@ -347,13 +349,35 @@
             name: node.label || 'Diena',
             desc: node.description || metaToText(node.meta) || '',
             image: node.cover || '',
-            stage: currentStage || 'Kita'
+            stage: currentStage || 'Kita',
+            status: 'plan'
           });
         }
         (node.children || []).forEach(child => walk(child, currentStage));
       }
       (tree.children || []).forEach(child => walk(child, null));
       return items;
+    }
+
+    function buildCatalogExtras(catalog, existingNames){
+      if (!catalog || !Array.isArray(catalog.stages)) return [];
+      const extra = [];
+      catalog.stages.forEach(stage => {
+        const stageKey = deriveStageFilter(stage.title || stage.id || '') || stage.title || 'Papildomos idėjos';
+        (stage.items || []).forEach((item, idx) => {
+          const key = (item.name || '').toLowerCase();
+          if (!key || existingNames.has(key)) return;
+          extra.push({
+            id: `${slugify(stageKey)}-${idx}`,
+            name: item.name || 'Vieta',
+            desc: item.desc || '',
+            image: item.image || '',
+            stage: stageKey || 'Papildomos idėjos',
+            status: 'idea'
+          });
+        });
+      });
+      return extra;
     }
 
     function renderOfflineList(){
@@ -496,12 +520,16 @@
         userVotes = new Set((cachedVotes||[]).filter(v => v.user_id === user?.id).map(v => v.place_id));
         if (!placesCache.length){
           setAlert('Supabase `places` lentelė tuščia – rodome demo katalogą.');
-          fetch('./data/routes-tree.json')
-            .then(r => r.json())
-            .then(tree => {
+          Promise.all([
+            fetch('./data/routes-tree.json').then(r => r.json()),
+            fetch('./data/places_catalog.json').then(r => r.json()).catch(() => null)
+          ])
+            .then(([tree, catalog]) => {
               const routeItems = buildRoutePlaces(tree);
-              offlineCatalog = routeItems;
-              const stageKeys = [...new Set(routeItems.map(item => item.stage).filter(Boolean))];
+              const nameSet = new Set(routeItems.map(item => (item.name || '').toLowerCase()));
+              const extraItems = buildCatalogExtras(catalog, nameSet);
+              offlineCatalog = [...routeItems, ...extraItems];
+              const stageKeys = [...new Set(offlineCatalog.map(item => item.stage).filter(Boolean))];
               buildOfflineFilters(stageKeys);
               previewBox?.classList.remove('hidden');
               offlineBox?.classList.remove('hidden');
