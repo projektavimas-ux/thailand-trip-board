@@ -105,7 +105,8 @@
               "meta": {
                 "transportas": "Longtail",
                 "pastaba": "Sugrįžti iki 18:00"
-              }
+              },
+              "cover": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80"
             },
             {
               "id": "day-6",
@@ -113,7 +114,8 @@
               "label": "D6 · Hong Islands slow day",
               "meta": {
                 "akcentas": "Lagūnos, 360° viewpoint"
-              }
+              },
+              "cover": "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1600&q=80"
             },
             {
               "id": "day-7",
@@ -122,7 +124,8 @@
               "meta": {
                 "operatorius": "Speedboat",
                 "biudzetas": "฿4k/asm"
-              }
+              },
+              "cover": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80"
             },
             {
               "id": "day-8",
@@ -130,10 +133,11 @@
               "label": "D8 · Phang Nga canoe",
               "meta": {
                 "planas": "Hong by Starlight / John Gray"
-              }
+              },
+              "cover": "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80"
             }
           ],
-          "cover": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop"
+          "cover": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80"
         },
         {
           "id": "stage-3",
@@ -158,7 +162,8 @@
               "label": "D9 · Koh Lanta chill",
               "meta": {
                 "veikla": "Long Beach, sunset"
-              }
+              },
+              "cover": "https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=1600&q=80"
             },
             {
               "id": "day-10",
@@ -166,10 +171,11 @@
               "label": "D10 · Khao Sok dienos turas",
               "meta": {
                 "pervezimas": "Minivanas + longtail"
-              }
+              },
+              "cover": "https://images.unsplash.com/photo-1504280390368-3976a42be078?auto=format&fit=crop&w=1600&q=80"
             }
           ],
-          "cover": "https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop"
+          "cover": "https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=1600&q=80"
         }
       ]
     },
@@ -219,7 +225,8 @@
               "meta": {
                 "maršrutas": "Wat Rong Khun → Wat Rong Suea Ten → Baan Dam",
                 "maistas": "Chivit Thamma Da"
-              }
+              },
+              "cover": "https://images.unsplash.com/photo-1549294413-26f195200c16?auto=format&fit=crop&w=1600&q=80"
             },
             {
               "id": "day-13",
@@ -228,7 +235,8 @@
               "meta": {
                 "sustabdymai": "Mae Sai, Sop Ruak, Hall of Opium",
                 "upė": "Mekongo kruizas"
-              }
+              },
+              "cover": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1600&q=80"
             },
             {
               "id": "day-14",
@@ -236,7 +244,8 @@
               "label": "D14 · Doi Tung / Mae Salong",
               "meta": {
                 "veikla": "Karališkieji sodai, arbatos degustacija, karštosios versmės"
-              }
+              },
+              "cover": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1600&q=80"
             }
           ],
           "cover": "https://images.unsplash.com/photo-1549294413-26f195200c16?q=80&w=1600&auto=format&fit=crop"
@@ -268,7 +277,8 @@
           "meta": {
             "skrydis": "CEI → BKK",
             "vakaro_planas": "Riverside dinner"
-          }
+          },
+          "cover": "https://images.unsplash.com/photo-1471513671800-b09c87e1497c?auto=format&fit=crop&w=1600&q=80"
         },
         {
           "id": "day-16",
@@ -277,7 +287,8 @@
           "meta": {
             "rytas": "Grand Palace, Wat Pho",
             "vakaras": "Chao Phraya cruise"
-          }
+          },
+          "cover": "https://images.unsplash.com/photo-1471513671800-b09c87e1497c?auto=format&fit=crop&w=1600&q=80"
         },
         {
           "id": "day-17",
@@ -286,7 +297,8 @@
           "meta": {
             "transportas": "Privatus van / traukinys",
             "pastaba": "Grįžti iki 18:00"
-          }
+          },
+          "cover": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=1600&q=80"
         },
         {
           "id": "day-18",
@@ -295,7 +307,8 @@
           "meta": {
             "rytas": "Chatuchak",
             "vakaras": "Yaowarat street food"
-          }
+          },
+          "cover": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1600&q=80"
         },
         {
           "id": "day-19",
@@ -323,7 +336,8 @@
             "pastaba": "Atvykti į oro uostą 3 val. anksčiau"
           }
         }
-      ]
+      ],
+      "cover": "https://images.unsplash.com/photo-1471513671800-b09c87e1497c?auto=format&fit=crop&w=1600&q=80"
     },
     {
       "id": "flight-in",
