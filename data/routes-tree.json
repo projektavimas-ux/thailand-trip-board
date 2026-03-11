@@ -2,22 +2,22 @@
   "id": "trip-2026-winter",
   "type": "trip",
   "label": "2026-12-11 → 2027-01-02 · Thailand OPEN-JAW",
-  "description": "Bendras stuburas: OUT į pietus (HKT/KBV), vidinė ašis tarp Phuket/Krabi mazgų ir grįžtamasis kilimas į Bangkoką prieš išvykimą.",
+  "description": "Bendras stuburas: OUT į pietus (HKT), kelių etapų kilimas per Andamano salas, vėliau šuolis į Chiang Rai šiaurėje ir finišas Bankoke per Naujuosius.",
   "meta": {
     "komanda": "4 suaugę",
-    "statusas": "Draft v0.2",
-    "prioritetas": "Dešinė ašis – suplanuoti etapus ir logistiką"
+    "statusas": "Draft v0.4",
+    "prioritetas": "Užtikrinti sklandų perėjimą Pietūs → Šiaurė (skrydis KBV → CEI)"
   },
   "children": [
     {
       "id": "flight-out",
       "type": "flight",
-      "label": "OUT: VNO/RIX → HKT arba KBV",
-      "description": "Lektuvai su 1 sustojimu (TK/AY/Qatar). Tikslas – atvykti iki 23:00 vietos laiku.",
+      "label": "OUT: VNO/RIX → Phuket (HKT)",
+      "description": "OPEN-JAW su 1 sustojimu (TK/AY/QR). Nusileidimas iki 18:00 vietos laiku.",
       "meta": {
         "langas": "2026-12-11",
-        "biudzetas_eur": "€580-720",
-        "statusas": "Stebėti kainas kasdien"
+        "biudzetas_eur": "€600-750",
+        "statusas": "Kasdienis kainų monitoringas"
       },
       "options": [
         "Turkish TK1870 + TK172",
@@ -28,56 +28,54 @@
     {
       "id": "south-axis",
       "type": "legs",
-      "label": "Pietų Tailando ašis",
-      "description": "2 branduoliai (Phuket + Krabi) su moduliais saloms.",
+      "label": "Pietų Tailando ašis (Phuket · Krabi · Lanta)",
+      "description": "D1-D10. Bazė Phuket Old Town + Ao Nang; moduliai saloms ir parkams.",
       "meta": {
-        "bazes": "Phuket Town + Ao Nang",
-        "pervezimai": "Privatus mikroautobusas arba Grab",
-        "dienos": "D1–D9"
+        "logistika": "Privatūs minivanai, speedboat'ai, longtail'ai",
+        "oro_langas": "Stebėti NE monsooną (gruodis palankus)",
+        "rezervai": "Khao Sok / Koh Lanta jei reikia laisvesnių dienų"
       },
       "children": [
         {
           "id": "stage-1",
           "type": "stage",
-          "label": "1 ETAPAS (12-11 → 12-16): Atvykimas į pietus",
-          "description": "Adaptacija ir švelnūs turai – Phuket Town, Big Buddha, Krabi įvadai.",
+          "label": "1 ETAPAS (12-11 → 12-14): Phuket adaptacija",
+          "description": "Old Town, Big Buddha, Wat Chalong, Nai Harn ir panoramos.",
           "meta": {
             "bazes": "Old Phuket Town",
-            "rytinis_langas": "08:00-12:00",
+            "rytinis_langas": "06:30-11:00",
             "vakarinis_langas": "17:00-22:00"
           },
           "options": [
             "Old Phuket Town",
             "Big Buddha + Wat Chalong",
-            "Railay Beach",
-            "Nai Harn Beach"
+            "Nai Harn + Promthep",
+            "Lard Yai sekmadienio turgus"
           ],
           "children": [
             {
               "id": "day-1",
               "type": "day",
-              "label": "D1 · Atvykimas ir adaptacija",
+              "label": "D1 · Atvykimas",
               "meta": {
-                "veikla": "Check-in, Old Town pasivaikščiojimas",
-                "atsarginis_planas": "Baseinas + masažas"
+                "veikla": "Check-in, Old Town pasivaikščiojimas"
               }
             },
             {
               "id": "day-2",
               "type": "day",
-              "label": "D2 · Phuket apžvalga",
+              "label": "D2 · Pietų panoramos",
               "meta": {
-                "rytas": "Big Buddha / Wat Chalong",
-                "vakaras": "Lard Yai turgus (sekmadienis)"
+                "rytas": "Big Buddha, Wat Chalong",
+                "vakaras": "Nai Harn saulėlydis"
               }
             },
             {
               "id": "day-3",
               "type": "day",
-              "label": "D3 · Krabi įvadas",
+              "label": "D3 · Lard Yai / laisva diena",
               "meta": {
-                "pervezimas": "Privatus taxi į Ao Nang (3h)",
-                "vakaro_planas": "Ao Nang promenada"
+                "fokusu": "Sekmadienio turgus, masažas"
               }
             }
           ],
@@ -86,45 +84,52 @@
         {
           "id": "stage-2",
           "type": "stage",
-          "label": "2 ETAPAS (12-17 → 12-22): Salos ir įlankos",
-          "description": "Pilnos dienos laivais – Phi Phi, Phang Nga, Hong Islands.",
+          "label": "2 ETAPAS (12-15 → 12-20): Krabi, Railay ir salos",
+          "description": "Ao Nang bazė, Railay, Hong, Phi Phi, Phang Nga kayaking.",
           "meta": {
-            "bazes": "Ao Nang / Phuket Bay",
-            "laivu_langas": "06:30-18:30",
-            "oro_langas": "Stebėti bangavimą"
+            "bazes": "Ao Nang",
+            "laivu_langas": "07:00-18:30",
+            "oro_langas": "Monitoringas dėl bangavimo"
           },
           "options": [
-            "Phi Phi salos",
-            "Maya Bay kvotos",
-            "Phang Nga (kayak)",
-            "Hong Islands slow day"
+            "Railay + Phra Nang",
+            "Hong Islands",
+            "Phi Phi sunrise",
+            "Phang Nga "
           ],
           "children": [
             {
               "id": "day-5",
               "type": "day",
-              "label": "D5 · Phi Phi ekspedicija",
+              "label": "D5 · Railay ir urvai",
               "meta": {
-                "operatorius": "Simba Sea Trips",
-                "biudzetas": "฿3.900/asm"
+                "transportas": "Longtail",
+                "pastaba": "Sugrįžti iki 18:00"
+              }
+            },
+            {
+              "id": "day-6",
+              "type": "day",
+              "label": "D6 · Hong Islands slow day",
+              "meta": {
+                "akcentas": "Lagūnos, 360° viewpoint"
               }
             },
             {
               "id": "day-7",
               "type": "day",
-              "label": "D7 · Phang Nga + James Bond",
+              "label": "D7 · Phi Phi sunrise",
               "meta": {
-                "transportas": "Longtail + kayak",
-                "atsarginis": "Railay chill"
+                "operatorius": "Speedboat",
+                "biudzetas": "฿4k/asm"
               }
             },
             {
               "id": "day-8",
               "type": "day",
-              "label": "D8 · Hong Islands slow day",
+              "label": "D8 · Phang Nga canoe",
               "meta": {
-                "akcentas": "Lagūnos + snorkeling",
-                "pastaba": "Tinka po audros"
+                "planas": "Hong by Starlight / John Gray"
               }
             }
           ],
@@ -133,45 +138,34 @@
         {
           "id": "stage-3",
           "type": "stage",
-          "label": "3 ETAPAS (12-23 → 12-30): Kilimas link Bangkok",
-          "description": "Sausumos kelias su Hua Hin, nacionaliniu parku ir kultūriniais taškais.",
+          "label": "3 ETAPAS (12-21 → 12-23): Koh Lanta · Khao Sok rezervas",
+          "description": "Lėtesnės dienos prieš skrydį į šiaurę: Koh Lanta paplūdimiai arba Khao Sok ežeras.",
           "meta": {
-            "pervezimas": "Krabi → Hua Hin (skrydis + van)",
-            "dienos": "D10-D12",
-            "apgyvendinimas": "Hua Hin beach resort"
+            "pervezimai": "Ao Nang → Koh Lanta (2h) / Ao Nang → Khao Sok (3.5h)",
+            "dienos": "D9-D10",
+            "pastaba": "Rezervinis langas audroms"
           },
           "options": [
-            "Hua Hin paplūdimiai",
-            "Khao Sam Roi Yot NP",
-            "Bueng Bua Boardwalk",
-            "Phetchaburi šventyklos"
+            "Long Beach Koh Lanta",
+            "Kantiang Bay",
+            "Khao Sok Cheow Lan Lake",
+            "Emerald Pool"
           ],
           "children": [
             {
+              "id": "day-9",
+              "type": "day",
+              "label": "D9 · Koh Lanta chill",
+              "meta": {
+                "veikla": "Long Beach, sunset"
+              }
+            },
+            {
               "id": "day-10",
               "type": "day",
-              "label": "D10 · Perkėlimas + Hua Hin įsikūrimas",
+              "label": "D10 · Khao Sok dienos turas",
               "meta": {
-                "transportas": "AirAsia HKT → DMK + privatus mikroautobusas",
-                "vakaro_planas": "Night market"
-              }
-            },
-            {
-              "id": "day-11",
-              "type": "day",
-              "label": "D11 · Khao Sam Roi Yot",
-              "meta": {
-                "rytinis": "Bueng Bua boardwalk",
-                "popietinis": "Sam Phraya paplūdimys"
-              }
-            },
-            {
-              "id": "day-12",
-              "type": "day",
-              "label": "D12 · Phetchaburi kultūra",
-              "meta": {
-                "sustabdymas": "Tham Khao Luang Cave",
-                "maistas": "Cha-Am seafood"
+                "pervezimas": "Minivanas + longtail"
               }
             }
           ],
@@ -180,48 +174,162 @@
       ]
     },
     {
+      "id": "north-loop",
+      "type": "legs",
+      "label": "Šiaurės Tailando kilimas (Chiang Rai)",
+      "description": "Skrydis KBV/HKT → Chiang Rai (CEI). D11-D16 skiriame šventykloms, Golden Triangle ir kalnų kultūrai.",
+      "meta": {
+        "skrydis": "AirAsia/Thai VietJet per BKK",
+        "bazes": "Chiang Rai Old Town",
+        "transportas": "Privatus mikroautobusas + vietiniai gidai"
+      },
+      "children": [
+        {
+          "id": "stage-chiangrai",
+          "type": "stage",
+          "label": "4 ETAPAS (12-24 → 12-29): Chiang Rai",
+          "description": "White / Blue Temple, Black House, Golden Triangle, Doi Tung ir Mae Salong arbatos kalvos.",
+          "meta": {
+            "bazes": "Le Patta / The Riverie",
+            "klimatas": "Vėsūs rytai (12-16°C)",
+            "special": "Naujų kavinių ir naktinių turgų gausa"
+          },
+          "options": [
+            "Wat Rong Khun (White Temple)",
+            "Wat Rong Suea Ten (Blue Temple)",
+            "Baan Dam (Black House)",
+            "Golden Triangle loop",
+            "Doi Tung arbatos sodai",
+            "Mae Fah Luang Garden"
+          ],
+          "children": [
+            {
+              "id": "day-11",
+              "type": "day",
+              "label": "D11 · Skrydis į Chiang Rai",
+              "meta": {
+                "transportas": "KBV/HKT → BKK → CEI",
+                "vakaras": "Night Bazaar food court"
+              }
+            },
+            {
+              "id": "day-12",
+              "type": "day",
+              "label": "D12 · Baltas + Mėlynas + Juodas",
+              "meta": {
+                "maršrutas": "Wat Rong Khun → Wat Rong Suea Ten → Baan Dam",
+                "maistas": "Chivit Thamma Da"
+              }
+            },
+            {
+              "id": "day-13",
+              "type": "day",
+              "label": "D13 · Golden Triangle",
+              "meta": {
+                "sustabdymai": "Mae Sai, Sop Ruak, Hall of Opium",
+                "upė": "Mekongo kruizas"
+              }
+            },
+            {
+              "id": "day-14",
+              "type": "day",
+              "label": "D14 · Doi Tung / Mae Salong",
+              "meta": {
+                "veikla": "Karališkieji sodai, arbatos degustacija, karštosios versmės"
+              }
+            }
+          ],
+          "cover": "https://images.unsplash.com/photo-1549294413-26f195200c16?q=80&w=1600&auto=format&fit=crop"
+        }
+      ]
+    },
+    {
       "id": "bangkok-leg",
       "type": "stage",
-      "label": "4 ETAPAS (12-31 → 01-02): Bangkokas ir išvykimas",
-      "description": "Paskutinės 48 h – Grand Palace, Wat Pho, Chao Phraya cruise, NYE panoramos.",
+      "label": "5 ETAPAS (12-30 → 01-02): Bangkokas + Naujieji",
+      "description": "Finalinis akordas: Old Town, Ayutthaya dienos turas, ICONSIAM fejerverkai, pasiruošimas grįžimui.",
       "meta": {
         "bazes": "Riverside viešbutis",
-        "ypatumai": "Naujųjų metų srautai",
-        "dienos": "D13-D14"
+        "srautai": "Naujųjų metų minių valdymas",
+        "dienos": "D17-D23"
       },
       "options": [
         "Grand Palace + Wat Pho",
-        "Chao Phraya kruizas",
-        "ICONSIAM NYE",
-        "Chatuchak turgus"
+        "Ayutthaya day trip",
+        "ICONSIAM/ASIATIQUE NYE",
+        "Chatuchak savaitgalio turgus",
+        "Chinatown maistas"
       ],
       "children": [
         {
-          "id": "day-13",
+          "id": "day-15",
           "type": "day",
-          "label": "D13 · Old Bangkok",
+          "label": "D15 · Chiang Rai → Bangkok",
           "meta": {
-            "rytas": "Grand Palace, Wat Pho",
-            "vakaras": "Chao Phraya dinner cruise"
+            "skrydis": "CEI → BKK",
+            "vakaro_planas": "Riverside dinner"
           }
         },
         {
-          "id": "day-14",
+          "id": "day-16",
           "type": "day",
-          "label": "D14 · Pasiruošimas grįžimui",
+          "label": "D16 · Old Bangkok",
           "meta": {
-            "rytinis": "Chatuchak/ICONSIAM",
-            "popietinis": "Spa + packing"
+            "rytas": "Grand Palace, Wat Pho",
+            "vakaras": "Chao Phraya cruise"
+          }
+        },
+        {
+          "id": "day-17",
+          "type": "day",
+          "label": "D17 · Ayutthaya",
+          "meta": {
+            "transportas": "Privatus van / traukinys",
+            "pastaba": "Grįžti iki 18:00"
+          }
+        },
+        {
+          "id": "day-18",
+          "type": "day",
+          "label": "D18 · Chatuchak + Chinatown",
+          "meta": {
+            "rytas": "Chatuchak",
+            "vakaras": "Yaowarat street food"
+          }
+        },
+        {
+          "id": "day-19",
+          "type": "day",
+          "label": "D19 · NYE pasiruošimas",
+          "meta": {
+            "diena": "ICONSIAM / Mahanakhon rezervacijos",
+            "naktis": "Fejerverkai prie upės"
+          }
+        },
+        {
+          "id": "day-20",
+          "type": "day",
+          "label": "D20 · 01-01 Recovery",
+          "meta": {
+            "planas": "Spa, Chinatown brunch, pasiruošimas skrydžiui"
+          }
+        },
+        {
+          "id": "day-21",
+          "type": "day",
+          "label": "D21 · 01-02 Išvykimas",
+          "meta": {
+            "tikslas": "BKK → VNO/RIX",
+            "pastaba": "Atvykti į oro uostą 3 val. anksčiau"
           }
         }
-      ],
-      "cover": "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?q=80&w=1600&auto=format&fit=crop"
+      ]
     },
     {
       "id": "flight-in",
       "type": "flight",
       "label": "IN: BKK → VNO/RIX",
-      "description": "Naktiniai ar ankstyvi grįžimai (01-01..01-03). Qatar/Finnair/LOT.",
+      "description": "Naktiniai ar ankstyvi grįžimai (01-01..01-02). Qatar/Finnair/LOT.",
       "meta": {
         "langas": "2027-01-01/02",
         "biudzetas_eur": "€520-680",

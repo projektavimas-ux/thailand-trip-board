@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-03-08T11:20:00+02:00",
-  "title": "Thailand 2026-27: Pietūs → Šiaurė (4 Etapai)",
+  "generated_at": "2026-03-11T09:45:00+02:00",
+  "title": "Thailand 2026-27 · Pietūs → Chiang Rai → Bangkok",
   "summary": {
     "outbound": "2026-12-11 · VNO/RIX → Phuket (HKT)",
     "inbound": "2027-01-02 · Bangkok (BKK) → VNO/RIX",
-    "team": "4 suaugę · Aktyvus poilsis + Kultūra"
+    "team": "4 suaugę · Aktyvus poilsis + kultūra"
   },
   "days": [
     {
@@ -13,120 +13,210 @@
       "theme": "Atvykimas ir adaptacija",
       "blocks": [
         "Nusileidimas HKT (popietė). Privatus pervežimas į Old Town (45 min).",
-        "Vakarienė: Tu Kab Khao (Michelin Plate) – pietietiška virtuvė.",
-        "Nakvynė: Sino-portugalų stiliaus boutique viešbutis (pvz., The Memory at On On)."
+        "Check-in į sino-portugalų boutique viešbutį (The Memory at On On arba panašų).",
+        "Vakarienė Tu Kab Khao · lengvas pasivaikščiojimas Thalang gatve."
       ],
-      "notes": "Pirmas vakaras ramus, be didelių žygių."
+      "notes": "Pirmą vakarą vengiam ilgos kelionės ar turų – tik maistas ir miegas."
     },
     {
       "day": "D2 · Gruodžio 12 (Št)",
       "area": "Phuket South",
-      "theme": "Panoramos ir šventyklos",
+      "theme": "Big Buddha + Nai Harn",
       "blocks": [
-        "06:30 Rytas prie Big Buddha (vengiant karščio ir minių).",
-        "Wat Chalong lankymas (08:30–09:30).",
-        "Popietė: Nai Harn Beach (maudynės + saulėlydis prie Promthep Cape)."
+        "06:30 startas į Big Buddha (mažiau minių, vėsu).",
+        "Wat Chalong ir kavinės su vaizdu į įlanką.",
+        "Popietė/saulėlydis: Nai Harn Beach + Promthep Cape."
       ],
-      "notes": "Big Buddha apranga: dengti pečiai ir keliai."
+      "notes": "Aprangos kodas šventyklose – dengti keliai/pečiai."
     },
     {
       "day": "D3 · Gruodžio 13 (Sk)",
       "area": "Phuket Town",
-      "theme": "Lard Yai Turgus",
+      "theme": "Sekmadienio Lard Yai",
       "blocks": [
-        "Rytas: Laisvas laikas / masažas.",
-        "16:00 – Startuoja „Lard Yai“ pėsčiųjų turgus Thalang gatvėje.",
-        "Street food degustacija + suvenyrai."
-      ],
-      "notes": "Sekmadienis – vienintelė diena Lard Yai turgui."
+        "Rytas: masažas / baseinas / kavos turas.",
+        "16:00 Thalang gatvė užsidaro pėstiesiems – startuoja Lard Yai street market.",
+        "Food crawl + desertų degustacija (Oh La La Ice Cream, The Tent)."
+      ]
     },
     {
       "day": "D4 · Gruodžio 14 (Pr)",
       "area": "Phuket → Ao Nang",
-      "theme": "Persikėlimas į žemyną",
+      "theme": "Pervežimas į žemyną",
       "blocks": [
-        "10:00 Pervežimas į Ao Nang (minivanas ~3 val. arba keltas).",
-        "Įsikūrimas Ao Nang (patogi bazė logistikai).",
-        "Vakaras: Ao Nang Landmark Night Market (gyva muzika)."
-      ],
-      "notes": "Ao Nang promenada patogi vakarienei ir turų užsakymui."
+        "10:00 privatus minivanas į Ao Nang (apie 3 val.).",
+        "Check-in Ao Nang bazėje (lengva logistikai).",
+        "Vakaras: promenada, Landmark Night Market."
+      ]
     },
     {
       "day": "D5 · Gruodžio 15 (An)",
-      "area": "Railay",
+      "area": "Railay / Phra Nang",
       "theme": "Uolos ir urvai",
       "blocks": [
-        "09:00 Longtail valtis į Railay West (200 THB/asm).",
-        "Phra Nang Cave Beach ir Diamond Cave lankymas.",
-        "Pietūs „The Grotto“ arba vietinėse kavinėse.",
-        "Vakaras: Saulėlydis Railay West."
-      ],
-      "notes": "Paskutinė valtis į Ao Nang grįžta apie 18:00 (vėliau – brangiau)."
+        "Longtail valtis į Railay West (200 THB/asm).",
+        "Phra Nang Cave Beach, lagoona, Diamond Cave.",
+        "Laipiojimo / viewpoint opcijos.",
+        "Sugrįžimas iki 18:00 (paskutinės valtys)."
+      ]
     },
     {
       "day": "D6 · Gruodžio 16 (Tr)",
       "area": "Hong Islands",
-      "theme": "Lagūnos ir apžvalga",
+      "theme": "Lagūnos ir apžvalgos",
       "blocks": [
-        "08:30 Privatus longtail turas į Hong salyną.",
-        "Hong Lagoon („Kambarys“) – plaukimas tarp uolų.",
-        "360° apžvalgos aikštelė (laiptai į viršų).",
-        "Snorkelingas ramiose įlankose."
+        "Privatus longtail turas 08:30–15:30.",
+        "Hong Lagoon plaukimas kanoja/ SUP.",
+        "360° viewpoint (kopimas laiptais).",
+        "Snorkelingas sekliuose rifuose."
       ],
-      "notes": "Hong saloje nėra maisto prekybos – pasiimti pietų dėžutes."
+      "notes": "Pasiimti užkandžių – salose nėra kavinių."
     },
     {
       "day": "D7 · Gruodžio 17 (Kt)",
       "area": "Phi Phi",
-      "theme": "Ankstyvas startas",
+      "theme": "Sunrise speedboat",
       "blocks": [
-        "07:00 Išvykimas į Phi Phi (speedboat), kad Maya Bay pasiekti pirmiesiems.",
-        "Maya Bay (tik nuotraukos/braidymas, maudytis draudžiama).",
-        "Pileh Lagoon (maudynės iš valties).",
-        "Pietūs Bamboo Island."
-      ],
-      "notes": "Nacionalinio parko mokestis (~400 THB) mokamas grynais."
+        "07:00 išvykimas speedboat, kad Maya Bay pasiekti pirmiesiems.",
+        "Pileh Lagoon maudynės, snorkelingas Shark Point.",
+        "Pietūs Bamboo Island.",
+        "Sugrįžimas 15:00 – laisvas vakaras."
+      ]
     },
     {
       "day": "D8 · Gruodžio 18 (Pn)",
-      "area": "Phang Nga Bay",
-      "theme": "James Bond ir kanojos",
+      "area": "Phang Nga",
+      "theme": "Hong by Starlight",
       "blocks": [
-        "Vėlyvesnis startas (apie 10:00) arba „Hong by Starlight“ turas (13:00–20:00).",
-        "Kanojos per urvus į uždaras lagūnas.",
-        "James Bond sala (Ko Tapu).",
-        "Vakarienė laive stebint saulėlydį/bioluminescenciją."
+        "Lėtesnis rytas / SPA.",
+        "13:00 išplaukimas su John Gray Sea Canoe.",
+        "Kanojos per urvus į lagūnas + žvakių „kratong“.",
+        "Vakarienė laive + bioluminescencijos stebėjimas."
       ],
-      "notes": "John Gray Sea Canoe – rekomenduojamas operatorius."
+      "notes": "Puiki diena audrų kompensacijai – jeigu orai blogi, galima sukeisti su D9."
     },
     {
-      "day": "D9-12 · Gruodis 19-22",
-      "area": "Laisvas / Rezervas",
-      "theme": "Poilsis ar papildomi turai",
+      "day": "D9 · Gruodžio 19 (Št)",
+      "area": "Koh Lanta arba Khao Sok",
+      "theme": "Lėtas režimas",
       "blocks": [
-        "Galimybė nuvykti į Freedom Beach (sunkus priėjimas/valtis).",
-        "Tiger Cave Temple (Krabi) – 1237 laipteliai.",
-        "Emerald Pool & Blue Pool karštosios versmės."
+        "Variantas A: Pervežimas į Koh Lanta (2h) – Long Beach, sunset.",
+        "Variantas B: Khao Sok dienos turas (Cheow Lan ežeras).",
+        "Rezervinis langas, jei bangos sutrukdė ankstesniems turams."
+      ]
+    },
+    {
+      "day": "D10 · Gruodžio 20 (Sk)",
+      "area": "Krabi → Chiang Rai",
+      "theme": "Didysis peršokimas",
+      "blocks": [
+        "Ryte – skrydis KBV/HKT → BKK → CEI (viena kryptis).",
+        "Popietė: įsikūrimas Chiang Rai centre (Le Patta / Riverie).",
+        "Vakaras: Chiang Rai Night Bazaar (maistas + suvenyrai)."
+      ]
+    },
+    {
+      "day": "D11 · Gruodžio 21 (Pr)",
+      "area": "Chiang Rai",
+      "theme": "Baltas · Mėlynas · Juodas",
+      "blocks": [
+        "Wat Rong Khun (White Temple) – ankstyvas startas.",
+        "Wat Rong Suea Ten (Blue Temple).",
+        "Baan Dam (Black House Museum).",
+        "Kavos pauzė Chivit Thamma Da / ryb-rysta River Hut."
+      ]
+    },
+    {
+      "day": "D12 · Gruodžio 22 (An)",
+      "area": "Golden Triangle",
+      "theme": "Trijų valstybių ratas",
+      "blocks": [
+        "Mae Sai (Tailando–Mianmaro pasienis).",
+        "Sop Ruak (Mekongo ir Ruako santaka).",
+        "Hall of Opium muziejus.",
+        "Trumpas kruizas Mekongo upėje (Laoso pusė)."
       ]
     },
     {
       "day": "D13 · Gruodžio 23 (Tr)",
-      "area": "Krabi → Hua Hin",
-      "theme": "Kelionė į šiaurę",
+      "area": "Doi Tung / Mae Salong",
+      "theme": "Karališkieji sodai",
       "blocks": [
-        "Skrydis KBV → BKK (arba pervežimas sausuma su sustojimais).",
-        "Pervežimas į Hua Hin kurortą.",
-        "Vakaras: Cicada Market (tik savaitgaliais) arba Night Market."
+        "Doi Tung Royal Villa ir Mae Fah Luang sodai.",
+        "Medžių viršūnių takas (Tree Top Walk).",
+        "Mae Salong arbatos degustacija, kalnų kaimai.",
+        "Karštosios versmės atgaliniame kelyje (Mae Khachan)."
       ]
     },
     {
-      "day": "D14-20 · Gruodis 24-30",
-      "area": "Hua Hin / Phetchaburi",
-      "theme": "Karališkasis kurortas",
+      "day": "D14 · Gruodžio 24 (Kt)",
+      "area": "Chiang Rai",
+      "theme": "Rezervas / kavos maršrutas",
       "blocks": [
-        "Khao Sam Roi Yot NP (Phraya Nakhon urvas).",
-        "Bueng Bua Boardwalk (lotosų pelkė).",
-        "Monsoon Valley vynuogynas."
+        "Kok khlongo kavos fabrikai arba Ban Du keramikos dirbtuvės.",
+        "Chiang Rai Clock Tower šou (vakare).",
+        "Pasiruošimas skrydžiui į Bangkoką."
+      ]
+    },
+    {
+      "day": "D15 · Gruodžio 25 (Pn)",
+      "area": "Chiang Rai → Bangkok",
+      "theme": "Skrydis ir upės vakaras",
+      "blocks": [
+        "Ryte – skrydis CEI → BKK (Thai VietJet / Bangkok Airways).",
+        "Check-in Riverside viešbutyje (Millennium Hilton / Capella).",
+        "Vakaras: kruizas Chao Phraya arba restoranas prie upės."
+      ]
+    },
+    {
+      "day": "D16 · Gruodžio 26 (Št)",
+      "area": "Bangkok Old Town",
+      "theme": "Šventyklos ir kanalai",
+      "blocks": [
+        "Grand Palace + Wat Pho (atidarymas 08:30).",
+        "Tha Tien pietūs (pad thai / dessert).",
+        "Longtail kruizas po khlong'us (Thonburi).",
+        "Vakare – rooftop (Mahanakhon SkyBar / Lebua)."
+      ]
+    },
+    {
+      "day": "D17 · Gruodžio 27 (Sk)",
+      "area": "Ayutthaya",
+      "theme": "UNESCO diena",
+      "blocks": [
+        "Privatus van arba traukinys į Ayutthaya (1,5 h).",
+        "Wat Mahathat, Wat Chaiwatthanaram, Wat Yai Chai Mongkhon.",
+        "Lunch boat, grįžimas iki 18:00."
+      ]
+    },
+    {
+      "day": "D18 · Gruodžio 28 (Pr)",
+      "area": "Bangkok",
+      "theme": "Turgai ir Chinatown",
+      "blocks": [
+        "Chatuchak (jei savaitgalis) arba Or Tor Kor gurmanų turgus.",
+        "Popietė ICONSIAM / Siam Square apsipirkimui.",
+        "Vakare Chinatown street food (Yaowarat)."
+      ]
+    },
+    {
+      "day": "D19 · Gruodžio 29 (An)",
+      "area": "Modernus Bangkokas",
+      "theme": "Rooftop'ai ir spa",
+      "blocks": [
+        "SPA / masažai (Health Land / Perception).",
+        "Art in Paradise arba Bangkok Art & Culture Centre.",
+        "Rooftop drink (Octave, Vertigo, Above Eleven)."
+      ]
+    },
+    {
+      "day": "D20 · Gruodžio 30 (Tr)",
+      "area": "Bangkok",
+      "theme": "NYE prep",
+      "blocks": [
+        "Rezervuoti vietas ICONSIAM / Asiatique fejerverkams.",
+        "Pasirengimas logistikai (transportas į/ iš upės zonos).",
+        "Vakare – lengvesnis meniu, kad išlaikyti energiją."
       ]
     },
     {
@@ -134,35 +224,36 @@
       "area": "Bangkok",
       "theme": "Naujieji metai",
       "blocks": [
-        "Atvykimas į Bangkoką.",
-        "Vakarienė prie upės (Riverside).",
-        "Fejerverkai prie ICONSIAM / Wat Arun."
+        "Laisvas rytas (brunch, masažas).",
+        "Popietė – pasiruošimas NYE programai.",
+        "23:30 – ICONSIAM/ASIATIQUE fejerverkai arba rooftop show."
       ]
     },
     {
       "day": "D22 · Sausio 01 (Pn)",
       "area": "Bangkok",
-      "theme": "Ramus startas",
+      "theme": "Recovery + Chinatown",
       "blocks": [
-        "Vėlyvi pusryčiai.",
-        "Grand Palace ir Wat Pho (jei atidaryta/mažiau žmonių).",
-        "Chinatown vakarienė."
+        "Lėtas rytas, baseinas, spa.",
+        "Chinatown brunch (Nai Ek Roll Noodles).",
+        "Pakavimas ir pasiruošimas išvykimui."
       ]
     },
     {
       "day": "D23 · Sausio 02 (Št)",
-      "area": "Bangkok → Namo",
-      "theme": "Paskutinė diena",
+      "area": "Bangkok → VNO/RIX",
+      "theme": "Išvykimas",
       "blocks": [
-        "Chatuchak savaitgalio turgus (nes tai šeštadienis!).",
-        "Paskutinis masažas.",
-        "Pervežimas į BKK oro uostą."
+        "Paskutiniai pirkinių sustojimai (ICONSIAM / King Power).",
+        "Pervežimas į BKK oro uostą (≥3 val. anksčiau).",
+        "Skrydis namo (Qatar/Finnair/LOT)."
       ]
     }
   ],
   "next_actions": [
-    "Patvirtinti „Hong by Starlight“ turo datą (populiarus).",
-    "Rezervuoti 12-13 d. (sekmadienio) nakvynę Phuket Town dėl Lard Yai.",
-    "Pasitikrinti vidaus skrydžių kainas KBV → BKK gruodžio 23 d."
+    "Rezervuoti KBV/HKT → CEI skrydį (geriausia 12-20 rytą).",
+    "Užblokuoti John Gray 'Hong by Starlight' turą (D8).",
+    "Pasirūpinti ICONSIAM/riverfront NYE leidimais arba rooftop rezervacija (iki spalio).",
+    "Įsivertinti Chiang Rai gidą Golden Triangle maršrutui (privatus mikroautobusas)."
   ]
 }

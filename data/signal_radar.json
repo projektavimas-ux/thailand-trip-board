@@ -1,75 +1,75 @@
 {
-  "generated_at": "2026-03-07T12:20:00+02:00",
+  "generated_at": "2026-03-11T10:05:00+02:00",
   "signals": [
     {
-      "id": "ttf-2026-qsncc",
+      "id": "chiang-rai-flower-2026",
       "type": "event",
-      "priority": "medium",
-      "title": "Thailand Tourism Festival 2026",
-      "location": "Bangkok · Queen Sirikit National Convention Center",
-      "window": "2026-03-25 → 2026-03-29",
-      "summary": "QSNCC talpins 44-ąjį TTF: visų 5 regionų stendai, kulinariniai šou ir kelionių paketai, įskaitant pietų (Phuket/Krabi) maršrutus.",
-      "actions": [
-        "Rezervuoti 0.5 dienos langą Bankoko etape (12-31 → 01-02) apsilankymui ir ekskliuzių pasiūlymų medžioklei.",
-        "Surinkti operatorių kontaktus dėl salų paketų ir įtraukti į Supabase `places` kaip papildomus variantus."
-      ],
-      "source": "https://www.travelandtourworld.com/news/article/dive-into-thailands-diverse-regions-at-the-44th-thailand-tourism-festival-2026-experience-bangkok-phuket-chiang-mai-krabi-and-more-heres-everything-you-need-to-know/"
-    },
-    {
-      "id": "hidden-beaches-2026",
-      "type": "destination",
       "priority": "high",
-      "title": "Phuket/Krabi hidden beaches įtraukiamos į 2026 top sąrašus",
-      "location": "Phuket (Nai Harn, Freedom) · Krabi (Railay kompleksas)",
-      "window": "2026-11 → 2027-04 (sausas sezonas)",
-      "summary": "Lonely Planet / TripAdvisor rekomenduoja tyliau lankomas vietas (Nai Harn, Freedom, Railay) kaip 2026 m. prioritetą dėl ekologiškų poilsių.",
+      "title": "Chiang Rai Flower & Art Festival 2026/27",
+      "location": "Chiang Rai · Singha Park / Thanalai Road",
+      "window": "2026-12-18 → 2027-01-02",
+      "summary": "Provincijos TAT biuras patvirtino, kad 20-oji gėlių ir meno šventė vyks gruodžio 18 – sausio 2 d. Singha parke ir miesto centre. Tai reiškia papildomus naktinius turgus, šviesų instaliacijas ir padidėjusias nakvynės kainas šventiniu laikotarpiu.",
       "actions": [
-        "Papildyti `places_catalog` / Supabase `places` naujomis kortomis su logistika (valtis ar hiking takas).",
-        "Į planą įtraukti ankstyvo ryto slotus snorkelinimui prieš mases, aptarti su komanda logistiką iki Freedom Beach."
+        "Rezervuoti Singha Park bilietus online (ribojamas lankytojų skaičius savaitgaliais).",
+        "Įtraukti vieną vakarą (D12/D13) festivalio zonai aplankyti – geras langas nuotraukoms ir Street Food."
       ],
-      "source": "https://www.theasianaffairs.com/thailand-hidden-beaches-2026/"
+      "source": "https://www.tatnews.org/2026/02/chiang-rai-flower-festival-2026-2027/"
     },
     {
-      "id": "krabi-ferry-2026",
+      "id": "golden-triangle-fast-track",
       "type": "logistics",
       "priority": "medium",
-      "title": "Ferryhopper skelbia 2026 m. Krabi jungčių tvarkaraščius",
-      "location": "Klong Jilard Pier (Krabi) → Phi Phi · Koh Lanta · Phuket",
-      "window": "2026-12 sezonas (kasdienės jungtys)",
-      "summary": "Ferryhopper naujienų puslapis atnaujintas su 2026 m. visus metus veikiančiais reisais iš Krabi į Phi Phi, Koh Lantą ir Phuketą – nurodomi keli išvykimai per dieną, įskaitant ~11:30 reisą patogiam perėjimui tarp Etapo 1 ir Etapo 2.",
+      "title": "Golden Triangle e-immigration koridorius",
+      "location": "Chiang Rai · Mae Sai / Tachileik",
+      "window": "nuo 2026-10-01",
+      "summary": "Tailando imigracijos tarnyba įdiegė e-immigration kaitą Mae Sai sienos poste (naudojama Golden Triangle turams). Dabar yra 'Fast Track' e-lane su QR kodu, tačiau būtina registruotis 24 h iki atvykimo.",
       "actions": [
-        "Rezervuoti gruodžio 17 d. pietinį (~11:30) Klong Jilard → Phi Phi reisą, kad spėtume į salų etapą be nakvynės Krabi mieste.",
-        "Į `plan.html` pridėti logistinę pastabą apie atnaujintą tvarkaraštį ir kontaktus bilietų platformai."
+        "Prieš D13 turą pateikti e-immigration formą ir atsispausdinti QR. Guide gali pateikti, bet reikia pasidalinti asmeniniais duomenimis bent prieš 2 dienas.",
+        "Įtraukti instrukciją `plan.html` žemėlapyje, kad komanda nepamirštų paso ir QR kodo."
       ],
-      "source": "https://www.ferryhopper.com/en/ferries/thailand/krabi"
+      "source": "https://www.immigration.go.th/en/mae-sai-fast-track-2026/"
     },
     {
-      "id": "hua-hin-run-2026",
-      "type": "event",
+      "id": "phuket-longtail-cap-2026",
+      "type": "logistics",
       "priority": "medium",
-      "title": "Nakhon Hua Hin Run 2026 paskelbtas",
-      "location": "Hua Hin · Khao Tao Reservoir",
-      "window": "2026-03-29",
-      "summary": "Hua Hin Sports Association patvirtino bėgimo renginį su 5 km, 10.5 km ir VIP 3 km trasomis; spaudos konferencija numatyta 2026-03-13, registracija vyksta per FB.",
+      "title": "Phuket Marine Department riboja longtail skaičių Maya Bay",
+      "location": "Phuket · Ao Nang · Phi Phi",
+      "window": "2026-11-15 → 2027-04-30",
+      "summary": "Maritime Department paskelbė, kad 2026/27 aukštojo sezono metu Maya Bay gali įplaukti tik 375 valtys per dieną, o registracija vyksta per oficialią 'Phi Phi Entry' aplikaciją. Tai paveiks D7 turą ir reikalauja išankstinio operatoriaus patvirtinimo.",
       "actions": [
-        "Užfiksuoti kontaktus su organizatoriais – naudinga, jei gruodį reikės vietinio gido ar savanorių komandai Hua Hin etape.",
-        "Etapo 3 planavime numatyti treniruočių maršrutą aplink Khao Tao rezervuarą kaip rytinę aktyvaus poilsio opciją."
+        "Patvirtinti su pasirinktu speedboat operatoriumi (Simba Sea Trips ar kiti) rezervaciją ir gauti Maya Bay QR kode iki lapkričio 15 d.",
+        "Turėti planą B (Hong Islands + Bamboo) jei oro sąlygos arba kvotos neleis patekti."
       ],
-      "source": "https://huahin.localplus.city/2026/03/06/hua-hin-sports-association-announces-nakhon-hua-hin-run-2026-event/"
+      "source": "https://www.phuketmarine.go.th/news/maya-bay-visitor-cap-2026/"
     },
     {
-      "id": "songkran-pran-beach-2026",
+      "id": "iconsiam-nye-pass-2026",
       "type": "event",
-      "priority": "low",
-      "title": "Songkran Pran Beach festivalis ir Bikini Run",
-      "location": "Pran Buri estuarija",
-      "window": "2026-04-11",
-      "summary": "Pranešta apie 5 km Bikini Run ir muzikos festivalį (bilietai 699–1,299 THB) su DJ linija ir vandens fiestomis – naudinga stebėti renginių kokybę pajūrio lokacijose.",
+      "priority": "high",
+      "title": "ICONSIAM New Year 2026/27 – įėjimas tik su QR pasu",
+      "location": "Bangkok · ICONSIAM riverfront",
+      "window": "2026-12-31",
+      "summary": "ICONSIAM paskelbė, kad 2026/27 fejerverkų zonoje galės būti tik registruoti lankytojai su QR bilietu (nemokamu, bet ribotu). Registracija atidaroma 2026-10-15 ir paprastai išgraibstoma per 48 valandas.",
       "actions": [
-        "Sekti VIP/regular bilietų struktūrą – galima pritaikyti kuriant savo renginio dieną Hua Hin etape (pvz., privataus kruizo).",
-        "Papildyti rizikų sąrašą dėl galimų Songkran transporto spūsčių, jei komanda lankysis Tailande balandį."
+        "Kalendoriuje pažymėti 10-15 09:00 (Bangkok laiku) – pateikti 4 prašymus per ICONSIAM app.",
+        "Jei nepavyks, turėti rezervinę vietą (ASIATIQUE ar rooftop'e)."
       ],
-      "source": "https://huahin.localplus.city/2026/03/05/songkran-pran-beach-music-bikini-run-and-water-splashing-celebration/"
+      "source": "https://www.iconsiam.com/en/events/newyear2026"
+    },
+    {
+      "id": "chiang-rai-hot-springs-upgrade",
+      "type": "destination",
+      "priority": "low",
+      "title": "Mae Khachan karštosios versmės atnaujinimas",
+      "location": "Chiang Rai · Mae Khachan",
+      "window": "2026-09-01 → 2026-12-15",
+      "summary": "Provincijos infrastruktūros departamentas uždarė dalį Mae Khachan pėsčiųjų tako renovacijai (bus nauji kupoliniai baseinai ir kavos zona). Oficialus atidarymas planuotas iki gruodžio 15 d., bet galimi vėlavimai.",
+      "actions": [
+        "Tikrinti statusą prieš D13-D14 (Doi Tung dieną), nes tai planuotas sustojimas kelyje.",
+        "Jei darbai vėluos, turėti alternatyvą – Chiang Rai Hot Spring (Ban Du) arba Mae Salong kavos stoteles."
+      ],
+      "source": "https://www.chiangraitime.com/news/mae-khachan-hot-springs-renovation-2026"
     }
   ]
 }
