@@ -308,7 +308,20 @@
         offlineStage.addEventListener('change', renderOfflineList);
       }
 
-      function renderOfflineList(){
+      function syncPreviewToMain(){
+      placesCache = offlineCatalog.map(item => ({
+        id: item.id,
+        name: item.name,
+        stage: item.stage,
+        description: item.desc,
+        image_url: item.image
+      }));
+      voteMapCache = {};
+      placesCache.forEach((item, idx) => { voteMapCache[item.id] = 0; });
+      applyFilters();
+    }
+
+    function renderOfflineList(){
         if (!offlineList) return;
         const query = (offlineSearch?.value || '').trim().toLowerCase();
         const stageValue = offlineStage?.value || 'all';
@@ -347,7 +360,11 @@
       function bootPreviewMode(){
         fetch('./data/places_catalog.json')
           .then(r => r.json())
-          .then(data => { renderPreview(data); initOfflineCatalog(data); })
+          .then(data => {
+            renderPreview(data);
+            initOfflineCatalog(data);
+            syncPreviewToMain();
+          })
           .catch(() => { if (offlineList) offlineList.innerHTML = '<p class="text-sm text-rose-500">Nepavyko įkelti vietų katalogo.</p>'; });
         previewBox?.classList.remove('hidden');
         document.getElementById('configBox')?.classList.add('hidden');
