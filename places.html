@@ -4,90 +4,198 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Thailand Control · Vietos ir balsai</title>
-  <link rel="stylesheet" href="./styles/site.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              900: '#0f172a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .plan-line {
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 18px;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      background: #f8fafc;
+    }
+    .plan-line strong { font-weight: 600; color: #0f172a; }
+    .place-card {
+      display: flex;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 20px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+      margin-bottom: 16px;
+    }
+    .place-card img {
+      width: 160px;
+      object-fit: cover;
+      display: block;
+    }
+    .place-card .body {
+      padding: 16px 18px;
+      flex: 1;
+    }
+    .place-card .tag {
+      display: inline-flex;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #2563eb;
+      background: rgba(37, 99, 235, 0.12);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    .place-card .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+    }
+    #placesList::-webkit-scrollbar,
+    #offlineList::-webkit-scrollbar { width: 6px; }
+    #placesList::-webkit-scrollbar-thumb,
+    #offlineList::-webkit-scrollbar-thumb { background: #cbd5f5; border-radius: 4px; }
+    .preview-stage {
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: #fff;
+    }
+    .preview-stage h4 { margin-bottom: 6px; font-weight: 600; color: #0f172a; }
+    .preview-stage .spot { margin-bottom: 8px; }
+  </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body>
-  <div class="wrap">
-    <h1>📍 Vietos ir balsavimas</h1>
-    <p class="muted">Kortelės generuojamos iš Supabase „places“ lentelės, balsai – „votes“.</p>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen">
+  <!-- Hero -->
+  <div class="relative bg-brand-900 h-64 sm:h-80 w-full overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=1920&auto=format&fit=crop" alt="Places" class="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-overlay">
+    <div class="absolute inset-0 bg-gradient-to-t from-brand-900/95 to-transparent"></div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-10">
+      <p class="text-xs text-brand-100 font-semibold uppercase tracking-[0.4em]">Vietos ir balsavimas</p>
+      <h1 class="text-4xl sm:text-5xl font-display font-bold text-white mb-2 drop-shadow">📍 Vietos ir balsai</h1>
+      <p class="text-brand-100 text-sm sm:text-base font-medium max-w-2xl drop-shadow">
+        Kortelės generuojamos iš Supabase „places“, balsai – iš „votes“. Galima naudoti demo režimą (`data/places_catalog.json`), kai Supabase neprieinamas.
+      </p>
+    </div>
+  </div>
 
-    <nav class="links">
-      <a href="./index.html">Apžvalga</a>
-      <a href="./flights.html">Skrydžiai</a>
-      <a href="./plan.html">Kelionės planas</a>
-      <a href="./routes-vertical.html">Maršruto tinklas</a>
-      <a class="active" href="./places.html">Vietos ir balsai</a>
-    </nav>
+  <!-- Navigation -->
+  <div class="bg-white border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex overflow-x-auto py-4 space-x-8 text-sm sm:text-base font-medium text-slate-500 whitespace-nowrap">
+        <a class="pb-1 hover:text-slate-900" href="./index.html">Apžvalga</a>
+        <a class="pb-1 hover:text-slate-900" href="./flights.html">Skrydžiai</a>
+        <a class="pb-1 hover:text-slate-900" href="./plan.html">Kelionės planas</a>
+        <a class="pb-1 hover:text-slate-900" href="./routes-vertical.html">Maršruto tinklas</a>
+        <a class="pb-1 text-slate-900 border-b-2 border-brand-500" href="./places.html">Vietos ir balsai</a>
+      </nav>
+    </div>
+  </div>
 
-    <div id="previewBox" class="card hidden">
-      <div class="topbar">
+  <!-- Content -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
+    <div id="previewBox" class="hidden bg-white rounded-2xl shadow-sm border border-slate-100">
+      <div class="px-5 sm:px-6 pt-6 pb-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2>Peržiūros režimas</h2>
-          <p class="muted">Supabase neaktyvus – rodoma iš `data/places_catalog.json`.</p>
+          <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold">Demo režimas</p>
+          <h2 class="text-xl font-display font-semibold text-slate-900">Peržiūra iš katalogo</h2>
+          <p class="text-sm text-slate-500">Supabase neaktyvus – rodomas `data/places_catalog.json` turinys.</p>
         </div>
-        <span id="previewStamp" class="muted"></span>
+        <span id="previewStamp" class="text-xs text-slate-400"></span>
       </div>
-      <div id="previewStages" class="preview-grid"></div>
+      <div id="previewStages" class="px-5 sm:px-6 py-6 grid gap-4 sm:grid-cols-2"></div>
     </div>
 
-    <div id=\"offlineBox\" class=\"card hidden\">
-      <div class=\"topbar\">
+    <div id="offlineBox" class="hidden bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
         <div>
-          <h2>Etapo vietos (skaitymo režimas)</h2>
-          <p class=\"muted\">Kai Supabase neveikia, čia matosi `data/places_catalog.json` turinys.</p>
+          <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold">Skaitymo režimas</p>
+          <h2 class="text-xl font-display font-semibold text-slate-900">Etapo vietos (offline)</h2>
+          <p class="text-sm text-slate-500">Kai Supabase neveikia, šis blokas rodo katalogą iš `data/places_catalog.json`.</p>
         </div>
       </div>
-      <div class=\"grid-2\">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <h3>Paieška</h3>
-          <input id=\"offlineSearch\" placeholder=\"Ieškoti pagal pavadinimą ar aprašą\" />
+          <label class="text-sm font-medium text-slate-600">Paieška</label>
+          <input id="offlineSearch" placeholder="Ieškoti pagal pavadinimą ar aprašą" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
         </div>
         <div>
-          <h3>Etapas</h3>
-          <select id=\"offlineStage\">
-            <option value=\"all\">Visi</option>
+          <label class="text-sm font-medium text-slate-600">Etapas</label>
+          <select id="offlineStage" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+            <option value="all">Visi</option>
           </select>
         </div>
       </div>
-      <div id=\"offlineList\" style=\"margin-top:16px\"></div>
+      <div id="offlineList" class="mt-6"></div>
     </div>
 
-    <div id="configBox" class="card hidden">
-      <strong>Trūksta Supabase konfigūracijos.</strong> Papildyk <code>supabase-config.v2.js</code>.</div>
+    <div id="configBox" class="hidden bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-xl shadow-sm">
+      <p class="text-sm text-yellow-700"><strong>Trūksta Supabase konfigūracijos.</strong> Papildyk `supabase-config.v2.js`.</p>
+    </div>
 
-    <div id="authBox" class="card hidden">
-      <h3>Prisijungimas</h3>
-      <input id="emailInput" placeholder="El. paštas" />
-      <input id="passInput" type="password" placeholder="Slaptažodis" />
-      <div class="grid-2">
-        <button id="loginBtn">Prisijungti</button>
-        <button id="signupBtn" class="secondary">Registruoti</button>
+    <div id="authBox" class="hidden max-w-md mx-auto bg-white rounded-2xl shadow-sm border border-slate-100 p-8">
+      <h3 class="text-2xl font-display font-semibold text-slate-900 mb-2">Prisijungimas</h3>
+      <p class="text-sm text-slate-500 mb-6">Naudok tą patį Supabase el. paštą.</p>
+      <div class="space-y-4">
+        <input id="emailInput" type="email" placeholder="El. paštas" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
+        <input id="passInput" type="password" placeholder="Slaptažodis" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
+        <div class="flex space-x-3 pt-2">
+          <button id="loginBtn" class="flex-1 bg-brand-600 hover:bg-brand-500 text-white font-medium py-3 px-4 rounded-lg transition-colors shadow-sm">Prisijungti</button>
+          <button id="signupBtn" class="flex-1 bg-white hover:bg-slate-50 text-slate-700 font-medium py-3 px-4 rounded-lg border border-slate-200 transition-colors shadow-sm">Registruoti</button>
+        </div>
+        <p id="authStatus" class="text-sm text-center text-rose-500 min-h-[20px]"></p>
       </div>
-      <p id="authStatus" class="muted"></p>
     </div>
 
-    <div id="appBox" class="hidden">
-      <div class="card topbar">
+    <div id="appBox" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <div id="who"></div>
-          <p class="muted">Visi pakeitimai iškart matomi kitiems dalyviams.</p>
+          <div id="who" class="text-lg font-display font-semibold text-slate-900"></div>
+          <p class="text-sm text-slate-500 mt-1">Visi pakeitimai iškart matomi kitiems dalyviams.</p>
         </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <button id="refreshPlaces" class="secondary" style="width:auto">Atnaujinti</button>
-          <button id="logoutBtn" class="secondary">Atsijungti</button>
+        <div class="flex flex-wrap gap-3">
+          <button id="refreshPlaces" class="px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors">Atnaujinti</button>
+          <button id="logoutBtn" class="px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors">Atsijungti</button>
         </div>
       </div>
 
-      <div class="card">
-        <div class="grid-2">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <h3>Paieška ir filtrai</h3>
-            <input id="searchBox" placeholder="Ieškoti pagal pavadinimą ar aprašą" />
+            <label class="text-sm font-medium text-slate-600">Paieška</label>
+            <input id="searchBox" placeholder="Ieškoti pagal pavadinimą ar aprašą" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
           </div>
           <div>
-            <h3>Etapas</h3>
-            <select id="stageSelect">
+            <label class="text-sm font-medium text-slate-600">Etapas</label>
+            <select id="stageSelect" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
               <option value="all">Visi</option>
               <option value="1 ETAPAS">1 ETAPAS</option>
               <option value="2 ETAPAS">2 ETAPAS</option>
@@ -100,27 +208,29 @@
         </div>
       </div>
 
-      <div id="alertBox" class="card hidden"></div>
+      <div id="alertBox" class="hidden bg-rose-50 border border-rose-200 text-rose-700 rounded-2xl p-4 text-sm"></div>
 
-      <div class="card">
-        <h2>Siūlomos vietos</h2>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+        <h2 class="text-2xl font-display font-semibold text-slate-900 mb-4">Siūlomos vietos</h2>
         <div id="placesList"></div>
       </div>
 
-      <div class="grid-2">
-        <div class="card">
-          <h3>Pridėti vietą</h3>
-          <input id="pname" placeholder="Pavadinimas" />
-          <input id="pstage" placeholder="Etapas (pvz., 1 ETAPAS)" />
-          <input id="pimg" placeholder="Nuotraukos URL" />
-          <textarea id="pdesc" placeholder="Trumpas aprašymas" rows="3"></textarea>
-          <button id="addPlace">Pridėti</button>
-          <p id="formStatus" class="muted"></p>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+          <h3 class="text-xl font-display font-semibold text-slate-900 mb-4">Pridėti vietą</h3>
+          <div class="space-y-4">
+            <input id="pname" placeholder="Pavadinimas" class="w-full rounded-lg border border-slate-200 px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
+            <input id="pstage" placeholder="Etapas (pvz., 1 ETAPAS)" class="w-full rounded-lg border border-slate-200 px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
+            <input id="pimg" placeholder="Nuotraukos URL" class="w-full rounded-lg border border-slate-200 px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
+            <textarea id="pdesc" placeholder="Trumpas aprašymas" rows="3" class="w-full rounded-lg border border-slate-200 px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-brand-500"></textarea>
+            <button id="addPlace" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-medium py-3 rounded-lg transition-colors">Pridėti</button>
+            <p id="formStatus" class="text-sm text-slate-500"></p>
+          </div>
         </div>
-        <div class="card">
-          <div class="topbar">
-            <h3>Balsų lenta</h3>
-            <small class="muted">Generuojama pagal filtrų rezultatus</small>
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-display font-semibold text-slate-900">Balsų lenta</h3>
+            <span class="text-xs uppercase tracking-[0.35em] text-slate-400">pagal filtrą</span>
           </div>
           <div id="planBoard"></div>
         </div>
@@ -191,12 +301,10 @@
 
       function buildOfflineFilters(stageKeys){
         if (!offlineStage) return;
-        const options = ['<option value='all'>Visi</option>'].concat(stageKeys.map(key => `<option value="${key}">${key}</option>`));
+        const options = ['<option value="all">Visi</option>'].concat(stageKeys.map(key => `<option value="${key}">${key}</option>`));
         offlineStage.innerHTML = options.join('');
         if (stageParam && stageKeys.includes(stageParam)) offlineStage.value = stageParam;
-        if (offlineSearch){
-          offlineSearch.addEventListener('input', renderOfflineList);
-        }
+        if (offlineSearch){ offlineSearch.addEventListener('input', renderOfflineList); }
         offlineStage.addEventListener('change', renderOfflineList);
       }
 
@@ -209,20 +317,16 @@
           const queryOk = !query || `${item.name} ${item.desc}`.toLowerCase().includes(query);
           return stageOk && queryOk;
         });
-        if (!filtered.length){
-          offlineList.innerHTML = '<p class="muted">Atitinkančių vietų nėra.</p>';
-          return;
-        }
-        offlineList.innerHTML = filtered.map(item => `
+        offlineList.innerHTML = filtered.length ? filtered.map(item => `
           <div class="place-card">
             ${item.image ? `<img src="${item.image}" alt="${item.name}" />` : ''}
             <div class="body">
               <div class="tag">${item.stage || 'Etapas nenurodytas'}</div>
-              <h3>${item.name}</h3>
-              <p class="muted">${item.desc || ''}</p>
-              ${item.source ? `<a class="ghost-link" href="${item.source}" target="_blank" rel="noopener">Šaltinis</a>` : ''}
+              <h3 class="text-lg font-display text-slate-900 mt-2 mb-2">${item.name}</h3>
+              <p class="text-sm text-slate-600">${item.desc || ''}</p>
+              ${item.source ? `<a class="text-sm font-semibold text-brand-600" href="${item.source}" target="_blank" rel="noopener">Šaltinis →</a>` : ''}
             </div>
-          </div>`).join('');
+          </div>`).join('') : '<p class="text-sm text-slate-500">Atitinkančių vietų nėra.</p>';
       }
 
       const previewBox = document.getElementById('previewBox');
@@ -231,36 +335,22 @@
       function renderPreview(data){
         if (!previewStagesBox) return;
         const stages = data?.stages || [];
-        if (!stages.length){
-          previewStagesBox.innerHTML = '<p class="muted">Nėra duomenų.</p>';
-          return;
-        }
-        previewStagesBox.innerHTML = stages.map(stage => `
+        previewStagesBox.innerHTML = stages.length ? stages.map(stage => `
           <div class="preview-stage">
             <h4>${stage.title}</h4>
-            ${(stage.items||[]).slice(0,3).map(item=>`<div class="spot"><strong>${item.name}</strong><br><span class="muted">${item.desc}</span></div>`).join('')}
-          </div>
-        `).join('');
+            ${(stage.items||[]).slice(0,3).map(item=>`<div class="spot"><strong>${item.name}</strong><br><span class="text-sm text-slate-500">${item.desc || ''}</span></div>`).join('')}
+          </div>`).join('') : '<p class="text-sm text-slate-500">Nėra duomenų.</p>';
         const stamp = document.getElementById('previewStamp');
-        if (stamp){
-          stamp.textContent = 'Demo modas · ' + new Date().toLocaleTimeString('lt-LT',{hour:'2-digit',minute:'2-digit'});
-        }
+        if (stamp){ stamp.textContent = 'Demo modas · ' + new Date().toLocaleTimeString('lt-LT',{hour:'2-digit',minute:'2-digit'}); }
       }
 
       function bootPreviewMode(){
         fetch('./data/places_catalog.json')
           .then(r => r.json())
-          .then(data => {
-            renderPreview(data);
-            initOfflineCatalog(data);
-          })
-          .catch(err => {
-            console.error(err);
-            if (offlineList) offlineList.innerHTML = '<p class=\"muted\">Nepavyko įkelti vietų katalogo.</p>';
-          });
-        if (previewBox) previewBox.classList.remove('hidden');
-        const config = document.getElementById('configBox');
-        if (config) config.classList.add('hidden');
+          .then(data => { renderPreview(data); initOfflineCatalog(data); })
+          .catch(() => { if (offlineList) offlineList.innerHTML = '<p class="text-sm text-rose-500">Nepavyko įkelti vietų katalogo.</p>'; });
+        previewBox?.classList.remove('hidden');
+        document.getElementById('configBox')?.classList.add('hidden');
       }
 
       function applyFilters(){
@@ -277,11 +367,7 @@
 
       function renderPlaces(list){
         const container = document.getElementById('placesList');
-        if (!list.length){
-          container.innerHTML = '<p class="muted">Atitinkančių vietų nėra.</p>';
-          return;
-        }
-        container.innerHTML = '';
+        container.innerHTML = list.length ? '' : '<p class="text-sm text-slate-500">Atitinkančių vietų nėra.</p>';
         list.forEach(p => {
           const card = document.createElement('div');
           card.className = 'place-card';
@@ -289,11 +375,11 @@
             ${p.image_url ? `<img src="${p.image_url}" alt="${p.name}" />` : ''}
             <div class="body">
               <div class="tag">${p.stage || 'Etapas nenurodytas'}</div>
-              <h3 style="margin:4px 0 6px">${p.name}</h3>
-              <p class="muted">${p.description || ''}</p>
+              <h3 class="text-lg font-display text-slate-900 mt-2 mb-2">${p.name}</h3>
+              <p class="text-sm text-slate-600">${p.description || ''}</p>
               <div class="footer">
-                <span class="muted">${voteMapCache[p.id]||0} bals.</span>
-                <button class="secondary" data-place="${p.id}">${userVotes.has(p.id)?'Atimti':'Balsuoti'}</button>
+                <span class="text-xs uppercase tracking-wide text-slate-500">${voteMapCache[p.id]||0} bals.</span>
+                <button class="px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors" data-place="${p.id}">${userVotes.has(p.id)?'Atimti':'Balsuoti'}</button>
               </div>
             </div>`;
           container.appendChild(card);
@@ -306,12 +392,12 @@
       function renderBoard(list){
         const box = document.getElementById('planBoard');
         if (!list.length){
-          box.innerHTML = '<p class="muted">Nėra duomenų.</p>';
+          box.innerHTML = '<p class="text-sm text-slate-500">Nėra duomenų.</p>';
           return;
         }
         const sorted = [...list].sort((a,b)=>(voteMapCache[b.id]||0)-(voteMapCache[a.id]||0));
         box.innerHTML = sorted.map((p,i)=>`
-          <div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMapCache[p.id]||0} bals.</span></div>`).join('');
+          <div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="text-xs uppercase tracking-wide text-slate-500">${voteMapCache[p.id]||0} bals.</span></div>`).join('');
       }
 
       async function toggleVote(placeId, remove){
@@ -333,16 +419,11 @@
           currentClient.from('places').select('*').order('created_at',{ascending:false}),
           currentClient.from('votes').select('place_id,user_id')
         ]);
-        if (pErr || vErr){
-          setAlert('Nepavyko gauti duomenų: ' + (pErr?.message || vErr?.message));
-          return;
-        }
+        if (pErr || vErr){ setAlert('Nepavyko gauti duomenų: ' + (pErr?.message || vErr?.message)); return; }
         placesCache = places || [];
         cachedVotes = votes || [];
         voteMapCache = {};
-        cachedVotes.forEach(v => {
-          voteMapCache[v.place_id] = (voteMapCache[v.place_id]||0) + 1;
-        });
+        cachedVotes.forEach(v => { voteMapCache[v.place_id] = (voteMapCache[v.place_id]||0) + 1; });
         const { data: { user } } = await currentClient.auth.getUser();
         userVotes = new Set((cachedVotes||[]).filter(v => v.user_id === user?.id).map(v => v.place_id));
         applyFilters();
@@ -356,19 +437,13 @@
         const desc = document.getElementById('pdesc').value.trim();
         const msg = document.getElementById('formStatus');
         msg.textContent='';
-        if (!name){
-          msg.textContent = 'Įvesk pavadinimą.';
-          return;
-        }
+        if (!name){ msg.textContent = 'Įvesk pavadinimą.'; return; }
         const { data: { user } } = await currentClient.auth.getUser();
         if (!user){ msg.textContent = 'Reikia prisijungti.'; return; }
         const payload = { name, stage, image_url: image, description: desc, created_by: user.id };
         const { error } = await currentClient.from('places').insert(payload);
         if (error){ msg.textContent = error.message; return; }
-        document.getElementById('pname').value = '';
-        document.getElementById('pstage').value = '';
-        document.getElementById('pimg').value = '';
-        document.getElementById('pdesc').value = '';
+        ['pname','pstage','pimg','pdesc'].forEach(id => document.getElementById(id).value='');
         msg.textContent = 'Išsaugota.';
         loadPlaces();
       }
@@ -379,10 +454,7 @@
       stageSelect.addEventListener('change', applyFilters);
 
       const supabaseCtx = initSupabasePage({
-        onReady: ({ client }) => {
-          currentClient = client;
-          loadPlaces();
-        },
+        onReady: ({ client }) => { currentClient = client; loadPlaces(); },
         onSignedOut: () => {
           currentClient = null;
           placesCache = [];
@@ -392,11 +464,8 @@
         }
       });
 
-      if (!supabaseCtx){
-        bootPreviewMode();
-      }
+      if (!supabaseCtx){ bootPreviewMode(); }
     });
-  </script>
   </script>
 </body>
 </html>
