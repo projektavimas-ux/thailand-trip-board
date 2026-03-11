@@ -1,0 +1,372 @@
+{
+  "old-phuket-town": {
+    "desc": "Istorinis kvartalas su spalvingais sino-portugalų stiliaus pastatais. Sekmadieniais (16:00–22:00) Thalang gatvė tampa 'Lard Yai' turgumi.",
+    "source": "https://www.tourismthailand.org/Attraction/phuket-old-town",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/3/31/Thalang_Road%2C_Old_Phuket_Town.jpg"
+  },
+  "big-buddha-phuket": {
+    "desc": "45 m aukščio balto marmuro statula ant Nakkerd kalvos. Geriausia lankytis anksti ryte arba saulėlydžio metu.",
+    "source": "https://phuketelephantnaturereserve.com/visiting-the-big-buddha-in-phuket/",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/7/73/Big_Buddha_von_Phuket_02.jpg"
+  },
+  "wat-chalong": {
+    "desc": "Svarbiausia Phuket šventykla su 60 m aukščio stupa (Chedi), saugančia Budos relikviją. Atidaryta 07:00–17:00.",
+    "source": "https://www.thethaipass.com/attractions/wat-chalong-phuket",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Phuket_Thailand_Wat-Chalong-01.jpg"
+  },
+  "ao-nang-promenada": {
+    "desc": "Pagrindinis Krabi logistinis centras. Vakarais atgyja 'Landmark Night Market' su gyva muzika ir 100+ maisto kioskų.",
+    "source": "https://www.weseektravel.com/ao-nang-night-market/",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Ao_Nang_Beach.jpg/1280px-Ao_Nang_Beach.jpg"
+  },
+  "railay-beach": {
+    "desc": "Pasiekiamas tik valtimi iš Ao Nang. Kalkakmenio uolos, Phra Nang urvas, viewpoint'ai.",
+    "source": "https://shippedaway.com/rock-climbing-railay-beach-krabi/",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/b/be/West_Railay_Beach_%2830880433234%29.jpg"
+  },
+  "nai-harn-beach": {
+    "desc": "Ramesnis paplūdimys pietuose – puikus saulėlydžiams, šalia Promthep Cape.",
+    "source": "https://snorkelingthailand.com/nai-harn-beach/",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/6/66/Nai_harn_beach_phuket_%2845%29.jpg"
+  },
+  "freedom-beach": {
+    "desc": "Sunkiau pasiekiamas (status takas arba valtis), bet balto smėlio ir ramybės garantas.",
+    "source": "https://phuket-tropic-tours.com/blog/freedom-beach",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/4/44/Freedom_beach_-_Karon%2C_Phuket%2C_Thailand_-_panoramio.jpg"
+  },
+  "karon-viewpoint": {
+    "desc": "Trijų įlankų panorama tarp Kata Noi ir Nai Harn – puiki foto stotelė važiuojant pietų ratu.",
+    "source": "https://www.tourismthailand.org/Attraction/karon-viewpoint",
+    "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80"
+  },
+  "ao-sane-snorkelinimas": {
+    "desc": "Mažas paplūdimys už Nai Harn, puikus snorkelinimui (reikalingas taxi arba motoroleris).",
+    "source": "https://www.snorkelingthailand.com/ao-sane-beach/",
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+  },
+  "phi-phi-maya-bay": {
+    "desc": "'The Beach' įlanka. Atidaryta 07:00–17:00, įlankoje maudytis draudžiama. Geriausia atvykti iki 09:00.",
+    "source": "https://www.qbictravel.com/how-to-visit-maya-bay-in-2025-entry-rules-best-time-travel-tips/",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/6/64/Playa_Maya%2C_Ko_Phi_Phi%2C_Tailandia%2C_2013-08-19%2C_DD_04.JPG"
+  },
+  "phang-nga-bay": {
+    "desc": "Ikoniškos kalkakmenio salos, populiarūs kanojų turai (John Gray Sea Canoe).",
+    "source": "https://johngray-seacanoe.com/",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/James_Bond_Felsen_phang_nga_bay_DSC02997.JPG"
+  },
+  "hong-islands": {
+    "desc": "Lagūnos, snorkelingas, 360° apžvalgos aikštelė – ramiau nei Phi Phi.",
+    "source": "https://whereintheworldisnina.com/hong-island-krabi-thailand/",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ko_Hong_Than_Bok_Khorani.jpg/1280px-Ko_Hong_Than_Bok_Khorani.jpg"
+  },
+  "ao-thalane-mangroves": {
+    "desc": "TAT 2026 'Travel with Care' programa riboja grupes iki 12 asmenų. Kajakai per mangroves, vietos bendruomenių pietūs. Rezervuoti ankstyvam potvyniui (07:00–09:00).",
+    "source": "https://www.travelandtourworld.com/news/article/thailands-new-sustainable-travel-experiences-for-2026-exploring-krabi-chiang-mai-and-unesco-creative-cities-in-a-modern-eco-friendly-way/",
+    "image": "https://images.unsplash.com/photo-1482192597420-4817fdd7e8b0?auto=format&fit=crop&w=1200&q=80"
+  },
+  "railay-viewpoint-trail": {
+    "desc": "20 min. status lipimas tarp Railay East ir Phra Nang – geriausia anksti ryte, kad išvengtum karščio.",
+    "source": "https://www.thailandmagazine.com/railay-viewpoint/",
+    "image": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=80"
+  },
+  "poda-island": {
+    "desc": "Balto smėlio sala su ikonišku kalkakmenio stulpu – puikus sustojimas Hong ar Four Islands turuose.",
+    "source": "https://www.krabitravelguide.com/poda-island/",
+    "image": "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80"
+  },
+  "long-beach-pra-ae": {
+    "desc": "Koh Lanta paplūdimys lėtesniam ritmui – daug paplūdimio barų, ramūs saulėlydžiai.",
+    "source": "https://www.tourismthailand.org/Attraction/pra-ae-beach",
+    "image": "https://images.unsplash.com/photo-1470246973918-29a93221c455?q=80&w=1200&auto=format&fit=crop"
+  },
+  "kantiang-bay": {
+    "desc": "Pietinis įlankos kampas su luksusiniu Pimalai resortu, snorkelinimo galimybės.",
+    "source": "https://www.tourismthailand.org/Attraction/ba-kan-ti-ang-bay",
+    "image": "https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=1200&auto=format&fit=crop"
+  },
+  "khao-sok-cheow-lan-lake": {
+    "desc": "Alternatyva audrų dienoms: 1n/2d plūduriuojantys nameliai, longtail turai, kalkakmenio stulpai.",
+    "source": "https://www.thainationalparks.com/khao-sok-national-park",
+    "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop"
+  },
+  "emerald-pool": {
+    "desc": "Natūralus smaragdinis baseinas Thung Teao miške – atvykti 08:00 prieš minias.",
+    "source": "https://www.krabivillasvillas.com/emerald-pool",
+    "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
+  },
+  "tha-pom-klong-song-nam": {
+    "desc": "Mangrovių upelis su krištolo vandeniu ir boardwalk'u – galima maudytis, atidaryta 08:30–18:00.",
+    "source": "https://www.krabimagazine.com/tha-pom-klong-song-nam",
+    "image": "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=1200&q=80"
+  },
+  "wat-rong-khun": {
+    "desc": "'White Temple' – Chalermocho Kossito kūrinys. 08:00–17:00. Nauja 2025 m. galerija eksponuoja šiuolaikinį meną.",
+    "source": "https://www.tourismchiangrai.org/white-temple",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/5/57/THIAN_2022.jpg"
+  },
+  "wat-rong-suea-ten": {
+    "desc": "Mėlynoji šventykla su aukso ornamentais ir budos statula. Atidaryta iki 20:00, įėjimas nemokamas.",
+    "source": "https://www.tourismthailand.org/Attraction/wat-rong-suea-ten",
+    "image": "https://images.unsplash.com/photo-1549294413-26f195200c16?q=80&w=1200&auto=format&fit=crop"
+  },
+  "baan-dam-museum": {
+    "desc": "Thawan Duchanee 'Juodieji namai' – instaliacijų kompleksas, atnaujintas 2025 m. su papildomu paviljonu.",
+    "source": "https://www.tourismthailand.org/Attraction/black-house-museum",
+    "image": "https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1200&auto=format&fit=crop"
+  },
+  "golden-triangle-loop": {
+    "desc": "Mae Sai pasienio turgus, Sop Ruak (Mekongo/Ruako santaka), Hall of Opium ir trumpas kruizas į Laoso pusę.",
+    "source": "https://www.tatnews.org/2025/11/golden-triangle-experiences",
+    "image": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=1200&auto=format&fit=crop"
+  },
+  "doi-tung-mae-fah-luang-garden": {
+    "desc": "Karališkasis projektas su sodais, Tree Top Walk, Rankų darbo dirbtuvėmis, arbatos degustacija Mae Salong kalvose.",
+    "source": "https://www.doitung.org/en/royal-project/",
+    "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop"
+  },
+  "mae-fah-luang-art-cultural-park": {
+    "desc": "Ramus parkas su Lanna stiliaus salėmis ir meno kolekcija – idealu derinti su Wat Rong Khun diena.",
+    "source": "https://www.maefahluang.org/",
+    "image": "https://images.unsplash.com/photo-1471513671800-b09c87e1497c?auto=format&fit=crop&w=1200&q=80"
+  },
+  "mae-salong-arbatos-kalvos": {
+    "desc": "Oolong ir arabikos plantacijos. Galima užsisakyti degustaciją ir apžiūrėti Hill Tribe kaimus.",
+    "source": "https://www.tourismthailand.org/Attraction/doi-mae-salong",
+    "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80"
+  },
+  "grand-palace-wat-pho": {
+    "desc": "Klasikinis Bankoko maršrutas – lankyti 08:30–11:00, vengiant kaitros.",
+    "source": "https://www.tourismthailand.org/Attraction/grand-palace",
+    "image": "https://images.unsplash.com/photo-1563492065599-3520f775eeed?q=80&w=1200&auto=format&fit=crop"
+  },
+  "ayutthaya-historical-park": {
+    "desc": "UNESCO objektas 80 km nuo BKK. Galima užsisakyti privatu van'ą arba važiuoti traukiniu.",
+    "source": "https://www.tourismthailand.org/Destination/Ayutthaya",
+    "image": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=1200&auto=format&fit=crop"
+  },
+  "iconsiam-asiatique-nye": {
+    "desc": "2026/27 ICONSIAM fejerverkai su ribotu įėjimu – registracija atidaroma spalio viduryje.",
+    "source": "https://www.iconsiam.com/en/event",
+    "image": "https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?q=80&w=1200&auto=format&fit=crop"
+  },
+  "chatuchak-chinatown": {
+    "desc": "Savaitgalio turgus su >15 000 kioskų ir Yaowarat street food maršrutu vakarui.",
+    "source": "https://www.tourismthailand.org/Attraction/chatuchak-weekend-market",
+    "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format&fit=crop"
+  },
+  "bangkok-art-culture-centre": {
+    "desc": "Šiuolaikinio meno galerija prie Siam Square – gera vieta kondicionuotam 'mid-day break'.",
+    "source": "https://www.bacc.or.th/",
+    "image": "https://images.unsplash.com/photo-1476979735039-6d1b81d2e9f6?auto=format&fit=crop&w=1200&q=80"
+  },
+  "yaowarat-street-food": {
+    "desc": "Chinatown večeriaus zona – ostrės, pad thai, mango sticky rice, desert barai (Sweettime, Nai Ek).",
+    "source": "https://guide.michelin.com/th/en/article/features/best-street-food-in-bangkok",
+    "image": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80"
+  },
+  "d2-pietu-panoramos": {
+    "desc": "Motoroleriais važiuojame pietine Phuket pakrante – Kata, Karon, Nai Harn ir Promthep iškilūs taškai.",
+    "source": "https://www.tourismthailand.org/Attraction/promthep-cape",
+    "image": ""
+  },
+  "d3-lard-yai-laisva-diena": {
+    "desc": "Sekmadienio Lard Yai turgus ir Phuket Old Town street food vakaras.",
+    "source": "https://www.tourismthailand.org/Attraction/phuket-walking-street",
+    "image": ""
+  },
+  "krabi-railay": {
+    "desc": "Railay pusiasalis – uolos, laipiojimo maršrutai ir tik longtail privažiavimas.",
+    "source": "https://www.tourismthailand.org/Attraction/railay-beach",
+    "image": ""
+  },
+  "phuket-kata-beach": {
+    "desc": "Kata paplūdimys baziniam apsistojimui – banglentės ir paplūdimio restoranai.",
+    "source": "https://www.tourismthailand.org/Attraction/kata-beach",
+    "image": ""
+  },
+  "big-buddha-wat-chalong": {
+    "desc": "Derinys: 45 m aukščio Big Buddha statula ir Wat Chalong vienuolynas.",
+    "source": "https://www.tourismthailand.org/Attraction/phuket-big-buddha",
+    "image": ""
+  },
+  "nai-harn-promthep": {
+    "desc": "Nai Harn paplūdimys + Promthep Cape saulėlydis.",
+    "source": "https://www.tourismthailand.org/Attraction/nai-harn-beach",
+    "image": ""
+  },
+  "lard-yai-sekmadienio-turgus": {
+    "desc": "Phuket Old Town sekmadienio turgus su vietiniais užkandžiais ir rankdarbiais.",
+    "source": "https://www.tourismthailand.org/Attraction/phuket-walking-street",
+    "image": ""
+  },
+  "d1-atvykimas": {
+    "desc": "Atvykimas į HKT (Phuket) ir pervežimas į Kata bazę.",
+    "source": "https://www.airportthai.co.th/en/phuket",
+    "image": ""
+  },
+  "d5-railay-ir-urvai": {
+    "desc": "Railay diena: Phra Nang urvai, laipiojimas ir paplūdimio laužai.",
+    "source": "https://www.tourismthailand.org/Attraction/railay-beach",
+    "image": ""
+  },
+  "d6-hong-islands-slow-day": {
+    "desc": "Hong Islands longtail turas su lagūnomis ir smėlio seklumomis.",
+    "source": "https://www.tourismthailand.org/Attraction/than-bok-khorani-national-park",
+    "image": ""
+  },
+  "d7-phi-phi-sunrise": {
+    "desc": "Ankstyvas reisas į Phi Phi/Maya Bay prieš minias.",
+    "source": "https://www.tourismthailand.org/Attraction/phi-phi-islands",
+    "image": ""
+  },
+  "d8-phang-nga-canoe": {
+    "desc": "Diena Phang Nga įlankoje su Sea Cave Canoe maršrutais.",
+    "source": "https://www.tourismthailand.org/Attraction/ao-phang-nga-national-park",
+    "image": ""
+  },
+  "phi-phi-salos": {
+    "desc": "Klasikinis dienos kruizas į Phi Phi Don + Phi Phi Leh.",
+    "source": "https://www.tourismthailand.org/Attraction/phi-phi-islands",
+    "image": ""
+  },
+  "koh-lanta": {
+    "desc": "Lėtas salos etapas su Long Beach ir Kantiang įlanka.",
+    "source": "https://www.tourismthailand.org/Attraction/koh-lanta",
+    "image": ""
+  },
+  "railay-phra-nang": {
+    "desc": "Phra Nang urvai ir Railay West paplūdimiai vienoje grandinėje.",
+    "source": "https://www.tourismthailand.org/Attraction/phra-nang-cave-beach",
+    "image": ""
+  },
+  "phi-phi-sunrise": {
+    "desc": "Maya Bay saulėtekio turas iš Ao Nang.",
+    "source": "https://www.tourismthailand.org/Attraction/maya-bay",
+    "image": ""
+  },
+  "phang-nga": {
+    "desc": "Bendras Ao Phang Nga kalkakmenio stulpų ir James Bond Island regionas.",
+    "source": "https://www.tourismthailand.org/Attraction/ao-phang-nga-national-park",
+    "image": ""
+  },
+  "long-beach-koh-lanta": {
+    "desc": "Pra-Ae paplūdimio ruožas lėtam laikui.",
+    "source": "https://www.tourismthailand.org/Attraction/pra-ae-beach",
+    "image": ""
+  },
+  "d9-koh-lanta-chill": {
+    "desc": "Atviras grafikas: longtail nuoma, sunset barai Long Beach ruože.",
+    "source": "https://www.tourismthailand.org/Attraction/koh-lanta",
+    "image": ""
+  },
+  "d10-khao-sok-dienos-turas": {
+    "desc": "Cheow Lan Lake longtail + plūduriuojantys nameliai.",
+    "source": "https://www.thainationalparks.com/khao-sok-national-park",
+    "image": ""
+  },
+  "wat-rong-khun-white-temple": {
+    "desc": "Chalermchai Kositpipat sukurta baltoji šventykla.",
+    "source": "https://www.tourismthailand.org/Attraction/white-temple",
+    "image": ""
+  },
+  "wat-rong-suea-ten-blue-temple": {
+    "desc": "Mėlynoji šventykla su mozaikomis ir budos statula.",
+    "source": "https://www.tourismthailand.org/Attraction/wat-rong-suea-ten",
+    "image": ""
+  },
+  "baan-dam-black-house": {
+    "desc": "Thawan Duchanee ekspresionistiniai paviljonai.",
+    "source": "https://www.tourismthailand.org/Attraction/black-house-museum",
+    "image": ""
+  },
+  "doi-tung-arbatos-sodai": {
+    "desc": "Karališkieji Doi Tung arbatos sodai ir Tree Top Walk.",
+    "source": "https://www.doitung.org/en/royal-project/",
+    "image": ""
+  },
+  "mae-fah-luang-garden": {
+    "desc": "Kalnų botanikos sodai su meistriškais gėlynais.",
+    "source": "https://www.maefahluang.org/",
+    "image": ""
+  },
+  "d11-skrydis-i-chiang-rai": {
+    "desc": "KBV/HKT → BKK → CEI jungiamasis skrydis.",
+    "source": "https://www.thaiairways.com/en_TH/plan/international-destinations/chiang-rai.page",
+    "image": ""
+  },
+  "d12-baltas-melynas-juodas": {
+    "desc": "Vienos dienos maršrutas White/Blue Temple + Black House.",
+    "source": "https://www.tourismthailand.org/Destination/chiang-rai",
+    "image": ""
+  },
+  "d13-golden-triangle": {
+    "desc": "Mae Sai – Sop Ruak – Hall of Opium kilpos planas.",
+    "source": "https://www.tourismthailand.org/Attraction/golden-triangle",
+    "image": ""
+  },
+  "d14-doi-tung-mae-salong": {
+    "desc": "Arbatos kalvos, Tree Top Walk ir Mae Salong degustacijos.",
+    "source": "https://www.tourismthailand.org/Attraction/doi-tung",
+    "image": ""
+  },
+  "d16-old-bangkok": {
+    "desc": "Grand Palace, Wat Pho ir vakarinis Chao Phraya kruizas.",
+    "source": "https://www.tourismthailand.org/Attraction/the-grand-palace",
+    "image": ""
+  },
+  "d15-chiang-rai-bangkok": {
+    "desc": "CEI → BKK skrydis ir persikraustymas į Riverside viešbutį.",
+    "source": "https://www.bangkokair.com/route/chiang-rai",
+    "image": ""
+  },
+  "chinatown-maistas": {
+    "desc": "Yaowarat g. maisto turas.",
+    "source": "https://guide.michelin.com/th/en/article/features/best-street-food-in-bangkok",
+    "image": ""
+  },
+  "chatuchak-savaitgalio-turgus": {
+    "desc": "Didžiausias savaitgalio turgus Tailande (>15k kioskų).",
+    "source": "https://www.tourismthailand.org/Attraction/chatuchak-weekend-market",
+    "image": ""
+  },
+  "ayutthaya-day-trip": {
+    "desc": "UNESCO Ayutthaya griuvėsiai + upės kroviniai.",
+    "source": "https://www.tourismthailand.org/Attraction/historical-city-of-ayutthaya",
+    "image": ""
+  },
+  "d18-chatuchak-chinatown": {
+    "desc": "Ryte Chatuchak, vakare Yaowarat street food.",
+    "source": "https://www.tourismthailand.org/Destination/bangkok",
+    "image": ""
+  },
+  "d17-ayutthaya": {
+    "desc": "Visa diena Ayutthaya istoriniame parke.",
+    "source": "https://whc.unesco.org/en/list/576/",
+    "image": ""
+  },
+  "d21-01-02-isvykimas": {
+    "desc": "Grįžtame iš BKK → VNO/RIX vakariniu skrydžiu.",
+    "source": "https://www.bangkokairportonline.com/",
+    "image": ""
+  },
+  "d20-01-01-recovery": {
+    "desc": "Spa + Chinatown brunch po Naujųjų.",
+    "source": "https://www.timeout.com/bangkok/things-to-do/best-spas-in-bangkok",
+    "image": ""
+  },
+  "d19-nye-pasiruosimas": {
+    "desc": "ICONSIAM / Mahanakhon rezervacijos ir fejerverkų logistikos planas.",
+    "source": "https://www.iconsiam.com/en/event",
+    "image": ""
+  },
+  "bangkok-rooftop-vakarelis": {
+    "desc": "Rooftop baro pasirinkimai (Mahanakhon, Octave, Sky Bar).",
+    "source": "https://www.timeout.com/bangkok/bars/best-rooftop-bars-in-bangkok",
+    "image": ""
+  },
+  "bangkok-chinatown": {
+    "desc": "Yaowarat rajono street food + senoji architektūra.",
+    "source": "https://www.tourismthailand.org/Attraction/chinatown-yaowarat",
+    "image": ""
+  }
+}

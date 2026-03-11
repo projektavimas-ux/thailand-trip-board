@@ -252,7 +252,34 @@
       const stageSelect = document.getElementById('stageSelect');
       const searchBox = document.getElementById('searchBox');
       const params = new URLSearchParams(window.location.search);
-      const stageSequence = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','4 ETAPAS','5 ETAPAS','Finalas','Papildomos idėjos','Kita'];
+      let placeOverrides = {};
+    const overridesReady = fetch('./data/places_overrides.json')
+      .then(r => r.json())
+      .then(data => { placeOverrides = data; })
+      .catch(() => { placeOverrides = {}; });
+
+    const stageSequence = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','4 ETAPAS','5 ETAPAS','Finalas','Papildomos idėjos','Kita'];
+      function slugify(text = ''){
+        return text.toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+      }
+      function getOverride(name){
+        if (!name) return null;
+        const key = slugify(name);
+        return placeOverrides[key] || null;
+      }
+      function decoratePlace(place){
+        if (!place) return place;
+        const override = getOverride(place.name);
+        const base = { ...place };
+        if (override){
+          base.description = override.desc || base.description || '';
+          base.image_url = override.image || base.image_url || '';
+          base.source = override.source || base.source || '';
+        }
+        base.status = base.status || ((base.stage || '').includes('ETAPAS') ? 'plan' : 'idea');
+        return base;
+      }
+
       const stageParam = params.get('stage');
       if (stageParam) {
         const hasOption = Array.from(stageSelect.options).some(opt => opt.value === stageParam);
@@ -284,15 +311,25 @@
         (catalog?.stages || []).forEach(stage => {
           const stageKey = deriveStageKey(stage.title || stage.id || '');
           (stage.items || []).forEach((item, idx) => {
-            items.push({
-              id: `${stageKey || 'stage'}-${idx}`,
-              name: item.name || '',
-              desc: item.desc || '',
-              image: item.image || '',
-              stage: stageKey || stage.title || 'Kita',
-              source: item.source || ''
-            });
+          const base = {
+            id: `${stageKey || 'stage'}-${idx}`,
+            name: item.name || '',
+            stage: stageKey || stage.title || 'Kita',
+            description: item.desc || '',
+            image_url: item.image || '',
+            source: item.source || ''
+          };
+          const decorated = decoratePlace(base);
+          items.push({
+            id: base.id,
+            name: decorated.name || base.name,
+            desc: decorated.description || base.description,
+            image: decorated.image_url || base.image_url,
+            stage: decorated.stage || base.stage,
+            source: decorated.source || base.source,
+            status: decorated.status || 'idea'
           });
+        });
         });
         offlineCatalog = items;
         buildOfflineFilters([...new Set(items.map(i => i.stage).filter(Boolean))]);
@@ -310,14 +347,20 @@
       }
 
       function syncPreviewToMain(){
-      placesCache = offlineCatalog.map(item => ({
-        id: item.id,
-        name: item.name,
-        stage: item.stage,
-        description: item.desc,
-        image_url: item.image,
-        status: item.status || 'idea'
-      }));
+      placesCache = offlineCatalog.map(item => {
+        const decorated = decoratePlace({
+          id: item.id,
+          name: item.name,
+          stage: item.stage,
+          description: item.desc,
+          image_url: item.image,
+          status: item.status
+        });
+        return {
+          ...decorated,
+          status: decorated.status || item.status || 'idea'
+        };
+      });
       voteMapCache = {};
       placesCache.forEach((item, idx) => { voteMapCache[item.id] = 0; });
       applyFilters();
@@ -333,24 +376,45 @@
         const currentStage = node.type === 'stage' ? (deriveStageFilter(node.label) || stageKey) : stageKey;
         if (node.options && currentStage){
           node.options.forEach((opt, idx) => {
-            items.push({
+            const base = {
               id: buildPlaceId(currentStage, opt, idx),
               name: opt,
-              desc: node.description || '',
-              image: node.cover || '',
               stage: currentStage,
-              status: 'plan'
+              description: node.description || '',
+              image_url: node.cover || '',
+              status: 'plan',
+              source: ''
+            };
+            const decorated = decoratePlace(base);
+            items.push({
+              id: base.id,
+              name: decorated.name || base.name,
+              desc: decorated.description || base.description,
+              image: decorated.image_url || base.image_url,
+              stage: decorated.stage || base.stage,
+              status: decorated.status || base.status,
+              source: decorated.source || base.source || ''
             });
           });
         }
         if (node.type === 'day'){
-          items.push({
+          const base = {
             id: node.id || slugify(node.label || `day-${items.length}`),
             name: node.label || 'Diena',
-            desc: node.description || metaToText(node.meta) || '',
-            image: node.cover || '',
+            description: node.description || metaToText(node.meta) || '',
+            image_url: node.cover || '',
             stage: currentStage || 'Kita',
             status: 'plan'
+          };
+          const decorated = decoratePlace(base);
+          items.push({
+            id: base.id,
+            name: decorated.name || base.name,
+            desc: decorated.description || base.description,
+            image: decorated.image_url || base.image_url,
+            stage: decorated.stage || base.stage,
+            status: decorated.status || base.status,
+            source: decorated.source || base.source || ''
           });
         }
         (node.children || []).forEach(child => walk(child, currentStage));
@@ -367,13 +431,24 @@
         (stage.items || []).forEach((item, idx) => {
           const key = (item.name || '').toLowerCase();
           if (!key || existingNames.has(key)) return;
-          extra.push({
+          const base = {
             id: `${slugify(stageKey)}-${idx}`,
             name: item.name || 'Vieta',
-            desc: item.desc || '',
-            image: item.image || '',
             stage: stageKey || 'Papildomos idėjos',
-            status: 'idea'
+            description: item.desc || '',
+            image_url: item.image || '',
+            status: 'idea',
+            source: item.source || ''
+          };
+          const decorated = decoratePlace(base);
+          extra.push({
+            id: base.id,
+            name: decorated.name || base.name,
+            desc: decorated.description || base.description,
+            image: decorated.image_url || base.image_url,
+            stage: decorated.stage || base.stage,
+            status: decorated.status || base.status,
+            source: decorated.source || base.source
           });
         });
       });
@@ -416,15 +491,17 @@
         if (stamp){ stamp.textContent = 'Demo modas · ' + new Date().toLocaleTimeString('lt-LT',{hour:'2-digit',minute:'2-digit'}); }
       }
 
-      function bootPreviewMode(){
-        fetch('./data/places_catalog.json')
-          .then(r => r.json())
-          .then(data => {
-            renderPreview(data);
-            initOfflineCatalog(data);
-            syncPreviewToMain();
-          })
-          .catch(() => { if (offlineList) offlineList.innerHTML = '<p class="text-sm text-rose-500">Nepavyko įkelti vietų katalogo.</p>'; });
+      async function bootPreviewMode(){
+        await overridesReady;
+        try {
+          const data = await fetch('./data/places_catalog.json').then(r => r.json());
+          renderPreview(data);
+          initOfflineCatalog(data);
+          syncPreviewToMain();
+        } catch (err){
+          console.error('catalog preview error', err);
+          if (offlineList) offlineList.innerHTML = '<p class="text-sm text-rose-500">Nepavyko įkelti vietų katalogo.</p>';
+        }
         previewBox?.classList.remove('hidden');
         document.getElementById('configBox')?.classList.add('hidden');
       }
@@ -457,19 +534,27 @@
       container.innerHTML = order
         .filter(stage => grouped[stage] && grouped[stage].length)
         .map(stage => {
-          const cards = grouped[stage].map(p => `
+          const cards = grouped[stage].map(p => {
+            const statusLabel = p.status === 'plan' ? 'PLANAS' : 'IDĖJA';
+            const statusColor = p.status === 'plan' ? 'text-emerald-600' : 'text-slate-400';
+            return `
             <div class="place-card">
               ${p.image_url ? `<img src="${p.image_url}" alt="${p.name}" />` : ''}
               <div class="body">
-                <div class="tag">${stage}</div>
+                <div class="flex items-center gap-2">
+                  <div class="tag">${stage}</div>
+                  <span class="text-[11px] uppercase tracking-[0.3em] ${statusColor}">${statusLabel}</span>
+                </div>
                 <h3 class="text-lg font-display text-slate-900 mt-2 mb-2">${p.name}</h3>
                 <p class="text-sm text-slate-600">${p.description || ''}</p>
+                ${p.source ? `<a class="text-sm font-semibold text-brand-600" href="${p.source}" target="_blank" rel="noopener">Šaltinis →</a>` : ''}
                 <div class="footer">
                   <span class="text-xs uppercase tracking-wide text-slate-500">${voteMapCache[p.id]||0} bals.</span>
                   <button class="px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors" data-place="${p.id}">${userVotes.has(p.id)?'Atimti':'Balsuoti'}</button>
                 </div>
               </div>
-            </div>`).join('');
+            </div>`;
+          }).join('');
           return `<div class="plan-stage">
             <h3 class="text-sm uppercase tracking-[0.3em] text-slate-400 mb-2">${stage}</h3>
             ${cards}
@@ -506,13 +591,14 @@
 
       async function loadPlaces(){
         if (!currentClient) return;
+        await overridesReady;
         setAlert('');
         const [{ data: places, error: pErr }, { data: votes, error: vErr }] = await Promise.all([
           currentClient.from('places').select('*').order('created_at',{ascending:false}),
           currentClient.from('votes').select('place_id,user_id')
         ]);
         if (pErr || vErr){ setAlert('Nepavyko gauti duomenų: ' + (pErr?.message || vErr?.message)); return; }
-        placesCache = places || [];
+        placesCache = (places || []).map(place => decoratePlace(place));
         cachedVotes = votes || [];
         voteMapCache = {};
         cachedVotes.forEach(v => { voteMapCache[v.place_id] = (voteMapCache[v.place_id]||0) + 1; });

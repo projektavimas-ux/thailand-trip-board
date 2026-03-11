@@ -109,17 +109,20 @@
         {
           "name": "Long Beach (Pra-Ae)",
           "image": "https://images.unsplash.com/photo-1470246973918-29a93221c455?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Koh Lanta paplūdimys lėtesniam ritmui – daug paplūdimio barų, ramūs saulėlydžiai."
+          "desc": "Koh Lanta paplūdimys lėtesniam ritmui – daug paplūdimio barų, ramūs saulėlydžiai.",
+          "source": "https://www.tourismthailand.org/Attraction/pra-ae-beach"
         },
         {
           "name": "Kantiang Bay",
           "image": "https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Pietinis įlankos kampas su luksusiniu Pimalai resortu, snorkelinimo galimybės."
+          "desc": "Pietinis įlankos kampas su luksusiniu Pimalai resortu, snorkelinimo galimybės.",
+          "source": "https://www.tourismthailand.org/Attraction/ba-kan-ti-ang-bay"
         },
         {
           "name": "Khao Sok · Cheow Lan Lake",
           "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Alternatyva audrų dienoms: 1n/2d plūduriuojantys nameliai, longtail turai, kalkakmenio stulpai."
+          "desc": "Alternatyva audrų dienoms: 1n/2d plūduriuojantys nameliai, longtail turai, kalkakmenio stulpai.",
+          "source": "https://www.thainationalparks.com/khao-sok-national-park"
         },
         {
           "name": "Emerald Pool",
@@ -148,7 +151,8 @@
         {
           "name": "Wat Rong Suea Ten",
           "image": "https://images.unsplash.com/photo-1549294413-26f195200c16?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Mėlynoji šventykla su aukso ornamentais ir budos statula. Atidaryta iki 20:00, įėjimas nemokamas."
+          "desc": "Mėlynoji šventykla su aukso ornamentais ir budos statula. Atidaryta iki 20:00, įėjimas nemokamas.",
+          "source": "https://www.tourismthailand.org/Attraction/wat-rong-suea-ten"
         },
         {
           "name": "Baan Dam Museum",
@@ -201,12 +205,14 @@
         {
           "name": "ICONSIAM / ASIATIQUE NYE",
           "image": "https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?q=80&w=1200&auto=format&fit=crop",
-          "desc": "2026/27 ICONSIAM fejerverkai su ribotu įėjimu – registracija atidaroma spalio viduryje."
+          "desc": "2026/27 ICONSIAM fejerverkai su ribotu įėjimu – registracija atidaroma spalio viduryje.",
+          "source": "https://www.iconsiam.com/en/event"
         },
         {
           "name": "Chatuchak + Chinatown",
           "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format&fit=crop",
-          "desc": "Savaitgalio turgus su >15 000 kioskų ir Yaowarat street food maršrutu vakarui."
+          "desc": "Savaitgalio turgus su >15 000 kioskų ir Yaowarat street food maršrutu vakarui.",
+          "source": "https://www.tourismthailand.org/Attraction/chatuchak-weekend-market"
         },
         {
           "name": "Bangkok Art & Culture Centre",
