@@ -4,73 +4,160 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Thailand Control · Skrydžiai</title>
-  <link rel="stylesheet" href="./styles/site.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#e0f2fe',
+              100: '#bae6fd',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              900: '#0f172a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .plan-line {
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      background: #f8fafc;
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.1);
+    }
+    .plan-line strong {
+      display: block;
+      font-size: 1rem;
+      color: #0f172a;
+      font-weight: 600;
+    }
+    .plan-line a {
+      color: #0ea5e9;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .plan-line a:hover {
+      text-decoration: underline;
+    }
+  </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body>
-  <div class="wrap">
-    <h1>✈️ Skrydžių ir paketų kontrolė</h1>
-    <p class="muted">Tikslas: OPEN-JAW (OUT VNO/RIX → HKT/KBV/USM/HDY, IN BKK → VNO/RIX), ≤1 sustojimas kiekviename segmente, 4 suaugę.</p>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen">
+  <!-- Hero -->
+  <div class="relative bg-brand-900 h-64 sm:h-80 w-full overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?q=80&w=1920&auto=format&fit=crop" alt="Open-jaw flights" class="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-overlay">
+    <div class="absolute inset-0 bg-gradient-to-t from-brand-900/95 to-transparent"></div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-10">
+      <p class="text-xs text-brand-100 font-semibold uppercase tracking-[0.4em]">Skrydžių kontrolė</p>
+      <h1 class="text-4xl sm:text-5xl font-display font-bold text-white mb-2 drop-shadow">
+        ✈️ Skrydžių ir paketų kontrolė
+      </h1>
+      <p class="text-brand-100 text-sm sm:text-base font-medium max-w-2xl drop-shadow">
+        Tikslas: OPEN-JAW (OUT VNO/RIX → HKT/KBV/USM/HDY, IN BKK → VNO/RIX), ≤1 sustojimas segmente, 4 suaugę. Cron’ai tikrina tiek reguliarųjį, tiek charter/paketų rinkas.
+      </p>
+    </div>
+  </div>
 
-    <nav class="links">
-      <a href="./index.html">Apžvalga</a>
-      <a class="active" href="./flights.html">Skrydžiai</a>
-      <a href="./plan.html">Kelionės planas</a>
-      <a href="./routes-vertical.html">Maršruto tinklas</a>
-      <a href="./places.html">Vietos ir balsai</a>
-    </nav>
+  <!-- Navigation -->
+  <div class="bg-white border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex overflow-x-auto py-4 space-x-8 text-sm sm:text-base font-medium text-slate-500 whitespace-nowrap">
+        <a class="pb-1 hover:text-slate-900" href="./index.html">Apžvalga</a>
+        <a class="pb-1 text-slate-900 border-b-2 border-brand-500" href="./flights.html">Skrydžiai</a>
+        <a class="pb-1 hover:text-slate-900" href="./plan.html">Kelionės planas</a>
+        <a class="pb-1 hover:text-slate-900" href="./routes-vertical.html">Maršruto tinklas</a>
+        <a class="pb-1 hover:text-slate-900" href="./places.html">Vietos ir balsai</a>
+      </nav>
+    </div>
+  </div>
 
-    <div id="configBox" class="card hidden">
-      <strong>Reikia Supabase konfigūracijos.</strong> Kadangi ši suvestinė privati, rodoma tik prisijungus.</div>
-
-    <div id="authBox" class="card hidden">
-      <h3>Prisijunk</h3>
-      <input id="emailInput" placeholder="El. paštas" />
-      <input id="passInput" type="password" placeholder="Slaptažodis" />
-      <div class="grid-2">
-        <button id="loginBtn">Prisijungti</button>
-        <button id="signupBtn" class="secondary">Registruoti</button>
-      </div>
-      <p id="authStatus" class="muted"></p>
+  <!-- Content wrap -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
+    <div id="configBox" class="hidden bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-xl shadow-sm">
+      <p class="text-sm text-yellow-700"><strong>Supabase konfigūracija būtina.</strong> Kadangi ši suvestinė privati, ji rodoma tik prisijungus.</p>
     </div>
 
-    <div id="appBox" class="hidden">
-      <div class="card topbar">
-        <div>
-          <div id="who"></div>
-          <p class="muted">Cron’ai: OPEN-JAW paieška + LT charter/paketų stebėsena.</p>
+    <div id="authBox" class="hidden max-w-md mx-auto bg-white rounded-2xl shadow-sm border border-slate-100 p-8">
+      <h3 class="text-2xl font-display font-semibold text-slate-900 mb-2">Prisijunk</h3>
+      <p class="text-sm text-slate-500 mb-6">Naudok tą patį Supabase el. paštą.</p>
+      <div class="space-y-4">
+        <input id="emailInput" type="email" placeholder="El. paštas" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
+        <input id="passInput" type="password" placeholder="Slaptažodis" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
+        <div class="flex space-x-3 pt-2">
+          <button id="loginBtn" class="flex-1 bg-brand-600 hover:bg-brand-500 text-white font-medium py-3 px-4 rounded-lg transition-colors shadow-sm">Prisijungti</button>
+          <button id="signupBtn" class="flex-1 bg-white hover:bg-slate-50 text-slate-700 font-medium py-3 px-4 rounded-lg border border-slate-200 transition-colors shadow-sm">Registruoti</button>
         </div>
-        <button id="logoutBtn" class="secondary">Atsijungti</button>
+        <p id="authStatus" class="text-sm text-center text-rose-500 min-h-[20px]"></p>
+      </div>
+    </div>
+
+    <div id="appBox" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <div id="who" class="text-lg font-display font-semibold text-slate-900"></div>
+          <p class="text-sm text-slate-500 mt-1">Cron’ai: OPEN-JAW paieška + LT charter/paketų stebėsena.</p>
+        </div>
+        <button id="logoutBtn" class="px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors">Atsijungti</button>
       </div>
 
-      <div class="grid-2">
-        <div class="card">
-          <h2>„Best today“ (OPEN-JAW)</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <p class="text-xs uppercase tracking-[0.35em] text-brand-500 font-semibold">OPEN-JAW</p>
+              <h2 class="text-xl font-display font-semibold text-slate-900">Best today</h2>
+            </div>
+          </div>
           <div id="bestOpenJaw"></div>
         </div>
-        <div class="card">
-          <h2>Charter/Paketų monitorius</h2>
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <p class="text-xs uppercase tracking-[0.35em] text-rose-400 font-semibold">Charter/paketai</p>
+              <h2 class="text-xl font-display font-semibold text-slate-900">Monitorius</h2>
+            </div>
+          </div>
           <div id="charterSnapshot"></div>
         </div>
       </div>
 
-      <div class="card">
-        <div class="topbar">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100">
+        <div class="px-5 sm:px-6 pt-6 pb-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
-            <h2>Visi užfiksuoti pasiūlymai</h2>
-            <p class="muted">`data/flights.json` – gali būti tiek atviri OPEN-JAW variantai, tiek katės iš TEZ TOUR.</p>
+            <p class="text-xs uppercase tracking-[0.35em] text-brand-500 font-semibold">Pilna lenta</p>
+            <h2 class="text-xl font-display font-semibold text-slate-900">Visi užfiksuoti pasiūlymai</h2>
+            <p class="text-sm text-slate-500">`data/flights.json` (OPEN-JAW + TEZ TOUR ir kiti paketai)</p>
           </div>
-          <button id="refreshBtn" class="secondary" style="width:auto">Atnaujinti</button>
+          <button id="refreshBtn" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors">Atnaujinti</button>
         </div>
-        <div id="flightList"></div>
+        <div class="px-5 sm:px-6 py-6" id="flightList"></div>
       </div>
 
-      <div class="card">
-        <h3>Prioritetai analizei</h3>
-        <ul>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+        <p class="text-xs uppercase tracking-[0.35em] text-brand-500 font-semibold mb-2">Analizės gairės</p>
+        <h3 class="text-lg font-display font-semibold text-slate-900 mb-3">Prioritetai analizei</h3>
+        <ul class="list-disc pl-6 text-sm text-slate-700 space-y-2">
           <li>Skrydžiai: Skyscanner · Google Flights · Expedia · Kayak · Kiwi/Opodo/eDreams (kai prieinama).</li>
-          <li>Charter/paketai: TEZ TOUR + kiti LT organizatoriai (Kelionių akademija ir pan.).</li>
-          <li>Ataskaitoje visada nurodyti kainą už 1 asmenį ir sumą už 4, taip pat nuorodą su data + keleiviais.</li>
+          <li>Charter/paketai: TEZ TOUR + kiti LT organizatoriai (Kelionių akademija ir t. t.).</li>
+          <li>Ataskaitoje visada nurodom kainą už 1 asmenį ir sumą už 4, taip pat nuorodą su data + keleiviais.</li>
         </ul>
       </div>
     </div>
@@ -80,75 +167,75 @@
   <script src="./scripts/supabase-page.js"></script>
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-    let latestData = null;
+      let latestData = null;
 
-    function renderLists(){
-      const list = document.getElementById('flightList');
-      const bestBox = document.getElementById('bestOpenJaw');
-      const charterBox = document.getElementById('charterSnapshot');
-      if (!latestData || !latestData.items || !latestData.items.length){
-        list.innerHTML = '<p class="muted">Šiandien naujų įrašų nėra.</p>';
-        bestBox.innerHTML = '<p class="muted">Laukiame naujų OPEN-JAW rezultatų.</p>';
-        charterBox.innerHTML = '<p class="muted">Naujų charter pasiūlymų nenustatyta.</p>';
-        return;
-      }
+      function renderLists(){
+        const list = document.getElementById('flightList');
+        const bestBox = document.getElementById('bestOpenJaw');
+        const charterBox = document.getElementById('charterSnapshot');
+        if (!latestData || !latestData.items || !latestData.items.length){
+          list.innerHTML = '<p class="text-sm text-slate-500">Šiandien naujų įrašų nėra.</p>';
+          bestBox.innerHTML = '<p class="text-sm text-slate-500">Laukiame naujų OPEN-JAW rezultatų.</p>';
+          charterBox.innerHTML = '<p class="text-sm text-slate-500">Naujų charter pasiūlymų nenustatyta.</p>';
+          return;
+        }
 
-      const items = latestData.items;
-      list.innerHTML = items.map(item => `
-        <div class="plan-line">
-          <strong>${item.title}</strong><br>
-          ${item.price}<br>
-          <a href="${item.url}" target="_blank">Nuoroda</a><br>
-          <span class="muted">${item.status}</span>
-        </div>
-      `).join('');
-
-      const openJaw = items.filter(i => /VNO|RIX/i.test(i.title || ''));
-      if (openJaw.length){
-        const best = openJaw[0];
-        bestBox.innerHTML = `
+        const items = latestData.items;
+        list.innerHTML = items.map(item => `
           <div class="plan-line">
-            <strong>${best.title}</strong><br>
-            ${best.price}<br>
-            <a href="${best.url}" target="_blank">Atidaryti</a><br>
-            <span class="muted">${best.status}</span>
-          </div>
-        `;
-      } else {
-        bestBox.innerHTML = '<p class="muted">Nėra OPEN-JAW įrašų.</p>';
-      }
-
-      const charter = items.filter(i => /TEZ TOUR|Tez|paketas/i.test(i.title || '') || /hotel|resort/i.test(i.title || ''));
-      if (charter.length){
-        charterBox.innerHTML = charter.slice(0,2).map(item => `
-          <div class="plan-line">
-            <strong>${item.title}</strong><br>
-            ${item.price}<br>
-            <a href="${item.url}" target="_blank">Nuoroda</a><br>
-            <span class="muted">${item.status}</span>
+            <strong>${item.title || ''}</strong>
+            ${item.price || ''}<br>
+            ${item.url ? `<a href="${item.url}" target="_blank" rel="noopener">Nuoroda</a><br>` : ''}
+            <span class="text-xs uppercase tracking-wide text-slate-500">${item.status || ''}</span>
           </div>
         `).join('');
-      } else {
-        charterBox.innerHTML = '<p class="muted">Charter/paketų įrašų dar nėra.</p>';
+
+        const openJaw = items.filter(i => /VNO|RIX/i.test(i.title || ''));
+        if (openJaw.length){
+          const best = openJaw[0];
+          bestBox.innerHTML = `
+            <div class="plan-line">
+              <strong>${best.title || ''}</strong>
+              ${best.price || ''}<br>
+              ${best.url ? `<a href="${best.url}" target="_blank" rel="noopener">Atidaryti</a><br>` : ''}
+              <span class="text-xs uppercase tracking-wide text-slate-500">${best.status || ''}</span>
+            </div>
+          `;
+        } else {
+          bestBox.innerHTML = '<p class="text-sm text-slate-500">Nėra OPEN-JAW įrašų.</p>';
+        }
+
+        const charter = items.filter(i => /TEZ TOUR|Tez|paketas/i.test(i.title || '') || /hotel|resort/i.test(i.title || ''));
+        if (charter.length){
+          charterBox.innerHTML = charter.slice(0,2).map(item => `
+            <div class="plan-line">
+              <strong>${item.title || ''}</strong>
+              ${item.price || ''}<br>
+              ${item.url ? `<a href="${item.url}" target="_blank" rel="noopener">Nuoroda</a><br>` : ''}
+              <span class="text-xs uppercase tracking-wide text-slate-500">${item.status || ''}</span>
+            </div>
+          `).join('');
+        } else {
+          charterBox.innerHTML = '<p class="text-sm text-slate-500">Charter/paketų įrašų dar nėra.</p>';
+        }
       }
-    }
 
-    function loadFlights(){
-      return fetch('./data/flights.json').then(r=>r.json()).catch(()=>({items:[]}));
-    }
-
-    async function refreshFlights(){
-      latestData = await loadFlights();
-      renderLists();
-    }
-
-    document.getElementById('refreshBtn').addEventListener('click', refreshFlights);
-
-    initSupabasePage({
-      onReady: () => {
-        refreshFlights();
+      function loadFlights(){
+        return fetch('./data/flights.json').then(r => r.json()).catch(() => ({ items: [] }));
       }
-    });
+
+      async function refreshFlights(){
+        latestData = await loadFlights();
+        renderLists();
+      }
+
+      document.getElementById('refreshBtn').addEventListener('click', refreshFlights);
+
+      initSupabasePage({
+        onReady: () => {
+          refreshFlights();
+        }
+      });
     });
   </script>
 </body>
