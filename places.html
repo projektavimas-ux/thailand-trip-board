@@ -252,6 +252,7 @@
       const stageSelect = document.getElementById('stageSelect');
       const searchBox = document.getElementById('searchBox');
       const params = new URLSearchParams(window.location.search);
+      const stageSequence = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','4 ETAPAS','5 ETAPAS','Finalas','Kita'];
       const stageParam = params.get('stage');
       if (stageParam) {
         const hasOption = Array.from(stageSelect.options).some(opt => opt.value === stageParam);
@@ -383,28 +384,44 @@
       }
 
       function renderPlaces(list){
-        const container = document.getElementById('placesList');
-        container.innerHTML = list.length ? '' : '<p class="text-sm text-slate-500">Atitinkančių vietų nėra.</p>';
-        list.forEach(p => {
-          const card = document.createElement('div');
-          card.className = 'place-card';
-          card.innerHTML = `
-            ${p.image_url ? `<img src="${p.image_url}" alt="${p.name}" />` : ''}
-            <div class="body">
-              <div class="tag">${p.stage || 'Etapas nenurodytas'}</div>
-              <h3 class="text-lg font-display text-slate-900 mt-2 mb-2">${p.name}</h3>
-              <p class="text-sm text-slate-600">${p.description || ''}</p>
-              <div class="footer">
-                <span class="text-xs uppercase tracking-wide text-slate-500">${voteMapCache[p.id]||0} bals.</span>
-                <button class="px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors" data-place="${p.id}">${userVotes.has(p.id)?'Atimti':'Balsuoti'}</button>
-              </div>
-            </div>`;
-          container.appendChild(card);
-        });
-        container.querySelectorAll('button[data-place]').forEach(btn => {
-          btn.addEventListener('click', () => toggleVote(Number(btn.dataset.place), btn.textContent === 'Atimti'));
-        });
+      const container = document.getElementById('placesList');
+      if (!list.length){
+        container.innerHTML = '<p class="text-sm text-slate-500">Atitinkančių vietų nėra.</p>';
+        return;
       }
+      const grouped = {};
+      list.forEach(p => {
+        const key = p.stage || 'Kita';
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push(p);
+      });
+      const order = stageSequence.concat(Object.keys(grouped).filter(key => !stageSequence.includes(key)));
+      container.innerHTML = order
+        .filter(stage => grouped[stage] && grouped[stage].length)
+        .map(stage => {
+          const cards = grouped[stage].map(p => `
+            <div class="place-card">
+              ${p.image_url ? `<img src="${p.image_url}" alt="${p.name}" />` : ''}
+              <div class="body">
+                <div class="tag">${stage}</div>
+                <h3 class="text-lg font-display text-slate-900 mt-2 mb-2">${p.name}</h3>
+                <p class="text-sm text-slate-600">${p.description || ''}</p>
+                <div class="footer">
+                  <span class="text-xs uppercase tracking-wide text-slate-500">${voteMapCache[p.id]||0} bals.</span>
+                  <button class="px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors" data-place="${p.id}">${userVotes.has(p.id)?'Atimti':'Balsuoti'}</button>
+                </div>
+              </div>
+            </div>`).join('');
+          return `<div class="plan-stage">
+            <h3 class="text-sm uppercase tracking-[0.3em] text-slate-400 mb-2">${stage}</h3>
+            ${cards}
+          </div>`;
+        })
+        .join('');
+      container.querySelectorAll('button[data-place]').forEach(btn => {
+        btn.addEventListener('click', () => toggleVote(Number(btn.dataset.place), btn.textContent === 'Atimti'));
+      });
+    }
 
       function renderBoard(list){
         const box = document.getElementById('planBoard');
