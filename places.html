@@ -275,6 +275,7 @@
           base.description = override.desc || base.description || '';
           base.image_url = override.image || base.image_url || '';
           base.source = override.source || base.source || '';
+          base.maps = override.maps || base.maps || '';
         }
         base.status = base.status || ((base.stage || '').includes('ETAPAS') ? 'plan' : 'idea');
         return base;
@@ -317,7 +318,8 @@
             stage: stageKey || stage.title || 'Kita',
             description: item.desc || '',
             image_url: item.image || '',
-            source: item.source || ''
+            source: item.source || '',
+            maps: item.maps || ''
           };
           const decorated = decoratePlace(base);
           items.push({
@@ -327,6 +329,7 @@
             image: decorated.image_url || base.image_url,
             stage: decorated.stage || base.stage,
             source: decorated.source || base.source,
+            maps: decorated.maps || base.maps || '',
             status: decorated.status || 'idea'
           });
         });
@@ -383,7 +386,8 @@
               description: node.description || '',
               image_url: node.cover || '',
               status: 'plan',
-              source: ''
+              source: '',
+              maps: ''
             };
             const decorated = decoratePlace(base);
             items.push({
@@ -438,7 +442,8 @@
             description: item.desc || '',
             image_url: item.image || '',
             status: 'idea',
-            source: item.source || ''
+            source: item.source || '',
+            maps: item.maps || ''
           };
           const decorated = decoratePlace(base);
           extra.push({
@@ -471,7 +476,10 @@
               <div class="tag">${item.stage || 'Etapas nenurodytas'}</div>
               <h3 class="text-lg font-display text-slate-900 mt-2 mb-2">${item.name}</h3>
               <p class="text-sm text-slate-600">${item.desc || ''}</p>
-              ${item.source ? `<a class="text-sm font-semibold text-brand-600" href="${item.source}" target="_blank" rel="noopener">Šaltinis →</a>` : ''}
+              <div class="mt-2 flex flex-wrap gap-4">
+                ${item.source ? `<a class="text-sm font-semibold text-brand-600" href="${item.source}" target="_blank" rel="noopener">Šaltinis →</a>` : ''}
+                ${item.maps ? `<a class="text-sm font-semibold text-brand-600" href="${item.maps}" target="_blank" rel="noopener">Google Maps →</a>` : ''}
+              </div>
             </div>
           </div>`).join('') : '<p class="text-sm text-slate-500">Atitinkančių vietų nėra.</p>';
       }
@@ -547,7 +555,10 @@
                 </div>
                 <h3 class="text-lg font-display text-slate-900 mt-2 mb-2">${p.name}</h3>
                 <p class="text-sm text-slate-600">${p.description || ''}</p>
-                ${p.source ? `<a class="text-sm font-semibold text-brand-600" href="${p.source}" target="_blank" rel="noopener">Šaltinis →</a>` : ''}
+                <div class="mt-2 flex flex-wrap gap-4">
+                  ${p.source ? `<a class="text-sm font-semibold text-brand-600" href="${p.source}" target="_blank" rel="noopener">Šaltinis →</a>` : ''}
+                  ${p.maps ? `<a class="text-sm font-semibold text-brand-600" href="${p.maps}" target="_blank" rel="noopener">Google Maps →</a>` : ''}
+                </div>
                 <div class="footer">
                   <span class="text-xs uppercase tracking-wide text-slate-500">${voteMapCache[p.id]||0} bals.</span>
                   <button class="px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors" data-place="${p.id}">${userVotes.has(p.id)?'Atimti':'Balsuoti'}</button>

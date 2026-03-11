@@ -7,82 +7,98 @@
   "big-buddha-phuket": {
     "desc": "45 metrų aukščio balto marmuro statula ant Nakkerd kalvos suteikia 360° panoramą į Kata, Karon ir Chalong įlankas. Kompleksas atidarytas 08:00–19:00, galima paremti vienuolyną įsigyjant marmuro plyteles su asmeninėmis žinutėmis.",
     "source": "https://phuketelephantnaturereserve.com/visiting-the-big-buddha-in-phuket/",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/7/73/Big_Buddha_von_Phuket_02.jpg"
+    "image": "https://upload.wikimedia.org/wikipedia/commons/7/73/Big_Buddha_von_Phuket_02.jpg",
+    "maps": "https://maps.google.com/?q=Big+Buddha+Phuket"
   },
   "wat-chalong": {
     "desc": "19 a. Wat Chalong laikoma svarbiausia Phuket šventykla – jos 60 m aukščio Chedi Phra Mahathat saugo Budos relikvijas. Kompleksas garsėja sienų freskomis apie Luang Pho Cham ir vaistažolių turgeliu šalia pagrindinės salės.",
     "source": "https://www.thethaipass.com/attractions/wat-chalong-phuket",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Phuket_Thailand_Wat-Chalong-01.jpg"
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Phuket_Thailand_Wat-Chalong-01.jpg",
+    "maps": "https://maps.google.com/?q=Wat+Chalong"
   },
   "ao-nang-promenada": {
     "desc": "Ao Nang krantinė jungia longtail katerių prieplauką, Landmark Night Market ir pasivaikščiojimo taką su masažo kioskų bei barų eilėmis. Vakare čia galima rezervuoti bilietus į Railay/Phi Phi laivus ir paragauti šviežių jūros gėrybių iš gatvės prekystalių.",
     "source": "https://www.weseektravel.com/ao-nang-night-market/",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Ao_Nang_Beach.jpg/1280px-Ao_Nang_Beach.jpg"
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Ao_Nang_Beach.jpg/1280px-Ao_Nang_Beach.jpg",
+    "maps": "https://maps.google.com/?q=Ao+Nang+Beach"
   },
   "railay-beach": {
     "desc": "Railay pasiekiamas tik valtimi, todėl čia nėra automobilių – aplink kalkakmenio uolas įsikūrę laipiojimo mokyklos ir paplūdimio barai. Ryte rekomenduojama lipti iki Viewpoint bei Princess Lagoon, o popietę atsigaivinti Phra Nang paplūdimyje.",
     "source": "https://shippedaway.com/rock-climbing-railay-beach-krabi/",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/b/be/West_Railay_Beach_%2830880433234%29.jpg"
+    "image": "https://upload.wikimedia.org/wikipedia/commons/b/be/West_Railay_Beach_%2830880433234%29.jpg",
+    "maps": "https://maps.google.com/?q=Railay+Beach"
   },
   "nai-harn-beach": {
     "desc": "Nai Harn – ramus pusmėnulis su lagūna SUP mėgėjams ir buriavimo klubais įlankos priekyje. Vakare verta užsukti į Ao Sane arba Promthep Cape saulėlydžiui, kai kelias apšviečia oranžinis dangus.",
     "source": "https://snorkelingthailand.com/nai-harn-beach/",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/6/66/Nai_harn_beach_phuket_%2845%29.jpg"
+    "image": "https://upload.wikimedia.org/wikipedia/commons/6/66/Nai_harn_beach_phuket_%2845%29.jpg",
+    "maps": "https://maps.google.com/?q=Nai+Harn+Beach"
   },
   "freedom-beach": {
     "desc": "Vienas balčiausių Phuket paplūdimių pasiekiamas tik longtail valtimi arba stačiu 10 min. taku per džiungles, todėl čia nedaug žmonių. Įlankoje yra du maži restoranai ir snorkelinimo zona su koralais palei pietinę uolą.",
     "source": "https://phuket-tropic-tours.com/blog/freedom-beach",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/4/44/Freedom_beach_-_Karon%2C_Phuket%2C_Thailand_-_panoramio.jpg"
+    "image": "https://upload.wikimedia.org/wikipedia/commons/4/44/Freedom_beach_-_Karon%2C_Phuket%2C_Thailand_-_panoramio.jpg",
+    "maps": "https://maps.google.com/?q=Freedom+Beach+Phuket"
   },
   "karon-viewpoint": {
     "desc": "Ši apžvalgos aikštelė tarp Kata Noi ir Nai Harn leidžia viename kadre matyti tris įlankas ir Karon kalnagūbrį. Geriausias apšvietimas – ryte arba prieš saulėlydį, kai dangus nusidažo oranžiniais tonais.",
     "source": "https://www.phuket101.net/karon-viewpoint/",
-    "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Karon+View+Point"
   },
   "ao-sane-snorkelinimas": {
     "desc": "Mažas akmenuotas Ao Sane slėptuvė garsėja ramiu vandeniu ir koralais vos keli metrai nuo kranto; čia nuomojama įranga ir galima pietauti paplūdimio kavinėje. Patogiausia atvykti motoroleriu per Nai Harn kelią ir sekti Ao Sane nuorodas.",
     "source": "https://www.snorkelingthailand.com/ao-sane-beach/",
-    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Ao+Sane+Beach"
   },
   "phi-phi-maya-bay": {
     "desc": "Nuo 2022 m. į Maya Bay įleidžiama ribotai – laivai prisišvartuoja Loh Samah pusėje, o lankytojai eina mediniu taku į paplūdimį, kuriame maudytis draudžiama. Turo operatoriai išplaukia ~05:30, kad iki 09:00 aplenktų didžiąsias minias.",
     "source": "https://www.qbictravel.com/how-to-visit-maya-bay-in-2025-entry-rules-best-time-travel-tips/",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/6/64/Playa_Maya%2C_Ko_Phi_Phi%2C_Tailandia%2C_2013-08-19%2C_DD_04.JPG"
+    "image": "https://upload.wikimedia.org/wikipedia/commons/6/64/Playa_Maya%2C_Ko_Phi_Phi%2C_Tailandia%2C_2013-08-19%2C_DD_04.JPG",
+    "maps": "https://maps.google.com/?q=Maya+Bay"
   },
   "phang-nga-bay": {
     "desc": "Ao Phang Nga įlanka garsėja kalkakmenio stulpais ir slaptomis lagūnomis; populiariausia programą – vakariniai sea-cave kanojų turai su bioliuminescencijos stebėjimu. Dieną galima aplankyti James Bond salą ir muslimų kaimą Koh Panyee.",
     "source": "https://johngray-seacanoe.com/",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/James_Bond_Felsen_phang_nga_bay_DSC02997.JPG"
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/James_Bond_Felsen_phang_nga_bay_DSC02997.JPG",
+    "maps": "https://maps.google.com/?q=Ao+Phang+Nga+National+Park"
   },
   "hong-islands": {
     "desc": "Hong salose galima užlipti į 360° apžvalgos aikštelę ir nusileisti į žalią Hong Lagoon, kurią supa stačios uolos. Dienos turai apjungia snorkelinimą Koh Pakbia seklumoje ir poilsį Koh Lao Lading įlankoje su mini paplūdimiu.",
     "source": "https://whereintheworldisnina.com/hong-island-krabi-thailand/",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ko_Hong_Than_Bok_Khorani.jpg/1280px-Ko_Hong_Than_Bok_Khorani.jpg"
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ko_Hong_Than_Bok_Khorani.jpg/1280px-Ko_Hong_Than_Bok_Khorani.jpg",
+    "maps": "https://maps.google.com/?q=Ko+Hong+Krabi"
   },
   "ao-thalane-mangroves": {
     "desc": "Ao Thalane vysto bendruomeninį ekoturizmą – mažos kajakų grupės plaukia per mangrovių kanalus, kur dažnai sutinkami makakai ir ereliai. Rekomenduojami potvyniai 07:00–09:00, kad būtų lengviau įplaukti į siauras upes ir lagūnas.",
     "source": "https://www.travelandtourworld.com/news/article/thailands-new-sustainable-travel-experiences-for-2026-exploring-krabi-chiang-mai-and-unesco-creative-cities-in-a-modern-eco-friendly-way/",
-    "image": "https://images.unsplash.com/photo-1482192597420-4817fdd7e8b0?auto=format&fit=crop&w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1482192597420-4817fdd7e8b0?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Ao+Thalane"
   },
   "railay-viewpoint-trail": {
     "desc": "Į Railay Viewpoint lipama stačiomis uolomis su virvėmis, tad praverčia batai su gera trauka – laipiojimas trunka ~20 min. Nuo viršaus matyti rytinė lagūna, o toliau takas leidžiasi į paslėptą Princess Lagoon su smaragdo vandeniu.",
     "source": "https://www.thailandmagazine.com/railay-viewpoint/",
-    "image": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Railay+Viewpoint"
   },
   "poda-island": {
     "desc": "Koh Poda yra 20 min. nuo Ao Nang; čia taikomas 200 THB nacionalinio parko mokestis ir draudžiama vartoti alkoholį paplūdimyje. Verta atplaukti žemo potvynio metu, kai atsiveria smėlio liežuvis link gretimų salų.",
     "source": "https://www.krabitravelguide.com/poda-island/",
-    "image": "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Ko+Poda"
   },
   "long-beach-pra-ae": {
     "desc": "Pra-Ae (Long Beach) tęsiasi daugiau kaip 3 km ir turi lygų įėjimą į jūrą, todėl tinka bėgimams ir bonfire vakarėliams. Paplūdimio baras „Somewhere Else“ kasdien groja gyvą muziką, o dieną veikia nardymo bei motorolerių nuoma.",
     "source": "https://www.kohlantaguide.com/pra-ae-beach-long-beach/",
-    "image": "https://images.unsplash.com/photo-1470246973918-29a93221c455?q=80&w=1200&auto=format&fit=crop"
+    "image": "https://images.unsplash.com/photo-1470246973918-29a93221c455?q=80&w=1200&auto=format&fit=crop",
+    "maps": "https://maps.google.com/?q=Long+Beach+Koh+Lanta"
   },
   "kantiang-bay": {
     "desc": "Kantiang – pietinė įlanka su krištolo vandeniu ir Pimalai Resort prižiūrimu molu; geriausia snorkelinimo zona yra šiauriniame krašte. Netoliese vyksta krabų fermų turai tradiciniais longtail laivais ir populiarus „Why Not“ baras.",
     "source": "https://www.travelfish.org/sight_profile/thailand/southern_thailand/krabi/ko_lanta/4281",
-    "image": "https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=1200&auto=format&fit=crop"
+    "image": "https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=1200&auto=format&fit=crop",
+    "maps": "https://maps.google.com/?q=Kantiang+Bay"
   },
   "khao-sok-cheow-lan-lake": {
     "desc": "Cheow Lan ežere naktį apsistojama plūduriuojančiuose rafthouse nameliuose, o dieną organizuojami longtail safariai tarp kalkakmenio stulpų. Populiarios veiklos – naktinis žygis klausantis gibbonų ir plaukimas prie Nam Talu urvo (sausros metu).",
@@ -167,102 +183,122 @@
   "d2-pietu-panoramos": {
     "desc": "Antra diena Phuket skirta pietinei motorolerio kilpai: Karon ir Kata apžvalgos aikštelės, Big Buddha, Nai Harn, Promthep Cape. Tarp sustojimų suplanuotos kavos pertraukos „Wassa“ ir pietūs Rawai Sea Gypsy turguje.",
     "source": "https://www.phuket101.net/promthep-cape/",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Promthep+Cape"
   },
   "d3-lard-yai-laisva-diena": {
     "desc": "Sekmadienis skirtas laisvam tempui: baseinas arba masažas dieną, o 16:00 startuoja Lard Yai walking street su gyva muzika. Vakare bar hopping maršrutas Soi Romanee ir craft kokteiliai „The Timber Hut“.",
     "source": "https://www.thephuketnews.com/phuket-old-town-walking-street-4-76701.php",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Phuket+Walking+Street"
   },
   "krabi-railay": {
     "desc": "Railay segmentas jungia Phra Nang Cave, Tonsai laipiojimo sienas ir apsistojimą Sand Sea/Rayavadee kurortuose. Planas numato rytinę urvų apžiūrą, dienos snorkelingą bei saulėlydį West Railay paplūdimyje.",
     "source": "https://www.lonelyplanet.com/thailand/andaman-coast/railay",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Railay+Beach"
   },
   "phuket-kata-beach": {
     "desc": "Bazinės 3 naktys Katoje leidžia išbandyti banglentes (birželis–spalis) ir užsisakyti dienos turus iš netoliese esančios prieplaukos. Vakare čia gausu restoranų, market street su vietiniu maistu ir gyva muzika „Ska Bar“.",
     "source": "https://www.lonelyplanet.com/thailand/andaman-coast/kata-beach",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Kata+Beach"
   },
   "big-buddha-wat-chalong": {
     "desc": "Ši diena sujungia dviejų svarbiausių Phuket šventovių vizitus: pradžioje Wat Chalong ritualai, vėliau kopimas į Big Buddha, kur galima palikti aukas. Į maršrutą įtraukti pietūs su vegetarišku meniu Chalong statulos papėdėje.",
     "source": "https://www.phuket101.net/big-buddha-phuket/",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Big+Buddha+Phuket"
   },
   "nai-harn-promthep": {
     "desc": "Rytinis plaukimas Nai Harn lagūnoje, po to pasivaikščiojimas aplink ežerą ir kava „Roost“. Dieną baigiame Promthep Cape saulėlydžiu ir vakariene Rawai jūros gėrybių turguje.",
     "source": "https://www.luxuryvillasphuketthailand.com/blog/nai-harn-beach-guide/",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Promthep+Cape"
   },
   "lard-yai-sekmadienio-turgus": {
     "desc": "Lard Yai gatvė kiekvieną sekmadienį 16:00–22:00 uždaroma automobiliams – čia gausu craft ledų, seno stiliaus žaislų ir indie muzikantų. Tai puiki vieta nusipirkti suvenyrų ar pasiklausyti tradicinių ranard instrumentų.",
     "source": "https://www.thephuketnews.com/phuket-old-town-walking-street-4-76701.php",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Phuket+Walking+Street"
   },
   "d1-atvykimas": {
     "desc": "Į Phuket atskrenda du pagrindiniai reisai (QR/AY) apie 09:00 ir 12:00; atvykus pasirūpiname SIM kortele bei grynaisiais oro uoste. Pervežimas į Kata trunka ~60 min., vakare numatytas lengvas pasivaikščiojimas po paplūdimį.",
     "source": "https://www.airportthai.co.th/en/phuket",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Phuket+International+Airport"
   },
   "d5-railay-ir-urvai": {
     "desc": "Ryte longtail valtis plaukia į Railay, kur lankome Princess Cave ir Diamond Cave, o dieną praleidžiame laipiodami ar plaukiodami. Saulėlydį stebime Tew Lay Bar kalvoje, grįžimas į Ao Nang suplanuotas 19:30.",
     "source": "https://www.earthtrekkers.com/things-to-do-in-railay-beach-thailand/",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Railay+Beach"
   },
   "d6-hong-islands-slow-day": {
     "desc": "Hong Island turas prasideda 09:00 – pirmiausia snorkelinimas Koh Daeng, po to kopimas į naują apžvalgos aikštelę (419 laiptelių). Popietę laukia lagūna ir lunch Lao Lading saloje, grįžtame apie 16:30.",
     "source": "https://www.kohsamuitour.net/blog/hong-island-krabi-thailand/",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Ko+Hong+Krabi"
   },
   "d7-phi-phi-sunrise": {
     "desc": "Išplaukiame 05:30, kad pirmieji pasiektume Maya Bay, Viking Cave ir Pileh Lagoon. Likusi dienos dalis skirta Bamboo Island paplūdimiui ir Ton Sai miestelio užkandžiams.",
     "source": "https://www.lostwithpurpose.com/maya-bay-phi-phi-islands/",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Maya+Bay"
   },
   "d8-phang-nga-canoe": {
     "desc": "„Hong by Starlight“ programa startuoja po pietų: plaukimas per kalkakmenio urvus, vakarienė ant laivo ir žibintų paleidimas naktį lagūnoje. Bioliuminescencijos stebėjimas baigiasi apie 21:00, grįžtame į viešbutį 22:30.",
     "source": "https://www.johngray-seacanoe.com/sea-cave-canoe/",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Ao+Phang+Nga+National+Park"
   },
   "phi-phi-salos": {
     "desc": "Phi Phi programoje deriname Maya Bay, snorkelinimą Laem Tong rifų rajone ir laisvą laiką Tonsai kavinėse. Šis etapas puikiai tinka balsuoti dėl spontaniškų paplūdimio vakarėlių ir barų.",
     "source": "https://www.lonelyplanet.com/thailand/andaman-coast/ko-phi-phi-don",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Ko+Phi+Phi+Don"
   },
   "koh-lanta": {
     "desc": "Koh Lanta bazė leidžia derinti darbą ir poilsį – dieną važiuojame į Lanta Old Town, Khlong Chak krioklį ar national park. Vakare planuojami sunset barai ant Long Beach ir gyva muzika Lanta Noi tilto rajone.",
     "source": "https://www.lonelyplanet.com/thailand/andaman-coast/ko-lanta",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Koh+Lanta"
   },
   "railay-phra-nang": {
     "desc": "Įrašas apjungia Phra Nang Cave su senu karališku altoriumi ir Railay West paplūdimį, kur mėgstame nuomotis kajakus. Vakare siūlome stebėti uolų laipiojimo šou Tonsai pusėje.",
     "source": "https://www.travelfish.org/sight_profile/thailand/southern_thailand/krabi/krabi_town/275",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Phra+Nang+Cave+Beach"
   },
   "phi-phi-sunrise": {
     "desc": "Papildomas balsavimo įrašas toms pačioms ankstyvoms išvykoms į Maya Bay – 05:30 startas, pusryčiai laive ir snorkelinimas Loh Samah Bay. Tie, kurie nori vėlesnio grafiko, gali pasiūlyti alternatyvų laiką.",
     "source": "https://www.lostwithpurpose.com/maya-bay-phi-phi-islands/",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Maya+Bay"
   },
   "phang-nga": {
     "desc": "Platus Phang Nga įrašas leidžia balsuoti dėl skirtingų scenarijų – James Bond sala, Koh Panyee žvejų kaimas ar Samed Nangshe apžvalgos aikštelė. Tai taip pat apima sausumos safarius su kalkakmenio urvų lankymu.",
     "source": "https://www.nationalgeographic.com/travel/article/thailands-phang-nga-bay",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Ao+Phang+Nga+National+Park"
   },
   "long-beach-koh-lanta": {
     "desc": "Šis balsavimo variantas užtikrina konkretų paplūdimį ilgesniam poilsiui – 3 km ruožas su patogiais paplūdimio barais, joga ir BBq galimybėmis. Čia siūlome organizuoti bendrą saulėlydžio vakarienę.",
     "source": "https://www.kohlantaguide.com/pra-ae-beach-long-beach/",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Long+Beach+Koh+Lanta"
   },
   "d9-koh-lanta-chill": {
     "desc": "Laisva diena: motoroleriu aplankome Lanta Noi tiltą, Papillion Beach barą ir vakaro masažą Saladan miestelyje. Jei oras leidžia, planuojamas saulėlydžio bioluminescencijos turas Klong Chak.",
     "source": "https://www.nomadicmatt.com/travel-blogs/koh-lanta-travel-guide/",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Long+Beach+Koh+Lanta"
   },
   "d10-khao-sok-dienos-turas": {
     "desc": "05:30 išvykstame iš Lantos į Khao Sok; laive gidas pasakoja apie nacionalinio parko istoriją. Į programą įeina bambukinių plaustų plaukimas, lunch rafthouse ir trumpas žygis į koralų urvą.",
     "source": "https://www.thainationalparks.com/khao-sok-national-park",
-    "image": ""
+    "image": "",
+    "maps": "https://maps.google.com/?q=Khao+Sok+National+Park"
   },
   "wat-rong-khun-white-temple": {
     "desc": "Dubliuojamas balsavimo įrašas tiems, kas nori akcentuoti White Temple dienos turą – primenamos 08:00–17:00 valandos ir meno detalės. Balsuotojai gali pridėti pastabas apie papildomas sustojimo vietas, pvz., Singha Park.",
