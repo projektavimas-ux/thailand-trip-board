@@ -4,23 +4,61 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Thailand Control · Maršruto tinklas</title>
-  <link rel="stylesheet" href="./styles/site.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#ecfeff',
+              100: '#cffafe',
+              500: '#14b8a6',
+              600: '#0d9488',
+              900: '#134e4a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
+    :root {
+      --line: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --accent: #14b8a6;
+    }
+    body.modal-open {
+      overflow: hidden;
+    }
     .timeline-card {
       overflow: visible;
     }
     .timeline {
       position: relative;
-      padding: 12px 0 12px 70px;
+      padding: 16px 0 16px 90px;
     }
     .timeline::before {
       content: "";
       position: absolute;
-      left: 44px;
+      left: 46px;
       top: 0;
       bottom: 0;
-      width: 2px;
-      background: rgba(37, 99, 235, 0.15);
+      width: 3px;
+      background: rgba(20, 184, 166, 0.2);
     }
     #connectorSvg {
       position: absolute;
@@ -37,144 +75,145 @@
     .node-card {
       position: relative;
       margin: 0 0 18px;
-      padding: 16px 18px 14px;
+      padding: 18px 20px 16px;
       border: 1px solid var(--line);
-      border-radius: 18px;
+      border-radius: 20px;
       background: #fff;
-      box-shadow: 0 8px 30px rgba(15, 23, 42, 0.05);
-      margin-left: calc(40px + var(--depth, 0) * 32px);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+      margin-left: calc(46px + var(--depth, 0) * 38px);
       transition: box-shadow .15s ease, transform .15s ease;
     }
     .node-card::before {
       content: "";
       position: absolute;
-      left: -26px;
+      left: -30px;
       top: 50%;
-      width: 20px;
+      width: 24px;
       height: 2px;
-      background: rgba(37, 99, 235, 0.35);
+      background: rgba(14, 148, 136, 0.35);
     }
     .node-card[data-depth="0"]::before {
       width: 0;
     }
     .node-card:hover {
-      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.12);
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.18);
       transform: translateY(-2px);
     }
     .node-card.is-dimmed {
-      opacity: 0.45;
-      filter: grayscale(0.15);
+      opacity: 0.35;
+      filter: grayscale(0.1);
     }
     .node-card.is-highlighted {
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+      box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.4);
     }
     .node-card.stage-card {
-      border-left: 4px solid var(--accent);
-      background: #f4f8ff;
+      border-left: 4px solid #14b8a6;
+      background: #ecfdf5;
     }
     .node-card.day-card {
       border-left: 4px solid #fb923c;
-      background: #fffaf5;
+      background: #fff7ed;
     }
     .node-card.flight-card {
-      border-left: 4px solid #0ea5e9;
-      background: #f0fbff;
+      border-left: 4px solid #38bdf8;
+      background: #f0f9ff;
     }
     .node-card.legs-card {
-      border-left: 4px solid #7c3aed;
+      border-left: 4px solid #a855f7;
       background: #faf5ff;
     }
     .node-card.trip-card {
       border-left: 4px solid #22c55e;
-      background: #f2fff5;
+      background: #f0fdf4;
     }
-    .node-card .node-header {
+    .node-header {
       display: flex;
       flex-direction: column;
       gap: 6px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
     .node-pill {
       display: inline-flex;
       align-self: flex-start;
       font-size: 11px;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--accent);
-      background: #e7efff;
-      padding: 3px 10px;
+      background: rgba(20, 184, 166, 0.15);
+      padding: 4px 12px;
       border-radius: 999px;
       font-weight: 700;
     }
-    .node-card.day-card .node-pill { color: #c2410c; background: #ffead8; }
-    .node-card.flight-card .node-pill { color: #0369a1; background: #dff6ff; }
-    .node-card.legs-card .node-pill { color: #6d28d9; background: #efe4ff; }
-    .node-card.trip-card .node-pill { color: #15803d; background: #e1ffe9; }
+    .node-card.day-card .node-pill { color: #c2410c; background: #ffedd5; }
+    .node-card.flight-card .node-pill { color: #0369a1; background: #dbeafe; }
+    .node-card.legs-card .node-pill { color: #6d28d9; background: #ede9fe; }
+    .node-card.trip-card .node-pill { color: #15803d; background: #dcfce7; }
     .node-meta {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 10px;
-      margin: 8px 0;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
     }
     .meta-item {
       background: rgba(15, 23, 42, 0.02);
-      border-radius: 10px;
-      padding: 8px 10px;
+      border-radius: 12px;
+      padding: 10px 12px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
     }
     .meta-item span {
       display: block;
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
     .meta-item strong {
       display: block;
-      margin-top: 2px;
+      margin-top: 4px;
       font-size: 15px;
+      color: var(--text);
     }
     .summary-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-      margin: 12px 0 4px;
+      gap: 14px;
+      margin: 12px 0 0;
     }
     .stage-filter {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin: 8px 0 4px;
+      gap: 10px;
+      margin: 18px 0 6px;
     }
     .stage-chip {
-      border: 1px solid rgba(37, 99, 235, 0.25);
+      border: 1px solid rgba(20, 184, 166, 0.5);
       border-radius: 999px;
-      padding: 6px 14px;
+      padding: 7px 16px;
       font-size: 13px;
       background: #fff;
-      color: var(--accent);
+      color: #0f766e;
       cursor: pointer;
       transition: all .15s ease;
     }
     .stage-chip:hover {
-      border-color: rgba(37, 99, 235, 0.45);
-      background: rgba(37, 99, 235, 0.05);
+      border-color: rgba(20, 184, 166, 0.8);
+      background: rgba(20, 184, 166, 0.08);
     }
     .stage-chip.active {
-      background: rgba(37, 99, 235, 0.12);
-      border-color: rgba(37, 99, 235, 0.65);
-      color: #1d4ed8;
+      background: rgba(20, 184, 166, 0.16);
+      border-color: rgba(20, 184, 166, 0.95);
+      color: #115e59;
       font-weight: 600;
-      box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.08);
     }
     .summary-chip {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 10px 14px;
-      background: #f8fbff;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 16px;
+      padding: 12px 16px;
+      background: #f8fafc;
     }
     .summary-chip span {
       display: block;
-      font-size: 12px;
+      font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       color: var(--muted);
@@ -182,128 +221,70 @@
     .summary-chip strong {
       display: block;
       margin-top: 4px;
-      font-size: 16px;
+      font-size: 18px;
     }
-    .actions-list {
-      margin: 0;
-      padding-left: 20px;
-      color: var(--text);
-    }
-    .actions-list li {
-      margin-bottom: 8px;
-      line-height: 1.5;
-    }
-    .actions-list li:last-child {
-      margin-bottom: 0;
-    }
-
     .node-cover {
-      border-radius: 16px;
+      border-radius: 18px;
       overflow: hidden;
-      margin: 10px 0;
-      height: 180px;
-      background: #000;
+      margin: 12px 0;
+      height: 190px;
+      background: #0f172a;
     }
     .node-cover img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
     }
-
     .node-gallery {
-    .signal-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .day-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 12px;
-    }
-    .day-card {
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 12px 14px;
-      background: #fff;
-    }
-    .day-card strong {
-      display: block;
-      font-size: 16px;
-      margin-bottom: 4px;
-    }
-    .day-card span {
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .day-card ul {
-      padding-left: 18px;
-      margin: 8px 0 0;
-    }
-    .day-card ul li {
-      margin-bottom: 4px;
-    }
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 8px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
     .gallery-card {
       border: 1px solid var(--line);
-      border-radius: 14px;
+      border-radius: 16px;
       overflow: hidden;
       background: #fff;
-      cursor: pointer;
       position: relative;
-      transition: transform .15s ease, box-shadow .15s ease;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
     }
     .gallery-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.15);
+      transform: translateY(-3px);
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.15);
     }
     .gallery-card img {
       width: 100%;
-      height: 100px;
+      height: 110px;
       object-fit: cover;
-      display: block;
     }
     .gallery-card .gallery-body {
-      padding: 8px 10px 10px;
-    }
-    .gallery-card strong {
-      display: block;
-      font-size: 14px;
-    }
-    .gallery-card span {
-      display: block;
-      font-size: 12px;
-      color: var(--muted);
+      padding: 10px 12px 14px;
     }
     .gallery-hint {
       position: absolute;
       top: 8px;
       right: 8px;
-      background: rgba(15, 23, 42, 0.75);
+      background: rgba(15, 23, 42, 0.9);
       color: #fff;
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
       padding: 4px 8px;
       border-radius: 999px;
     }
-
     .node-options {
-      margin: 6px 0;
+      margin-top: 6px;
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 8px;
     }
     .option-chip {
       background: #fff;
       border: 1px dashed var(--line);
       border-radius: 999px;
-      padding: 4px 10px;
+      padding: 4px 12px;
       font-size: 12px;
       color: var(--muted);
     }
@@ -314,34 +295,32 @@
       transition: background .15s ease, border-color .15s ease;
     }
     .option-chip.is-link:hover {
-      background: rgba(37, 99, 235, 0.08);
-      border-color: rgba(37, 99, 235, 0.45);
+      background: rgba(20, 184, 166, 0.1);
+      border-color: rgba(20, 184, 166, 0.7);
     }
-    .ghost-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 600;
-      border: 1px solid rgba(37,99,235,0.35);
+    .signal-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .day-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .day-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 16px;
       background: #fff;
-      padding: 6px 12px;
-      border-radius: 999px;
-      margin-top: 10px;
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.15);
     }
-    .ghost-link::after {
-      content: "→";
-      font-size: 13px;
+    .day-card ul {
+      padding-left: 18px;
+      margin: 10px 0 0;
     }
-    .node-note {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-    body.modal-open {
-      overflow: hidden;
+    .day-card ul li {
+      margin-bottom: 4px;
     }
     .place-modal {
       position: fixed;
@@ -359,159 +338,173 @@
       position: absolute;
       inset: 0;
       background: rgba(15, 23, 42, 0.55);
-      backdrop-filter: blur(2px);
+      backdrop-filter: blur(3px);
     }
     .place-modal__dialog {
       position: relative;
       background: #fff;
-      border-radius: 22px;
-      padding: 24px;
+      border-radius: 26px;
+      padding: 28px;
       max-width: 640px;
       width: 100%;
-      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.35);
+      box-shadow: 0 35px 80px rgba(15, 23, 42, 0.4);
       z-index: 1;
     }
     .place-modal__close {
       position: absolute;
-      top: 12px;
-      right: 12px;
+      top: 14px;
+      right: 14px;
       border: none;
-      background: rgba(15, 23, 42, 0.06);
+      background: rgba(15, 23, 42, 0.08);
       border-radius: 999px;
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       font-size: 18px;
       cursor: pointer;
     }
-    .place-modal__content h3 {
-      margin: 0 0 6px;
-    }
     .place-modal__media {
-      border-radius: 18px;
+      border-radius: 20px;
       overflow: hidden;
-      margin: 10px 0 16px;
+      margin: 12px 0 18px;
       max-height: 260px;
-    }
-    .place-modal__media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
     }
     .place-modal__meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 12px;
+      gap: 12px;
+      margin-bottom: 14px;
     }
     .place-modal__meta span {
-      font-size: 12px;
+      font-size: 11px;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       color: var(--muted);
-      letter-spacing: 0.04em;
-      display: block;
-    }
-    .place-modal__meta strong {
-      font-size: 15px;
-      display: block;
     }
     .place-modal__actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
+      gap: 12px;
+      margin-top: 16px;
     }
     .place-modal__actions a {
-      border: 1px solid rgba(37, 99, 235, 0.35);
+      border: 1px solid rgba(20, 184, 166, 0.35);
       border-radius: 999px;
-      padding: 6px 14px;
+      padding: 7px 16px;
       text-decoration: none;
       color: var(--accent);
       font-weight: 600;
     }
     @media (max-width: 640px) {
-      .place-modal__dialog {
-        padding: 18px;
-        border-radius: 18px;
-      }
       .timeline {
-        padding-left: 38px;
+        padding-left: 48px;
       }
       .timeline::before {
-        left: 26px;
+        left: 30px;
       }
       .node-card {
-        margin-left: calc(10px + var(--depth, 0) * 24px);
+        margin-left: calc(12px + var(--depth, 0) * 28px);
       }
       .node-card::before {
-        left: -18px;
+        left: -20px;
         width: 14px;
+      }
+      .place-modal__dialog {
+        padding: 20px;
+        border-radius: 20px;
       }
     }
   </style>
 </head>
-<body>
-  <div class="wrap">
-    <h1>🌴 Maršruto tinklas</h1>
-    <p class="muted">Hierarchinis kelionės stuburas nuo skrydžių iki dienų plano. Duomenys kraunami iš <code>data/routes-tree.json</code>, kortelės susietos su vietų katalogu.</p>
-
-    <nav class="links">
-      <a href="./index.html">Apžvalga</a>
-      <a href="./flights.html">Skrydžiai</a>
-      <a href="./plan.html">Kelionės planas</a>
-      <a class="active" href="./routes-vertical.html">Maršruto tinklas</a>
-      <a href="./places.html">Vietos ir balsai</a>
-    </nav>
-
-    <div class="card timeline-card">
-      <div class="topbar">
-        <div>
-          <h2>Hierarchinė lenta</h2>
-          <p class="muted" id="timelineStatus">Kraunama…</p>
-        </div>
-        <button id="resetView" class="secondary" style="width:auto">Perbraižyti jungtis</button>
-      </div>
-      <div class="summary-grid" id="tripSummary"></div>
-      <div class="stage-filter" id="stageFilter"></div>
-      <div class="timeline" id="timeline">
-        <svg id="connectorSvg"></svg>
-        <div id="timelineBody"></div>
-      </div>
-    </div>
-
-    <div class="card" id="actionsCard">
-      <div class="topbar">
-        <div>
-          <h2>Artimiausi darbai</h2>
-          <p class="muted">Pagal 13 d. planą</p>
-        </div>
-        <span class="muted" id="actionsStamp"></span>
-      </div>
-      <ol class="actions-list" id="actionsList"></ol>
-    </div>
-
-    <div class="card" id="signalsCard">
-      <div class="topbar">
-        <div>
-          <h2>Signalų radaras</h2>
-          <p class="muted">Vieši įvykiai ir logistika</p>
-        </div>
-      </div>
-      <div class="signal-stack" id="signalStack"></div>
-    </div>
-
-    <div class="card" id="daysCard">
-      <div class="topbar">
-        <div>
-          <h2>Dienų vaizdas</h2>
-          <p class="muted">Iš `data/itinerary.json`</p>
-        </div>
-        <button id="toggleDays" class="secondary" style="width:auto">Rodyti daugiau</button>
-      </div>
-      <div class="day-grid" id="dayGrid"></div>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased min-h-screen">
+  <!-- Hero -->
+  <div class="relative bg-brand-900 h-64 sm:h-80 w-full overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1920&auto=format&fit=crop" alt="Andaman jūra" class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay">
+    <div class="absolute inset-0 bg-gradient-to-t from-brand-900/95 to-transparent"></div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-10">
+      <p class="text-xs text-brand-100 font-semibold uppercase tracking-[0.3em]">Maršruto kontrolė</p>
+      <h1 class="text-4xl sm:text-5xl font-display font-bold text-white mb-2 drop-shadow-md">🌴 Maršruto tinklas</h1>
+      <p class="text-brand-100 text-sm sm:text-base font-medium max-w-2xl drop-shadow">
+        Hierarchinis kelionės stuburas nuo skrydžių iki dienų plano. Duomenys kraunami iš <code>data/routes-tree.json</code> ir susiejami su vietų katalogu.
+      </p>
     </div>
   </div>
 
+  <!-- Navigation -->
+  <div class="bg-white border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex overflow-x-auto py-4 space-x-8 text-sm sm:text-base font-medium text-gray-500 whitespace-nowrap">
+        <a class="pb-1 hover:text-gray-900" href="./index.html">Apžvalga</a>
+        <a class="pb-1 hover:text-gray-900" href="./flights.html">Skrydžiai</a>
+        <a class="pb-1 hover:text-gray-900" href="./plan.html">Kelionės planas</a>
+        <a class="pb-1 text-gray-900 border-b-2 border-brand-500" href="./routes-vertical.html">Maršruto tinklas</a>
+        <a class="pb-1 hover:text-gray-900" href="./places.html">Vietos ir balsai</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8 sm:space-y-10">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 timeline-card">
+      <div class="px-5 sm:px-8 pt-6 pb-4 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <p class="text-xs uppercase tracking-[0.4em] text-brand-500 font-semibold">Hierarchinė lenta</p>
+          <h2 class="text-2xl font-display font-semibold text-gray-900 mt-1">Kelionės stuburas</h2>
+          <p class="text-sm text-gray-500" id="timelineStatus">Kraunama…</p>
+        </div>
+        <button id="resetView" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors">Perbraižyti jungtis</button>
+      </div>
+      <div class="px-5 sm:px-8 pb-2">
+        <div class="summary-grid" id="tripSummary"></div>
+        <div class="stage-filter" id="stageFilter"></div>
+      </div>
+      <div class="px-2 sm:px-4 pb-6">
+        <div class="timeline" id="timeline">
+          <svg id="connectorSvg"></svg>
+          <div id="timelineBody"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+        <div class="px-5 sm:px-6 pt-6 pb-4 border-b border-gray-100 flex items-start justify-between">
+          <div>
+            <p class="text-xs uppercase tracking-[0.4em] text-brand-500 font-semibold">Užduotys</p>
+            <h2 class="text-xl font-display font-semibold text-gray-900">Artimiausi darbai</h2>
+            <p class="text-sm text-gray-500">Pagal 13 d. planą</p>
+          </div>
+          <span class="text-xs text-gray-400" id="actionsStamp"></span>
+        </div>
+        <div class="px-5 sm:px-6 py-6">
+          <ol class="space-y-3 text-sm text-gray-700" id="actionsList"></ol>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+        <div class="px-5 sm:px-6 pt-6 pb-4 border-b border-gray-100">
+          <p class="text-xs uppercase tracking-[0.4em] text-brand-500 font-semibold">Signalai</p>
+          <h2 class="text-xl font-display font-semibold text-gray-900">Signalų radaras</h2>
+          <p class="text-sm text-gray-500">Vieši įvykiai ir logistika</p>
+        </div>
+        <div class="px-5 sm:px-6 py-6 signal-stack" id="signalStack"></div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+      <div class="px-5 sm:px-6 pt-6 pb-4 border-b border-gray-100 flex items-start justify-between gap-4">
+        <div>
+          <p class="text-xs uppercase tracking-[0.4em] text-brand-500 font-semibold">Itineraris</p>
+          <h2 class="text-xl font-display font-semibold text-gray-900">Dienų vaizdas</h2>
+          <p class="text-sm text-gray-500">Iš `data/itinerary.json`</p>
+        </div>
+        <button id="toggleDays" class="px-4 py-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors">Rodyti daugiau</button>
+      </div>
+      <div class="px-5 sm:px-6 py-6">
+        <div id="dayGrid" class="day-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
   <div class="place-modal" id="placeModal" aria-hidden="true">
     <div class="place-modal__backdrop" id="placeModalBackdrop"></div>
     <div class="place-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="placeModalTitle">
@@ -587,10 +580,6 @@
     const svgEl = document.getElementById('connectorSvg');
     const statusEl = document.getElementById('timelineStatus');
     const resetBtn = document.getElementById('resetView');
-    window.addEventListener('error', (event) => {
-      if (event.target !== window) return;
-      if (statusEl) statusEl.textContent = `Klaida: ${event.message}`;
-    });
     const summaryEl = document.getElementById('tripSummary');
     const actionsListEl = document.getElementById('actionsList');
     const actionsStampEl = document.getElementById('actionsStamp');
@@ -665,15 +654,6 @@
         });
       });
       return map;
-    }
-
-    function getSourceHost(url){
-      if (!url) return '';
-      try {
-        return new URL(url).hostname.replace(/^www\./, '');
-      } catch (err) {
-        return 'Nuoroda';
-      }
     }
 
     function getStageCover(stageKey){
@@ -780,7 +760,7 @@
 
     function scrollToStage(nodeId){
       if (!nodeId) return;
-      const target = bodyEl?.querySelector(`.node-card[data-node-id=\"${nodeId}\"]`);
+      const target = bodyEl?.querySelector(`.node-card[data-node-id="${nodeId}"]`);
       if (!target) return;
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       target.classList.add('is-highlighted');
@@ -790,7 +770,7 @@
     function renderActions(actions, stamp){
       if (!actionsListEl) return;
       if (!actions || !actions.length){
-        actionsListEl.innerHTML = '<li class="muted">Papildomų veiksmų nėra.</li>';
+        actionsListEl.innerHTML = '<li class="text-gray-500">Papildomų veiksmų nėra.</li>';
       } else {
         actionsListEl.innerHTML = actions.map(item => `<li>${item}</li>`).join('');
       }
@@ -802,21 +782,21 @@
     function renderSignals(signals){
       if (!signalStackEl) return;
       if (!signals || !signals.length){
-        signalStackEl.innerHTML = '<p class="muted">Naujų signalų nėra.</p>';
+        signalStackEl.innerHTML = '<p class="text-sm text-gray-500">Naujų signalų nėra.</p>';
         return;
       }
       signalStackEl.innerHTML = signals.map(signal => `
-        <div class="signal-card">
-          <div class="signal-meta">
+        <div class="p-5 border border-gray-100 rounded-2xl bg-gradient-to-br from-gray-50 to-white shadow-sm">
+          <div class="flex flex-wrap items-center gap-3 mb-2 text-xs text-gray-500 uppercase tracking-wide">
             <span>${signal.type || 'signal'}</span>
             <span>Prioritetas: ${signal.priority || '–'}</span>
             <span>${signal.window || ''}</span>
           </div>
-          <strong>${signal.title || 'Be pavadinimo'}</strong>
-          <p class="muted">${signal.location || ''}</p>
-          <p>${signal.summary || ''}</p>
-          ${signal.actions && signal.actions.length ? `<ul class="signal-actions">${signal.actions.map(act => `<li>${act}</li>`).join('')}</ul>` : ''}
-          ${signal.source ? `<a href="${signal.source}" target="_blank" rel="noopener">Šaltinis</a>` : ''}
+          <strong class="block text-lg font-display text-gray-900">${signal.title || 'Be pavadinimo'}</strong>
+          <p class="text-sm text-gray-500 mb-3">${signal.location || ''}</p>
+          <p class="text-sm text-gray-700 mb-3">${signal.summary || ''}</p>
+          ${signal.actions && signal.actions.length ? `<ul class="list-disc pl-5 text-sm text-gray-700 space-y-1 mb-3">${signal.actions.map(act => `<li>${act}</li>`).join('')}</ul>` : ''}
+          ${signal.source ? `<a class="text-sm font-semibold text-brand-600" href="${signal.source}" target="_blank" rel="noopener">Šaltinis →</a>` : ''}
         </div>`).join('');
     }
 
@@ -828,15 +808,15 @@
     function updateDayGrid(){
       if (!dayGridEl) return;
       if (!cachedDays.length){
-        dayGridEl.innerHTML = '<p class="muted">13 d. planas dar nepateiktas.</p>';
+        dayGridEl.innerHTML = '<p class="text-sm text-gray-500">13 d. planas ruošiamas.</p>';
         if (toggleDaysBtn) toggleDaysBtn.disabled = true;
         return;
       }
       const slice = showAllDays ? cachedDays : cachedDays.slice(0,4);
       dayGridEl.innerHTML = slice.map(day => `
         <div class="day-card">
-          <strong>${day.day || ''}</strong>
-          <span>${day.area || ''} · ${day.theme || ''}</span>
+          <strong class="text-lg font-display text-gray-900">${day.day || ''}</strong>
+          <span class="text-sm text-gray-500">${day.area || ''}${day.theme ? ' · ' + day.theme : ''}</span>
           ${day.blocks && day.blocks.length ? `<ul>${day.blocks.map(block => `<li>${block}</li>`).join('')}</ul>` : ''}
         </div>`).join('');
       if (toggleDaysBtn){
@@ -873,12 +853,12 @@
       const badge = typeLabels[node.type] || 'Mazgas';
       const header = document.createElement('div');
       header.className = 'node-header';
-      header.innerHTML = `<span class="node-pill">${badge}</span><h3>${node.label || 'Be pavadinimo'}</h3>`;
+      header.innerHTML = `<span class="node-pill">${badge}</span><h3 class="text-xl font-display text-gray-900">${node.label || 'Be pavadinimo'}</h3>`;
       card.appendChild(header);
 
       if (node.stageFilter && node.type !== 'stage') {
         const stageNote = document.createElement('div');
-        stageNote.className = 'node-note';
+        stageNote.className = 'text-sm text-gray-500';
         stageNote.textContent = `Priklauso etapui: ${node.stageFilter}`;
         card.appendChild(stageNote);
       }
@@ -945,7 +925,7 @@
 
       if (node.type === 'stage' && node.stageFilter){
         const link = document.createElement('a');
-        link.className = 'ghost-link';
+        link.className = 'inline-flex items-center gap-2 text-sm font-semibold text-brand-600 mt-3';
         link.href = `./places.html?stage=${encodeURIComponent(node.stageFilter)}`;
         link.textContent = `Atverti „${node.stageFilter}“ vietas`;
         card.appendChild(link);
@@ -994,7 +974,7 @@
         const top = card.offsetTop + card.offsetHeight / 2;
         const style = window.getComputedStyle(card);
         const marginLeft = parseFloat(style.marginLeft) || 0;
-        const anchorX = Math.max(marginLeft - 18, 20);
+        const anchorX = Math.max(marginLeft - 24, 20);
         coords[id] = { x: anchorX, y: top };
       });
       const height = timelineEl.scrollHeight;
@@ -1013,8 +993,8 @@
         const midX = Math.max(Math.min(from.x, to.x) - 30, 10);
         path.setAttribute('d', `M ${from.x} ${from.y} C ${midX} ${from.y}, ${midX} ${to.y}, ${to.x} ${to.y}`);
         path.setAttribute('fill', 'none');
-        path.setAttribute('stroke', node.type === 'day' ? 'rgba(251, 146, 60, 0.6)' : 'rgba(37, 99, 235, 0.55)');
-        path.setAttribute('stroke-width', node.type === 'day' ? 1.4 : 2);
+        path.setAttribute('stroke', node.type === 'day' ? 'rgba(251, 146, 60, 0.6)' : 'rgba(20, 184, 166, 0.6)');
+        path.setAttribute('stroke-width', node.type === 'day' ? 1.3 : 2);
         path.setAttribute('stroke-linecap', 'round');
         svgEl.appendChild(path);
       });
@@ -1040,18 +1020,18 @@
     function buildPlaceModalContent(place){
       const image = place.image || getStageCover(place.stageKey) || pickFallbackCover('stage', place.stageKey || place.id);
       const stageLink = place.stageKey ? `./places.html?stage=${encodeURIComponent(place.stageKey)}` : '';
-      const host = place.source ? getSourceHost(place.source) : '';
+      const host = place.source ? new URL(place.source).hostname.replace(/^www\./, '') : '';
       return `
         ${place.stageKey ? `<span class="node-pill">${place.stageKey}</span>` : ''}
-        <h3 id="placeModalTitle">${place.name || 'Be pavadinimo'}</h3>
+        <h3 id="placeModalTitle" class="text-2xl font-display text-gray-900">${place.name || 'Be pavadinimo'}</h3>
         <div class="place-modal__meta">
           ${place.stageTitle ? `<div><span>Etapas</span><strong>${place.stageTitle}</strong></div>` : ''}
           ${place.ordinal ? `<div><span>Pozicija</span><strong>#${place.ordinal}</strong></div>` : ''}
           ${host ? `<div><span>Šaltinis</span><strong>${host}</strong></div>` : ''}
         </div>
         ${image ? `<div class="place-modal__media"><img src="${image}" alt="${place.name || ''}" /></div>` : ''}
-        ${place.desc ? `<p>${place.desc}</p>` : '<p class="muted">Papildomas aprašas ruošiamas.</p>'}
-        ${place.source ? `<p><a href="${place.source}" target="_blank" rel="noopener">Pirminis šaltinis</a></p>` : ''}
+        ${place.desc ? `<p class="text-gray-700">${place.desc}</p>` : '<p class="text-gray-500">Papildomas aprašas ruošiamas.</p>'}
+        ${place.source ? `<p class="mt-3"><a class="text-brand-600 font-semibold" href="${place.source}" target="_blank" rel="noopener">Pirminis šaltinis →</a></p>` : ''}
         <div class="place-modal__actions">
           ${stageLink ? `<a href="${stageLink}">Atverti etapą</a>` : ''}
           <a href="./plan.html">Kelionės planas</a>
@@ -1112,11 +1092,7 @@
       });
     }
 
-    window.__routeTimelineReady = 'script-loaded';
-    const start = () => init();
-    start();
-    window.addEventListener('load', start);
-    setTimeout(start, 600);
+    init();
   </script>
 </body>
 </html>
