@@ -4,88 +4,180 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Thailand Control · Kelionės planas</title>
-  <link rel="stylesheet" href="./styles/site.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#ecfccb',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              900: '#14532d'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-sA+e2atnCo1hNWeSSz0pQ8U4C1uMBaDZI8q9d2LFw2g=" crossorigin="" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-o9N1j7kGStGkG2JxG2fE9JteLo75fW9n4nDYn7J4kL8=" crossorigin=""></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    .plan-line {
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 18px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      background: #f8fafc;
+    }
+    .plan-line strong {
+      display: inline-block;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #0f172a;
+    }
+    .plan-stage {
+      margin-bottom: 18px;
+    }
+    #routeMap {
+      width: 100%;
+      min-height: 320px;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      overflow: hidden;
+    }
+  </style>
 </head>
-<body>
-  <div class="wrap">
-    <h1>🗺️ Kelionės planas pagal etapus</h1>
-    <p class="muted">`stage` laukas Supabase lentelėje – 1 ETAPAS → 2 ETAPAS → 3 ETAPAS → Finalas.</p>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen">
+  <!-- Hero -->
+  <div class="relative bg-brand-900 h-64 sm:h-80 w-full overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1920&auto=format&fit=crop" alt="Route planning" class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay">
+    <div class="absolute inset-0 bg-gradient-to-t from-brand-900/95 to-transparent"></div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-10">
+      <p class="text-xs text-brand-100 font-semibold uppercase tracking-[0.4em]">Kelionės stuburas</p>
+      <h1 class="text-4xl sm:text-5xl font-display font-bold text-white mb-2 drop-shadow">
+        🗺️ Kelionės planas pagal etapus
+      </h1>
+      <p class="text-brand-100 text-sm sm:text-base font-medium max-w-2xl drop-shadow">
+        `stage` laukas Supabase lentelėje – 1 ETAPAS → 2 ETAPAS → 3 ETAPAS → Finalas. Žemiau – 13 dienų stuburas, vietų balsai ir žemėlapis vienoje lentoje.
+      </p>
+    </div>
+  </div>
 
-    <nav class="links">
-      <a href="./index.html">Apžvalga</a>
-      <a href="./flights.html">Skrydžiai</a>
-      <a class="active" href="./plan.html">Kelionės planas</a>
-      <a href="./routes-vertical.html">Maršruto tinklas</a>
-      <a href="./places.html">Vietos ir balsai</a>
-    </nav>
+  <!-- Navigation -->
+  <div class="bg-white border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex overflow-x-auto py-4 space-x-8 text-sm sm:text-base font-medium text-slate-500 whitespace-nowrap">
+        <a class="pb-1 hover:text-slate-900" href="./index.html">Apžvalga</a>
+        <a class="pb-1 hover:text-slate-900" href="./flights.html">Skrydžiai</a>
+        <a class="pb-1 text-slate-900 border-b-2 border-brand-500" href="./plan.html">Kelionės planas</a>
+        <a class="pb-1 hover:text-slate-900" href="./routes-vertical.html">Maršruto tinklas</a>
+        <a class="pb-1 hover:text-slate-900" href="./places.html">Vietos ir balsai</a>
+      </nav>
+    </div>
+  </div>
 
-    <div class="card" id="publicPlan">
-      <div class="topbar">
+  <!-- Content -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100">
+      <div class="px-5 sm:px-6 pt-6 pb-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2>13 dienų kelionės stuburas</h2>
-          <p class="muted" id="itinerarySummary">Kraunama…</p>
+          <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold">13 dienų planas</p>
+          <h2 class="text-2xl font-display font-semibold text-slate-900">Viešas stuburas</h2>
+          <p class="text-sm text-slate-500" id="itinerarySummary">Kraunama…</p>
         </div>
-        <a id="downloadItinerary" class="nav-link" href="./data/itinerary.json" download>Parsisiųsti JSON</a>
+        <a id="downloadItinerary" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors" href="./data/itinerary.json" download>Parsisiųsti JSON</a>
       </div>
-      <div id="itineraryList" class="plan-stage"></div>
-      <div class="card" style="margin-top:14px;background:#f8fafc;border-style:dashed" id="nextActionsBox"></div>
+      <div class="px-5 sm:px-6 py-6" id="itineraryList"></div>
+      <div class="px-5 sm:px-6 pb-6" id="nextActionsBox"></div>
     </div>
 
-    <div id="configBox" class="card hidden">
-      <strong>Reikia Supabase rakto.</strong> Įrašyk duomenis faile <code>supabase-config.v2.js</code>.</div>
-
-    <div id="authBox" class="card hidden">
-      <h3>Prisijunk</h3>
-      <input id="emailInput" placeholder="El. paštas" />
-      <input id="passInput" type="password" placeholder="Slaptažodis" />
-      <div class="grid-2">
-        <button id="loginBtn">Prisijungti</button>
-        <button id="signupBtn" class="secondary">Registruoti</button>
-      </div>
-      <p id="authStatus" class="muted"></p>
+    <div id="configBox" class="hidden bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-xl shadow-sm">
+      <p class="text-sm text-yellow-700"><strong>Supabase raktas būtinas.</strong> Įrašyk `window.SUPABASE_URL` ir `window.SUPABASE_ANON_KEY` faile `supabase-config.v2.js`.</p>
     </div>
 
-    <div id="appBox" class="hidden">
-      <div class="card topbar">
+    <div id="authBox" class="hidden max-w-md mx-auto bg-white rounded-2xl shadow-sm border border-slate-100 p-8">
+      <h3 class="text-2xl font-display font-semibold text-slate-900 mb-2">Prisijunk</h3>
+      <p class="text-sm text-slate-500 mb-6">Naudok tą patį Supabase el. paštą.</p>
+      <div class="space-y-4">
+        <input id="emailInput" type="email" placeholder="El. paštas" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
+        <input id="passInput" type="password" placeholder="Slaptažodis" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
+        <div class="flex space-x-3 pt-2">
+          <button id="loginBtn" class="flex-1 bg-brand-600 hover:bg-brand-500 text-white font-medium py-3 px-4 rounded-lg transition-colors shadow-sm">Prisijungti</button>
+          <button id="signupBtn" class="flex-1 bg-white hover:bg-slate-50 text-slate-700 font-medium py-3 px-4 rounded-lg border border-slate-200 transition-colors shadow-sm">Registruoti</button>
+        </div>
+        <p id="authStatus" class="text-sm text-center text-rose-500 min-h-[20px]"></p>
+      </div>
+    </div>
+
+    <div id="appBox" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <div id="who"></div>
-          <p class="muted">Vietos ir balsai kraunami tiesiai iš Supabase.</p>
+          <div id="who" class="text-lg font-display font-semibold text-slate-900"></div>
+          <p class="text-sm text-slate-500 mt-1">Vietos ir balsai kraunami tiesiai iš Supabase.</p>
         </div>
-        <button id="logoutBtn" class="secondary">Atsijungti</button>
+        <button id="logoutBtn" class="px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors">Atsijungti</button>
       </div>
 
-      <div class="card">
-        <h2>Automatinė statuso lenta</h2>
-        <p class="muted">Spausk „Atnaujinti planą“ po naujų balsavimų ar vietų kūrimo.</p>
-        <button id="refreshBtn" class="secondary" style="width:auto">Atnaujinti planą</button>
-      </div>
-
-      <div class="card">
-        <div class="topbar">
-          <h2>Interaktyvus maršrutas</h2>
-          <a class="nav-link" id="googleMapLink" href="https://www.google.com/maps/dir/Kata+Beach,+Karon,+Phuket/Railay+Beach,+Krabi/Koh+Lanta,+Krabi/Bangkok+Old+Town/" target="_blank" rel="noopener">Google Maps</a>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-display font-semibold text-slate-900">Automatinė statuso lenta</h2>
+          <p class="text-sm text-slate-500">Spausk „Atnaujinti planą“ po naujų balsavimų ar vietų kūrimo.</p>
         </div>
-        <div id="routeMap"></div>
-        <p class="muted">Žemėlapyje parodyti pagrindiniai etapai nuo Phuketo iki Bankoko.</p>
+        <button id="refreshBtn" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors">Atnaujinti planą</button>
       </div>
 
-      <div class="card">
-        <h2>Vidiniai pervažiavimai / perskridimai</h2>
-        <div id="transferList"></div>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <h2>Etapai</h2>
-          <div id="stagesBox" class="plan-stage"></div>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100">
+        <div class="px-5 sm:px-6 pt-6 pb-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold">Maršruto žemėlapis</p>
+            <h2 class="text-xl font-display font-semibold text-slate-900">Interaktyvus maršrutas</h2>
+            <p class="text-sm text-slate-500">Pagrindiniai etapai nuo Phuketo iki Bankoko</p>
+          </div>
+          <a id="googleMapLink" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600" href="https://www.google.com/maps/dir/Kata+Beach,+Karon,+Phuket/Railay+Beach,+Krabi/Koh+Lanta,+Krabi/Bangkok+Old+Town/" target="_blank" rel="noopener">Google Maps →</a>
         </div>
-        <div class="card">
-          <div class="topbar">
-            <h2>Bendra lentelė</h2>
-            <select id="boardStageFilter">
+        <div class="px-5 sm:px-6 py-6">
+          <div id="routeMap"></div>
+          <p class="text-sm text-slate-500 mt-3">Žemėlapyje parodyti pagrindiniai etapai ir langai.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+        <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold mb-2">Vidiniai pervažiavimai</p>
+        <h2 class="text-xl font-display font-semibold text-slate-900">Transferų planas</h2>
+        <div id="transferList" class="mt-4"></div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+          <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold mb-2">Etapų lenta</p>
+          <h2 class="text-xl font-display font-semibold text-slate-900">Etapai</h2>
+          <div id="stagesBox" class="mt-4"></div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+            <div>
+              <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold mb-1">Balsų lenta</p>
+              <h2 class="text-xl font-display font-semibold text-slate-900">Bendra lentelė</h2>
+            </div>
+            <select id="boardStageFilter" class="rounded-lg border border-slate-200 px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
               <option value="all">Visi etapai</option>
               <option value="1 ETAPAS">1 ETAPAS</option>
               <option value="2 ETAPAS">2 ETAPAS</option>
@@ -98,12 +190,12 @@
         </div>
       </div>
 
-      <div class="card">
-        <h3>Pastabos</h3>
-        <ul>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+        <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold mb-2">Pastabos</p>
+        <ul class="list-disc pl-6 text-sm text-slate-700 space-y-2">
           <li>Etapų pavadinimai gali būti bet kokie (pvz., „Naktinis traukinys“), svarbu juos įvesti vienodai.</li>
           <li>Jei etapas nenurodytas, jis patenka į skiltį „Kita“.</li>
-          <li>Pats balsavimas vyksta puslapyje „Vietos ir balsai“.</li>
+          <li>Balsavimas vyksta puslapyje „Vietos ir balsai“.</li>
         </ul>
       </div>
     </div>
@@ -113,194 +205,189 @@
   <script src="./scripts/supabase-page.js"></script>
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-    const stageOrder = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','Finalas','Kita'];
-    const mapStops = [
-      { name: 'Kata · Phuket', window: 'D1–D4', coords: [7.821, 98.296], note: 'Starto bazė pietuose' },
-      { name: 'Railay · Krabi', window: 'D5–D7', coords: [8.012, 98.839], note: 'Kalkakmenio įlankos' },
-      { name: 'Koh Lanta', window: 'D8–D10', coords: [7.514, 99.093], note: 'Ramesni paplūdimiai' },
-      { name: 'Bangkok Old Town', window: 'D11–D13', coords: [13.751, 100.491], note: 'Finalas + skrydis namo' }
-    ];
-    const transferPlan = [
-      { leg: 'OUT · VNO/RIX → Phuket (HKT) 2026-12-09..12', detail: 'OPEN-JAW 1 sustojimo skrydis (Qatar/Turkish). Nusileidus – privatus minivanas (45 min) iki Kata/Karon.' },
-      { leg: 'Phuket (Kata) → Railay Beach', detail: 'Privatus minivanas iki Ao Nang (~2h40) + long-tail valtis į Railay (15 min). Alternatyva: intermodalinis perkėlimas per Phuket Ferry.' },
-      { leg: 'Railay → Koh Lanta', detail: 'Greitaeigė valtis nuo Ao Nang Pier (70 min) arba kombinuotas minivanas + keltas per Saladan.' },
-      { leg: 'Koh Lanta → Bangkok', detail: 'Pervežimas į Krabi oro uostą (2h) + AirAsia/Thai VietJet skrydis į DMK/BKK; iš oro uosto – „Grab“ ar MRT į Old Town.' },
-      { leg: 'IN · Bangkok → VNO/RIX 2027-01-01..03', detail: 'BKK → VNO/RIX 1 sustojimo kryptis (Turkish/Qatar). Įtraukti papildomą 3h „bufferį“ skrydžio dieną.' }
-    ];
-    const googleMapLink = 'https://www.google.com/maps/dir/Kata+Beach,+Karon,+Phuket/Railay+Beach,+Krabi/Koh+Lanta,+Krabi/Bangkok+Old+Town/';
+      const stageOrder = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','Finalas','Kita'];
+      const mapStops = [
+        { name: 'Kata · Phuket', window: 'D1–D4', coords: [7.821, 98.296], note: 'Starto bazė pietuose' },
+        { name: 'Railay · Krabi', window: 'D5–D7', coords: [8.012, 98.839], note: 'Kalkakmenio įlankos' },
+        { name: 'Koh Lanta', window: 'D8–D10', coords: [7.514, 99.093], note: 'Ramesni paplūdimiai' },
+        { name: 'Bangkok Old Town', window: 'D11–D13', coords: [13.751, 100.491], note: 'Finalas + skrydis namo' }
+      ];
+      const transferPlan = [
+        { leg: 'OUT · VNO/RIX → Phuket (HKT) 2026-12-09..12', detail: 'OPEN-JAW 1 sustojimo skrydis (Qatar/Turkish). Nusileidus – privatus minivanas (45 min) iki Kata/Karon.' },
+        { leg: 'Phuket (Kata) → Railay Beach', detail: 'Privatus minivanas iki Ao Nang (~2h40) + long-tail valtis į Railay (15 min).' },
+        { leg: 'Railay → Koh Lanta', detail: 'Greitaeigė valtis nuo Ao Nang Pier (70 min) arba kombinuotas minivanas + keltas per Saladan.' },
+        { leg: 'Koh Lanta → Bangkok', detail: 'Pervežimas į Krabi oro uostą (2h) + AirAsia/Thai VietJet skrydis į DMK/BKK; iš oro uosto – „Grab“ ar MRT.' },
+        { leg: 'IN · Bangkok → VNO/RIX 2027-01-01..03', detail: 'BKK → VNO/RIX 1 sustojimo kryptis (Turkish/Qatar) + 3h buferis.' }
+      ];
+      const googleMapLink = 'https://www.google.com/maps/dir/Kata+Beach,+Karon,+Phuket/Railay+Beach,+Krabi/Koh+Lanta,+Krabi/Bangkok+Old+Town/';
 
-    const itinerarySummaryEl = document.getElementById('itinerarySummary');
-    const itineraryListEl = document.getElementById('itineraryList');
-    const nextActionsEl = document.getElementById('nextActionsBox');
+      const itinerarySummaryEl = document.getElementById('itinerarySummary');
+      const itineraryListEl = document.getElementById('itineraryList');
+      const nextActionsEl = document.getElementById('nextActionsBox');
 
-    let currentClient = null;
-    let lastPlaces = [];
-    let lastVoteMap = {};
-    let boardFilter = 'all';
-    let mapInstance = null;
+      let currentClient = null;
+      let lastPlaces = [];
+      let lastVoteMap = {};
+      let boardFilter = 'all';
+      let mapInstance = null;
 
-    function renderItinerary(data){
-      if (!itinerarySummaryEl) return;
-      if (!data){
-        itinerarySummaryEl.textContent = 'Nepavyko įkelti plano.';
-        itineraryListEl.innerHTML = '<p class="muted">Patikrink failą data/itinerary.json</p>';
-        if (nextActionsEl) nextActionsEl.innerHTML = '';
-        return;
-      }
-      const summaryParts = [];
-      if (data.summary?.outbound) summaryParts.push(data.summary.outbound);
-      if (data.summary?.inbound) summaryParts.push(data.summary.inbound);
-      if (data.summary?.team) summaryParts.push(data.summary.team);
-      itinerarySummaryEl.textContent = summaryParts.join(' • ');
-      const days = data.days || [];
-      if (!days.length){
-        itineraryListEl.innerHTML = '<p class="muted">Nėra dienų.</p>';
-      } else {
-        itineraryListEl.innerHTML = days.map(day => `
+      function renderItinerary(data){
+        if (!data){
+          itinerarySummaryEl.textContent = 'Nepavyko įkelti plano.';
+          itineraryListEl.innerHTML = '<p class="text-sm text-slate-500">Patikrink failą data/itinerary.json</p>';
+          nextActionsEl.innerHTML = '';
+          return;
+        }
+        const summaryParts = [];
+        if (data.summary?.outbound) summaryParts.push(data.summary.outbound);
+        if (data.summary?.inbound) summaryParts.push(data.summary.inbound);
+        if (data.summary?.team) summaryParts.push(data.summary.team);
+        itinerarySummaryEl.textContent = summaryParts.join(' • ');
+        const days = data.days || [];
+        itineraryListEl.innerHTML = days.length ? days.map(day => `
           <div class="plan-line">
             <strong>${day.day || ''}</strong> · ${day.area || ''}<br/>
-            ${day.theme ? `<span class="muted">${day.theme}</span><br/>` : ''}
-            ${(day.blocks || []).map(block => `<div class="muted">• ${block}</div>`).join('')}
-            ${day.notes ? `<small class="muted">${day.notes}</small>` : ''}
+            ${day.theme ? `<span class=\"text-xs uppercase tracking-wide text-slate-500\">${day.theme}</span><br/>` : ''}
+            ${(day.blocks || []).map(block => `<div class=\"text-sm text-slate-600\">• ${block}</div>`).join('')}
+            ${day.notes ? `<small class=\"text-slate-500\">${day.notes}</small>` : ''}
+          </div>
+        `).join('') : '<p class="text-sm text-slate-500">Nėra dienų.</p>';
+        const acts = data.next_actions || [];
+        nextActionsEl.innerHTML = acts.length ? `
+          <div class="bg-brand-50 border border-brand-100 rounded-2xl p-4">
+            <p class="text-xs uppercase tracking-[0.35em] text-brand-700 font-semibold mb-2">Kiti veiksmai</p>
+            <ul class="list-disc pl-6 text-sm text-slate-700 space-y-1">${acts.map(item => `<li>${item}</li>`).join('')}</ul>
+          </div>
+        ` : '<p class="text-sm text-slate-500">Papildomų veiksmų kol kas nėra.</p>';
+      }
+
+      function loadItinerary(){
+        nextActionsEl.innerHTML = '<p class="text-sm text-slate-500">Kraunama…</p>';
+        fetch('./data/itinerary.json')
+          .then(res => res.json())
+          .then(renderItinerary)
+          .catch(() => {
+            itinerarySummaryEl.textContent = 'Nepavyko įkelti plano.';
+            itineraryListEl.innerHTML = '<p class="text-sm text-slate-500">Patikrink failą data/itinerary.json</p>';
+            nextActionsEl.innerHTML = '';
+          });
+      }
+
+      loadItinerary();
+
+      function renderStages(places, voteMap){
+        const box = document.getElementById('stagesBox');
+        if (!places.length){
+          box.innerHTML = '<p class="text-sm text-slate-500">Dar nėra pasiūlymų.</p>';
+          return;
+        }
+        const grouped = {};
+        stageOrder.forEach(key => grouped[key] = []);
+        places.forEach(p => {
+          const key = stageOrder.includes(p.stage) ? p.stage : (p.stage || 'Kita');
+          grouped[key].push(p);
+        });
+        box.innerHTML = '';
+        Object.entries(grouped).forEach(([stage, items]) => {
+          if (!items.length) return;
+          const wrapper = document.createElement('div');
+          wrapper.className = 'plan-stage';
+          wrapper.innerHTML = `<h3 class="text-lg font-display font-semibold text-slate-900 mb-2">${stage}</h3>`;
+          items.sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0)).forEach((p,i) => {
+            const line = document.createElement('div');
+            line.className = 'plan-line';
+            line.innerHTML = `<strong>${i+1}.</strong> ${p.name}<br><span class="text-xs uppercase tracking-wide text-slate-500">${voteMap[p.id]||0} bals.</span>`;
+            wrapper.appendChild(line);
+          });
+          box.appendChild(wrapper);
+        });
+      }
+
+      function renderBoard(){
+        const box = document.getElementById('boardBox');
+        if (!lastPlaces.length){
+          box.innerHTML = '<p class="text-sm text-slate-500">Kol kas tuščia.</p>';
+          return;
+        }
+        const filtered = boardFilter === 'all' ? lastPlaces : lastPlaces.filter(p => (p.stage || 'Kita') === boardFilter);
+        if (!filtered.length){
+          box.innerHTML = '<p class="text-sm text-slate-500">Šiame etape dar nėra vietų.</p>';
+          return;
+        }
+        const sorted = [...filtered].sort((a,b)=>(lastVoteMap[b.id]||0)-(lastVoteMap[a.id]||0));
+        box.innerHTML = sorted.map((p,i) => `
+          <div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="text-xs uppercase tracking-wide text-slate-500">${lastVoteMap[p.id]||0} bals.</span></div>
+        `).join('');
+      }
+
+      function renderTransfers(){
+        const box = document.getElementById('transferList');
+        box.innerHTML = transferPlan.map(item => `
+          <div class="plan-line">
+            <strong>${item.leg}</strong><br>
+            <span class="text-sm text-slate-600">${item.detail}</span>
           </div>
         `).join('');
       }
-      if (nextActionsEl){
-        const acts = data.next_actions || [];
-        nextActionsEl.innerHTML = acts.length ? `
-          <h3 style="margin-top:0">Kiti veiksmai</h3>
-          <ul>${acts.map(item => `<li>${item}</li>`).join('')}</ul>
-        ` : '<p class="muted">Papildomų veiksmų kol kas nėra.</p>';
-      }
-    }
 
-    function loadItinerary(){
-      if (!itinerarySummaryEl) return;
-      if (nextActionsEl) nextActionsEl.innerHTML = '<p class="muted">Kraunama…</p>';
-      fetch('./data/itinerary.json')
-        .then(res => res.json())
-        .then(renderItinerary)
-        .catch(() => {
-          itinerarySummaryEl.textContent = 'Nepavyko įkelti plano.';
-          itineraryListEl.innerHTML = '<p class="muted">Patikrink failą data/itinerary.json</p>';
-          if (nextActionsEl) nextActionsEl.innerHTML = '';
+      function renderMap(){
+        if (mapInstance || !document.getElementById('routeMap')) return;
+        mapInstance = L.map('routeMap', { scrollWheelZoom: false }).setView(mapStops[0].coords, 6);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(mapInstance);
+        const coords = mapStops.map(stop => stop.coords);
+        const poly = L.polyline(coords, { color: '#16a34a', weight: 3, opacity: 0.9 }).addTo(mapInstance);
+        mapStops.forEach((stop, idx) => {
+          L.marker(stop.coords).addTo(mapInstance)
+            .bindPopup(`<strong>${idx+1}. ${stop.name}</strong><br>${stop.window || ''}<br>${stop.note || ''}`);
         });
-    }
-
-    loadItinerary();
-
-    function renderStages(places,voteMap){
-      const box = document.getElementById('stagesBox');
-      if (!places.length){
-        box.innerHTML = '<p class="muted">Dar nėra pasiūlymų.</p>';
-        return;
+        mapInstance.fitBounds(poly.getBounds(), { padding: [20, 20] });
       }
-      const grouped={};
-      stageOrder.forEach(key=>grouped[key]=[]);
-      places.forEach(p=>{
-        const key = stageOrder.includes(p.stage) ? p.stage : (p.stage || 'Kita');
-        grouped[key].push(p);
-      });
-      box.innerHTML='';
-      Object.entries(grouped).forEach(([stage,items])=>{
-        if(!items.length) return;
-        const wrapper=document.createElement('div');
-        wrapper.className='plan-stage';
-        wrapper.innerHTML=`<h3>${stage}</h3>`;
-        items.sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0)).forEach((p,i)=>{
-          const line=document.createElement('div');
-          line.className='plan-line';
-          line.innerHTML=`<strong>${i+1}.</strong> ${p.name}<br><span class="muted">${voteMap[p.id]||0} bals.</span>`;
-          wrapper.appendChild(line);
+
+      function refreshData(client){
+        return Promise.all([
+          client.from('places').select('*').order('created_at', { ascending: false }),
+          client.from('votes').select('place_id,user_id')
+        ]).then(([placesRes, votesRes]) => {
+          if (placesRes.error || votesRes.error){
+            document.getElementById('stagesBox').innerHTML = '<p class="text-sm text-rose-500">Nepavyko gauti duomenų.</p>';
+            document.getElementById('boardBox').innerHTML = '';
+            return;
+          }
+          lastVoteMap = {};
+          (votesRes.data || []).forEach(v => { lastVoteMap[v.place_id] = (lastVoteMap[v.place_id] || 0) + 1; });
+          lastPlaces = placesRes.data || [];
+          renderStages(lastPlaces, lastVoteMap);
+          renderBoard();
         });
-        box.appendChild(wrapper);
-      });
-    }
-
-    function renderBoard(){
-      const box=document.getElementById('boardBox');
-      if(!lastPlaces.length){
-        box.innerHTML='<p class="muted">Kol kas tuščia.</p>';
-        return;
       }
-      const filtered = boardFilter==='all' ? lastPlaces : lastPlaces.filter(p => (p.stage || 'Kita')===boardFilter);
-      if(!filtered.length){
-        box.innerHTML='<p class="muted">Šiame etape dar nėra vietų.</p>';
-        return;
-      }
-      const sorted=[...filtered].sort((a,b)=>(lastVoteMap[b.id]||0)-(lastVoteMap[a.id]||0));
-      box.innerHTML = sorted.map((p,i)=>`
-        <div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="muted">${lastVoteMap[p.id]||0} bals.</span></div>`).join('');
-    }
 
-    function renderTransfers(){
-      const box = document.getElementById('transferList');
-      box.innerHTML = transferPlan.map(item=>`
-        <div class="plan-line">
-          <strong>${item.leg}</strong><br>
-          <span class="muted">${item.detail}</span>
-        </div>
-      `).join('');
-    }
-
-    function renderMap(){
-      if (mapInstance || !document.getElementById('routeMap')) return;
-      mapInstance = L.map('routeMap', { scrollWheelZoom: false }).setView(mapStops[0].coords, 6);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap'
-      }).addTo(mapInstance);
-      const coords = mapStops.map(stop => stop.coords);
-      const poly = L.polyline(coords, { color: '#2563eb', weight: 3, opacity: 0.9 }).addTo(mapInstance);
-      mapStops.forEach((stop, idx) => {
-        L.marker(stop.coords).addTo(mapInstance)
-          .bindPopup(`<strong>${idx+1}. ${stop.name}</strong><br>${stop.window || ''}<br>${stop.note || ''}`);
-      });
-      mapInstance.fitBounds(poly.getBounds(), { padding: [20,20] });
-    }
-
-    function refreshData(client){
-      return Promise.all([
-        client.from('places').select('*').order('created_at',{ascending:false}),
-        client.from('votes').select('place_id,user_id')
-      ]).then(([placesRes,votesRes])=>{
-        if (placesRes.error || votesRes.error){
-          document.getElementById('stagesBox').innerHTML = '<p class="muted">Nepavyko gauti duomenų.</p>';
+      initSupabasePage({
+        onReady: ({ client }) => {
+          currentClient = client;
+          document.getElementById('googleMapLink').href = googleMapLink;
+          renderMap();
+          renderTransfers();
+          refreshData(client);
+        },
+        onSignedOut: () => {
+          currentClient = null;
+          lastPlaces = [];
+          lastVoteMap = {};
+          document.getElementById('stagesBox').innerHTML = '';
           document.getElementById('boardBox').innerHTML = '';
-          return;
         }
-        lastVoteMap = {};
-        (votesRes.data||[]).forEach(v=>{ lastVoteMap[v.place_id] = (lastVoteMap[v.place_id]||0)+1; });
-        lastPlaces = placesRes.data || [];
-        renderStages(lastPlaces, lastVoteMap);
+      });
+
+      document.getElementById('refreshBtn').addEventListener('click', () => {
+        if (currentClient) refreshData(currentClient);
+      });
+
+      document.getElementById('boardStageFilter').addEventListener('change', (e) => {
+        boardFilter = e.target.value;
         renderBoard();
       });
-    }
 
-    initSupabasePage({
-      onReady: ({ client }) => {
-        currentClient = client;
-        document.getElementById('googleMapLink').href = googleMapLink;
-        renderMap();
-        renderTransfers();
-        refreshData(client);
-      },
-      onSignedOut: () => {
-        currentClient = null;
-        lastPlaces = [];
-        lastVoteMap = {};
-        document.getElementById('stagesBox').innerHTML = '';
-        document.getElementById('boardBox').innerHTML = '';
-      }
-    });
-
-    document.getElementById('refreshBtn').addEventListener('click', () => {
-      if (currentClient) refreshData(currentClient);
-    });
-
-    document.getElementById('boardStageFilter').addEventListener('change', (e) => {
-      boardFilter = e.target.value;
-      renderBoard();
-    });
+      renderTransfers();
     });
   </script>
 </body>
