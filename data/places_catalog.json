@@ -45,6 +45,18 @@
           "image": "https://upload.wikimedia.org/wikipedia/commons/4/44/Freedom_beach_-_Karon%2C_Phuket%2C_Thailand_-_panoramio.jpg",
           "desc": "Sunkiau pasiekiamas (status takas arba valtis), bet balto smėlio ir ramybės garantas.",
           "source": "https://phuket-tropic-tours.com/blog/freedom-beach"
+        },
+        {
+          "name": "Karon Viewpoint",
+          "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Trijų įlankų panorama tarp Kata Noi ir Nai Harn – puiki foto stotelė važiuojant pietų ratu.",
+          "source": "https://www.tourismthailand.org/Attraction/karon-viewpoint"
+        },
+        {
+          "name": "Ao Sane snorkelinimas",
+          "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Mažas paplūdimys už Nai Harn, puikus snorkelinimui (reikalingas taxi arba motoroleris).",
+          "source": "https://www.snorkelingthailand.com/ao-sane-beach/"
         }
       ]
     },
@@ -75,6 +87,18 @@
           "image": "https://images.unsplash.com/photo-1482192597420-4817fdd7e8b0?auto=format&fit=crop&w=1200&q=80",
           "desc": "TAT 2026 'Travel with Care' programa riboja grupes iki 12 asmenų. Kajakai per mangroves, vietos bendruomenių pietūs. Rezervuoti ankstyvam potvyniui (07:00–09:00).",
           "source": "https://www.travelandtourworld.com/news/article/thailands-new-sustainable-travel-experiences-for-2026-exploring-krabi-chiang-mai-and-unesco-creative-cities-in-a-modern-eco-friendly-way/"
+        },
+        {
+          "name": "Railay Viewpoint trail",
+          "image": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=80",
+          "desc": "20 min. status lipimas tarp Railay East ir Phra Nang – geriausia anksti ryte, kad išvengtum karščio.",
+          "source": "https://www.thailandmagazine.com/railay-viewpoint/"
+        },
+        {
+          "name": "Poda Island",
+          "image": "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Balto smėlio sala su ikonišku kalkakmenio stulpu – puikus sustojimas Hong ar Four Islands turuose.",
+          "source": "https://www.krabitravelguide.com/poda-island/"
         }
       ]
     },
@@ -96,6 +120,18 @@
           "name": "Khao Sok · Cheow Lan Lake",
           "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop",
           "desc": "Alternatyva audrų dienoms: 1n/2d plūduriuojantys nameliai, longtail turai, kalkakmenio stulpai."
+        },
+        {
+          "name": "Emerald Pool",
+          "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Natūralus smaragdinis baseinas Thung Teao miške – atvykti 08:00 prieš minias.",
+          "source": "https://www.krabivillasvillas.com/emerald-pool"
+        },
+        {
+          "name": "Tha Pom Klong Song Nam",
+          "image": "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Mangrovių upelis su krištolo vandeniu ir boardwalk'u – galima maudytis, atidaryta 08:30–18:00.",
+          "source": "https://www.krabimagazine.com/tha-pom-klong-song-nam"
         }
       ]
     },
@@ -131,6 +167,18 @@
           "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop",
           "desc": "Karališkasis projektas su sodais, Tree Top Walk, Rankų darbo dirbtuvėmis, arbatos degustacija Mae Salong kalvose.",
           "source": "https://www.doitung.org/en/royal-project/"
+        },
+        {
+          "name": "Mae Fah Luang Art & Cultural Park",
+          "image": "https://images.unsplash.com/photo-1471513671800-b09c87e1497c?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Ramus parkas su Lanna stiliaus salėmis ir meno kolekcija – idealu derinti su Wat Rong Khun diena.",
+          "source": "https://www.maefahluang.org/"
+        },
+        {
+          "name": "Mae Salong arbatos kalvos",
+          "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Oolong ir arabikos plantacijos. Galima užsisakyti degustaciją ir apžiūrėti Hill Tribe kaimus.",
+          "source": "https://www.tourismthailand.org/Attraction/doi-mae-salong"
         }
       ]
     },
@@ -159,6 +207,18 @@
           "name": "Chatuchak + Chinatown",
           "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format&fit=crop",
           "desc": "Savaitgalio turgus su >15 000 kioskų ir Yaowarat street food maršrutu vakarui."
+        },
+        {
+          "name": "Bangkok Art & Culture Centre",
+          "image": "https://images.unsplash.com/photo-1476979735039-6d1b81d2e9f6?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Šiuolaikinio meno galerija prie Siam Square – gera vieta kondicionuotam 'mid-day break'.",
+          "source": "https://www.bacc.or.th/"
+        },
+        {
+          "name": "Yaowarat Street Food",
+          "image": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Chinatown večeriaus zona – ostrės, pad thai, mango sticky rice, desert barai (Sweettime, Nai Ek).",
+          "source": "https://guide.michelin.com/th/en/article/features/best-street-food-in-bangkok"
         }
       ]
     }
