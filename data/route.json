@@ -1,9 +1,44 @@
 {
   "days": [
-    {"day":"D1","plan":"Atvykimas į pietų Tailandą (HKT/KBV), pervežimas į viešbutį"},
-    {"day":"D2-D5","plan":"Pietų regionas: paplūdimiai, salų turai"},
-    {"day":"D6-D9","plan":"Perkėlimas į kitą pietų tašką (pvz. Krabi/Phuket)"},
-    {"day":"D10-D13","plan":"Persikėlimas į Bangkoką"},
-    {"day":"Grįžimas","plan":"BKK → VNO/RIX (2027-01-01..03)"}
+    {
+      "day": "D1",
+      "plan": "Phuket Old Town adaptacija (12-11)"
+    },
+    {
+      "day": "D2-D4",
+      "plan": "Phuket pietūs: Big Buddha, Wat Chalong, Nai Harn"
+    },
+    {
+      "day": "D5-D8",
+      "plan": "Krabi/Ao Nang bazė: Railay, Hong, Phi Phi, Phang Nga"
+    },
+    {
+      "day": "D9-D10",
+      "plan": "Koh Lanta chill arba Khao Sok rezervas"
+    },
+    {
+      "day": "D11",
+      "plan": "Skrydis į Chiang Rai (KBV/HKT → BKK → CEI)"
+    },
+    {
+      "day": "D12-D14",
+      "plan": "Chiang Rai: White/Blue Temple, Golden Triangle, Doi Tung"
+    },
+    {
+      "day": "D15",
+      "plan": "CEI → Bangkok, Riverside check-in"
+    },
+    {
+      "day": "D16-D18",
+      "plan": "Bangkok Old Town + Ayutthaya"
+    },
+    {
+      "day": "D19-D21",
+      "plan": "Bangkok modernus miestas, Chatuchak, Chinatown, NYE"
+    },
+    {
+      "day": "D22-D23",
+      "plan": "Recovery + pasiruošimas grįžimui (BKK → VNO/RIX)"
+    }
   ]
 }

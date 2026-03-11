@@ -2,31 +2,43 @@
   "lines": [
     {
       "name": "OPEN-JAW skrydžiai (4 asm)",
-      "amount": "€2,100–2,400 (tikslas: ≤€2,300)"
+      "amount": "€2,200–2,400 (tikslas: ≤€2,300)"
     },
     {
-      "name": "Pietų Tailando apgyvendinimas (9 n.)",
-      "amount": "€1,500–1,800 (2 kamb.)"
+      "name": "Vidaus skrydžiai (KBV→CEI, CEI→BKK)",
+      "amount": "€420 (apie ฿16k)"
     },
     {
-      "name": "Bangkok apgyvendinimas (4 n.)",
-      "amount": "€640–800"
+      "name": "Pietų Tailando apgyvendinimas (10 n.)",
+      "amount": "€1,700–1,950 (2 kamb.)"
     },
     {
-      "name": "Vidaus skrydis + pervežimai",
-      "amount": "€420 (AirAsia/Thai VietJet + 2 priv. van'ai)"
+      "name": "Chiang Rai apgyvendinimas (4 n.)",
+      "amount": "€520–640 (vid. €130/n.)"
     },
     {
-      "name": "Salų turai ir veiklos",
-      "amount": "€1,000 rezervas (snorkel, kayak, laipiojimas)"
+      "name": "Bangkok apgyvendinimas (5 n.)",
+      "amount": "€800–950 (riverside)"
+    },
+    {
+      "name": "Salų turai / veiklos",
+      "amount": "€1,200 rezervas (Hong, Phi Phi, Phang Nga, Railay laipiojimas)"
+    },
+    {
+      "name": "Chiang Rai ekskursijos",
+      "amount": "€600 (privatus mikroautobusas + gidai + įėjimai)"
     },
     {
       "name": "Maistas / pramogos",
-      "amount": "€1,200 (vid. €30/asm/d.)"
+      "amount": "€1,400 (vid. €35/asm/d.)"
+    },
+    {
+      "name": "Naujųjų metų programa",
+      "amount": "€350 (cruise / rooftop / rezervai)"
     },
     {
       "name": "Nenumatytos išlaidos",
-      "amount": "€400 (medicina, upgrade'ai)"
+      "amount": "€500 (medicina, upgrade'ai, shopping)"
     }
   ]
 }

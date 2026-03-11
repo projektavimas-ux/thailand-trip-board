@@ -1,16 +1,28 @@
 {
   "items": [
     {
-      "title": "1-STOP RIX → HKT (2026-12-11)",
-      "price": "$523 / asm (už 4: $2,092)",
-      "url": "https://www.expedia.com/Flights-Search?trip=oneway&leg1=from%3ARiga%2Cto%3APhuket%2Cdeparture%3A2026-12-11TANYT&passengers=adults%3A4&mode=search&pwaDialog=FLIGHTS_DETAILS_AND_FARES-index-1-leg-0-fsr",
-      "status": "VERIFIED"
+      "title": "1-STOP VNO → HKT (2026-12-11) Turkish",
+      "price": "€548 / asm (4 asm: €2,192)",
+      "url": "https://www.skyscanner.net/transport/flights/vno/hkt/261211/?adultsv2=4",
+      "status": "WATCH"
     },
     {
-      "title": "1-STOP VNO → HKT (2026-12-11)",
-      "price": "$522 / asm (už 4: $2,088)",
-      "url": "https://www.expedia.com/Flights-Search?trip=oneway&leg1=from%3AVilnius%2Cto%3APhuket%2Cdeparture%3A2026-12-11TANYT&passengers=adults%3A4&mode=search&pwaDialog=FLIGHTS_DETAILS_AND_FARES-index-2-leg-0-fsr",
-      "status": "VERIFIED"
+      "title": "1-STOP RIX → HKT (2026-12-11) Finnair",
+      "price": "€562 / asm (4 asm: €2,248)",
+      "url": "https://www.finnair.com/lt-en/flights?origin=RIX&destination=HKT&adults=4&depart=2026-12-11",
+      "status": "WATCH"
+    },
+    {
+      "title": "KBV → BKK → CEI (AirAsia + Thai VietJet)",
+      "price": "฿3,850 / asm (apie €100)",
+      "url": "https://12go.asia/en/travel/krabi-airport/chiang-rai-airport?date=2026-12-20&adults=4",
+      "status": "PLAN"
+    },
+    {
+      "title": "CEI → BKK (2026-12-30) Bangkok Airways",
+      "price": "฿2,990 / asm (apie €77)",
+      "url": "https://www.bangkokair.com/flight/booking?from=CEI&to=BKK&depart=2026-12-30&adults=4",
+      "status": "PLAN"
     },
     {
       "title": "BKK → VNO (2027-01-02) Qatar",
@@ -29,6 +41,12 @@
       "price": "nuo €1,299 / asm",
       "url": "https://www.teztour.lt/lt/viesbuciai/thailand/phuket/?date_from=2026-12-10&nights=7&adults=2",
       "status": "INFO"
+    },
+    {
+      "title": "TUI LT charteris (RIX → HKT) 12-10",
+      "price": "€1,180 / asm (su viešbučiu)",
+      "url": "https://www.tui.lv/lv/celojumi/tailandes-fuketa/",
+      "status": "OPTION"
     }
   ]
 }
