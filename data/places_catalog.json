@@ -57,6 +57,36 @@
           "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
           "desc": "Mažas paplūdimys už Nai Harn, puikus snorkelinimui (reikalingas taxi arba motoroleris).",
           "source": "https://www.snorkelingthailand.com/ao-sane-beach/"
+        },
+        {
+          "name": "Wassa Homemade Bar",
+          "desc": "Populiarus saulėlydžio baras virš Patong įlankos. Puiki vieta po pietinės kilpos.",
+          "image": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800&q=80"
+        },
+        {
+          "name": "Roost Coffee & Roastery",
+          "desc": "Glamping stiliaus kavinė ir skrudykla Nai Harn rajone.",
+          "image": "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=800&q=80"
+        },
+        {
+          "name": "Rawai Sea Gypsy Market",
+          "desc": "Šviežios jūros gėrybės, kurias gali išsirinkti ir kitoje gatvės pusėje esantys restoranai iškeps.",
+          "image": "https://images.unsplash.com/photo-1534043464124-3be32fe000c9?w=800&q=80"
+        },
+        {
+          "name": "Casa Blanca Boutique (Old Town)",
+          "desc": "Kompaktiškas ir stilingas boutique viešbutis pačiame Phuket senamiesčio centre.",
+          "image": "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&q=80"
+        },
+        {
+          "name": "The Memory at On On",
+          "desc": "Istorinis viešbutis (matytas filme „The Beach“), puikiai restauruotas išlaikant Sino-Portuguese stilių.",
+          "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80"
+        },
+        {
+          "name": "Nai Harn / Kata vilos",
+          "desc": "Privačios vilos pietinėje salos dalyje, idealu 4 asmenų komandai.",
+          "image": "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800&q=80"
         }
       ]
     },
@@ -99,6 +129,36 @@
           "image": "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80",
           "desc": "Balto smėlio sala su ikonišku kalkakmenio stulpu – puikus sustojimas Hong ar Four Islands turuose.",
           "source": "https://www.krabitravelguide.com/poda-island/"
+        },
+        {
+          "name": "Landmark Night Market (Ao Nang)",
+          "desc": "Gatvės maisto ir prekių turgus netoli Ao Nang krantinės. Gyva muzika kiekvieną vakarą.",
+          "image": "https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=800&q=80"
+        },
+        {
+          "name": "Tew Lay Bar (Railay)",
+          "desc": "Chill baras Railay East pakraštyje su hamakais ir vaizdu į mangroves.",
+          "image": "https://images.unsplash.com/photo-1540202404-b2bc1fbf2a21?w=800&q=80"
+        },
+        {
+          "name": "Krua Thara Seafood",
+          "desc": "Žinomas vietinis jūros gėrybių restoranas Nopparat Thara paplūdimyje.",
+          "image": "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&q=80"
+        },
+        {
+          "name": "Ao Nang pool villa",
+          "desc": "Komfortiška vila su baseinu Krabi regione, puiki bazė dienos turams.",
+          "image": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80"
+        },
+        {
+          "name": "Railay Sand Sea / Rayavadee",
+          "desc": "Resortai ant Railay West smėlio, suteikiantys pilną tropikų pabėgimo jausmą.",
+          "image": "https://images.unsplash.com/photo-1583422409516-2895a77ef244?w=800&q=80"
+        },
+        {
+          "name": "Ton Sai bungalows",
+          "desc": "Backpackerių ir laipiotojų uolomis meka su biudžetiniais nameliais džiunglėse.",
+          "image": "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800&q=80"
         }
       ]
     },
@@ -135,6 +195,36 @@
           "image": "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=1200&q=80",
           "desc": "Mangrovių upelis su krištolo vandeniu ir boardwalk'u – galima maudytis, atidaryta 08:30–18:00.",
           "source": "https://www.krabimagazine.com/tha-pom-klong-song-nam"
+        },
+        {
+          "name": "Lanta Old Town pier restoranai",
+          "desc": "Mediniai restoranai ant stulpų virš vandens. Puiki vieta jūrų gėrybėms rytinėje salos pusėje.",
+          "image": "https://images.unsplash.com/photo-1552596950-8b1740b2b800?w=800&q=80"
+        },
+        {
+          "name": "Shanti Shanti Beach Bar",
+          "desc": "Prancūziško akcento baras ir kavinė su puikiais krepes, tiesiai ant Klong Nin paplūdimio.",
+          "image": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&q=80"
+        },
+        {
+          "name": "Klong Nin sunset BBQ",
+          "desc": "Vakariniai barbekiu tiesiog ant smėlio su ugnies šou pasirodymais.",
+          "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80"
+        },
+        {
+          "name": "Long Beach beachfront vila",
+          "desc": "Namai tiesiai ant smėlio. Pra-Ae paplūdimys garantuoja ilgus pasivaikščiojimus ir gražius saulėlydžius.",
+          "image": "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800&q=80"
+        },
+        {
+          "name": "Pimalai Resort (Kantiang)",
+          "desc": "Prabangus 5 žvaigždučių poilsis Kantiang įlankoje, įsiliejantis į džiunglių kalvą.",
+          "image": "https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800&q=80"
+        },
+        {
+          "name": "Cheow Lan floating rafthouse",
+          "desc": "Plūduriuojantys nameliai (pvz., Panvaree, 500 Rai) ant smaragdinio Cheow Lan ežero.",
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Trees%20rising%20out%20of%20Cheow%20Lan%20Lake%2C%20blue%20sky%2C%20eternal%20summer%20in%20Surat%20Thani%20edited.jpg?width=800"
         }
       ]
     },
@@ -207,6 +297,31 @@
           "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Hot%20Sping%20Chiangrai%20By%20HS3CMI%20-%20panoramio.jpg?width=1200",
           "desc": "Tarp Chiang Mai ir Chiang Rai esanti 90 °C geoterminė stotelė su naujuoju kairiojo kranto promenados kompleksu (kavinės, OTOP parduotuvės) ir klasikiniais kiaušinių virimo baseinais.",
           "source": "https://www.chiangraiguide.com/en/categories/attractions/mae-ka-chan-hot-springs/"
+        },
+        {
+          "name": "Chivit Thamma Da",
+          "desc": "Išskirtinė kavinė ant Kok upės kranto su sodu ir puikiu meniu. Labai rekomenduojama pietums.",
+          "image": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80"
+        },
+        {
+          "name": "Chiang Rai Night Bazaar food court",
+          "desc": "Atvira aikštė su daugybe maisto kioskų ir gyva muzika bei tradiciniais šokiais centre.",
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Chiang_Rai_Night_Bazaar%2C_Thailand_%284246630562%29.jpg?width=800"
+        },
+        {
+          "name": "Nangnon Coffee / Mae Salong arbatos",
+          "desc": "Kavos ir oolong arbatos stotelės kalnuose aplink Doi Tung ir Mae Salong.",
+          "image": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=800&q=80"
+        },
+        {
+          "name": "Le Patta Chiang Rai",
+          "desc": "Boutique viešbutis netoli Night Bazaar, su baseinu ir patogiu susisiekimu.",
+          "image": "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80"
+        },
+        {
+          "name": "The Riverie by Katathani",
+          "desc": "Aukštesnės klasės viešbutis ant upės kranto su puikiais baseinais.",
+          "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80"
         }
       ]
     },
@@ -261,6 +376,26 @@
           "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Talat%20Noi%20Street%20Art.jpg?width=1200",
           "desc": "Charoenkrung 30/32 kvartalas su Warehouse 30 galerijomis, Mother Roaster kava ir Bukruk grafičiais. Derinkite su TCDC / Grand Postal pastatu ir vakarine Chao Phraya promenada.",
           "source": "https://www.cktravels.com/talat-noi-bangkok-things-to-do/"
+        },
+        {
+          "name": "SookSiam @ ICONSIAM",
+          "desc": "Vidinė plaukiojančio turgaus rekonstrukcija apatiniame ICONSIAM aukšte. Autentiškas gatvės maistas kondicionuotoje erdvėje.",
+          "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80"
+        },
+        {
+          "name": "Talat Noi kavinės (Hong Sieng Kong)",
+          "desc": "Senosios kinų architektūros ir antikvarų kavinės Chao Phraya pakrantėje.",
+          "image": "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=800&q=80"
+        },
+        {
+          "name": "Avani+ / Anantara Riverside",
+          "desc": "Prabangūs viešbučiai kitoje upės pusėje su nemokamais laivais iki Sathorn Pier.",
+          "image": "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&q=80"
+        },
+        {
+          "name": "Siam @ Siam Design Hotel",
+          "desc": "Modernaus meno įkvėptas viešbutis netoli National Stadium, lengvas susisiekimas BTS linijomis.",
+          "image": "https://images.unsplash.com/photo-1551882547-ff40c0d5e9af?w=800&q=80"
         }
       ]
     }
