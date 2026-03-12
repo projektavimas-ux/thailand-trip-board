@@ -453,5 +453,53 @@
     "source": "https://www.cktravels.com/talat-noi-bangkok-things-to-do/",
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Talat%20Noi%20Street%20Art.jpg?width=1200",
     "maps": "https://maps.google.com/?q=Talat+Noi+Bangkok"
+  },
+  "blu-monkey-hub-hotel-phuket": {
+    "desc": "Co-working stiliaus viešbutis Phuket Old Town centre; Kayak kainos nuo $32 (~29 EUR) už dvivietį su pusryčiais ir baseino prieiga.",
+    "source": "https://www.kayak.com/Phuket-City-Hotels-Blu-Monkey-Hub-And-Hotel-Phuket.2363256.ksp",
+    "image": "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Blu+Monkey+Hub+%26+Hotel+Phuket"
+  },
+  "railay-garden-view-resort": {
+    "desc": "Mediniai bungalow'ai ant Railay East kalvos; Kayak fiksuoja nuo $20 (~18 EUR) už naktį su pusryčiais ir įtrauktais longtail pervežimais.",
+    "source": "https://www.kayak.com/Ao-Nang-Hotels-Railay-Garden-View-Resort.421887.ksp",
+    "image": "https://images.unsplash.com/photo-1501117716987-c8e1ecb210cc?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Railay+Garden+View+Resort"
+  },
+  "ava-sea-resort": {
+    "desc": "Modernus Ao Nang viešbutis su ilgu baseinu ir šeimos kambariais; Kayak kainos nuo $33–37 (~31 EUR) už Deluxe numerį.",
+    "source": "https://www.kayak.com/Ao-Nang-Hotels-Ava-Sea-Resort.2874883.ksp",
+    "image": "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Ava+Sea+Resort"
+  },
+  "thai-house-beach-resort": {
+    "desc": "Šeimos valdoma bazė Long Beach paplūdimyje; bungalow'ai startuoja nuo $10 (~9 EUR) už naktį, tinkama pigiausiam 4 suaugusiųjų apgyvendinimui.",
+    "source": "https://www.kayak.com/Ko-Lanta-Hotels-Thai-House-Beach-Resort.2063768.ksp",
+    "image": "https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Thai+House+Beach+Resort"
+  },
+  "long-beach-chalet": {
+    "desc": "Boutique chalets su baseinu ir beach bar'u; Kayak rodo nuo $34 (~31 EUR) už nakvynę su pusryčiais.",
+    "source": "https://www.kayak.com/Ko-Lanta-Hotels-Long-Beach-Chalet.400197.ksp",
+    "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Long+Beach+Chalet"
+  },
+  "laluna-hotel-resort": {
+    "desc": "Bungalow'ai tropiniame sode 5 min. nuo Chiang Rai Night Bazaar; Kayak kainos nuo $39 (~35 EUR).",
+    "source": "https://www.kayak.com/Chiang-Rai-Hotels-Laluna-Hotel-Resort.177964.ksp",
+    "image": "https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Laluna+Hotel+%26+Resort"
+  },
+  "holiday-inn-express-bangkok-sathorn": {
+    "desc": "Silom/Sathorn biurų rajonas, į kainą įskaičiuoti pusryčiai ir 24/7 kava; Kayak kainos nuo $56 (~51 EUR).",
+    "source": "https://www.kayak.com/Bangkok-Hotels-Holiday-Inn-Express-Bangkok-Sathorn.2076534.ksp",
+    "image": "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Holiday+Inn+Express+Bangkok+Sathorn"
+  },
+  "the-quarter-chaophraya-by-uhg": {
+    "desc": "Riverside baseinas ir pervežimas iki ICONSIAM; Kayak startuoja nuo $44 (~40 EUR) už naktį.",
+    "source": "https://www.kayak.com/Bangkok-Hotels-The-Quarter-Chaophraya-By-Uhg.9074548.ksp",
+    "image": "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=The+Quarter+Chaophraya+by+UHG"
   }
 }

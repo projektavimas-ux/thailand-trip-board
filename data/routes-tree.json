@@ -80,9 +80,8 @@
               "label": "Nakvynės bazės",
               "description": "Strateginės vietos Phuket saloje.",
               "options": [
-                "Casa Blanca Boutique (Old Town)",
-                "The Memory at On On",
-                "Nai Harn / Kata vilos"
+                "Blu Monkey Hub & Hotel Phuket",
+                "Casa Blanca Boutique (Old Town)"
               ]
             },
             {
@@ -175,9 +174,8 @@
               "label": "Nakvynės bazės",
               "description": "Old Town + Kata/Nai Harn",
               "options": [
-                "Casa Blanca Boutique (Old Town)",
-                "The Memory at On On",
-                "Nai Harn / Kata vilos"
+                "Blu Monkey Hub & Hotel Phuket",
+                "Casa Blanca Boutique (Old Town)"
               ]
             },
             {
@@ -257,9 +255,8 @@
               "label": "Nakvynės bazės",
               "description": "Ao Nang arba Railay lokacijos.",
               "options": [
-                "Ao Nang pool villa",
-                "Railay Sand Sea / Rayavadee",
-                "Ton Sai bungalows"
+                "Railay Garden View Resort",
+                "Ava Sea Resort"
               ]
             },
             {
@@ -365,9 +362,8 @@
               "label": "Nakvynės bazės",
               "description": "Ao Nang / Railay pasirinkimai",
               "options": [
-                "Ao Nang pool villa",
-                "Railay Sand Sea / Rayavadee",
-                "Ton Sai bungalows"
+                "Railay Garden View Resort",
+                "Ava Sea Resort"
               ]
             },
             {
@@ -451,9 +447,8 @@
               "label": "Nakvynės bazės",
               "description": "Ramios vilos ar rafthouse ant vandens.",
               "options": [
-                "Long Beach beachfront vila",
-                "Pimalai Resort (Kantiang)",
-                "Cheow Lan floating rafthouse"
+                "Thai House Beach Resort",
+                "Long Beach Chalet"
               ]
             },
             {
@@ -537,9 +532,8 @@
               "label": "Nakvynės bazės",
               "description": "Beachfront + kalnų lodge",
               "options": [
-                "Long Beach beachfront vila",
-                "Pimalai Resort (Kantiang)",
-                "Cheow Lan floating rafthouse"
+                "Thai House Beach Resort",
+                "Long Beach Chalet"
               ]
             },
             {
