@@ -46,13 +46,74 @@
             "rytinis_langas": "06:30-11:00",
             "vakarinis_langas": "17:00-22:00"
           },
-          "options": [
-            "Old Phuket Town",
-            "Big Buddha + Wat Chalong",
-            "Nai Harn + Promthep",
-            "Lard Yai sekmadienio turgus"
-          ],
           "children": [
+            {
+              "id": "stage-1-experience",
+              "type": "experience",
+              "label": "Ekskursijos ir lankytinos vietos",
+              "description": "Phuket Old Town ir pietinės panoramos.",
+              "options": [
+                "Old Phuket Town",
+                "Big Buddha (Phuket)",
+                "Wat Chalong",
+                "Karon Viewpoint",
+                "Nai Harn Beach",
+                "Freedom Beach",
+                "Ao Sane snorkelinimas"
+              ]
+            },
+            {
+              "id": "stage-1-food",
+              "type": "food",
+              "label": "Maitinimas ir vakarojimas",
+              "description": "Gatvės maistas ir kavinės.",
+              "options": [
+                "Lard Yai sekmadienio turgus",
+                "Wassa Homemade Bar",
+                "Roost Coffee & Roastery",
+                "Rawai Sea Gypsy Market"
+              ]
+            },
+            {
+              "id": "stage-1-stay",
+              "type": "stay",
+              "label": "Nakvynės bazės",
+              "description": "Strateginės vietos Phuket saloje.",
+              "options": [
+                "Casa Blanca Boutique (Old Town)",
+                "The Memory at On On",
+                "Nai Harn / Kata vilos"
+              ]
+            },
+            {
+              "id": "stage-1-transport",
+              "type": "transport",
+              "label": "Transporto kanalai",
+              "description": "Judėjimas saloje ir pervežimai.",
+              "routes": [
+                {
+                  "from": "HKT oro uostas",
+                  "to": "Old Phuket Town",
+                  "mode": "Privatus vanas",
+                  "duration": "60 min",
+                  "notes": "SIM + grynieji oro uoste"
+                },
+                {
+                  "from": "Old Town",
+                  "to": "Kata / Nai Harn",
+                  "mode": "Grab/Bolt",
+                  "duration": "35–45 min",
+                  "notes": "Perkėlimas po 2 dienų"
+                },
+                {
+                  "from": "Kata / Nai Harn",
+                  "to": "Promthep Cape",
+                  "mode": "Motoroleriai",
+                  "duration": "15-30 min",
+                  "notes": "Saulėlydžio kilpa"
+                }
+              ]
+            },
             {
               "id": "day-1",
               "type": "day",
@@ -77,6 +138,77 @@
               "meta": {
                 "fokusu": "Sekmadienio turgus, masažas"
               }
+            },
+            {
+              "id": "stage-1-experiences",
+              "type": "category",
+              "category": "experience",
+              "label": "Ekskursijos ir lankytinos vietos",
+              "description": "Phuket Old Town + pietinė panorama",
+              "options": [
+                "Old Phuket Town",
+                "Big Buddha (Phuket)",
+                "Wat Chalong",
+                "Karon Viewpoint",
+                "Nai Harn Beach",
+                "Freedom Beach",
+                "Ao Sane snorkelinimas"
+              ]
+            },
+            {
+              "id": "stage-1-food",
+              "type": "category",
+              "category": "food",
+              "label": "Maitinimas ir vakarojimas",
+              "description": "Lengvas startas pietiniame Phuket",
+              "options": [
+                "Lard Yai sekmadienio turgus",
+                "Wassa Homemade Bar",
+                "Roost Coffee & Roastery",
+                "Rawai Sea Gypsy Market"
+              ]
+            },
+            {
+              "id": "stage-1-stay",
+              "type": "category",
+              "category": "stay",
+              "label": "Nakvynės bazės",
+              "description": "Old Town + Kata/Nai Harn",
+              "options": [
+                "Casa Blanca Boutique (Old Town)",
+                "The Memory at On On",
+                "Nai Harn / Kata vilos"
+              ]
+            },
+            {
+              "id": "stage-1-transport",
+              "type": "category",
+              "category": "transport",
+              "label": "Transporto kanalai",
+              "description": "Pervežimai iš HKT ir pietinė kilpa",
+              "routes": [
+                {
+                  "from": "HKT oro uostas",
+                  "to": "Old Phuket Town",
+                  "mode": "Privatus vanas",
+                  "duration": "60 min",
+                  "notes": "SIM + grynieji oro uoste"
+                },
+                {
+                  "from": "Old Town",
+                  "to": "Kata / Nai Harn",
+                  "mode": "Grab/Bolt + motoroleriai",
+                  "duration": "35–45 min",
+                  "notes": "D2 pietinė panorama"
+                },
+                {
+                  "from": "Old Town",
+                  "to": "Promthep Cape",
+                  "mode": "Motoroleriai",
+                  "duration": "~1 h",
+                  "notes": "Saulėlydžio kilpa per Nai Harn"
+                }
+              ]
             }
           ],
           "cover": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1600&auto=format&fit=crop"
@@ -91,13 +223,74 @@
             "laivu_langas": "07:00-18:30",
             "oro_langas": "Monitoringas dėl bangavimo"
           },
-          "options": [
-            "Railay + Phra Nang",
-            "Hong Islands",
-            "Phi Phi sunrise",
-            "Phang Nga "
-          ],
           "children": [
+            {
+              "id": "stage-2-experience",
+              "type": "experience",
+              "label": "Ekskursijos ir salos",
+              "description": "Krabi regiono akcentai.",
+              "options": [
+                "Railay Beach",
+                "Hong Islands",
+                "Phi Phi (Maya Bay)",
+                "Phang Nga Bay",
+                "Ao Thalane mangrovės",
+                "Railay Viewpoint trail",
+                "Poda Island"
+              ]
+            },
+            {
+              "id": "stage-2-food",
+              "type": "food",
+              "label": "Maitinimas ir barai",
+              "description": "Naktiniai turgūs ir paplūdimio vakarai.",
+              "options": [
+                "Ao Nang Promenada",
+                "Landmark Night Market",
+                "Tew Lay Bar (Railay)",
+                "Krua Thara Seafood"
+              ]
+            },
+            {
+              "id": "stage-2-stay",
+              "type": "stay",
+              "label": "Nakvynės bazės",
+              "description": "Ao Nang arba Railay lokacijos.",
+              "options": [
+                "Ao Nang pool villa",
+                "Railay Sand Sea / Rayavadee",
+                "Ton Sai bungalows"
+              ]
+            },
+            {
+              "id": "stage-2-transport",
+              "type": "transport",
+              "label": "Transporto kanalai",
+              "description": "Laivai ir turų logistika.",
+              "routes": [
+                {
+                  "from": "Ao Nang",
+                  "to": "Railay",
+                  "mode": "Longtail valtis",
+                  "duration": "15 min",
+                  "notes": "Išplaukti nuo 07:00"
+                },
+                {
+                  "from": "Ao Nang",
+                  "to": "Hong / Phi Phi",
+                  "mode": "Speedboat",
+                  "duration": "40-60 min",
+                  "notes": "Dienos turai (05:30 arba 09:00)"
+                },
+                {
+                  "from": "Ao Nang",
+                  "to": "Phang Nga",
+                  "mode": "Minivanas + Laivas",
+                  "duration": "Pusė dienos",
+                  "notes": "Hong by Starlight programa"
+                }
+              ]
+            },
             {
               "id": "day-5",
               "type": "day",
@@ -135,6 +328,84 @@
                 "planas": "Hong by Starlight / John Gray"
               },
               "cover": "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80"
+            },
+            {
+              "id": "stage-2-experiences",
+              "type": "category",
+              "category": "experience",
+              "label": "Ekskursijos ir salos",
+              "description": "Ao Nang bazė + salų moduliai",
+              "options": [
+                "Railay Beach",
+                "Railay Viewpoint trail",
+                "Hong Islands",
+                "Phi Phi (Maya Bay)",
+                "Phang Nga Bay",
+                "Ao Thalane mangrovės",
+                "Poda Island"
+              ]
+            },
+            {
+              "id": "stage-2-food",
+              "type": "category",
+              "category": "food",
+              "label": "Maitinimas ir barai",
+              "description": "Ao Nang + Railay",
+              "options": [
+                "Landmark Night Market (Ao Nang)",
+                "Tew Lay Bar (Railay)",
+                "Krua Thara Seafood",
+                "Koh Poda picnic lunch"
+              ]
+            },
+            {
+              "id": "stage-2-stay",
+              "type": "category",
+              "category": "stay",
+              "label": "Nakvynės bazės",
+              "description": "Ao Nang / Railay pasirinkimai",
+              "options": [
+                "Ao Nang pool villa",
+                "Railay Sand Sea / Rayavadee",
+                "Ton Sai bungalows"
+              ]
+            },
+            {
+              "id": "stage-2-transport",
+              "type": "category",
+              "category": "transport",
+              "label": "Transporto kanalai",
+              "description": "Longtail + speedboat + dienos turai",
+              "routes": [
+                {
+                  "from": "Ao Nang",
+                  "to": "Railay",
+                  "mode": "Longtail valtis",
+                  "duration": "~15 min",
+                  "notes": "Išplaukti nuo 07:00, grįžti iki 18:00"
+                },
+                {
+                  "from": "Ao Nang",
+                  "to": "Hong Islands",
+                  "mode": "Speedboat",
+                  "duration": "~40 min",
+                  "notes": "D6 turas 09:00–16:30"
+                },
+                {
+                  "from": "Ao Nang",
+                  "to": "Phi Phi",
+                  "mode": "Speedboat (sunrise)",
+                  "duration": "05:30 startas",
+                  "notes": "Maya Bay kvotos ir Bamboo Island"
+                },
+                {
+                  "from": "Ao Nang",
+                  "to": "Phang Nga",
+                  "mode": "Minivanas + John Gray laivas",
+                  "duration": "14:00–22:00",
+                  "notes": "Hong by Starlight programa"
+                }
+              ]
             }
           ],
           "cover": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80"
@@ -149,13 +420,71 @@
             "dienos": "D9-D10",
             "pastaba": "Rezervinis langas audroms"
           },
-          "options": [
-            "Long Beach (Pra-Ae)",
-            "Kantiang Bay",
-            "Khao Sok Cheow Lan Lake",
-            "Emerald Pool"
-          ],
           "children": [
+            {
+              "id": "stage-3-experience",
+              "type": "experience",
+              "label": "Ekskursijos ir gamta",
+              "description": "Lėtesnis tempas prieš šiaurę.",
+              "options": [
+                "Long Beach (Pra-Ae)",
+                "Kantiang Bay",
+                "Khao Sok · Cheow Lan Lake",
+                "Emerald Pool",
+                "Tha Pom Klong Song Nam"
+              ]
+            },
+            {
+              "id": "stage-3-food",
+              "type": "food",
+              "label": "Maitinimas",
+              "description": "Pakrantės barai ir lėtas maistas.",
+              "options": [
+                "Lanta Old Town restoranai",
+                "Shanti Shanti Beach Bar",
+                "Klong Nin sunset BBQ"
+              ]
+            },
+            {
+              "id": "stage-3-stay",
+              "type": "stay",
+              "label": "Nakvynės bazės",
+              "description": "Ramios vilos ar rafthouse ant vandens.",
+              "options": [
+                "Long Beach beachfront vila",
+                "Pimalai Resort (Kantiang)",
+                "Cheow Lan floating rafthouse"
+              ]
+            },
+            {
+              "id": "stage-3-transport",
+              "type": "transport",
+              "label": "Transporto kanalai",
+              "description": "Ilgesni tarpmiestiniai pervežimai.",
+              "routes": [
+                {
+                  "from": "Ao Nang",
+                  "to": "Koh Lanta",
+                  "mode": "Privatus vanas + keltas",
+                  "duration": "2 h",
+                  "notes": "Įtraukti 30 min keltui"
+                },
+                {
+                  "from": "Ao Nang",
+                  "to": "Khao Sok",
+                  "mode": "Minivanas",
+                  "duration": "3.5 h",
+                  "notes": "Jei aktyvuojamas Khao Sok turas"
+                },
+                {
+                  "from": "Koh Lanta",
+                  "to": "KBV oro uostas",
+                  "mode": "Privatus vanas",
+                  "duration": "2.5 h",
+                  "notes": "Rytinis transferas skrydžiui į šiaurę"
+                }
+              ]
+            },
             {
               "id": "day-9",
               "type": "day",
@@ -173,6 +502,75 @@
                 "pervezimas": "Minivanas + longtail"
               },
               "cover": "https://images.unsplash.com/photo-1504280390368-3976a42be078?auto=format&fit=crop&w=1600&q=80"
+            },
+            {
+              "id": "stage-3-experiences",
+              "type": "category",
+              "category": "experience",
+              "label": "Ekskursijos ir gamta",
+              "description": "Koh Lanta + rezervinis Khao Sok",
+              "options": [
+                "Long Beach (Pra-Ae)",
+                "Kantiang Bay",
+                "Khao Sok · Cheow Lan Lake",
+                "Emerald Pool",
+                "Tha Pom Klong Song Nam"
+              ]
+            },
+            {
+              "id": "stage-3-food",
+              "type": "category",
+              "category": "food",
+              "label": "Maitinimas ir vakarai",
+              "description": "Lanta Old Town + paplūdimiai",
+              "options": [
+                "Lanta Old Town pier restoranai",
+                "Shanti Shanti Beach Bar",
+                "Time for Lime cooking class",
+                "Klong Nin sunset BBQ"
+              ]
+            },
+            {
+              "id": "stage-3-stay",
+              "type": "category",
+              "category": "stay",
+              "label": "Nakvynės bazės",
+              "description": "Beachfront + kalnų lodge",
+              "options": [
+                "Long Beach beachfront vila",
+                "Pimalai Resort (Kantiang)",
+                "Cheow Lan floating rafthouse"
+              ]
+            },
+            {
+              "id": "stage-3-transport",
+              "type": "category",
+              "category": "transport",
+              "label": "Transporto kanalai",
+              "description": "Perėjimas tarp Ao Nang, Lanta ir Khao Sok",
+              "routes": [
+                {
+                  "from": "Ao Nang",
+                  "to": "Koh Lanta",
+                  "mode": "Privatus vanas + keltas",
+                  "duration": "~2 h",
+                  "notes": "Įtraukti 30 min keltui"
+                },
+                {
+                  "from": "Ao Nang",
+                  "to": "Khao Sok",
+                  "mode": "Minivanas",
+                  "duration": "~3.5 h",
+                  "notes": "D10 turas (05:30 startas)"
+                },
+                {
+                  "from": "Koh Lanta",
+                  "to": "KBV oro uostas",
+                  "mode": "Privatus vanas",
+                  "duration": "~3 h",
+                  "notes": "D11 rytinis transferas į skrydį"
+                }
+              ]
             }
           ],
           "cover": "https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=1600&q=80"
@@ -200,15 +598,78 @@
             "klimatas": "Vėsūs rytai (12-16°C)",
             "special": "Naujų kavinių ir naktinių turgų gausa"
           },
-          "options": [
-            "Wat Rong Khun (White Temple)",
-            "Wat Rong Suea Ten (Blue Temple)",
-            "Baan Dam (Black House)",
-            "Golden Triangle loop",
-            "Doi Tung arbatos sodai",
-            "Mae Fah Luang Garden"
-          ],
           "children": [
+            {
+              "id": "stage-chiangrai-experience",
+              "type": "experience",
+              "label": "Šventyklos ir kalnų projektai",
+              "description": "Kultūrinis Šiaurės Tailando pažinimas.",
+              "options": [
+                "Wat Rong Khun",
+                "Wat Rong Suea Ten",
+                "Baan Dam Museum",
+                "Wat Huay Pla Kang",
+                "Golden Triangle loop",
+                "Chiang Rai Flower Festival",
+                "Doi Tung & Mae Fah Luang Garden",
+                "Mae Fah Luang Art & Cultural Park",
+                "Mae Salong arbatos kalvos",
+                "Khun Korn Waterfall",
+                "Mae Khachan Hot Springs"
+              ]
+            },
+            {
+              "id": "stage-chiangrai-food",
+              "type": "food",
+              "label": "Maitinimas ir kava",
+              "description": "Šiaurietiška virtuvė ir kalnų kava.",
+              "options": [
+                "Chivit Thamma Da",
+                "Chiang Rai Night Bazaar",
+                "Nangnon Coffee / Mae Salong arbatos",
+                "Thanalai Walking Street"
+              ]
+            },
+            {
+              "id": "stage-chiangrai-stay",
+              "type": "stay",
+              "label": "Nakvynės bazės",
+              "description": "Miesto ar gamtos viešbučiai.",
+              "options": [
+                "Le Patta Chiang Rai",
+                "The Riverie by Katathani",
+                "Doi Tung Lodge"
+              ]
+            },
+            {
+              "id": "stage-chiangrai-transport",
+              "type": "transport",
+              "label": "Transporto kanalai",
+              "description": "Skrydis ir kalnų maršrutai.",
+              "routes": [
+                {
+                  "from": "KBV / HKT",
+                  "to": "CEI (Chiang Rai)",
+                  "mode": "Skrydis per BKK",
+                  "duration": "4-5 h",
+                  "notes": "D11 perėjimas į šiaurę"
+                },
+                {
+                  "from": "Chiang Rai",
+                  "to": "Golden Triangle",
+                  "mode": "Mikroautobusas",
+                  "duration": "2 h",
+                  "notes": "Pilnos dienos išvyka"
+                },
+                {
+                  "from": "Chiang Rai",
+                  "to": "Doi Tung",
+                  "mode": "Mikroautobusas",
+                  "duration": "1.5 h",
+                  "notes": "Kalnų keliai, ankstyvas startas"
+                }
+              ]
+            },
             {
               "id": "day-11",
               "type": "day",
@@ -246,6 +707,88 @@
                 "veikla": "Karališkieji sodai, arbatos degustacija, karštosios versmės"
               },
               "cover": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1600&q=80"
+            },
+            {
+              "id": "stage-chiangrai-experiences",
+              "type": "category",
+              "category": "experience",
+              "label": "Šventyklos ir kalnų projektai",
+              "description": "4 etapas: Chiang Rai",
+              "options": [
+                "Wat Rong Khun (White Temple)",
+                "Wat Rong Suea Ten (Blue Temple)",
+                "Baan Dam Museum",
+                "Wat Huay Pla Kang",
+                "Golden Triangle loop",
+                "Chiang Rai Flower Festival",
+                "Doi Tung & Mae Fah Luang Garden",
+                "Mae Fah Luang Art & Cultural Park",
+                "Mae Salong arbatos kalvos",
+                "Khun Korn Waterfall",
+                "Mae Khachan Hot Springs"
+              ]
+            },
+            {
+              "id": "stage-chiangrai-food",
+              "type": "category",
+              "category": "food",
+              "label": "Maitinimas ir kavos vietos",
+              "description": "Upės ir kalnų kavinių miksas",
+              "options": [
+                "Chivit Thamma Da",
+                "Chiang Rai Night Bazaar food court",
+                "Nangnon Coffee / Mae Salong arbatos",
+                "Thanalai Walking Street"
+              ]
+            },
+            {
+              "id": "stage-chiangrai-stay",
+              "type": "category",
+              "category": "stay",
+              "label": "Nakvynės bazės",
+              "description": "Miesto ir kalnų nakvynė",
+              "options": [
+                "Le Patta Chiang Rai",
+                "The Riverie by Katathani",
+                "Doi Tung Lodge"
+              ]
+            },
+            {
+              "id": "stage-chiangrai-transport",
+              "type": "category",
+              "category": "transport",
+              "label": "Transporto kanalai",
+              "description": "Skrydis į CEI + kalnų maršrutai",
+              "routes": [
+                {
+                  "from": "KBV/HKT",
+                  "to": "CEI (per BKK)",
+                  "mode": "Thai Smile / AirAsia",
+                  "duration": "~4 h door-to-door",
+                  "notes": "D11 perėjimas į šiaurę"
+                },
+                {
+                  "from": "Chiang Rai Old Town",
+                  "to": "Golden Triangle",
+                  "mode": "Privatus mikroautobusas",
+                  "duration": "~2 h",
+                  "notes": "Mae Sai, Sop Ruak, Hall of Opium"
+                },
+                {
+                  "from": "Old Town",
+                  "to": "Doi Tung & Mae Salong",
+                  "mode": "Kalnų kelias",
+                  "duration": "~1 h 15 min",
+                  "notes": "Startuoti anksti, ribotas parkavimas"
+                },
+                {
+                  "from": "Old Town",
+                  "to": "Khun Korn Waterfall",
+                  "mode": "Microbus + žygis",
+                  "duration": "45 min + 40 min",
+                  "notes": "Būtini sportiniai batai"
+                }
+              ]
             }
           ],
           "cover": "https://images.unsplash.com/photo-1549294413-26f195200c16?q=80&w=1600&auto=format&fit=crop"
@@ -262,14 +805,82 @@
         "srautai": "Naujųjų metų minių valdymas",
         "dienos": "D17-D23"
       },
-      "options": [
-        "Grand Palace + Wat Pho",
-        "Ayutthaya day trip",
-        "ICONSIAM/ASIATIQUE NYE",
-        "Chatuchak savaitgalio turgus",
-        "Chinatown maistas"
-      ],
       "children": [
+        {
+          "id": "bangkok-leg-experience",
+          "type": "experience",
+          "label": "Miesto ritmas ir istorija",
+          "description": "Finalinės dienos sostinėje.",
+          "options": [
+            "Grand Palace + Wat Pho",
+            "Ayutthaya Historical Park",
+            "Benjakitti Forest Park Skywalk",
+            "Talat Noi Creative District",
+            "ICONSIAM / ASIATIQUE NYE",
+            "Chatuchak + Chinatown",
+            "Bangkok Art & Culture Centre",
+            "Yaowarat Street Food"
+          ]
+        },
+        {
+          "id": "bangkok-leg-food",
+          "type": "food",
+          "label": "Maitinimas ir naktinis gyvenimas",
+          "description": "Street food ir modernūs barai.",
+          "options": [
+            "Yaowarat Street Food",
+            "SookSiam @ ICONSIAM",
+            "Talat Noi kavinės",
+            "Tropic City / TEP Bar"
+          ]
+        },
+        {
+          "id": "bangkok-leg-stay",
+          "type": "stay",
+          "label": "Nakvynės bazės",
+          "description": "Riverside ar centro lokacijos.",
+          "options": [
+            "Riverside viešbutis (Avani+ ar kt.)",
+            "Siam @ Siam Design Hotel",
+            "Novotel Suvarnabhumi (skrydžiui)"
+          ]
+        },
+        {
+          "id": "bangkok-leg-transport",
+          "type": "transport",
+          "label": "Transporto kanalai",
+          "description": "Miesto judėjimo linijos.",
+          "routes": [
+            {
+              "from": "CEI",
+              "to": "BKK",
+              "mode": "Skrydis",
+              "duration": "1.5 h",
+              "notes": "D15 popietė"
+            },
+            {
+              "from": "Riverside",
+              "to": "Old Town",
+              "mode": "Chao Phraya Express / Grab",
+              "duration": "30 min",
+              "notes": "Vengti kamščių upe"
+            },
+            {
+              "from": "Bangkok",
+              "to": "Ayutthaya",
+              "mode": "Privatus vanas / traukinys",
+              "duration": "1.5 h",
+              "notes": "D17 pilnos dienos išvyka"
+            },
+            {
+              "from": "Miestas",
+              "to": "BKK oro uostas",
+              "mode": "Airport Rail Link / Grab",
+              "duration": "45-60 min",
+              "notes": "01-02 atvykti 3h prieš skrydį"
+            }
+          ]
+        },
         {
           "id": "day-15",
           "type": "day",
@@ -335,6 +946,85 @@
             "tikslas": "BKK → VNO/RIX",
             "pastaba": "Atvykti į oro uostą 3 val. anksčiau"
           }
+        },
+        {
+          "id": "bangkok-leg-experiences",
+          "type": "category",
+          "category": "experience",
+          "label": "Ekskursijos ir miestų signalai",
+          "description": "Bangkok + Ayutthaya",
+          "options": [
+            "Grand Palace + Wat Pho",
+            "Ayutthaya Historical Park",
+            "Benjakitti Forest Park Skywalk",
+            "Talat Noi Creative District",
+            "ICONSIAM / ASIATIQUE NYE",
+            "Chatuchak + Chinatown",
+            "Bangkok Art & Culture Centre",
+            "Yaowarat Street Food"
+          ]
+        },
+        {
+          "id": "bangkok-leg-food",
+          "type": "category",
+          "category": "food",
+          "label": "Maitinimas ir street food",
+          "description": "Riverside + Chinatown",
+          "options": [
+            "Yaowarat Street Food",
+            "SookSiam @ ICONSIAM",
+            "Talat Noi kavinės (Hong Sieng Kong)",
+            "Hidden rooftop bar (TEP / Tropic City)"
+          ]
+        },
+        {
+          "id": "bangkok-leg-stay",
+          "type": "category",
+          "category": "stay",
+          "label": "Nakvynės bazės",
+          "description": "Riverside + miesto viešbučiai",
+          "options": [
+            "Avani+ / Anantara Riverside",
+            "Siam @ Siam Design Hotel",
+            "Novotel Suvarnabhumi (ankstiems skrydžiams)"
+          ]
+        },
+        {
+          "id": "bangkok-leg-transport",
+          "type": "category",
+          "category": "transport",
+          "label": "Transporto kanalai",
+          "description": "Nuo CEI skrydžio iki išvykimo",
+          "routes": [
+            {
+              "from": "CEI",
+              "to": "BKK (Suvarnabhumi)",
+              "mode": "Thai Smile skrydis",
+              "duration": "1 h 30 min",
+              "notes": "D15 popietinis atvykimas"
+            },
+            {
+              "from": "Riverside",
+              "to": "Grand Palace / Old Town",
+              "mode": "Longtail + Grab",
+              "duration": "20–30 min",
+              "notes": "Planuoti 08:30–11:00 langą"
+            },
+            {
+              "from": "Bangkok",
+              "to": "Ayutthaya",
+              "mode": "Privatus vanas",
+              "duration": "~1 h 15 min",
+              "notes": "D17 pilna diena"
+            },
+            {
+              "from": "City centre",
+              "to": "BKK oro uostas",
+              "mode": "Airport Rail Link / Grab",
+              "duration": "40–60 min",
+              "notes": "01-02 išvykimas"
+            }
+          ]
         }
       ],
       "cover": "https://images.unsplash.com/photo-1471513671800-b09c87e1497c?auto=format&fit=crop&w=1600&q=80"
