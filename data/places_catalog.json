@@ -183,6 +183,30 @@
           "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
           "desc": "Oolong ir arabikos plantacijos. Galima užsisakyti degustaciją ir apžiūrėti Hill Tribe kaimus.",
           "source": "https://www.tourismthailand.org/Attraction/doi-mae-salong"
+        },
+        {
+          "name": "Wat Huay Pla Kang",
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Chiang_Rai_-_Wat_Huay_Pla_Kang_(2026)_-_img_01.jpg?width=1200",
+          "desc": "Milžiniška Guanyin statula ir 9 aukštų pagoda ant kalvos 8 km nuo centro. Terasoje atsiveria 360° horizontas, o viduje kiekvienas aukštas puoštas medinėmis Budos skulptūromis (liftas iki viršaus ~20 THB).",
+          "source": "https://www.chiangmaitravelhub.com/attractions/wat-huay-pla-kang/"
+        },
+        {
+          "name": "Chiang Rai Flower Festival",
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Singha_Park_Chiang_Rai.jpg?width=1200",
+          "desc": "Žiemos gėlių sezonas Hat Nakhon parke ir Singha Park (2025-12-26 → 2026-02-18) su milijonais tulpių/orchidėjų, šeštadienio koncertais ir vietinių produktų turgumi – puiki D12 arba D13 vakaro veikla.",
+          "source": "https://www.discoverythailand.com/events-chiang-rai-flower-festival-2026-returns-for-its-22nd-edition"
+        },
+        {
+          "name": "Khun Korn Waterfall",
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/KhunKorn%20Waterfalls%20ChiangRai.jpg?width=1200",
+          "desc": "70 m aukščio krioklys Khun Korn Forest Park’e – iki baseino veda 3,2 km bambukų takas (30–40 min.). Puikus ryto žygis prieš pietus mieste, galima atsigaivinti šaltoje natūralioje vonioje.",
+          "source": "https://www.hikinthai.com/khun-korn-waterfall/"
+        },
+        {
+          "name": "Mae Khachan Hot Springs",
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Hot%20Sping%20Chiangrai%20By%20HS3CMI%20-%20panoramio.jpg?width=1200",
+          "desc": "Tarp Chiang Mai ir Chiang Rai esanti 90 °C geoterminė stotelė su naujuoju kairiojo kranto promenados kompleksu (kavinės, OTOP parduotuvės) ir klasikiniais kiaušinių virimo baseinais.",
+          "source": "https://www.chiangraiguide.com/en/categories/attractions/mae-ka-chan-hot-springs/"
         }
       ]
     },
@@ -205,7 +229,7 @@
         {
           "name": "ICONSIAM / ASIATIQUE NYE",
           "image": "https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?q=80&w=1200&auto=format&fit=crop",
-          "desc": "2026/27 ICONSIAM fejerverkai su ribotu įėjimu – registracija atidaroma spalio viduryje.",
+          "desc": "2026/27 ICONSIAM promenada priima tik QR bilietus (registracija startuoja 10-15 ir baigiasi per ~48 h). Turėti rezervinį planą ASIATIQUE ar rooftop’e, nes po 18:00 uždaromi tiltai ir įvedami saugumo koridoriai.",
           "source": "https://www.iconsiam.com/en/event"
         },
         {
@@ -225,6 +249,18 @@
           "image": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
           "desc": "Chinatown večeriaus zona – ostrės, pad thai, mango sticky rice, desert barai (Sweettime, Nai Ek).",
           "source": "https://guide.michelin.com/th/en/article/features/best-street-food-in-bangkok"
+        },
+        {
+          "name": "Benjakitti Forest Park Skywalk",
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Benjakitti%20Forest%20Park%20(I).jpg?width=1200",
+          "desc": "320 rai miesto oazė su 1,6 km pakeltu skywalk’u virš pelkių zonos. Atidaryta 05:00–21:00, jungia Benjakitti ežerą su „Green Bridge“ link Lumphini – tobula 01-01 ryto detox programa.",
+          "source": "https://greener.bangkok.go.th/en/park/benjakitti-park/"
+        },
+        {
+          "name": "Talat Noi Creative District",
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Talat%20Noi%20Street%20Art.jpg?width=1200",
+          "desc": "Charoenkrung 30/32 kvartalas su Warehouse 30 galerijomis, Mother Roaster kava ir Bukruk grafičiais. Derinkite su TCDC / Grand Postal pastatu ir vakarine Chao Phraya promenada.",
+          "source": "https://www.cktravels.com/talat-noi-bangkok-things-to-do/"
         }
       ]
     }

@@ -109,6 +109,9 @@
     .node-card.is-highlighted {
       box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.4);
     }
+    .node-card.is-search-hit {
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35), 0 18px 35px rgba(15, 23, 42, 0.12);
+    }
     .node-card.stage-card {
       border-left: 4px solid #14b8a6;
       background: #ecfdf5;
@@ -488,6 +491,13 @@
       <div class="px-5 sm:px-8 pb-2">
         <div class="summary-grid" id="tripSummary"></div>
         <div class="stage-filter" id="stageFilter"></div>
+        <div class="mt-4 space-y-2">
+          <label for="nodeSearchInput" class="text-xs font-semibold uppercase tracking-[0.3em] text-gray-500">Greita paieška</label>
+          <input id="nodeSearchInput" type="search" placeholder="Pvz. 'Railay', 'Chiang Rai', 'skrydis'" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm" />
+          <div id="nodeSearchResults" class="text-sm text-gray-500 space-y-2">
+            <p>Įvesk ≥2 simbolius, kad filtruotum mazgus pagal pavadinimą, etapą ar aprašą.</p>
+          </div>
+        </div>
       </div>
       <div class="px-2 sm:px-4 pb-6">
         <div class="timeline" id="timeline">
@@ -621,6 +631,8 @@
     const dayGridEl = document.getElementById('dayGrid');
     const toggleDaysBtn = document.getElementById('toggleDays');
     const stageFilterEl = document.getElementById('stageFilter');
+    const nodeSearchInput = document.getElementById('nodeSearchInput');
+    const nodeSearchResultsEl = document.getElementById('nodeSearchResults');
 
     let flattenedNodes = [];
     let stageCatalogMap = {};
@@ -630,6 +642,9 @@
     let activeStageFilter = '';
     let nodeById = new Map();
     let activeStageAncestors = new Set();
+    let activeSearchQuery = '';
+    let searchHitSet = new Set();
+    let searchDebounce = null;
 
     const placeModalEl = document.getElementById('placeModal');
     const placeModalContentEl = document.getElementById('placeModalContent');
@@ -769,7 +784,7 @@
       updateStageFilterChips();
       applyStageFilter();
       if (activeStageFilter && targetId){
-        scrollToStage(targetId);
+        focusNode(targetId);
       }
     }
 
@@ -792,7 +807,84 @@
       });
     }
 
-    function scrollToStage(nodeId){
+    function handleNodeSearchInput(event){
+      const value = (event.target.value || '').trim().toLowerCase();
+      if (searchDebounce){
+        clearTimeout(searchDebounce);
+      }
+      searchDebounce = setTimeout(() => runNodeSearch(value), 160);
+    }
+
+    function runNodeSearch(query){
+      activeSearchQuery = query;
+      if (!query || query.length < 2){
+        searchHitSet = new Set();
+        renderSearchResults([]);
+        applySearchHighlights();
+        return;
+      }
+      const matches = flattenedNodes.filter(node => matchNodeToQuery(node, query));
+      searchHitSet = new Set(matches.map(node => node.id));
+      renderSearchResults(matches.slice(0, 6));
+      applySearchHighlights();
+    }
+
+    function matchNodeToQuery(node, query){
+      if (!node) return false;
+      const parts = [node.label, node.description, node.type, node.stageFilter];
+      if (node.options && node.options.length){
+        parts.push(...node.options);
+      }
+      if (node.meta && typeof node.meta === 'object'){
+        Object.entries(node.meta).forEach(([key, value]) => {
+          parts.push(key);
+          if (typeof value === 'string' || typeof value === 'number'){
+            parts.push(String(value));
+          } else if (Array.isArray(value)){
+            parts.push(value.join(' '));
+          } else if (value && typeof value === 'object'){
+            parts.push(Object.values(value).join(' '));
+          }
+        });
+      }
+      const haystack = parts.filter(Boolean).join(' ').toLowerCase();
+      return haystack.includes(query);
+    }
+
+    function renderSearchResults(matches){
+      if (!nodeSearchResultsEl) return;
+      if (!activeSearchQuery){
+        nodeSearchResultsEl.innerHTML = '<p>Įvesk ≥2 simbolius, kad filtruotum mazgus pagal pavadinimą, etapą ar aprašą.</p>';
+        return;
+      }
+      if (!matches.length){
+        nodeSearchResultsEl.innerHTML = '<p class="text-rose-500">Pagal šią užklausą mazgų nerasta.</p>';
+        return;
+      }
+      nodeSearchResultsEl.innerHTML = matches.map(node => {
+        const typeLabel = typeLabels[node.type] || 'Mazgas';
+        const context = node.stageFilter ? node.stageFilter : 'Bendra seka';
+        const snippet = node.description ? node.description.slice(0, 160) : '';
+        return `
+          <button type="button" class="w-full text-left p-3 border border-gray-200 rounded-xl bg-white hover:border-brand-500 hover:bg-brand-50 transition-colors" data-node-id="${node.id}">
+            <div class="text-[10px] uppercase tracking-[0.3em] text-gray-500 mb-1">${typeLabel} · ${context}</div>
+            <div class="text-sm font-semibold text-gray-900">${node.label || 'Be pavadinimo'}</div>
+            ${snippet ? `<p class="text-xs text-gray-500 mt-1">${snippet}</p>` : ''}
+          </button>`;
+      }).join('');
+    }
+
+    function applySearchHighlights(){
+      if (!bodyEl) return;
+      const cards = bodyEl.querySelectorAll('.node-card');
+      const shouldHighlight = activeSearchQuery && activeSearchQuery.length >= 2;
+      cards.forEach(card => {
+        const isHit = shouldHighlight && searchHitSet.has(card.dataset.nodeId);
+        card.classList.toggle('is-search-hit', Boolean(isHit));
+      });
+    }
+
+    function focusNode(nodeId){
       if (!nodeId) return;
       const target = bodyEl?.querySelector(`.node-card[data-node-id="${nodeId}"]`);
       if (!target) return;
@@ -1097,6 +1189,7 @@
           flattenedNodes = flattenTree(tree);
           renderSummary(tree);
           renderTimeline(flattenedNodes);
+          runNodeSearch(activeSearchQuery);
           renderActions(itinerary?.next_actions || [], itinerary?.generated_at);
           renderDays(itinerary?.days || []);
           renderSignals(signals?.signals || []);
@@ -1125,6 +1218,18 @@
         updateDayGrid();
       });
     }
+
+    if (nodeSearchInput){
+      nodeSearchInput.addEventListener('input', handleNodeSearchInput);
+    }
+    if (nodeSearchResultsEl){
+      nodeSearchResultsEl.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-node-id]');
+        if (!button) return;
+        focusNode(button.dataset.nodeId);
+      });
+    }
+    renderSearchResults([]);
 
     init();
   </script>

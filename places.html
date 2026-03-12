@@ -252,8 +252,9 @@
       const stageSelect = document.getElementById('stageSelect');
       const searchBox = document.getElementById('searchBox');
       const params = new URLSearchParams(window.location.search);
+      const assetVersion = '2026-03-12-a';
       let placeOverrides = {};
-    const overridesReady = fetch('./data/places_overrides.json')
+    const overridesReady = fetch(`./data/places_overrides.json?v=${assetVersion}`)
       .then(r => r.json())
       .then(data => { placeOverrides = data; })
       .catch(() => { placeOverrides = {}; });
@@ -502,7 +503,7 @@
       async function bootPreviewMode(){
         await overridesReady;
         try {
-          const data = await fetch('./data/places_catalog.json').then(r => r.json());
+          const data = await fetch(`./data/places_catalog.json?v=${assetVersion}`).then(r => r.json());
           renderPreview(data);
           initOfflineCatalog(data);
           syncPreviewToMain();
@@ -618,8 +619,8 @@
         if (!placesCache.length){
           setAlert('Supabase `places` lentelė tuščia – rodome demo katalogą.');
           Promise.all([
-            fetch('./data/routes-tree.json').then(r => r.json()),
-            fetch('./data/places_catalog.json').then(r => r.json()).catch(() => null)
+            fetch(`./data/routes-tree.json?v=${assetVersion}`).then(r => r.json()),
+            fetch(`./data/places_catalog.json?v=${assetVersion}`).then(r => r.json()).catch(() => null)
           ])
             .then(([tree, catalog]) => {
               const routeItems = buildRoutePlaces(tree);
