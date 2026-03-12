@@ -118,67 +118,80 @@
   "wat-rong-khun": {
     "desc": "Chalermchai Kositpipat modernioji baltoji šventykla išmarginta veidrodžių mozaikomis ir simbolinėmis skulptūromis apie karmą. Viduje tapytos freskos jungia budistinius motyvus ir popkultūrą; atidaryta 08:00–17:00, bilietas 100 THB.",
     "source": "https://www.tourismchiangrai.org/white-temple",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/5/57/THIAN_2022.jpg"
+    "image": "https://upload.wikimedia.org/wikipedia/commons/5/57/THIAN_2022.jpg",
+    "maps": "https://maps.google.com/?q=Wat+Rong+Khun"
   },
   "wat-rong-suea-ten": {
     "desc": "Blue Temple išsiskiria kobalto sienomis, aukso ornamentais ir 6,5 m aukščio balta Buda salės centre. Teritorija apšviečiama iki 20:00, todėl verta atvykti sutemus ir paragauti mėlynų kokoso desertų aplinkinėse kavinėse.",
     "source": "https://www.chiangraibulletin.com/blue-temple/",
-    "image": "https://images.unsplash.com/photo-1549294413-26f195200c16?q=80&w=1200&auto=format&fit=crop"
+    "image": "https://images.unsplash.com/photo-1549294413-26f195200c16?q=80&w=1200&auto=format&fit=crop",
+    "maps": "https://maps.google.com/?q=Wat+Rong+Suea+Ten"
   },
   "baan-dam-museum": {
     "desc": "„Juodieji namai“ – 40 Thawan Duchanee paviljonų su kaulo, ragų ir medžio instaliacijomis, aiškinančiomis menininko filosofiją. Muziejuje įrengtos dirbtuvės, kur galima stebėti etnografinių eksponatų restauraciją.",
     "source": "https://www.thailandmagazine.com/black-house-baan-dam-chiang-rai/",
-    "image": "https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1200&auto=format&fit=crop"
+    "image": "https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1200&auto=format&fit=crop",
+    "maps": "https://maps.google.com/?q=Baan+Dam+Museum"
   },
   "golden-triangle-loop": {
     "desc": "Maršrutas suka per Mae Sai pasienio turgų, Sop Ruak apžvalgos tašką, Hall of Opium muziejų ir trumpą Mekongo kruizą link Laoso. Vairuotojas sustoja prie Wat Phra That Pukhao šventyklos, iš kurios atsiveria santakos panorama.",
     "source": "https://www.tatnews.org/2025/11/golden-triangle-experiences",
-    "image": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=1200&auto=format&fit=crop"
+    "image": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=1200&auto=format&fit=crop",
+    "maps": "https://maps.google.com/?q=Golden+Triangle+Thailand"
   },
   "doi-tung-mae-fah-luang-garden": {
     "desc": "Karališkasis Doi Tung projektas apjungia Mae Fah Luang botanikos sodus, Tree Top Walk ir kalnų kavines su vietine arabika. Lankytojai gali užsisakyti arbatos degustaciją Mae Salong kilmės ūkiuose ir užkopti į apžvalgos platformas.",
     "source": "https://www.doitung.org/en/royal-project/",
-    "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop"
+    "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop",
+    "maps": "https://maps.google.com/?q=Doi+Tung+Royal+Villa"
   },
   "mae-fah-luang-art-cultural-park": {
     "desc": "Komplekse Haw Kham salė demonstruoja Lanna stiliaus drožybą, o galerija „Hall of Inspiration“ pasakoja karališkosios šeimos projektų istoriją. Parke rengiami rankdarbių turgeliai ir Hill Tribe pasirodymai, todėl verta planuoti bent 1,5 valandos.",
     "source": "https://www.maefahluang.org/",
-    "image": "https://images.unsplash.com/photo-1471513671800-b09c87e1497c?auto=format&fit=crop&w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1471513671800-b09c87e1497c?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Mae+Fah+Luang+Art+%26+Cultural+Park"
   },
   "mae-salong-arbatos-kalvos": {
     "desc": "Doi Mae Salong kalvos garsėja oolong plantacijomis, kur galima užsisakyti degustaciją ir apžvalgos turą eko-džiovyklėse. Kelias vingiuoja per Akha ir Yao kaimus, kuriuose parduodami rankų darbo dirbiniai.",
     "source": "https://www.lonelyplanet.com/thailand/northern-thailand/doi-mae-salong",
-    "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Doi+Mae+Salong"
   },
   "grand-palace-wat-pho": {
     "desc": "Grand Palace komplekse būtina pasirūpinti pečius dengiančiais drabužiais; lankytojai užsuka į Emerald Buddha koplyčią ir Amarin palaiko sales. Šalia Wat Pho stovi 46 m ilgio Gulinčio Budos statula ir tradicinių masažų mokykla.",
     "source": "https://www.timeout.com/bangkok/attractions/the-grand-palace",
-    "image": "https://images.unsplash.com/photo-1563492065599-3520f775eeed?q=80&w=1200&auto=format&fit=crop"
+    "image": "https://images.unsplash.com/photo-1563492065599-3520f775eeed?q=80&w=1200&auto=format&fit=crop",
+    "maps": "https://maps.google.com/?q=Grand+Palace+Bangkok"
   },
   "ayutthaya-historical-park": {
     "desc": "UNESCO parkas apima Wat Mahathat Budos galvą medžio šakose ir upės pakrantės Wat Chaiwatthanaram šventyklą. Geriausia išsinuomoti dviratį (50 THB) ir kelionę pradėti 08:00, kad išvengtum karščio.",
     "source": "https://whc.unesco.org/en/list/576/",
-    "image": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=1200&auto=format&fit=crop"
+    "image": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=1200&auto=format&fit=crop",
+    "maps": "https://maps.google.com/?q=Ayutthaya+Historical+Park"
   },
   "iconsiam-asiatique-nye": {
     "desc": "ICONSIAM NYE 2026/27 įleidžia tik iš anksto registruotus lankytojus su QR pasais – registracija startuoja spalio 15 d. 09:00 (BKK laiku) ir kvotos išgraibstomos per ~48 h. Alternatyvos: ASIATIQUE krantinė arba rezervuotas rooftop, nes upės tiltai po 18:00 ribojami.",
     "source": "https://www.iconsiam.com/en/event",
-    "image": "https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?q=80&w=1200&auto=format&fit=crop"
+    "image": "https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?q=80&w=1200&auto=format&fit=crop",
+    "maps": "https://maps.google.com/?q=ICONSIAM"
   },
   "chatuchak-chinatown": {
     "desc": "Chatuchak turi daugiau nei 15 000 kioskų 27 sekcijose (mados, keramika, augalai); patogiausia atvykti MRT iki Kamphaeng Phet stoties. Vakare maršrutas persikelia į Yaowarat, kur paragaujame žymios Nai Ek char siu sriubos.",
     "source": "https://www.bangkokpost.com/life/social-and-lifestyle/2461882/bangkoks-chatuchak-weekend-market",
-    "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format&fit=crop"
+    "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format&fit=crop",
+    "maps": "https://maps.google.com/?q=Chatuchak+Weekend+Market"
   },
   "bangkok-art-culture-centre": {
     "desc": "BACC – nemokamas šiuolaikinio meno centras su kintančiomis parodomis, dizaino parduotuvėmis ir kavinėmis ties Siam Square. Pastato spiralės leidžia peržiūrėti galerijas per 30–45 min., o savaitgaliais vyksta indie knygų mugės.",
     "source": "https://www.bacc.or.th/",
-    "image": "https://images.unsplash.com/photo-1476979735039-6d1b81d2e9f6?auto=format&fit=crop&w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1476979735039-6d1b81d2e9f6?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Bangkok+Art+and+Culture+Centre"
   },
   "yaowarat-street-food": {
     "desc": "Yaowarat Road vakarais virsta 700 m maisto koridoriumi – minios laukia ostrių (Nai Mong Hoy Tod), kario ir desertų „Sweettime“. Geriausia atvykti 18–19 val., kai dar yra vietos prie populiariausių kioskų.",
     "source": "https://guide.michelin.com/th/en/article/features/best-street-food-in-bangkok",
-    "image": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80"
+    "image": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Yaowarat+Road"
   },
   "d2-pietu-panoramos": {
     "desc": "Antra diena Phuket skirta pietinei motorolerio kilpai: Karon ir Kata apžvalgos aikštelės, Big Buddha, Nai Harn, Promthep Cape. Tarp sustojimų suplanuotos kavos pertraukos „Wassa“ ir pietūs Rawai Sea Gypsy turguje.",
