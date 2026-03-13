@@ -20,7 +20,13 @@
     "desc": "Ao Nang krantinė jungia longtail katerių prieplauką, Landmark Night Market ir pasivaikščiojimo taką su masažo kioskų bei barų eilėmis. Vakare čia galima rezervuoti bilietus į Railay/Phi Phi laivus ir paragauti šviežių jūros gėrybių iš gatvės prekystalių.",
     "source": "https://www.weseektravel.com/ao-nang-night-market/",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Ao_Nang_Beach.jpg/1280px-Ao_Nang_Beach.jpg",
-    "maps": "https://maps.google.com/?q=Ao+Nang+Beach"
+    "maps": "https://maps.google.com/?q=Ao+Nang+Beach",
+    "pricing": {
+      "badge": "60–100 THB gatvės patiekalai",
+      "level": "฿",
+      "details": "BetweenEnglandAndIowa mini roti už 60 THB; CKTravels – Pad Thai 80 THB ir Chang alus 100 THB",
+      "note": "Šaltiniai: BetweenEngland&Iowa (2025-05-23), CKTravels (2024-05-15)"
+    }
   },
   "railay-beach": {
     "desc": "Railay pasiekiamas tik valtimi, todėl čia nėra automobilių – aplink kalkakmenio uolas įsikūrę laipiojimo mokyklos ir paplūdimio barai. Ryte rekomenduojama lipti iki Viewpoint bei Princess Lagoon, o popietę atsigaivinti Phra Nang paplūdimyje.",
@@ -233,7 +239,13 @@
     "desc": "Lard Yai gatvė kiekvieną sekmadienį 16:00–22:00 uždaroma automobiliams – čia gausu craft ledų, seno stiliaus žaislų ir indie muzikantų. Tai puiki vieta nusipirkti suvenyrų ar pasiklausyti tradicinių ranard instrumentų. Gatvės maistas (Street food): 50-150 THB (~1.5-4 EUR) už porciją.",
     "source": "https://www.thephuketnews.com/phuket-old-town-walking-street-4-76701.php",
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Phuket%20Weekend%20Market.jpg?width=1200",
-    "maps": "https://maps.google.com/?q=Phuket+Walking+Street"
+    "maps": "https://maps.google.com/?q=Phuket+Walking+Street",
+    "pricing": {
+      "badge": "50–150 THB / porcija",
+      "level": "฿",
+      "details": "Jamie’s Phuket fiksuoja Tuk Tuk Diner burgerius nuo 50 THB ir daugumą užkandžių iki ~150 THB",
+      "note": "Šaltinis: JamiesPhuketBlog (2024-06)"
+    }
   },
   "d1-atvykimas": {
     "desc": "Į Phuket atskrenda du pagrindiniai reisai (QR/AY) apie 09:00 ir 12:00; atvykus pasirūpiname SIM kortele bei grynaisiais oro uoste. Pervežimas į Kata trunka ~60 min., vakare numatytas lengvas pasivaikščiojimas po paplūdimį.",
@@ -458,19 +470,34 @@
     "desc": "Co-working stiliaus viešbutis Phuket Old Town centre; Kayak kainos nuo $32 (~29 EUR) už dvivietį su pusryčiais ir baseino prieiga.",
     "source": "https://www.kayak.com/Phuket-City-Hotels-Blu-Monkey-Hub-And-Hotel-Phuket.2363256.ksp",
     "image": "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80",
-    "maps": "https://maps.google.com/?q=Blu+Monkey+Hub+%26+Hotel+Phuket"
+    "maps": "https://maps.google.com/?q=Blu+Monkey+Hub+%26+Hotel+Phuket",
+    "pricing": {
+      "badge": "€29 / naktis",
+      "details": "Kayak 'from $32' (~€29) su pusryčiais ir baseinu",
+      "note": "Šaltinis: Kayak"
+    }
   },
   "railay-garden-view-resort": {
     "desc": "Mediniai bungalow'ai ant Railay East kalvos; Kayak fiksuoja nuo $20 (~18 EUR) už naktį su pusryčiais ir įtrauktais longtail pervežimais.",
     "source": "https://www.kayak.com/Ao-Nang-Hotels-Railay-Garden-View-Resort.421887.ksp",
     "image": "https://images.unsplash.com/photo-1501117716987-c8e1ecb210cc?auto=format&fit=crop&w=1200&q=80",
-    "maps": "https://maps.google.com/?q=Railay+Garden+View+Resort"
+    "maps": "https://maps.google.com/?q=Railay+Garden+View+Resort",
+    "pricing": {
+      "badge": "€18 / naktis",
+      "details": "Kayak fiksuoja nuo $20 (~€18) su pusryčiais",
+      "note": "Šaltinis: Kayak"
+    }
   },
   "ava-sea-resort": {
     "desc": "Modernus Ao Nang viešbutis su ilgu baseinu ir šeimos kambariais; Kayak kainos nuo $33–37 (~31 EUR) už Deluxe numerį.",
     "source": "https://www.kayak.com/Ao-Nang-Hotels-Ava-Sea-Resort.2874883.ksp",
     "image": "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1200&q=80",
-    "maps": "https://maps.google.com/?q=Ava+Sea+Resort"
+    "maps": "https://maps.google.com/?q=Ava+Sea+Resort",
+    "pricing": {
+      "badge": "€31 / naktis",
+      "details": "Kayak kainos $33–37 (~€31) už Deluxe kambarį",
+      "note": "Šaltinis: Kayak"
+    }
   },
   "thai-house-beach-resort": {
     "desc": "Šeimos valdoma bazė Long Beach paplūdimyje; bungalow'ai startuoja nuo $10 (~9 EUR) už naktį, tinkama pigiausiam 4 suaugusiųjų apgyvendinimui.",
@@ -501,5 +528,95 @@
     "source": "https://www.kayak.com/Bangkok-Hotels-The-Quarter-Chaophraya-By-Uhg.9074548.ksp",
     "image": "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=1200&q=80",
     "maps": "https://maps.google.com/?q=The+Quarter+Chaophraya+by+UHG"
+  },
+  "casa-blanca-boutique-old-town": {
+    "pricing": {
+      "badge": "€43 / naktis",
+      "details": "Kayak rodo 'from $47' (~€43) už dvivietį kamb., 2026-03-13",
+      "note": "Šaltinis: Kayak"
+    }
+  },
+  "the-memory-at-on-on": {
+    "pricing": {
+      "badge": "€36 / naktis",
+      "details": "Kayak sandoriai nuo $39 už kambarį senamiestyje",
+      "note": "Šaltinis: Kayak"
+    }
+  },
+  "nai-harn-kata-vilos": {
+    "pricing": {
+      "badge": "€270 / vila / naktis (vid.)",
+      "details": "Booking.com vidurkis: vila Nai Harn teritorijoje kainuoja apie $294/naktis",
+      "note": "Šaltinis: Booking.com (2026-03-13)"
+    }
+  },
+  "wassa-homemade-bar": {
+    "pricing": {
+      "badge": "Cocktail ~250 THB",
+      "level": "฿฿",
+      "details": "Tripadvisor lankytojai mini 100–120 THB alų ir ~250 THB kokteilius su saulėlydžiu",
+      "note": "Šaltinis: Tripadvisor (2025-07)"
+    }
+  },
+  "roost-coffee-roastery": {
+    "pricing": {
+      "badge": "849 THB plaukiojantis pusryčių setas",
+      "level": "฿฿",
+      "details": "PhuketWalk aprašo smoothie bowl + pusryčių rinkinį (floating breakfast) už 849 THB",
+      "note": "Šaltinis: PhuketWalk (2025-05-18)"
+    }
+  },
+  "rawai-sea-gypsy-market": {
+    "pricing": {
+      "badge": "250–1,500 THB / kg",
+      "level": "฿฿",
+      "details": "Thai2Siam mini snapper ~250 THB/kg, tigro krevetės 850–1,500 THB/kg + ~100 THB gaminimo mokestis",
+      "note": "Šaltiniai: Phuket101 (2025-11) ir Thai2Siam"
+    }
+  },
+  "ao-nang-pool-villa": {
+    "pricing": {
+      "badge": "€60–580 / vila / naktis",
+      "details": "thailandtriptips.com pateikia Oscar Villa (~US$66) ir Pimann Buri (~US$629) kainas",
+      "note": "Šaltinis: ThailandTripTips (2025)"
+    }
+  },
+  "railay-sand-sea-rayavadee": {
+    "pricing": {
+      "badge": "€65–370 / naktis",
+      "details": "Sand Sea resort Kayak nuo $71 (~€65); Rayavadee nuo $400 (~€368)",
+      "note": "Šaltinis: Kayak (2026-03-13)"
+    }
+  },
+  "ton-sai-bungalows": {
+    "pricing": {
+      "badge": "950 THB (~€26) / naktis",
+      "details": "Basecamp Tonsai Forest Cottage tarifai 950 THB už naktį",
+      "note": "Šaltinis: Basecamptonsai (2025-07)"
+    }
+  },
+  "landmark-night-market-ao-nang": {
+    "pricing": {
+      "badge": "80–120 THB / patiekalas",
+      "level": "฿",
+      "details": "Tripadvisor lankytojai aprašo Pad Thai ~60 THB ir satay 60–80 THB; airial.travel – dauguma porcijų apie 100 THB",
+      "note": "Šaltiniai: Tripadvisor r.563ed7d ir airial.travel (2025)"
+    }
+  },
+  "tew-lay-bar-railay": {
+    "pricing": {
+      "badge": "Kokteiliai ~200 THB",
+      "level": "฿฿",
+      "details": "Krabi LocalPlus rašo apie ~200 THB kokteilius su vaizdu į Railay East",
+      "note": "Šaltinis: krabi.localplus.city (2021-11-01)"
+    }
+  },
+  "krua-thara-seafood": {
+    "pricing": {
+      "badge": "Seafood 1,100–1,550 THB",
+      "level": "฿฿฿",
+      "details": "MenuWeb svečiai užsisakė scallops+krevetes už 1,550 THB; Tripadvisor pažymi krabą ~1,100 THB",
+      "note": "Šaltiniai: menuweb.menu ir Tripadvisor (2025)"
+    }
   }
 }

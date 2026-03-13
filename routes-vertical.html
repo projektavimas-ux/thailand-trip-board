@@ -352,6 +352,35 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
+    .place-item-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .price-chip {
+      display: inline-flex;
+      align-items: center;
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 23, 42, 0.15);
+      background: rgba(15, 23, 42, 0.02);
+      color: #0f172a;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .price-chip.level {
+      border-color: rgba(99, 102, 241, 0.35);
+      background: rgba(99, 102, 241, 0.12);
+      color: #4338ca;
+    }
+    .price-chip.badge {
+      border-color: rgba(16, 185, 129, 0.35);
+      background: rgba(45, 212, 191, 0.15);
+      color: #0f766e;
+    }
     .option-chip {
       background: #fff;
       border: 1px dashed var(--line);
@@ -451,6 +480,25 @@
       letter-spacing: 0.04em;
       text-transform: uppercase;
       color: var(--muted);
+    }
+    .place-modal__pricing {
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: rgba(20, 184, 166, 0.06);
+      margin-bottom: 14px;
+    }
+    .place-modal__pricing strong {
+      display: block;
+      font-size: 13px;
+      color: #0f766e;
+      margin-bottom: 6px;
+    }
+    .place-modal__pricing span {
+      display: block;
+      font-size: 12px;
+      color: #0f172a;
+      line-height: 1.4;
     }
     .place-modal__actions {
       display: flex;
@@ -767,6 +815,11 @@
           item.image = override.image || item.image;
           item.source = override.source || item.source;
           item.maps = override.maps || item.maps;
+          Object.entries(override).forEach(([key, value]) => {
+            if (!['desc','image','source','maps'].includes(key)) {
+              item[key] = value;
+            }
+          });
           const placeId = buildPlaceId(stageKey, item?.name, idx);
           placeIndex.set(placeId, {
             ...item,
@@ -1042,6 +1095,49 @@
       return value;
     }
 
+    function getPricing(place){
+      if (!place) return null;
+      return place.pricing || place.price || null;
+    }
+
+    function renderPriceTags(place){
+      const pricing = getPricing(place);
+      if (!pricing) return '';
+      const badge = pricing.badge || pricing.price_badge || pricing.range;
+      const level = pricing.level || pricing.price_level;
+      const tags = [];
+      if (level){
+        tags.push(`<span class="price-chip level">${level}</span>`);
+      }
+      if (badge){
+        tags.push(`<span class="price-chip badge">${badge}</span>`);
+      }
+      if (!tags.length) return '';
+      return `<div class="place-item-tags">${tags.join('')}</div>`;
+    }
+
+    function renderPriceDetails(place){
+      const pricing = getPricing(place);
+      if (!pricing) return '';
+      const badge = pricing.badge || pricing.price_badge || pricing.range;
+      const level = pricing.level || pricing.price_level;
+      const details = pricing.details || pricing.note || '';
+      const note = pricing.note && pricing.note !== details ? pricing.note : '';
+      if (!badge && !level && !details) return '';
+      let body = '';
+      if (badge || level){
+        body += `<strong>${[level, badge].filter(Boolean).join(' · ')}</strong>`;
+      }
+      if (details){
+        body += `<span>${details}</span>`;
+      }
+      if (note && (!details || !note.includes(details))){
+        body += `<span class="text-xs text-gray-500">${note}</span>`;
+      }
+      if (!body) return '';
+      return `<div class="place-modal__pricing">${body}</div>`;
+    }
+
     function buildCard(node){
       const card = document.createElement('div');
       card.className = `node-card ${node.type}-card`;
@@ -1136,6 +1232,7 @@
                 <div class="place-item-content">
                   <div class="place-item-title">${finalPlace.name}</div>
                   <div class="place-item-desc">${finalPlace.desc || 'Nėra aprašymo'}</div>
+                  ${renderPriceTags(finalPlace)}
                 </div>
               `;
               item.addEventListener('click', (e) => {
@@ -1301,6 +1398,7 @@
         </div>
         ${image ? `<div class="place-modal__media"><img src="${image}" alt="${place.name || ''}" /></div>` : ''}
         ${place.desc ? `<p class="text-gray-700">${place.desc}</p>` : '<p class="text-gray-500">Papildomas aprašas ruošiamas.</p>'}
+        ${renderPriceDetails(place)}
         ${place.source ? `<p class="mt-3"><a class="text-brand-600 font-semibold" href="${place.source}" target="_blank" rel="noopener">Pirminis šaltinis →</a></p>` : ''}
         <div class="place-modal__actions">
           ${stageLink ? `<a href="${stageLink}">Atverti etapą</a>` : ''}
