@@ -38,6 +38,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-sA+e2atnCo1hNWeSSz0pQ8U4C1uMBaDZI8q9d2LFw2g=" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-o9N1j7kGStGkG2JxG2fE9JteLo75fW9n4nDYn7J4kL8=" crossorigin=""></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <style>
     .plan-line {
@@ -62,6 +63,34 @@
       border-radius: 18px;
       border: 1px solid rgba(148, 163, 184, 0.3);
       overflow: hidden;
+    }
+    #networkGraph {
+      width: 100%;
+      height: 100%;
+      min-height: 360px;
+    }
+    #networkFallback {
+      pointer-events: none;
+    }
+    .network-link {
+      stroke: rgba(15, 23, 42, 0.18);
+      stroke-width: 2px;
+    }
+    .network-node circle {
+      fill: #fff;
+      stroke: #16a34a;
+      stroke-width: 3px;
+      transition: stroke 0.2s, stroke-width 0.2s, r 0.2s;
+    }
+    .network-node circle.active {
+      stroke: #0f172a;
+      stroke-width: 4px;
+    }
+    .network-node-label {
+      font-size: 12px;
+      font-weight: 600;
+      fill: #0f172a;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -159,6 +188,35 @@
         </div>
       </div>
 
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6 space-y-6" id="networkCard">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div>
+            <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold">AI maršrutas</p>
+            <h2 class="text-2xl font-display font-semibold text-slate-900">Mazgų tinklas</h2>
+            <p class="text-sm text-slate-500 max-w-2xl">Dirbtinis asistentas susieja pagrindinius mazgus (pamatyti, kur pavalgyti, ką veikti, kur miegoti) ir parodyti jungiamuosius koridorius tarp jų.</p>
+          </div>
+          <div class="flex items-center gap-3 flex-wrap">
+            <button id="networkResetBtn" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors">Perstatyti grafiką</button>
+            <a href="./data/trip_network.json" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors" download>Parsisiųsti JSON</a>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)] gap-6">
+          <div class="space-y-4">
+            <div id="networkGraphWrapper" class="relative border border-dashed border-slate-200 rounded-2xl bg-slate-50">
+              <svg id="networkGraph" aria-label="Kelionės mazgų tinklas"></svg>
+              <p id="networkFallback" class="absolute inset-0 flex items-center justify-center text-sm text-slate-500"></p>
+            </div>
+          </div>
+          <div id="networkDetails" class="bg-slate-50 border border-slate-200 rounded-2xl p-5 min-h-[220px]">
+            <p class="text-sm text-slate-500">Pasirink mazgą, kad matytum veiksmą aplink jį.</p>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold mb-2">Transporto koridoriai</p>
+          <div id="networkEdges" class="flex flex-col gap-3"></div>
+        </div>
+      </div>
+
       <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
         <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold mb-2">Vidiniai pervažiavimai</p>
         <h2 class="text-xl font-display font-semibold text-slate-900">Transferų planas</h2>
@@ -224,6 +282,16 @@
       const itinerarySummaryEl = document.getElementById('itinerarySummary');
       const itineraryListEl = document.getElementById('itineraryList');
       const nextActionsEl = document.getElementById('nextActionsBox');
+      const networkFallbackEl = document.getElementById('networkFallback');
+      const networkEdgesBox = document.getElementById('networkEdges');
+      const networkState = {
+        nodes: [],
+        edges: [],
+        selectedId: null,
+        simulation: null,
+        nodeSelection: null
+      };
+      let networkResizeTimer = null;
 
       let currentClient = null;
       let lastPlaces = [];
@@ -343,6 +411,206 @@
         mapInstance.fitBounds(poly.getBounds(), { padding: [20, 20] });
       }
 
+      function buildNetworkList(label, items){
+        if (!Array.isArray(items) || !items.length) return '';
+        return `
+          <div class="space-y-2">
+            <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold">${label}</p>
+            <ul class="list-disc pl-4 text-sm text-slate-700 space-y-1">${items.map(item => `<li>${item}</li>`).join('')}</ul>
+          </div>
+        `;
+      }
+
+      function lookupNodeLabel(id){
+        return (networkState.nodes.find(node => node.id === id)?.label) || id;
+      }
+
+      function renderNetworkDetails(node){
+        const box = document.getElementById('networkDetails');
+        if (!box) return;
+        if (!node){
+          box.innerHTML = '<p class="text-sm text-slate-500">Pasirink mazgą, kad matytum veiksmą aplink jį.</p>';
+          return;
+        }
+        const windowLabel = node.window ? `${node.window} · ` : '';
+        box.innerHTML = `
+          <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold mb-1">${node.stage || ''}</p>
+          <h3 class="text-2xl font-display font-semibold text-slate-900">${node.label}</h3>
+          <p class="text-sm text-slate-500 mb-4">${windowLabel}${node.focus || ''}</p>
+          <div class="space-y-4">
+            ${buildNetworkList('Pamatyti', node.see)}
+            ${buildNetworkList('Kur pavalgyti', node.eat)}
+            ${buildNetworkList('Veiksmas', node.do)}
+            ${buildNetworkList('Kur miegoti', node.stay)}
+          </div>
+        `;
+      }
+
+      function renderNetworkEdges(edges){
+        if (!networkEdgesBox) return;
+        if (!edges || !edges.length){
+          networkEdgesBox.innerHTML = '<p class="text-sm text-slate-500">Kol kas nėra koridorių.</p>';
+          return;
+        }
+        networkEdgesBox.innerHTML = edges.map(edge => `
+          <div class="border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <p class="text-sm font-semibold text-slate-900">${lookupNodeLabel(edge.from)} → ${lookupNodeLabel(edge.to)}</p>
+              <p class="text-sm text-slate-500">${edge.notes || ''}</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-100">${edge.mode || ''}</span>
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700">${edge.duration || ''}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function updateActiveNetworkNodes(){
+        if (!networkState.nodeSelection) return;
+        networkState.nodeSelection.select('circle')
+          .classed('active', d => d.id === networkState.selectedId)
+          .attr('r', d => d.id === networkState.selectedId ? 34 : 26);
+      }
+
+      function selectNetworkNode(node){
+        networkState.selectedId = node ? node.id : null;
+        renderNetworkDetails(node || null);
+        updateActiveNetworkNodes();
+      }
+
+      function setupNetworkGraph(){
+        if (!networkState.nodes.length) return;
+        const container = document.getElementById('networkGraphWrapper');
+        const width = container ? container.clientWidth : 640;
+        const height = Math.max(360, Math.min(520, width * 0.6));
+        const svg = d3.select('#networkGraph');
+        svg.selectAll('*').remove();
+        svg.attr('viewBox', `0 0 ${width} ${height}`);
+        svg.attr('preserveAspectRatio', 'xMidYMid meet');
+
+        const nodes = networkState.nodes.map(node => ({ ...node }));
+        const links = (networkState.edges || []).map(link => ({ ...link }));
+
+        const simulation = d3.forceSimulation(nodes)
+          .force('link', d3.forceLink(links).id(d => d.id).distance(190).strength(0.22))
+          .force('charge', d3.forceManyBody().strength(-420))
+          .force('center', d3.forceCenter(width / 2, height / 2))
+          .force('collision', d3.forceCollide().radius(90));
+
+        const link = svg.append('g')
+          .attr('class', 'network-links')
+          .selectAll('line')
+          .data(links)
+          .enter().append('line')
+          .attr('class', 'network-link');
+
+        link.append('title').text(d => `${lookupNodeLabel(d.from)} → ${lookupNodeLabel(d.to)}\n${d.mode || ''} · ${d.duration || ''}\n${d.notes || ''}`);
+
+        const node = svg.append('g')
+          .attr('class', 'network-nodes')
+          .selectAll('g')
+          .data(nodes)
+          .enter().append('g')
+          .attr('class', 'network-node')
+          .call(
+            d3.drag()
+              .on('start', (event, d) => {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+              })
+              .on('drag', (event, d) => {
+                d.fx = event.x;
+                d.fy = event.y;
+              })
+              .on('end', (event, d) => {
+                if (!event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+              })
+          )
+          .on('click', (_, d) => selectNetworkNode(d));
+
+        node.append('circle').attr('r', 26).append('title').text(d => d.label);
+
+        node.append('text')
+          .attr('class', 'network-node-label')
+          .attr('text-anchor', 'middle')
+          .attr('y', 44)
+          .each(function(d){
+            const text = d3.select(this);
+            const parts = d.label.split(' · ');
+            if (parts.length > 1){
+              text.append('tspan').attr('x', 0).text(parts[0]);
+              text.append('tspan').attr('x', 0).attr('dy', '1.2em').text('· ' + parts[1]);
+            } else {
+              text.append('tspan').attr('x', 0).text(d.label);
+            }
+          });
+
+        simulation.on('tick', () => {
+          link
+            .attr('x1', d => Math.max(20, Math.min(width - 20, d.source.x)))
+            .attr('y1', d => Math.max(20, Math.min(height - 20, d.source.y)))
+            .attr('x2', d => Math.max(20, Math.min(width - 20, d.target.x)))
+            .attr('y2', d => Math.max(20, Math.min(height - 20, d.target.y)));
+          node.attr('transform', d => {
+            d.x = Math.max(40, Math.min(width - 40, d.x));
+            d.y = Math.max(40, Math.min(height - 40, d.y));
+            return `translate(${d.x},${d.y})`;
+          });
+        });
+
+        networkState.simulation = simulation;
+        networkState.nodeSelection = node;
+        if (!networkState.selectedId && nodes.length){
+          networkState.selectedId = nodes[0].id;
+        }
+        const activeNode = nodes.find(n => n.id === networkState.selectedId) || nodes[0] || null;
+        selectNetworkNode(activeNode);
+        renderNetworkEdges(networkState.edges);
+      }
+
+      function initTripNetwork(){
+        const graph = document.getElementById('networkGraph');
+        if (!graph) return;
+        if (networkFallbackEl){
+          networkFallbackEl.textContent = 'Kraunama tinklo schema...';
+        }
+        fetch('./data/trip_network.json', { cache: 'no-cache' })
+          .then(res => (res.ok ? res.json() : null))
+          .then(data => {
+            if (!data || !Array.isArray(data.nodes) || !data.nodes.length) throw new Error('nėra duomenų');
+            networkState.nodes = data.nodes;
+            networkState.edges = Array.isArray(data.edges) ? data.edges : [];
+            if (networkFallbackEl) networkFallbackEl.textContent = '';
+            setupNetworkGraph();
+          })
+          .catch(() => {
+            if (networkFallbackEl) networkFallbackEl.textContent = 'Nepavyko įkelti tinklo duomenų.';
+            renderNetworkDetails(null);
+            renderNetworkEdges([]);
+          });
+
+        const resetBtn = document.getElementById('networkResetBtn');
+        if (resetBtn){
+          resetBtn.addEventListener('click', () => {
+            if (networkState.simulation){
+              networkState.simulation.alpha(1).restart();
+            }
+          });
+        }
+
+        window.addEventListener('resize', () => {
+          if (!networkState.nodes.length) return;
+          clearTimeout(networkResizeTimer);
+          networkResizeTimer = setTimeout(() => {
+            setupNetworkGraph();
+          }, 250);
+        });
+      }
+
       function refreshData(client){
         return Promise.all([
           client.from('places').select('*').order('created_at', { ascending: false }),
@@ -387,6 +655,7 @@
         renderBoard();
       });
 
+      initTripNetwork();
       renderTransfers();
     });
   </script>

@@ -1,0 +1,121 @@
+{
+  "nodes": [
+    {
+      "id": "phuket-kata",
+      "label": "Phuket · Kata / Old Town",
+      "stage": "1 ETAPAS",
+      "window": "D1–D4",
+      "focus": "Starto bazė pietuose + pietinės kilpos.",
+      "see": ["Old Phuket Town", "Big Buddha", "Wat Chalong"],
+      "eat": ["Rawai Sea Gypsy Market", "JAMPA · Tri Vananda"],
+      "do": ["Ao Sane snorkelinimas", "Karon Viewpoint saulėlydis"],
+      "stay": ["Nai Harn / Kata vilos", "The Memory at On On"]
+    },
+    {
+      "id": "railay-bay",
+      "label": "Railay · Krabi Bay",
+      "stage": "2 ETAPAS",
+      "window": "D5–D7",
+      "focus": "Kalkakmenio įlankos, laipiojimas ir naktiniai turgūs.",
+      "see": ["Railay Beach", "Hong Islands"],
+      "eat": ["Landmark Night Market", "Tew Lay Bar"],
+      "do": ["Railay Viewpoint trail", "Ao Thalane mangrovės kajakai"],
+      "stay": ["Railay Garden View Resort", "Ava Sea Resort"]
+    },
+    {
+      "id": "koh-lanta-trang",
+      "label": "Koh Lanta · Trang archipelagas",
+      "stage": "3 ETAPAS",
+      "window": "D8–D10",
+      "focus": "Lėti paplūdimiai + snorkelis iki Koh Kradan.",
+      "see": ["Long Beach (Pra-Ae)", "Kantiang Bay"],
+      "eat": ["Lanta Old Town pier restoranai", "Shanti Shanti Beach Bar"],
+      "do": ["Koh Kradan snorkelinimas", "Klong Nin sunset BBQ"],
+      "stay": ["Long Beach beachfront vila", "Long Beach Chalet"]
+    },
+    {
+      "id": "khao-sok",
+      "label": "Khao Sok · Cheow Lan",
+      "stage": "3 ETAPAS",
+      "window": "D9–D11 (opc.)",
+      "focus": "Džiunglių rezervatas + plūduriuojantys nameliai.",
+      "see": ["Cheow Lan Lake kalkakmenis", "Emerald Pool & Tha Pom"],
+      "eat": ["Plūduriuojančios rafthouse vakarienės", "Surat Thani vietiniai turgeliai"],
+      "do": ["Longtail turas per kalkakmenius", "Džiunglių trek'ai ir urvai"],
+      "stay": ["Cheow Lan floating rafthouse", "Jungle lodge prie įėjimo"]
+    },
+    {
+      "id": "bangkok-old-town",
+      "label": "Bangkok · Old Town + upės ašis",
+      "stage": "Finalas",
+      "window": "D11–D13",
+      "focus": "Kultūra + NYE + finaliniai apsipirkimai.",
+      "see": ["Grand Palace + Wat Pho", "Ayutthaya Historical Park"],
+      "eat": ["Yaowarat Street Food", "SookSiam @ ICONSIAM"],
+      "do": ["ICONSIAM / ASIATIQUE NYE", "Benjakitti Forest Park Skywalk"],
+      "stay": ["Avani+ / Anantara Riverside", "Siam @ Siam Design Hotel"]
+    },
+    {
+      "id": "chiang-rai-loop",
+      "label": "Chiang Rai · Šiaurės ciklas",
+      "stage": "4 ETAPAS",
+      "window": "D14–D18",
+      "focus": "Šiaurės šventyklos + arbatos kalvos.",
+      "see": ["Wat Rong Khun", "Wat Huay Pla Kang"],
+      "eat": ["Chivit Thamma Da", "Chiang Rai Night Bazaar"],
+      "do": ["Golden Triangle loop", "Doi Tung & Mae Fah Luang Garden"],
+      "stay": ["Le Patta Chiang Rai", "The Riverie by Katathani"]
+    }
+  ],
+  "edges": [
+    {
+      "from": "phuket-kata",
+      "to": "railay-bay",
+      "mode": "Minivanas + long-tail",
+      "duration": "~3 h",
+      "notes": "Phuket (Kata) → Ao Nang (2 h 40) + 15 min valtis į Railay."
+    },
+    {
+      "from": "railay-bay",
+      "to": "koh-lanta-trang",
+      "mode": "Greitaeigė valtis / minivanas+keltas",
+      "duration": "1 h 15 – 3 h",
+      "notes": "Ao Nang Pier → Saladan arba kombinuotas sausuma + keltas."
+    },
+    {
+      "from": "koh-lanta-trang",
+      "to": "khao-sok",
+      "mode": "Krabi → Surat Thani pervažiavimas",
+      "duration": "4 h kelionė + 2d/1n turas",
+      "notes": "Minivanas iki Phang Nga / Surat Thani + longtail į rafthouse."
+    },
+    {
+      "from": "koh-lanta-trang",
+      "to": "bangkok-old-town",
+      "mode": "Vidaus skrydis (KBV/HDY → BKK/DMK)",
+      "duration": "1 h 20 + pervežimai",
+      "notes": "AirAsia / Thai VietJet + Grab/MRT iki Old Town."
+    },
+    {
+      "from": "bangkok-old-town",
+      "to": "chiang-rai-loop",
+      "mode": "Vidaus skrydis arba traukinys+van",
+      "duration": "1 h 25 arba 12 h kombinuota",
+      "notes": "BKK/DMK → CEI rytais; alternatyva – naktinis traukinys iki Chiang Mai."
+    },
+    {
+      "from": "chiang-rai-loop",
+      "to": "bangkok-old-town",
+      "mode": "CEI → BKK grįžtamasis skrydis",
+      "duration": "1 h 25",
+      "notes": "Ryto skrydis leidžia dar spėti Talat Noi vakaro planą."
+    },
+    {
+      "from": "phuket-kata",
+      "to": "bangkok-old-town",
+      "mode": "OPEN-JAW buferis per BKK",
+      "duration": "2 h skrydis + 40 min transferis",
+      "notes": "Jei reikia, HKT → BKK atsarginis hop'as prieš tarptautinį išvykimą."
+    }
+  ]
+}
