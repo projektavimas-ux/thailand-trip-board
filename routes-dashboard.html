@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="lt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thailand Control · Maršruto dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              200: '#a5f3fc',
+              500: '#14b8a6',
+              600: '#0d9488',
+              900: '#134e4a'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    .nav-link { transition: all 0.2s ease; }
+    .nav-link.active { border-bottom: 2px solid #14b8a6; color: #0f766e; }
+    .grid-auto-fill { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased min-h-screen">
+
+  <header class="relative bg-brand-900 h-64 sm:h-80 text-white">
+    <img src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=1920&q=70" class="absolute inset-0 w-full h-full object-cover opacity-30" alt="Thailand skyline" />
+    <div class="absolute inset-0 bg-gradient-to-r from-brand-900 via-brand-900/80 to-brand-700/70"></div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-10 space-y-3">
+      <p class="text-sm uppercase tracking-[0.2em] text-brand-100">Thailand Control · Parallel dashboard</p>
+      <h1 class="text-4xl sm:text-5xl font-display font-semibold" data-trip-title>Maršruto dashboard</h1>
+      <p class="text-brand-50 max-w-3xl" data-trip-summary>
+        Kraunama kelionės informacija...
+      </p>
+      <div class="flex flex-wrap gap-3 text-sm">
+        <span class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full" data-trip-team>
+          <span class="w-2 h-2 rounded-full bg-emerald-300"></span>
+          Komanda
+        </span>
+        <span class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full" data-trip-window>
+          <span class="w-2 h-2 rounded-full bg-sky-300"></span>
+          Datos
+        </span>
+        <span class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full" data-trip-status>
+          <span class="w-2 h-2 rounded-full bg-amber-300"></span>
+          Statusas
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <div class="bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex overflow-x-auto py-4 space-x-8 text-sm sm:text-base font-medium text-gray-500 whitespace-nowrap">
+        <a class="nav-link hover:text-gray-900 pb-1" href="./index.html">Apžvalga</a>
+        <a class="nav-link hover:text-gray-900 pb-1" href="./flights.html">Skrydžiai</a>
+        <a class="nav-link hover:text-gray-900 pb-1" href="./plan.html">Kelionės planas</a>
+        <a class="nav-link hover:text-gray-900 pb-1" href="./routes-vertical.html">Maršruto tinklas</a>
+        <a class="nav-link hover:text-gray-900 pb-1" href="./routes-dashboard.html">Dashboard (eksperimentinis)</a>
+        <a class="nav-link hover:text-gray-900 pb-1" href="./places.html">Vietos ir balsai</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+
+    <section class="bg-white rounded-2xl shadow-lg p-6">
+      <div class="flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <p class="text-xs uppercase tracking-[0.2em] text-brand-600">Fazės</p>
+          <h2 class="text-2xl font-display font-semibold text-gray-900">Etapų langai</h2>
+        </div>
+        <p class="text-sm text-gray-500" data-windows-updated></p>
+      </div>
+      <div class="mt-6 grid grid-auto-fill gap-4" id="stageWindows"></div>
+    </section>
+
+    <section class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 bg-white rounded-2xl shadow-lg p-6">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <p class="text-xs uppercase tracking-[0.2em] text-brand-600">Stuburas</p>
+            <h2 class="text-2xl font-display font-semibold text-gray-900">Etapai ir moduliai</h2>
+          </div>
+          <div class="text-sm text-gray-500" data-stage-count></div>
+        </div>
+        <div class="mt-6 space-y-4" id="stageList"></div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <p class="text-xs uppercase tracking-[0.2em] text-brand-600">Signalų radaras</p>
+        <h2 class="text-xl font-display font-semibold text-gray-900">Naujausi ženklai</h2>
+        <div class="mt-4 space-y-4" id="signalList"></div>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-lg p-6">
+      <div class="flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <p class="text-xs uppercase tracking-[0.2em] text-brand-600">Etapo peržiūra</p>
+          <h2 class="text-2xl font-display font-semibold text-gray-900">Detalus fokusas</h2>
+          <p class="text-sm text-gray-500">Pasirink etapą ir matyk pilną tvarkaraštį + rekomendacijas.</p>
+        </div>
+        <select id="detailSelect" class="mt-3 sm:mt-0 border border-gray-200 rounded-xl px-3 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 bg-white shadow-sm"></select>
+      </div>
+      <div id="stageDetail" class="mt-6 space-y-6 text-sm text-gray-600"></div>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-lg p-6">
+      <div class="flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <p class="text-xs uppercase tracking-[0.2em] text-brand-600">1 ETAPO vitrina</p>
+          <h2 class="text-2xl font-display font-semibold text-gray-900">Realių vietų kortelės</h2>
+          <p class="text-sm text-gray-500">Čia sudėjau svarbiausias Phuket adaptacijos vietas su nuotraukomis ir nuorodomis.</p>
+        </div>
+      </div>
+      <div class="mt-6 grid gap-4 lg:grid-cols-4 sm:grid-cols-2">
+        <article class="flex flex-col rounded-2xl border border-gray-100 bg-gray-50 overflow-hidden shadow-sm">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/31/Thalang_Road%2C_Old_Phuket_Town.jpg" alt="Old Phuket Town" class="h-36 w-full object-cover">
+          <div class="p-4 flex-1 flex flex-col">
+            <h3 class="text-sm font-semibold text-gray-900">Old Phuket Town</h3>
+            <p class="mt-2 text-xs text-gray-600 flex-1">Sino-portugalų architektūra, sekmadienio Lard Yai turgus, kavinių ir galerijų kvartalas adaptacijai.</p>
+            <a href="https://www.tourismthailand.org/Attraction/phuket-old-town" target="_blank" rel="noopener" class="mt-3 text-xs font-medium text-brand-600 hover:text-brand-500">Apie kvartalą ↗</a>
+          </div>
+        </article>
+        <article class="flex flex-col rounded-2xl border border-gray-100 bg-gray-50 overflow-hidden shadow-sm">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/73/Big_Buddha_von_Phuket_02.jpg" alt="Big Buddha" class="h-36 w-full object-cover">
+          <div class="p-4 flex-1 flex flex-col">
+            <h3 class="text-sm font-semibold text-gray-900">Big Buddha + Wat Chalong</h3>
+            <p class="mt-2 text-xs text-gray-600 flex-1">Rytinis ritualas Nakkerd kalvoje ir pagrindinėje Phuket šventykloje; puikus pradžios taškas prieš pietų ratą.</p>
+            <a href="https://phuketelephantnaturereserve.com/visiting-the-big-buddha-in-phuket/" target="_blank" rel="noopener" class="mt-3 text-xs font-medium text-brand-600 hover:text-brand-500">Maršruto aprašas ↗</a>
+          </div>
+        </article>
+        <article class="flex flex-col rounded-2xl border border-gray-100 bg-gray-50 overflow-hidden shadow-sm">
+          <img src="https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=1200&q=80" alt="JAMPA Tri Vananda" class="h-36 w-full object-cover">
+          <div class="p-4 flex-1 flex flex-col">
+            <h3 class="text-sm font-semibold text-gray-900">JAMPA · Tri Vananda</h3>
+            <p class="mt-2 text-xs text-gray-600 flex-1">Michelin Green Star veg degustacija atviromis ugnimis. Asmeninis vertinimas ⭐⭐⭐⭐☆ – verta rezervuoti D2 vakarui.</p>
+            <a href="https://traveldreamsmagazine.com/phukets-michelin-green-star-restaurant-jampa-introduces-7-course-botanical-experience/" target="_blank" rel="noopener" class="mt-3 text-xs font-medium text-brand-600 hover:text-brand-500">Travel Dreams straipsnis ↗</a>
+          </div>
+        </article>
+        <article class="flex flex-col rounded-2xl border border-gray-100 bg-gray-50 overflow-hidden shadow-sm">
+          <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1200&q=80" alt="Casa Blanca Boutique" class="h-36 w-full object-cover">
+          <div class="p-4 flex-1 flex flex-col">
+            <h3 class="text-sm font-semibold text-gray-900">Casa Blanca Boutique</h3>
+            <p class="mt-2 text-xs text-gray-600 flex-1">Boutique bazė Old Town širdyje su baseinu. Idealis startui prieš pereinant į Ao Nang / Khao Sok.</p>
+            <a href="https://www.casablancaphuket.com/" target="_blank" rel="noopener" class="mt-3 text-xs font-medium text-brand-600 hover:text-brand-500">Viešbutis ↗</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      bootstrapDashboard();
+    });
+
+    async function bootstrapDashboard() {
+      try {
+        const [tripRes, windowsRes, radarRes, placesRes] = await Promise.all([
+          fetch('./data/routes-tree.json').then(r => r.json()),
+          fetch('./data/stage_windows.json').then(r => r.json()).catch(() => null),
+          fetch('./data/signal_radar.json').then(r => r.json()).catch(() => null),
+          fetch('./data/places_catalog.json').then(r => r.json()).catch(() => null)
+        ]);
+        const stages = collectStages(tripRes);
+        const placeIndex = buildPlacesIndex(placesRes);
+        renderTripHero(tripRes);
+        renderStageWindows(windowsRes);
+        renderStages(stages);
+        setupStageDetail(stages, placeIndex);
+        renderSignals(radarRes);
+      } catch (error) {
+        console.error('Nepavyko užkrauti duomenų', error);
+      }
+    }
+
+    function buildPlacesIndex(payload) {
+      const index = new Map();
+      const stageBlocks = payload?.stages || [];
+      stageBlocks.forEach(block => {
+        (block.items || []).forEach(item => {
+          if (!item?.name) return;
+          index.set(normalizeKey(item.name), item);
+        });
+      });
+      return index;
+    }
+
+    function normalizeKey(value = '') {
+      return value.trim().toLowerCase();
+    }
+
+    function renderTripHero(trip) {
+      if (!trip) return;
+      document.querySelector('[data-trip-title]').textContent = trip.label || 'Maršruto dashboard';
+      document.querySelector('[data-trip-summary]').textContent = trip.description || '';
+      document.querySelector('[data-trip-team]').innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-300"></span>${trip.meta?.komanda || 'Komanda nenurodyta'}`;
+      document.querySelector('[data-trip-window]').innerHTML = `<span class="w-2 h-2 rounded-full bg-sky-300"></span>${trip.meta?.langas || '2026-12-11 → 2027-01-02'}`;
+      document.querySelector('[data-trip-status]').innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-300"></span>${trip.meta?.statusas || 'Draft'}`;
+    }
+
+    function renderStageWindows(payload) {
+      const container = document.getElementById('stageWindows');
+      if (!payload?.items?.length) {
+        container.innerHTML = '<p class="text-sm text-gray-500">Nėra suvestų langų.</p>';
+        return;
+      }
+      if (payload.updated_at) {
+        document.querySelector('[data-windows-updated]').textContent = `Atnaujinta ${formatDate(payload.updated_at)}`;
+      }
+      container.innerHTML = payload.items.map(item => `
+        <article class="p-4 rounded-2xl border border-gray-100 shadow-sm bg-gradient-to-br from-white to-brand-50/40">
+          <p class="text-xs font-semibold text-brand-600 tracking-wide">${item.stage}</p>
+          <h3 class="text-xl font-display font-semibold text-gray-900">${item.window}</h3>
+          <p class="text-sm text-gray-500">${item.focus || ''}</p>
+          <div class="mt-3 text-xs text-gray-400">D${item.start_day} → D${item.end_day}</div>
+        </article>
+      `).join('');
+    }
+
+    function renderStages(stages = []) {
+      const container = document.getElementById('stageList');
+      if (!stages.length) {
+        container.innerHTML = '<p class="text-sm text-gray-500">Nėra duomenų.</p>';
+        document.querySelector('[data-stage-count]').textContent = '0 etapų';
+        return;
+      }
+      document.querySelector('[data-stage-count]').textContent = `${stages.length} etapų`;
+      container.innerHTML = stages.map(stage => stageCard(stage)).join('');
+    }
+
+    function collectStages(node) {
+      const acc = [];
+      const visit = (item) => {
+        if (!item || typeof item !== 'object') return;
+        if (item.type === 'stage') acc.push(item);
+        if (Array.isArray(item.children)) item.children.forEach(visit);
+      };
+      visit(node);
+      return acc;
+    }
+
+    function stageCard(stage) {
+      const meta = stage.meta || {};
+      const tags = extractCategoryTags(stage.children || []);
+      return `
+        <article class="p-5 rounded-2xl border border-gray-100 shadow-sm bg-white">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="text-xs uppercase tracking-[0.25em] text-brand-500">${(stage.type || 'STAGE').toUpperCase()}</p>
+              <h3 class="text-lg font-display font-semibold text-gray-900">${stage.label}</h3>
+            </div>
+            <span class="text-xs px-2 py-1 rounded-full bg-brand-100 text-brand-700 font-medium">${stage.meta?.bazes || stage.meta?.logistika || 'Langas'}</span>
+          </div>
+          <p class="mt-2 text-sm text-gray-600">${stage.description || ''}</p>
+          <dl class="mt-4 grid grid-cols-2 gap-3 text-xs text-gray-500">
+            ${stage.meta?.rytinis_langas ? `<div><dt class="uppercase tracking-wide text-gray-400">Rytai</dt><dd>${stage.meta.rytinis_langas}</dd></div>` : ''}
+            ${stage.meta?.vakarinis_langas ? `<div><dt class="uppercase tracking-wide text-gray-400">Vakarai</dt><dd>${stage.meta.vakarinis_langas}</dd></div>` : ''}
+            ${stage.meta?.rezervai ? `<div><dt class="uppercase tracking-wide text-gray-400">Rezervai</dt><dd>${stage.meta.rezervai}</dd></div>` : ''}
+          </dl>
+          ${tags.length ? `<div class="mt-4 flex flex-wrap gap-2 text-xs">${tags.map(renderTag).join('')}</div>` : ''}
+        </article>
+      `;
+    }
+
+    function setupStageDetail(stages = [], placeIndex) {
+      const select = document.getElementById('detailSelect');
+      const box = document.getElementById('stageDetail');
+      if (!select || !box) return;
+      if (!stages.length) {
+        select.innerHTML = '<option>-</option>';
+        select.disabled = true;
+        box.innerHTML = '<p class="text-sm text-gray-500">Nėra etapų peržiūrai.</p>';
+        return;
+      }
+      select.disabled = false;
+      select.innerHTML = stages.map(stage => `<option value="${stage.id}">${stage.label}</option>`).join('');
+      select.value = stages[0].id;
+      renderStageDetail(stages[0], placeIndex);
+      select.addEventListener('change', (event) => {
+        const stage = stages.find(s => s.id === event.target.value);
+        renderStageDetail(stage, placeIndex);
+      });
+    }
+
+    function renderStageDetail(stage, placeIndex) {
+      const box = document.getElementById('stageDetail');
+      if (!box) return;
+      if (!stage) {
+        box.innerHTML = '<p class="text-sm text-gray-500">Pasirink etapą iš sąrašo.</p>';
+        return;
+      }
+      const groups = splitStageChildren(stage.children || []);
+      const meta = stage.meta || {};
+      const days = groups.day || [];
+      box.innerHTML = `
+        <div class="grid md:grid-cols-2 gap-4">
+          <article class="p-4 rounded-2xl border border-gray-100 shadow-sm bg-gray-50">
+            <h3 class="text-lg font-display font-semibold text-gray-900">${stage.label}</h3>
+            <p class="mt-1 text-sm text-gray-600">${stage.description || ''}</p>
+            <dl class="mt-3 grid grid-cols-2 gap-3 text-xs text-gray-500">
+              ${meta.bazes ? `<div><dt>Bazės</dt><dd>${meta.bazes}</dd></div>` : ''}
+              ${meta.logistika ? `<div><dt>Logistika</dt><dd>${meta.logistika}</dd></div>` : ''}
+              ${meta.rytinis_langas ? `<div><dt>Rytinis langas</dt><dd>${meta.rytinis_langas}</dd></div>` : ''}
+              ${meta.vakarinis_langas ? `<div><dt>Vakarinis langas</dt><dd>${meta.vakarinis_langas}</dd></div>` : ''}
+            </dl>
+          </article>
+          <article class="p-4 rounded-2xl border border-gray-100 shadow-sm">
+            <h4 class="text-sm font-semibold text-gray-900 uppercase tracking-widest">Dienų planas</h4>
+            ${days.length ? `<ul class="mt-3 space-y-2">${days.map(day => `<li class="p-3 rounded-xl bg-gray-50"><p class="text-sm font-semibold text-gray-800">${day.label || day.id}</p><p class="text-xs text-gray-500">${formatMetaPairs(day.meta)}</p></li>`).join('')}</ul>` : '<p class="mt-3 text-xs text-gray-500">Dar nėra suvestų dienų.</p>'}
+          </article>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4 mt-4">
+          ${renderCategoryBlock('Ekskursijos / veiklos', groups.experience, placeIndex)}
+          ${renderCategoryBlock('Maitinimas', groups.food, placeIndex)}
+          ${renderCategoryBlock('Nakvynė', groups.stay, placeIndex)}
+          ${renderTransportBlock(groups.transport, placeIndex)}
+        </div>
+      `;
+    }
+
+    function splitStageChildren(children) {
+      const groups = { experience: [], food: [], stay: [], transport: [], day: [] };
+      children.forEach(child => {
+        if (!child) return;
+        const type = (child.category || child.type || '').toLowerCase();
+        if (type === 'experience') groups.experience.push(child);
+        else if (type === 'food') groups.food.push(child);
+        else if (type === 'stay') groups.stay.push(child);
+        else if (type === 'transport') groups.transport.push(child);
+        else if (type === 'day') groups.day.push(child);
+      });
+      return groups;
+    }
+
+    function renderCategoryBlock(title, items = [], placeIndex) {
+      const entries = expandCategoryEntries(items, placeIndex);
+      if (!entries.length) {
+        return `<article class="p-4 rounded-2xl border border-gray-100 bg-white shadow-sm"><h4 class="text-sm font-semibold text-gray-900">${title}</h4><p class="mt-2 text-xs text-gray-500">Dar nėra įrašų.</p></article>`;
+      }
+      const cards = entries.map(entry => renderPlaceCard(entry)).join('');
+      return `<article class="p-4 rounded-2xl border border-gray-100 bg-white shadow-sm"><h4 class="text-sm font-semibold text-gray-900">${title}</h4><div class="mt-3 space-y-3">${cards}</div></article>`;
+    }
+
+    function expandCategoryEntries(items = [], placeIndex) {
+      const results = [];
+      const seen = new Set();
+      const pushEntry = (rawName, extra = {}) => {
+        if (!rawName) return;
+        const key = normalizeKey(rawName);
+        if (seen.has(key)) return;
+        seen.add(key);
+        const place = placeIndex?.get(key);
+        results.push({
+          name: rawName,
+          description: place?.desc || extra.description || '',
+          image: place?.image || extra.image,
+          source: place?.source || extra.source || '',
+        });
+      };
+      items.forEach(item => {
+        if (Array.isArray(item.options) && item.options.length) {
+          item.options.forEach(option => pushEntry(option, item));
+        } else {
+          pushEntry(item.label || item.name || item.id, item);
+        }
+      });
+      return results;
+    }
+
+    function renderPlaceCard(entry) {
+      return `
+        <div class="flex gap-3 rounded-xl border border-gray-100 bg-gray-50/80 p-3">
+          <div class="w-16 h-16 rounded-lg overflow-hidden bg-gray-200">
+            ${entry.image ? `<img src="${entry.image}" alt="${entry.name}" class="w-full h-full object-cover">` : '<div class="w-full h-full bg-gradient-to-br from-brand-50 to-brand-100"></div>'}
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-gray-900">${entry.name}</p>
+            <p class="text-xs text-gray-500 line-clamp-2">${entry.description || 'Aprašymas bus pridėtas.'}</p>
+            ${entry.source ? `<a href="${entry.source}" target="_blank" rel="noopener" class="mt-1 inline-flex items-center text-xs font-medium text-brand-600 hover:text-brand-500">Plačiau<span class="ml-1">↗</span></a>` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderTransportBlock(items = [], placeIndex) {
+      if (!items.length) {
+        return `<article class="p-4 rounded-2xl border border-gray-100 bg-white shadow-sm"><h4 class="text-sm font-semibold text-gray-900">Transportas</h4><p class="mt-2 text-xs text-gray-500">Dar nėra įrašų.</p></article>`;
+      }
+      const routes = items.flatMap(item => item.routes || []);
+      if (!routes.length) {
+        return `<article class="p-4 rounded-2xl border border-gray-100 bg-white shadow-sm"><h4 class="text-sm font-semibold text-gray-900">Transportas</h4><p class="mt-2 text-xs text-gray-500">Įrašai neapibrėžti.</p></article>`;
+      }
+      const list = routes.map(route => {
+        const related = matchRoutePlaces(route, placeIndex);
+        const badges = related.length
+          ? `<p class="mt-2 text-[11px] text-gray-500">Susietos veiklos ${related.map(name => `<span class="inline-flex items-center px-2 py-0.5 mr-1 rounded-full bg-white border border-gray-200">${name}</span>`).join('')}</p>`
+          : '';
+        return `
+          <li class="flex flex-col border border-gray-100 rounded-xl p-3 bg-gray-50">
+            <div class="flex items-center justify-between text-sm text-gray-800">
+              <strong>${route.from}</strong>
+              <span class="text-gray-400 text-xs">→</span>
+              <strong>${route.to}</strong>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">${route.mode || ''}${route.duration ? ` · ${route.duration}` : ''}</p>
+            <p class="text-xs text-gray-400">${route.notes || ''}</p>
+            ${badges}
+          </li>
+        `;
+      }).join('');
+      return `<article class="p-4 rounded-2xl border border-gray-100 bg-white shadow-sm"><h4 class="text-sm font-semibold text-gray-900">Transportas</h4><ul class="mt-3 space-y-2">${list}</ul></article>`;
+    }
+
+    function matchRoutePlaces(route = {}, placeIndex) {
+      if (!placeIndex) return [];
+      const targets = [];
+      const tokens = `${route.from || ''} ${route.to || ''}`.split(/[·/,]/).map(token => token.trim()).filter(Boolean);
+      tokens.forEach(token => {
+        const place = placeIndex.get(normalizeKey(token));
+        if (place && !targets.includes(place.name)) {
+          targets.push(place.name);
+        }
+      });
+      return targets;
+    }
+
+    function extractCategoryTags(children) {
+      const tags = [];
+      children.forEach(child => {
+        if (!child) return;
+        const cat = child.category || child.type;
+        if (['experience', 'food', 'stay', 'transport'].includes(cat)) {
+          tags.push({ label: child.label || child.id || cat, cat });
+        }
+      });
+      return dedupeTags(tags);
+    }
+
+    function dedupeTags(list) {
+      const seen = new Set();
+      return list.filter(tag => {
+        const key = tag.label;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+
+    function renderTag(tag) {
+      const palette = {
+        experience: 'bg-indigo-50 text-indigo-700 border-indigo-100',
+        food: 'bg-orange-50 text-orange-700 border-orange-100',
+        stay: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+        transport: 'bg-sky-50 text-sky-700 border-sky-100'
+      };
+      return `<span class="inline-flex items-center px-3 py-1 rounded-full border ${palette[tag.cat] || 'bg-gray-50 text-gray-600 border-gray-100'}">${tag.label}</span>`;
+    }
+
+    function renderSignals(radar) {
+      const container = document.getElementById('signalList');
+      if (!radar?.signals?.length) {
+        container.innerHTML = '<p class="text-sm text-gray-500">Signalų dar neturime.</p>';
+        return;
+      }
+      container.innerHTML = radar.signals.slice(0, 4).map(signal => `
+        <article class="border border-gray-100 rounded-xl p-4 shadow-sm bg-gradient-to-br from-white to-gray-50">
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">${signal.type}</span>
+            <span class="text-xs px-2 py-1 rounded-full ${priorityBadge(signal.priority)}">${signal.priority}</span>
+          </div>
+          <h3 class="mt-1 text-base font-semibold text-gray-900">${signal.title}</h3>
+          <p class="text-xs text-gray-500">${signal.location}</p>
+          <p class="mt-2 text-sm text-gray-600">${signal.summary}</p>
+          ${signal.actions?.length ? `<ul class="mt-3 text-xs text-gray-600 list-disc pl-4 space-y-1">${signal.actions.map(a => `<li>${a}</li>`).join('')}</ul>` : ''}
+          ${signal.window ? `<p class="mt-3 text-xs text-gray-400">Langas: ${signal.window}</p>` : ''}
+        </article>
+      `).join('');
+    }
+
+    function priorityBadge(level = '') {
+      const map = {
+        high: 'bg-rose-100 text-rose-700',
+        medium: 'bg-amber-100 text-amber-700',
+        low: 'bg-slate-100 text-slate-600'
+      };
+      return map[level.toLowerCase()] || 'bg-slate-100 text-slate-600';
+    }
+
+    function formatMetaPairs(meta = {}) {
+      const entries = Object.entries(meta).filter(([, value]) => Boolean(value));
+      if (!entries.length) return 'Nėra detalių';
+      return entries.map(([key, value]) => `${key}: ${value}`).join(' • ');
+    }
+
+    function formatDate(value) {
+      try {
+        const date = new Date(value);
+        return date.toLocaleString('lt-LT', { dateStyle: 'medium', timeStyle: 'short' });
+      } catch (err) {
+        return value;
+      }
+    }
+  </script>
+
+</body>
+</html>

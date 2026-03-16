@@ -73,6 +73,7 @@
         <a class="nav-link hover:text-gray-900 pb-1" href="./flights.html">Skrydžiai</a>
         <a class="nav-link hover:text-gray-900 pb-1" href="./plan.html">Kelionės planas</a>
         <a class="nav-link hover:text-gray-900 pb-1" href="./routes-vertical.html">Maršruto tinklas</a>
+        <a class="nav-link hover:text-gray-900 pb-1" href="./routes-dashboard.html">Dashboard (eksperimentinis)</a>
         <a class="nav-link hover:text-gray-900 pb-1" href="./places.html">Vietos ir balsai</a>
       </nav>
     </div>
@@ -151,6 +152,18 @@
         </div>
       </div>
 
+      <!-- Stage Windows -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-5 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center">
+          <div>
+            <h2 class="text-lg font-display font-semibold text-gray-900">Etapų langai</h2>
+            <p class="text-xs text-gray-500 mt-1">`data/stage_windows.json` – laiko langai ir fokuso zonos.</p>
+          </div>
+          <span id="stageWindowStamp" class="text-xs text-gray-400 font-medium"></span>
+        </div>
+        <div id="stageWindows" class="p-5"></div>
+      </div>
+
       <!-- Two Col Grid 2 -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
         <!-- Route List -->
@@ -219,8 +232,33 @@
         </div>
         <div class="p-5 bg-brand-50/30 border-b border-gray-100">
           <div id="intelBox" class="flex flex-wrap gap-3"></div>
+          <div class="mt-4 space-y-4">
+            <div>
+              <p class="text-[11px] uppercase tracking-wide text-brand-700/80 font-semibold">Tipai</p>
+              <div id="signalTypeFilters" class="flex flex-wrap gap-2 mt-2"></div>
+            </div>
+            <div>
+              <p class="text-[11px] uppercase tracking-wide text-brand-700/80 font-semibold">Prioritetas</p>
+              <div id="signalPriorityFilters" class="flex flex-wrap gap-2 mt-2"></div>
+            </div>
+          </div>
         </div>
         <div id="intelSignals" class="p-5 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"></div>
+      </div>
+
+      <!-- Source Tracker -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-5 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center">
+          <div>
+            <h2 class="text-lg font-display font-semibold text-gray-900">Šaltinių matrica</h2>
+            <p class="text-xs text-gray-500 mt-1">`data/intel/thailand-sources.json` – kanalų higiena ir stebėjimo grafikas.</p>
+          </div>
+          <span id="sourceStamp" class="text-xs text-gray-400 font-medium"></span>
+        </div>
+        <div class="p-5 border-b border-gray-100 bg-white">
+          <div id="sourceSummary" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+        </div>
+        <div id="sourceList" class="p-5 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
       </div>
 
       <!-- Two Col Grid 4 -->
@@ -306,6 +344,10 @@
         URL.revokeObjectURL(url);
       }
 
+      const signalState = { raw: null, filters: { type: 'all', priority: 'all' } };
+      const signalTypeLabels = { logistics: 'Logistika', destination: 'Vietos', event: 'Renginiai', alert: 'Įspėjimai', other: 'Kita' };
+      const priorityLabels = { high: 'Aukštas', medium: 'Vidutinis', low: 'Žemas' };
+
       let latestVoteSummary = null;
       const exportBtn = document.getElementById('exportVotesBtn');
       function toggleExportAvailability(enabled){
@@ -351,6 +393,31 @@
             <div class="text-right text-xs">
               <span class="block text-gray-500">${data.count} viet.</span>
               <span class="block font-medium text-brand-600">${data.balsai} bals.</span>
+            </div>
+          </div>`).join('');
+      }
+
+      function renderStageWindows(payload){
+        const box = document.getElementById('stageWindows');
+        if (!box) return;
+        const stamp = document.getElementById('stageWindowStamp');
+        if (stamp){
+          stamp.textContent = payload?.updated_at ? `Atnaujinta ${formatTimestamp(payload.updated_at)}` : '';
+        }
+        const items = payload?.items || [];
+        if (!items.length){
+          box.innerHTML = '<p class=\"text-sm text-gray-500\">Langai dar nesuplanuoti.</p>';
+          return;
+        }
+        box.innerHTML = items.map((item, index)=>`
+          <div class=\"flex items-start gap-4 py-3 border-b border-gray-100 last:border-0\">
+            <div class=\"flex-shrink-0 w-16 h-16 rounded-2xl bg-brand-50 border border-brand-100 flex flex-col items-center justify-center text-brand-700 font-display font-semibold\">
+              <span class=\"text-[11px] uppercase tracking-wide\">${item.stage || `Etapas ${index+1}`}</span>
+              <span class=\"text-xs text-brand-600\">${item.window || ''}</span>
+            </div>
+            <div class=\"flex-1\">
+              <p class=\"text-sm font-medium text-gray-900\">${item.focus || ''}</p>
+              <p class=\"text-xs text-gray-500 mt-1\">${item.start_day ? `D${item.start_day}` : ''}${item.end_day ? ` → D${item.end_day}` : ''}</p>
             </div>
           </div>`).join('');
       }
@@ -489,7 +556,9 @@
           { label: 'Maršruto d.', value: meta.routeDays ?? '0' },
           { label: 'Itinerario d.', value: meta.itineraryDays ?? '0' },
           { label: 'Užduotys', value: meta.todoCount ?? '0' },
-          { label: 'Skrydžiai', value: meta.flightCount ?? '0' }
+          { label: 'Skrydžiai', value: meta.flightCount ?? '0' },
+          { label: 'Šaltiniai', value: meta.sourceCount ?? '0' },
+          { label: 'Etapų langai', value: meta.stageWindowCount ?? '0' }
         ];
         box.innerHTML = chips.map(chip => `
           <div class="bg-white border border-brand-100/50 px-4 py-2 rounded-lg shadow-sm flex flex-col items-center min-w-[90px]">
@@ -499,23 +568,212 @@
         `).join('');
       }
 
+      function normalizeSignalType(value){
+        return (value || 'other').toLowerCase();
+      }
+
+      function normalizeSignalPriority(value){
+        return (value || '').toLowerCase();
+      }
+
+      function buildTypeOptions(signals){
+        const set = new Set();
+        (signals || []).forEach(signal => set.add(normalizeSignalType(signal.type)));
+        const options = [{ value: 'all', label: 'Visi tipai' }];
+        Array.from(set).sort().forEach(value => {
+          options.push({ value, label: signalTypeLabels[value] || value });
+        });
+        return options;
+      }
+
+      function buildPriorityOptions(signals){
+        const set = new Set();
+        (signals || []).forEach(signal => {
+          const priority = normalizeSignalPriority(signal.priority);
+          if (priority) set.add(priority);
+        });
+        const order = ['high','medium','low'];
+        const options = [{ value: 'all', label: 'Visi prioritetai' }];
+        order.forEach(priority => {
+          if (set.has(priority)){
+            options.push({ value: priority, label: priorityLabels[priority] || priority });
+          }
+        });
+        Array.from(set).sort().forEach(priority => {
+          if (!order.includes(priority)){
+            options.push({ value: priority, label: priorityLabels[priority] || priority });
+          }
+        });
+        return options;
+      }
+
+      function filterButtonClasses(active){
+        return active
+          ? 'px-3 py-1 rounded-full text-xs font-semibold bg-brand-600 text-white shadow-sm'
+          : 'px-3 py-1 rounded-full text-xs border border-gray-200 text-gray-600 hover:border-brand-300 hover:text-brand-600 transition-colors bg-white';
+      }
+
+      function mountFilterButtons(containerId, options, filterKey){
+        const box = document.getElementById(containerId);
+        if (!box) return;
+        box.dataset.filterKey = filterKey;
+        box.innerHTML = options.map(opt => `
+          <button type="button" data-value="${opt.value}" class="${filterButtonClasses(opt.value === signalState.filters[filterKey])}">${opt.label}</button>
+        `).join('');
+        if (!box.dataset.bound){
+          box.addEventListener('click', event => {
+            const button = event.target.closest('button');
+            if (!button) return;
+            const value = button.dataset.value;
+            const key = box.dataset.filterKey;
+            if (!value || !key || value === signalState.filters[key]) return;
+            signalState.filters[key] = value;
+            updateFilterActiveState(containerId, value);
+            applySignalFilters();
+          });
+          box.dataset.bound = 'true';
+        }
+      }
+
+      function updateFilterActiveState(containerId, activeValue){
+        const box = document.getElementById(containerId);
+        if (!box) return;
+        box.querySelectorAll('button').forEach(btn => {
+          const isActive = btn.dataset.value === activeValue;
+          btn.className = filterButtonClasses(isActive);
+        });
+      }
+
+      function applySignalFilters(){
+        if (!signalState.raw){
+          renderSignals({ signals: [] });
+          return;
+        }
+        const payload = signalState.raw;
+        const filtered = (payload.signals || []).filter(signal => {
+          const typeValue = normalizeSignalType(signal.type);
+          const priorityValue = normalizeSignalPriority(signal.priority);
+          const typeMatch = signalState.filters.type === 'all' || typeValue === signalState.filters.type;
+          const priorityMatch = signalState.filters.priority === 'all' || priorityValue === signalState.filters.priority;
+          return typeMatch && priorityMatch;
+        });
+        renderSignals({ ...payload, signals: filtered });
+      }
+
+      function setupSignalFilters(payload){
+        signalState.raw = payload || { signals: [] };
+        const signals = signalState.raw.signals || [];
+        const typeOptions = buildTypeOptions(signals);
+        if (!typeOptions.some(opt => opt.value === signalState.filters.type)){
+          signalState.filters.type = 'all';
+        }
+        mountFilterButtons('signalTypeFilters', typeOptions, 'type');
+        const priorityOptions = buildPriorityOptions(signals);
+        if (!priorityOptions.some(opt => opt.value === signalState.filters.priority)){
+          signalState.filters.priority = 'all';
+        }
+        mountFilterButtons('signalPriorityFilters', priorityOptions, 'priority');
+        updateFilterActiveState('signalTypeFilters', signalState.filters.type);
+        updateFilterActiveState('signalPriorityFilters', signalState.filters.priority);
+        applySignalFilters();
+      }
+
       function renderSignals(payload){
         const box = document.getElementById('intelSignals');
         if (!box) return;
+        const stamp = document.getElementById('intelStamp');
+        if (stamp){
+          stamp.textContent = payload?.generated_at ? `Atnaujinta ${formatTimestamp(payload.generated_at)}` : '';
+        }
         const signals = payload?.signals || [];
-        if (!signals.length){ box.innerHTML = '<p class="text-sm text-gray-500">Naujų signalų išorės šaltiniuose nėra.</p>'; return; }
-        box.innerHTML = signals.map(signal => `
+        const filtersActive = signalState.filters.type !== 'all' || signalState.filters.priority !== 'all';
+        const emptyMessage = filtersActive ? 'Pagal pasirinktus filtrus signalų nėra.' : 'Naujų signalų išorės šaltiniuose nėra.';
+        if (!signals.length){ box.innerHTML = `<p class="text-sm text-gray-500">${emptyMessage}</p>`; return; }
+        box.innerHTML = signals.map(signal => {
+          const badgeColor = normalizeSignalPriority(signal.priority) === 'high' ? 'bg-red-50 text-red-700 border border-red-100' : normalizeSignalPriority(signal.priority) === 'medium' ? 'bg-amber-50 text-amber-700 border border-amber-100' : 'bg-emerald-50 text-emerald-700 border border-emerald-100';
+          const priorityLabel = signal.priority ? (priorityLabels[normalizeSignalPriority(signal.priority)] || signal.priority) : '';
+          return `
           <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm flex flex-col h-full">
             <div class="flex-1">
               <div class="flex justify-between items-start mb-2">
                 <h3 class="text-sm font-semibold text-gray-900">${signal.title || 'Signal'}</h3>
-                ${signal.priority ? `<span class="bg-red-50 text-red-700 text-[10px] px-2 py-0.5 rounded uppercase font-bold tracking-wide">${signal.priority}</span>` : ''}
+                ${priorityLabel ? `<span class="${badgeColor} text-[10px] px-2 py-0.5 rounded-full uppercase font-bold tracking-wide">${priorityLabel}</span>` : ''}
               </div>
               <p class="text-sm text-gray-600 mb-4 leading-relaxed">${signal.summary || ''}</p>
             </div>
             ${signal.source ? `<a href="${signal.source}" target="_blank" class="mt-4 text-xs font-medium text-brand-600 hover:text-brand-500">Skaityti daugiau &rarr;</a>` : ''}
           </div>
+        `;
+        }).join('');
+      }
+
+      function renderSourceTracker(payload){
+        const summaryBox = document.getElementById('sourceSummary');
+        const listBox = document.getElementById('sourceList');
+        const stampEl = document.getElementById('sourceStamp');
+        if (stampEl){
+          stampEl.textContent = payload?.updated_at ? `Atnaujinta ${formatTimestamp(payload.updated_at)}` : '';
+        }
+        if (!summaryBox || !listBox){
+          return;
+        }
+        const sources = payload?.sources || [];
+        if (!sources.length){
+          summaryBox.innerHTML = '<p class="text-sm text-gray-500">Šaltinių dar nėra.</p>';
+          listBox.innerHTML = '<p class="text-sm text-gray-500">Reikia atnaujinti JSON.</p>';
+          return;
+        }
+        const autoCount = sources.filter(src => (src.method || '').toLowerCase().includes('rss')).length;
+        const manualCount = sources.length - autoCount;
+        const communityCount = sources.filter(src => ['forum','community'].includes((src.type || '').toLowerCase())).length;
+        const summary = [
+          { label: 'Šaltinių viso', value: sources.length },
+          { label: 'Automatiniai (RSS)', value: autoCount },
+          { label: 'Rankiniai / Browser', value: manualCount },
+          { label: 'Forumai + bendruomenės', value: communityCount }
+        ];
+        summaryBox.innerHTML = summary.map(item => `
+          <div class="p-4 bg-gray-50 border border-gray-100 rounded-lg">
+            <span class="block text-2xl font-display font-bold text-gray-900">${item.value}</span>
+            <span class="text-[11px] uppercase tracking-wide text-gray-500">${item.label}</span>
+          </div>
         `).join('');
+        const typeStyles = {
+          official: { label: 'Oficialu', classes: 'bg-emerald-50 text-emerald-700 border-emerald-100' },
+          news: { label: 'Naujienos', classes: 'bg-blue-50 text-blue-700 border-blue-100' },
+          media: { label: 'Media', classes: 'bg-indigo-50 text-indigo-700 border-indigo-100' },
+          blog: { label: 'Blogas', classes: 'bg-amber-50 text-amber-700 border-amber-100' },
+          forum: { label: 'Forumas', classes: 'bg-rose-50 text-rose-700 border-rose-100' },
+          community: { label: 'Bendruomenė', classes: 'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-100' },
+          default: { label: 'Šaltinis', classes: 'bg-gray-50 text-gray-700 border-gray-100' }
+        };
+        const sorted = [...sources].sort((a,b)=>{
+          return (a.type || '').localeCompare(b.type || '') || (a.name || '').localeCompare(b.name || '');
+        });
+        listBox.innerHTML = sorted.map(source => {
+          const typeKey = (source.type || 'default').toLowerCase();
+          const base = typeStyles[typeKey] || typeStyles.default;
+          const style = typeStyles[typeKey] ? base : { ...base, label: source.type || base.label };
+          const language = (source.language || '').toUpperCase() || '??';
+          const methodLabel = (source.method || 'manual').replace(/[-_]/g, ' ');
+          const notes = source.notes ? `<p class="text-sm text-gray-600 mt-3 leading-relaxed">${source.notes}</p>` : '';
+          const link = source.url ? `<a href="${source.url}" target="_blank" class="text-xs font-medium text-brand-600 hover:text-brand-500">Atverti &rarr;</a>` : '<span class="text-xs text-gray-400">URL nėra</span>';
+          return `
+            <div class="p-5 border border-gray-100 rounded-xl shadow-sm flex flex-col bg-white">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-[11px] font-semibold px-2 py-1 rounded-full border ${style.classes}">${style.label}</span>
+                <span class="text-[10px] font-semibold text-gray-500 tracking-wide">${language}</span>
+              </div>
+              <h3 class="text-base font-display font-semibold text-gray-900">${source.name}</h3>
+              <p class="text-xs text-gray-400 uppercase tracking-wide mt-0.5">${source.id}</p>
+              ${notes}
+              <div class="flex items-center justify-between mt-4 text-xs text-gray-500">
+                <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">${methodLabel}</span>
+                ${link}
+              </div>
+            </div>
+          `;
+        }).join('');
       }
 
       let staticLoaded = false;
@@ -528,17 +786,26 @@
           fetch('./data/budget.json').then(r=>r.json()).catch(()=>null),
           fetch('./data/flights.json').then(r=>r.json()).catch(()=>null),
           fetch('./data/itinerary.json').then(r=>r.json()).catch(()=>null),
-          fetch('./data/signal_radar.json').then(r=>r.json()).catch(()=>null)
-        ]).then(([route,todos,budget,flights,itinerary,signals])=>{
+          fetch('./data/signal_radar.json').then(r=>r.json()).catch(()=>null),
+          fetch('./data/intel/thailand-sources.json').then(r=>r.json()).catch(()=>null),
+          fetch('./data/stage_windows.json').then(r=>r.json()).catch(()=>null)
+        ]).then(([route,todos,budget,flights,itinerary,signals,sources,stageWindows])=>{
           renderRoute(route);
           renderTodos(todos);
           renderBudget(budget);
           renderFlightSnapshot(flights);
           renderItineraryPreview(itinerary);
+          renderStageWindows(stageWindows);
           renderIntel({
-            routeDays: route?.days?.length, todoCount: todos?.items?.length, flightCount: flights?.items?.length, itineraryDays: itinerary?.days?.length
+            routeDays: route?.days?.length,
+            todoCount: todos?.items?.length,
+            flightCount: flights?.items?.length,
+            itineraryDays: itinerary?.days?.length,
+            sourceCount: sources?.sources?.length,
+            stageWindowCount: stageWindows?.items?.length
           });
-          renderSignals(signals);
+          setupSignalFilters(signals);
+          renderSourceTracker(sources);
         });
       }
 
