@@ -57,6 +57,19 @@
     .plan-stage {
       margin-bottom: 18px;
     }
+    .hidden-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #b45309;
+      background: rgba(180, 83, 9, 0.15);
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
     .timeline-bar {
       position: relative;
       height: 8px;
@@ -319,6 +332,38 @@
         { leg: 'IN · Bangkok → VNO/RIX 2027-01-01..03', detail: 'BKK → VNO/RIX 1 sustojimo kryptis (Turkish/Qatar) + 3h buferis.' }
       ];
       const googleMapLink = 'https://www.google.com/maps/dir/Kata+Beach,+Karon,+Phuket/Railay+Beach,+Krabi/Koh+Lanta,+Krabi/Bangkok+Old+Town/';
+      const assetVersion = '2026-03-17';
+      let placeOverrides = {};
+      const overridesReady = fetch(`./data/places_overrides.json?v=${assetVersion}`)
+        .then(res => res.json())
+        .then(data => { placeOverrides = data || {}; })
+        .catch(() => { placeOverrides = {}; });
+
+      function slugify(text = ''){
+        return text.toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+      }
+      function getOverride(name){
+        if (!name) return null;
+        return placeOverrides[slugify(name)] || null;
+      }
+      function decoratePlace(place){
+        if (!place) return place;
+        const override = getOverride(place.name);
+        const base = { ...place };
+        if (override && typeof override.hidden === 'boolean'){
+          base.hidden = override.hidden;
+        }
+        base.hidden = base.hidden || false;
+        return base;
+      }
+      function deriveStageLabel(label){
+        if (!label) return 'Kita';
+        const match = label.match(/^(\d+\s*ETAPAS)/i);
+        if (match) return match[1].replace(/etapas/i,'ETAPAS').trim();
+        const parts = label.split(':');
+        return (parts[0] || label).trim();
+      }
+
 
       const itinerarySummaryEl = document.getElementById('itinerarySummary');
       const itineraryListEl = document.getElementById('itineraryList');
@@ -334,6 +379,9 @@
         nodeSelection: null
       };
       let networkResizeTimer = null;
+
+      const googleLinkEl = document.getElementById('googleMapLink');
+      if (googleLinkEl) googleLinkEl.href = googleMapLink;
 
       let currentClient = null;
       let lastPlaces = [];
@@ -406,7 +454,8 @@
           items.sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0)).forEach((p,i) => {
             const line = document.createElement('div');
             line.className = 'plan-line';
-            line.innerHTML = `<strong>${i+1}.</strong> ${p.name}<br><span class="text-xs uppercase tracking-wide text-slate-500">${voteMap[p.id]||0} bals.</span>`;
+            const hiddenChip = p.hidden ? '<span class=\"hidden-pill\">🔒 Hidden</span>' : '';
+            line.innerHTML = `<strong>${i+1}.</strong> ${p.name} ${hiddenChip}<br><span class="text-xs uppercase tracking-wide text-slate-500">${voteMap[p.id]||0} bals.</span>`;
             wrapper.appendChild(line);
           });
           box.appendChild(wrapper);
@@ -425,9 +474,12 @@
           return;
         }
         const sorted = [...filtered].sort((a,b)=>(lastVoteMap[b.id]||0)-(lastVoteMap[a.id]||0));
-        box.innerHTML = sorted.map((p,i) => `
-          <div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="text-xs uppercase tracking-wide text-slate-500">${lastVoteMap[p.id]||0} bals.</span></div>
-        `).join('');
+        box.innerHTML = sorted.map((p,i) => {
+          const hiddenChip = p.hidden ? '<span class=\"hidden-pill\">🔒 Hidden</span>' : '';
+          return `
+          <div class=\"plan-line\"><strong>${i+1}.</strong> ${p.name} ${hiddenChip}<br><span class=\"text-xs uppercase tracking-wide text-slate-500\">${lastVoteMap[p.id]||0} bals.</span></div>
+        `;
+        }).join('');
       }
 
       function renderTransfers(){
@@ -723,25 +775,58 @@
         });
       }
 
-      function refreshData(client){
-        return Promise.all([
+      async function refreshData(client){
+        await overridesReady;
+        const [placesRes, votesRes] = await Promise.all([
           client.from('places').select('*').order('created_at', { ascending: false }),
           client.from('votes').select('place_id,user_id')
-        ]).then(([placesRes, votesRes]) => {
-          if (placesRes.error || votesRes.error){
-            document.getElementById('stagesBox').innerHTML = '<p class="text-sm text-rose-500">Nepavyko gauti duomenų.</p>';
-            document.getElementById('boardBox').innerHTML = '';
-            return;
-          }
-          lastVoteMap = {};
-          (votesRes.data || []).forEach(v => { lastVoteMap[v.place_id] = (lastVoteMap[v.place_id] || 0) + 1; });
-          lastPlaces = placesRes.data || [];
-          renderStages(lastPlaces, lastVoteMap);
-          renderBoard();
-        });
+        ]);
+        if (placesRes.error || votesRes.error){
+          document.getElementById('stagesBox').innerHTML = '<p class="text-sm text-rose-500">Nepavyko gauti duomenų.</p>';
+          document.getElementById('boardBox').innerHTML = '';
+          return;
+        }
+        lastVoteMap = {};
+        (votesRes.data || []).forEach(v => { lastVoteMap[v.place_id] = (lastVoteMap[v.place_id] || 0) + 1; });
+        lastPlaces = (placesRes.data || []).map(decoratePlace);
+        renderStages(lastPlaces, lastVoteMap);
+        renderBoard();
       }
 
-      initSupabasePage({
+      function enableDemoAppView(){
+        document.getElementById('configBox')?.classList.add('hidden');
+        document.getElementById('authBox')?.classList.add('hidden');
+        document.getElementById('appBox')?.classList.remove('hidden');
+        const whoEl = document.getElementById('who');
+        if (whoEl) whoEl.textContent = 'Demo režimas (Supabase neįjungtas)';
+      }
+
+      async function loadDemoPlaces(){
+        await overridesReady;
+        try {
+          const catalog = await fetch(`./data/places_catalog.json?v=${assetVersion}`).then(res => res.json());
+          const items = [];
+          (catalog?.stages || []).forEach(stage => {
+            const stageKey = deriveStageLabel(stage.title || stage.id || '');
+            (stage.items || []).forEach((item, idx) => {
+              items.push(decoratePlace({
+                id: `${stageKey || 'stage'}-${idx}`,
+                name: item.name || `Vieta ${idx+1}`,
+                stage: stageKey || 'Kita',
+                hidden: false
+              }));
+            });
+          });
+          lastPlaces = items;
+          lastVoteMap = {};
+          renderStages(lastPlaces, lastVoteMap);
+          renderBoard();
+        } catch (err){
+          document.getElementById('stagesBox').innerHTML = '<p class="text-sm text-rose-500">Nepavyko įkrauti demo duomenų.</p>';
+        }
+      }
+
+      const supabaseSession = initSupabasePage({
         onReady: ({ client }) => {
           currentClient = client;
           document.getElementById('googleMapLink').href = googleMapLink;
@@ -758,6 +843,11 @@
         }
       });
 
+      if (!supabaseSession){
+        enableDemoAppView();
+        loadDemoPlaces();
+      }
+
       document.getElementById('refreshBtn').addEventListener('click', () => {
         if (currentClient) refreshData(currentClient);
       });
@@ -767,6 +857,7 @@
         renderBoard();
       });
 
+      renderMap();
       initTripNetwork();
       renderTransfers();
       loadStageWindows();
