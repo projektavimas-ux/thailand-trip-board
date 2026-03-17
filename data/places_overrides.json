@@ -618,5 +618,17 @@
       "details": "MenuWeb svečiai užsisakė scallops+krevetes už 1,550 THB; Tripadvisor pažymi krabą ~1,100 THB",
       "note": "Šaltiniai: menuweb.menu ir Tripadvisor (2025)"
     }
+  },
+  "koh-wai-paradise": {
+    "desc": "Mediniai bungalow'ai stovi tiesiai ant balto smėlio šiaurinėje Koh Wai pakrantėje; sala neturi kelių, todėl tarp kurortų judama pesčiomis, o generatoriai tiekia elektrą tik vakare (18:00–22:00). Nuo Bungalow 20 tako galima per 15 min. perkopti į Sunset Viewpoint pusę, o priešais krantą – koralų riba snorkelinimui.",
+    "source": "https://iamkohchang.com/guide/koh-wai-travel-guide.html",
+    "image": "https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Koh+Wai+Paradise",
+    "pricing": {
+      "badge": "400–800 THB / naktis",
+      "level": "฿",
+      "details": "Paradise / Grandma hut'ai prasideda ~400 THB su bendromis dušo blokais, Good Feeling (~600 THB) turi nuosavus dušus; elektra ir Wi-Fi veikia tik vakare.",
+      "note": "Šaltiniai: 12Go Asia (2024-11) ir iamkohchang (2025-11)."
+    }
   }
 }

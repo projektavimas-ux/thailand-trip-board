@@ -57,6 +57,31 @@
     .plan-stage {
       margin-bottom: 18px;
     }
+    .timeline-bar {
+      position: relative;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.08);
+      margin-top: 16px;
+      margin-bottom: 6px;
+    }
+    .timeline-bar .timeline-fill {
+      position: absolute;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #16a34a, #22c55e);
+      box-shadow: 0 2px 6px rgba(22, 163, 74, 0.35);
+    }
+    .timeline-point {
+      position: absolute;
+      top: 12px;
+      transform: translateX(-50%);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: #475569;
+      text-transform: uppercase;
+    }
     #routeMap {
       width: 100%;
       min-height: 320px;
@@ -189,6 +214,21 @@
         </div>
       </div>
 
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold">Laiko langai
+            </p>
+            <h2 class="text-xl font-display font-semibold text-slate-900">Etapų laikrodžio juosta</h2>
+            <p class="text-sm text-slate-500">Kraunama iš `data/stage_windows.json`.</p>
+          </div>
+          <a href="./data/stage_windows.json" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600" download>Parsisiųsti JSON →</a>
+        </div>
+        <div id="stageWindowsTimeline" class="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+          <p class="text-sm text-slate-500">Kraunama...</p>
+        </div>
+      </div>
+
       <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6 space-y-6" id="networkCard">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
@@ -285,6 +325,7 @@
       const nextActionsEl = document.getElementById('nextActionsBox');
       const networkFallbackEl = document.getElementById('networkFallback');
       const networkEdgesBox = document.getElementById('networkEdges');
+      const stageTimelineBox = document.getElementById('stageWindowsTimeline');
       const networkState = {
         nodes: [],
         edges: [],
@@ -397,6 +438,76 @@
             <span class="text-sm text-slate-600">${item.detail}</span>
           </div>
         `).join('');
+      }
+
+      function formatDayRange(start, end){
+        if (typeof start === 'number' && typeof end === 'number'){
+          return `D${start} → D${end}`;
+        }
+        if (typeof start === 'number'){
+          return `Nuo D${start}`;
+        }
+        if (typeof end === 'number'){
+          return `Iki D${end}`;
+        }
+        return '';
+      }
+
+      function getTimelineTotalDays(items){
+        const maxDay = items.reduce((max, item) => {
+          const candidate = typeof item.end_day === 'number' ? item.end_day : item.start_day;
+          return Math.max(max, candidate || 0);
+        }, 0);
+        return maxDay || 13;
+      }
+
+      function dayPercent(day, total, inclusive = false){
+        if (typeof day !== 'number' || !total) return inclusive ? 100 : 0;
+        const clamped = Math.max(1, Math.min(total, day));
+        return inclusive ? (clamped / total) * 100 : ((clamped - 1) / total) * 100;
+      }
+
+      function renderStageTimeline(items){
+        if (!stageTimelineBox) return;
+        if (!items.length){
+          stageTimelineBox.innerHTML = '<p class="text-sm text-slate-500">Laiko langai dar nesudėti.</p>';
+          return;
+        }
+        const totalDays = getTimelineTotalDays(items);
+        stageTimelineBox.innerHTML = items.map((item, idx) => {
+          const dayRange = formatDayRange(item.start_day, item.end_day);
+          const startPct = dayPercent(item.start_day, totalDays, false);
+          const endPct = dayPercent(typeof item.end_day === 'number' ? item.end_day : (item.start_day || totalDays), totalDays, true);
+          const fillWidth = Math.min(100 - startPct, Math.max(endPct - startPct, 6));
+          const rightLabelPct = Math.min(100, startPct + fillWidth);
+          return `
+            <div class="relative border border-slate-200 rounded-2xl p-4 bg-slate-50">
+              <div class="flex items-center gap-2 text-xs uppercase tracking-[0.35em] text-slate-500 font-semibold">
+                <span>${idx+1}</span>
+                <span>${item.stage || ''}</span>
+              </div>
+              <p class="text-2xl font-display font-semibold text-slate-900 mt-2">${item.window || ''}</p>
+              <p class="text-sm text-slate-600 mt-1">${item.focus || ''}</p>
+              ${dayRange ? `<p class="text-xs text-slate-400 mt-1">${dayRange}</p>` : ''}
+              <div class="timeline-bar">
+                <span class="timeline-fill" style="left:${startPct}%;width:${fillWidth}%;"></span>
+                ${item.start_day ? `<span class="timeline-point" style="left:${startPct}%">D${item.start_day}</span>` : ''}
+                ${item.end_day ? `<span class="timeline-point" style="left:${rightLabelPct}%">D${item.end_day}</span>` : ''}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      function loadStageWindows(){
+        if (!stageTimelineBox) return;
+        stageTimelineBox.innerHTML = '<p class="text-sm text-slate-500">Kraunama…</p>';
+        fetch('./data/stage_windows.json')
+          .then(res => res.json())
+          .then(data => renderStageTimeline((data && data.items) || []))
+          .catch(() => {
+            stageTimelineBox.innerHTML = '<p class="text-sm text-rose-500">Nepavyko įkelti laiko langų.</p>';
+          });
       }
 
       function renderMap(){
@@ -658,6 +769,7 @@
 
       initTripNetwork();
       renderTransfers();
+      loadStageWindows();
     });
   </script>
 </body>

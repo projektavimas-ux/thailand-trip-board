@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-11T10:05:00+02:00",
+  "generated_at": "2026-03-16T11:45:00+02:00",
   "signals": [
     {
       "id": "chiang-rai-flower-2026",
@@ -70,6 +70,34 @@
         "Jei darbai vėluos, turėti alternatyvą – Chiang Rai Hot Spring (Ban Du) arba Mae Salong kavos stoteles."
       ],
       "source": "https://www.chiangraitime.com/news/mae-khachan-hot-springs-renovation-2026"
+    },
+    {
+      "id": "tdac-mandatory-2026",
+      "type": "logistics",
+      "priority": "high",
+      "title": "Privalomas Thailand Digital Arrival Card (TDAC)",
+      "location": "Visi Tailandos oro uostai",
+      "window": "nuo 2026-03-01",
+      "summary": "Imigracija patvirtino, kad visi užsieniečiai turi užpildyti TDAC formą per 72 h iki atvykimo. Ji tampa privaloma dar 2026 m. pavasarį, todėl gruodžio skrydžiams reikės papildomo pasiruošimo.",
+      "actions": [
+        "Kelionės kontrolės faile pridėti TDAC žingsnį (submit likus 48 h iki 2026-12-11 skrydžio).",
+        "Supabase 'todos' įtraukti lauką TDAC QR / patvirtinimas kiekvienam keleiviui."
+      ],
+      "source": "https://thailandinsiderguide.com/en/travel-essentials/visas-and-entry-requirements/"
+    },
+    {
+      "id": "airspace-closure-contingency-2026",
+      "type": "alert",
+      "priority": "medium",
+      "title": "Laikinos priemonės dėl Vidurio Rytų oro erdvės trikdžių",
+      "location": "Thailand Immigration Bureau",
+      "window": "2026-02-28 → iki atskiro pranešimo",
+      "summary": "Dėl vasario pabaigos oro erdvės uždarymų įvestos laikinos išvykimo/užsilaikymo taisyklės: galima gauti 30 d. pratęsimą ir galimas overstay baudų atleidimas, jei pateikiami atšauktų skrydžių įrodymai.",
+      "actions": [
+        "Kelionių aplanke laikyti aviakompanijų (Qatar/Turkish) pranešimus apie galimus nukreipimus, kad prireikus būtų įrodymas.",
+        "Prie D13 logistinio plano pridėti žymą sekti NOTAM / Middle East koridoriaus statusą likus 14 d. iki grįžimo."
+      ],
+      "source": "https://thailandinsiderguide.com/en/travel-essentials/visas-and-entry-requirements/"
     }
   ]
 }

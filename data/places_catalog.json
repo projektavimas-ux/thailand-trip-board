@@ -93,6 +93,20 @@
           "image": "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80",
           "desc": "Old Town co-working viešbutis su baseinu ir nemokama kava; Kayak kainos prasideda nuo $32 (~29 EUR) už dvivietį su pusryčiais.",
           "source": "https://www.kayak.com/Phuket-City-Hotels-Blu-Monkey-Hub-And-Hotel-Phuket.2363256.ksp"
+        },
+        {
+          "name": "JAMPA · Tri Vananda",
+          "image": "https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Michelin Green Star restoranas Tri Vananda bendruomenėje. Chef Rick Dingen 2025-07 pristatytas 7 patiekalų Botanical Experience remiasi daržovių degustacija ant atviros ugnies (Travel Dreams Magazine). Mano rekomendacija: ⭐⭐⭐⭐☆ (4.7/5) – verta rezervuoti iš anksto vakarui po Big Buddha / Rawai maršruto.",
+          "source": "https://traveldreamsmagazine.com/phukets-michelin-green-star-restaurant-jampa-introduces-7-course-botanical-experience/",
+          "maps": "https://www.google.com/maps/place/JAMPA+Restaurant/@8.0301289,98.3420067,17z"
+        },
+        {
+          "name": "Central Phuket Outdoor Arena Countdown",
+          "image": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Travel + Leisure Asia (2025-12-29) rekomenduoja atvykti į Central Phuket Festival lauko areną kelios valandos prieš 2026 NYE – čia vyksta pagrindinė koncertų scena prieš keliaujant į paplūdimius Patong/Karon ir gaudant fejerverkus. Mano vertinimas: ⭐⭐⭐⭐ (4.3/5) – geras „bazinis taškas“ jei nenori spaustis paplūdimyje.",
+          "source": "https://www.travelandleisureasia.com/sea/destinations/southeast-asia/spending-new-years-eve-in-thailand-top-countdown-destinations-for-2026/",
+          "maps": "https://www.google.com/maps/place/Central+Phuket/@7.8900273,98.3851339,17z"
         }
       ]
     },
@@ -137,6 +151,19 @@
           "source": "https://www.krabitravelguide.com/poda-island/"
         },
         {
+          "name": "Koh Kradan (Trang)",
+          "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Travel & Tour World (2025-06-29) vadina Koh Kradan pasaulio top paplūdimiu: nėra kelių ar nuolatinių gyventojų, tik Had Chao Mai NP prižiūrimi paplūdimiai ir krištolo vanduo. Mano įvertinimas: ⭐⭐⭐⭐☆ (4.6/5) – ideali diena snorkelinimui prieš/po Trang archipelago pertraukos.",
+          "source": "https://www.travelandtourworld.com/news/article/thailands-hidden-gems-to-visit-in-2025-discover-koh-kradan-khao-yai-national-park-koh-kood-and-more/",
+          "maps": "https://www.google.com/maps/place/Ko+Kradan/@7.3086,99.2623,13z"
+        },
+        {
+          "name": "Beyond Skywalk Nangshi",
+          "image": "https://news.destination-asia.com/wp-content/uploads/2024/07/TH_AT_305_305.jpg",
+          "desc": "Naujai atidarytas 180 m stiklo takas 80 m virš Andamano jūros Samet Nangshe kalne. Puikus sustojimas tarp Phuket ir Krabi – saulėtekis, saulėlydis ar net Paukščių Tako vaizdai.",
+          "source": "https://news.destination-asia.com/a-thailand-experience-on-a-whole-new-level/"
+        },
+        {
           "name": "Landmark Night Market (Ao Nang)",
           "desc": "Gatvės maisto ir prekių turgus netoli Ao Nang krantinės. Gyva muzika kiekvieną vakarą.",
           "image": "https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=800&q=80"
@@ -177,6 +204,12 @@
           "image": "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1200&q=80",
           "desc": "Modernus Ao Nang viešbutis su 30 m baseinu; Kayak kainos nuo $33–37 (~31 EUR) už Deluxe kambarį.",
           "source": "https://www.kayak.com/Ao-Nang-Hotels-Ava-Sea-Resort.2874883.ksp"
+        },
+        {
+          "name": "Koh Wai Paradise (Trat · hidden)",
+          "image": "https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=1200&q=80",
+          "desc": "🔒 Slaptas pasirinkimas: Koh Wai Paradise – 30 min. greitaeigiu nuo Laem Ngop, be kelių ir su generatoriaus elektra tik vakarais; balto smėlio juosta su snorkelinimu tiesiog nuo krantinės, tinkama tik lapkričio–balandžio sezonui.",
+          "source": "https://12go.asia/en/thailand/koh-wai"
         }
       ]
     },
@@ -384,6 +417,13 @@
           "source": "https://www.iconsiam.com/en/event"
         },
         {
+          "name": "Sanam Luang Midnight Merit",
+          "image": "https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Travel + Leisure Asia (2025-12-29) išskiria Sanam Luang kaip ramų būdą pasitikti 2026-uosius – tradicinės ceremonijos ir merit ritualai prie Grand Palace. Puikus planas, jei ICONSIAM/Asiatique per pilna: galima stebėti fejerverkus iš toliau ir 00:30 nueiti į Wat Phra Kaew atlikti auką. Mano įvertinimas: ⭐⭐⭐⭐☆ (4.5/5) už kultūrinę patirtį.",
+          "source": "https://www.travelandleisureasia.com/sea/destinations/southeast-asia/spending-new-years-eve-in-thailand-top-countdown-destinations-for-2026/",
+          "maps": "https://maps.app.goo.gl/Acb7Da7kruuJsbEv6"
+        },
+        {
           "name": "Chatuchak + Chinatown",
           "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format&fit=crop",
           "desc": "Savaitgalio turgus su >15 000 kioskų ir Yaowarat street food maršrutu vakarui.",
@@ -394,6 +434,18 @@
           "image": "https://images.unsplash.com/photo-1476979735039-6d1b81d2e9f6?auto=format&fit=crop&w=1200&q=80",
           "desc": "Šiuolaikinio meno galerija prie Siam Square – gera vieta kondicionuotam 'mid-day break'.",
           "source": "https://www.bacc.or.th/"
+        },
+        {
+          "name": "THAINOSAUR Museum (AWC)",
+          "image": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Naujas „Bangkok Spectacular 2026“ kampanijos traukos objektas, pristatantis Tailando paleontologiją per interaktyvias ekspozicijas ir šeimų zoną netoli Chao Phraya promenadų.",
+          "source": "https://www.travelandtourworld.com/news/article/bangkok-spectacular-2026-a-new-chapter-in-thailands-tourism-industry/"
+        },
+        {
+          "name": "Cave Fantasy (MBK Center)",
+          "image": "https://images.unsplash.com/photo-1523475472560-d2df97ec485c?w=800&q=80",
+          "desc": "2026 m. sausį atidaryta imersinė VR atrakcionų erdvė MBK 4 aukšte: „Fantasy Flight Theater\" VR coaster, veidrodžių labirintai ir šviesų tuneliai, puikūs kaip vakarinių veiklų planas prieš Talat Noi ar ICONSIAM.",
+          "source": "https://thesmartlocal.com/read/new-things-to-do-bangkok/"
         },
         {
           "name": "Yaowarat Street Food",

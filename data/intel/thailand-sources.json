@@ -1,0 +1,149 @@
+{
+  "updated_at": "2026-03-14T10:00:00+02:00",
+  "sources": [
+    {
+      "id": "tat-newsroom",
+      "name": "Tourism Authority of Thailand Newsroom",
+      "type": "official",
+      "language": "en",
+      "method": "rss",
+      "url": "https://www.tatnews.org/feed/",
+      "notes": "Oficialūs TAT pranešimai apie renginius, festivalius ir politikas. Žiūrima kasdien 12:00."
+    },
+    {
+      "id": "nation-thailand",
+      "name": "The Nation Thailand",
+      "type": "news",
+      "language": "en",
+      "method": "rss",
+      "url": "https://www.nationthailand.com/rss",
+      "notes": "Nacionalinės naujienos – naudojama kelionių / politikos išklotinei."
+    },
+    {
+      "id": "travelandleisure-asia",
+      "name": "Travel + Leisure Asia · Dining",
+      "type": "media",
+      "language": "en",
+      "method": "manual",
+      "url": "https://www.travelandleisureasia.com/sea/dining/food/",
+      "notes": "Stebiu MICHELIN / restoranų naujienas (naudojama JAMPA šaltiniui)."
+    },
+    {
+      "id": "traveldreams-mag",
+      "name": "Travel Dreams Magazine",
+      "type": "blog",
+      "language": "en",
+      "method": "rss",
+      "url": "https://traveldreamsmagazine.com/feed/",
+      "notes": "Boutique kelionių reportažai (JAMPA Botanical Experience interviu)."
+    },
+    {
+      "id": "asean-now-travel",
+      "name": "ASEAN NOW (ThaiVisa) Thailand Travel Forum",
+      "type": "forum",
+      "language": "en",
+      "method": "manual",
+      "url": "https://aseannow.com/forum/92-travel-in-thailand/",
+      "notes": "Kasdien 12:00 ieškoma naujų temų pagal 'Phuket', 'Chiang Rai festival', 'Bangkok NYE'."
+    },
+    {
+      "id": "facebook-travel-thailand-group",
+      "name": "Thailand Travel Group (Facebook)",
+      "type": "community",
+      "language": "en",
+      "method": "manual-browser",
+      "url": "https://www.facebook.com/groups/ThailandTravelGroup/",
+      "notes": "Vieša grupė ~270k narių. Reikia Browser Relay seanso, tikrinama 12:00."
+    },
+    {
+      "id": "facebook-thailand-travel-advice",
+      "name": "Thailand Travel Advice (Facebook)",
+      "type": "community",
+      "language": "en",
+      "method": "manual-browser",
+      "url": "https://www.facebook.com/groups/travelthailandgroup/",
+      "notes": "Kelionių Q&A – filtruoju tik klausimus apie 2026-12 → 2027-01 langą."
+    },
+    {
+      "id": "coconuts-bangkok-travel",
+      "name": "Coconuts Bangkok · Travel",
+      "type": "media",
+      "language": "en",
+      "method": "rss",
+      "url": "https://coconuts.co/bangkok/travel/feed/",
+      "notes": "Miesto naujienos (pvz., nauji barai prie Chao Phraya)."
+    },
+    {
+      "id": "thaiger-talk",
+      "name": "Thaiger Talk",
+      "type": "forum",
+      "language": "en",
+      "method": "manual",
+      "url": "https://thaigertalk.com/",
+      "notes": "Diskusijos apie regionus, salų logistiką ir transportą – ieškosiu „hidden gems" ir šviežių patirčių."
+    },
+    {
+      "id": "thai-expat-forum",
+      "name": "Thai Expat Forum",
+      "type": "forum",
+      "language": "en",
+      "method": "manual",
+      "url": "https://thaiexpat.forum/",
+      "notes": "Expat patarimai apie miestus, maršrutus ir kainas; geras šaltinis ilgalaikių rekomendacijų."
+    },
+    {
+      "id": "expat-com-thailand",
+      "name": "Expat.com · Thailand",
+      "type": "forum",
+      "language": "en",
+      "method": "manual",
+      "url": "https://www.expat.com/en/forum/asia/thailand/",
+      "notes": "Temos apie kasdienybę, būstą ir regionines keliones; pravers logistikos klausimams."
+    },
+    {
+      "id": "reddit-thailandtourism",
+      "name": "Reddit · r/ThailandTourism",
+      "type": "community",
+      "language": "en",
+      "method": "manual",
+      "url": "https://www.reddit.com/r/ThailandTourism/",
+      "notes": "Kelionių klausimai iš keliautojų – filtruosiu postus su 2026-12/2027-01 datomis ir paslėptas lokacijas."
+    },
+    {
+      "id": "reddit-thailand",
+      "name": "Reddit · r/Thailand",
+      "type": "community",
+      "language": "en",
+      "method": "manual",
+      "url": "https://www.reddit.com/r/Thailand/",
+      "notes": "Bendresnė LT/expat diskusija – naudosiu ieškant regioninių naujienų ir transporto trikdžių."
+    },
+    {
+      "id": "reddit-digitalnomad",
+      "name": "Reddit · r/digitalnomad",
+      "type": "community",
+      "language": "en",
+      "method": "manual",
+      "url": "https://www.reddit.com/r/digitalnomad/",
+      "notes": "Sekcijos su Tailando žymomis – praverčia cowork/vilų rekomendacijoms ar ilgalaikių maršrutų įžvalgomis."
+    },
+    {
+      "id": "travelfish-board",
+      "name": "Travelfish Thailand Board",
+      "type": "forum",
+      "language": "en",
+      "method": "manual",
+      "url": "https://www.travelfish.org/board/topic/thailand",
+      "notes": "Veteran backpackerių diskusijos – gaudysiu off-route patarimus ir alternatyvius maršrutus (ypač šiaurės/Andaman regionams)."
+    },
+    {
+      "id": "pantip-th",
+      "name": "Pantip.com",
+      "type": "forum",
+      "language": "th",
+      "method": "manual+translate",
+      "url": "https://pantip.com",
+      "notes": "Didžiausia tailandiečių bendruomenė nuo 1996 m. – naudodamas vertimą ieškosiu vietinių rekomendacijų ir regioninių naujienų, kurių nėra angliškai."
+    }
+  ]
+}
