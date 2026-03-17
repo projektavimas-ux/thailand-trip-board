@@ -395,6 +395,30 @@
       ]
     },
     {
+      "id": "koh-samui-gulf",
+      "title": "4 ETAPAS (Alternatyva): Koh Samui / Gulf of Thailand",
+      "items": [
+        {
+          "name": "Fisherman's Village (Bophut)",
+          "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Istorinis žvejų kaimelis Samui saloje, dabar pilnas boutique parduotuvių ir restoranų ant jūros kranto. Penktadieniais vyksta populiarus naktinis turgus.",
+          "source": "https://www.kosamui.com/bophut/fishermans-village.htm"
+        },
+        {
+          "name": "Ang Thong National Marine Park",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Ang_Thong_National_Marine_Park.jpg",
+          "desc": "42 salų archipelagas, pasiekiamas dienos turu iš Samui. Galima kopti į apžvalgos aikšteles (Koh Wua Ta Lap) arba plaukti baidarėmis aplink kalkakmenio uolas.",
+          "source": "https://www.thainationalparks.com/mu-ko-ang-thong-national-marine-park"
+        },
+        {
+          "name": "Wat Plai Laem",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Wat_Plai_Laem_02.jpg",
+          "desc": "Spalvinga šventykla su 18 rankų Guanyin (Gailestingumo deivės) statula, apsupta ežero, kuriame plaukioja šimtai žuvų ir vėžlių.",
+          "source": "https://www.kosamui.com/attractions/wat-plai-laem.htm"
+        }
+      ]
+    },
+    {
       "id": "bangkok-finish",
       "title": "5 ETAPAS (12-30 → 01-02): Bangkokas ir išvykimas",
       "items": [
