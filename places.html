@@ -215,6 +215,7 @@
               <option value="2 ETAPAS">2 ETAPAS</option>
               <option value="3 ETAPAS">3 ETAPAS</option>
               <option value="4 ETAPAS">4 ETAPAS</option>
+              <option value="4 ETAPAS (Alternatyva)">4 ETAPAS (Alternatyva)</option>
               <option value="Finalas">Finalas</option>
               <option value="Kita">Kita / neapibrėžta</option>
             </select>
@@ -273,7 +274,7 @@
       .then(data => { placeOverrides = data; })
       .catch(() => { placeOverrides = {}; });
 
-    const stageSequence = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','4 ETAPAS','5 ETAPAS','Finalas','Papildomos idėjos','Kita'];
+    const stageSequence = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','4 ETAPAS','4 ETAPAS (Alternatyva)','5 ETAPAS','Finalas','Papildomos idėjos','Kita'];
       function slugify(text = ''){
         return text.toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
       }
