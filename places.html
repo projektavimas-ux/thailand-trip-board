@@ -72,6 +72,19 @@
       border-radius: 999px;
       font-weight: 600;
     }
+    .hidden-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #b45309;
+      background: rgba(180, 83, 9, 0.15);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
     .place-card .footer {
       display: flex;
       justify-content: space-between;
@@ -278,7 +291,9 @@
           base.image_url = override.image || base.image_url || '';
           base.source = override.source || base.source || '';
           base.maps = override.maps || base.maps || '';
+          if (typeof override.hidden === 'boolean') { base.hidden = override.hidden; }
         }
+        base.hidden = base.hidden || false;
         base.status = base.status || ((base.stage || '').includes('ETAPAS') ? 'plan' : 'idea');
         return base;
       }
@@ -332,7 +347,8 @@
             stage: decorated.stage || base.stage,
             source: decorated.source || base.source,
             maps: decorated.maps || base.maps || '',
-            status: decorated.status || 'idea'
+            status: decorated.status || 'idea',
+            hidden: decorated.hidden || false
           });
         });
         });
@@ -476,6 +492,7 @@
             ${item.image ? `<img src="${item.image}" alt="${item.name}" />` : ''}
             <div class="body">
               <div class="tag">${item.stage || 'Etapas nenurodytas'}</div>
+              ${item.hidden ? '<span class=\"hidden-pill\">🔒 Hidden</span>' : ''}
               <h3 class="text-lg font-display text-slate-900 mt-2 mb-2">${item.name}</h3>
               <p class="text-sm text-slate-600">${item.desc || ''}</p>
               <div class="mt-2 flex flex-wrap gap-4">
@@ -495,7 +512,11 @@
         previewStagesBox.innerHTML = stages.length ? stages.map(stage => `
           <div class="preview-stage">
             <h4>${stage.title}</h4>
-            ${(stage.items||[]).slice(0,3).map(item=>`<div class="spot"><strong>${item.name}</strong><br><span class="text-sm text-slate-500">${item.desc || ''}</span></div>`).join('')}
+            ${(stage.items||[]).slice(0,3).map(item=>{
+              const override = getOverride(item.name || '');
+              const hiddenChip = override?.hidden ? '<span class=\"hidden-pill ml-2\">🔒 Hidden</span>' : '';
+              return `<div class=\"spot\"><strong>${item.name}</strong>${hiddenChip}<br><span class=\"text-sm text-slate-500\">${item.desc || ''}</span></div>`;
+            }).join('')}
           </div>`).join('') : '<p class="text-sm text-slate-500">Nėra duomenų.</p>';
         const stamp = document.getElementById('previewStamp');
         if (stamp){ stamp.textContent = 'Demo modas · ' + new Date().toLocaleTimeString('lt-LT',{hour:'2-digit',minute:'2-digit'}); }
@@ -551,8 +572,9 @@
             <div class="place-card">
               ${p.image_url ? `<img src="${p.image_url}" alt="${p.name}" />` : ''}
               <div class="body">
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 flex-wrap">
                   <div class="tag">${stage}</div>
+                  ${p.hidden ? '<span class=\"hidden-pill\">🔒 Hidden</span>' : ''}
                   <span class="text-[11px] uppercase tracking-[0.3em] ${statusColor}">${statusLabel}</span>
                 </div>
                 <h3 class="text-lg font-display text-slate-900 mt-2 mb-2">${p.name}</h3>
