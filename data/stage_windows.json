@@ -1,9 +1,10 @@
 {
-  "updated_at": "2026-03-14T18:00:00+02:00",
+  "updated_at": "2026-03-17T10:00:00+02:00",
   "items": [
     {"stage": "1 ETAPAS", "window": "D1–D4", "start_day": 1, "end_day": 4, "focus": "Phuket · Kata / Old Town"},
     {"stage": "2 ETAPAS", "window": "D5–D7", "start_day": 5, "end_day": 7, "focus": "Railay / Ao Nang įlankos"},
     {"stage": "3 ETAPAS", "window": "D8–D10", "start_day": 8, "end_day": 10, "focus": "Koh Lanta / Khao Sok"},
+    {"stage": "4 ETAPAS (Alternatyva)", "window": "D8–D10", "start_day": 8, "end_day": 10, "focus": "Koh Samui / Gulf of Thailand"},
     {"stage": "Finalas", "window": "D11–D13", "start_day": 11, "end_day": 13, "focus": "Bangkok Old Town + išvykimas"}
   ]
 }
