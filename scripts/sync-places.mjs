@@ -43,7 +43,7 @@ async function main() {
 
   const { data: authData, error: authError } = await client.auth.signInWithPassword({
     email: 'agentasT@th-ailand.com',
-    password: 'agentasT321'
+    password: process.env.SUPABASE_AGENT_PASSWORD
   });
 
   if (authError) {
