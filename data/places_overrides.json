@@ -631,5 +631,65 @@
       "details": "Paradise / Grandma hut'ai prasideda ~400 THB su bendromis dušo blokais, Good Feeling (~600 THB) turi nuosavus dušus; elektra ir Wi-Fi veikia tik vakare.",
       "note": "Šaltiniai: 12Go Asia (2024-11) ir iamkohchang (2025-11)."
     }
+  },
+  "koh-phayam": {
+    "desc": "Sala be automobilių Andamanų pakrantėje: Ao Yai (Long Beach) garsėja vakariniais saulėlydžiais ir banglentėmis, o Buffalo Bay – ramiu vandeniu, mangrovėmis bei ragų snapiais virš kabančių hamakų.",
+    "source": "https://homeiswhereyourbagis.com/en/koh-phayam-things-to-do/",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Ko_Phayam_v5.jpg",
+    "maps": "https://maps.google.com/?q=Ko+Phayam"
+  },
+  "koh-mak": {
+    "desc": "Trat provincijos koh Mak siūlo 27 km dviračių takų tarp gumos plantacijų, o Ao Suan Yai sekluma žemo potvynio metu atveria smėlio liežuvį link Koh Kham.",
+    "source": "https://iamkohchang.com/guide/koh-mak-travel-guide.html",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Ko_Mak%2C_Thailand_-_panoramio.jpg",
+    "maps": "https://maps.google.com/?q=Koh+Mak"
+  },
+  "koh-kood": {
+    "desc": "Koh Kood vilioja krištolo skaidriais Bang Bao paplūdimiais ir džiunglėmis apsuptu Klong Chao kriokliu, kur galima maudytis natūraliuose baseinuose.",
+    "source": "https://www.tourismthailand.org/Attraction/ko-kut",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Koh_Kut%2C_Thailand%2C_Bang_Bao_Beach.jpg",
+    "maps": "https://maps.google.com/?q=Koh+Kood"
+  },
+  "koh-jum": {
+    "desc": "Krabi provincijos Koh Jum jungia Ting Rai žvejų kaimą ir 4 km ilgio Golden Pearl paplūdimį; čia dar vis važinėjama motociklais purvo keliais.",
+    "source": "https://www.travelfish.org/island/thailand/southern_thailand/krabi/ko_jum",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Ko_Jum_boat.jpg",
+    "maps": "https://maps.google.com/?q=Koh+Jum"
+  },
+  "koh-libong": {
+    "desc": "Trang provincijos Koh Libong žinoma kaip Tailando dugongų prieglauda; nuo Tung Yaka mangrovių tako stebimos jūros karvės ir paukščiai.",
+    "source": "https://www.tourismthailand.org/Attraction/ko-libong",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Ko_Libong%2C_Kantang_District%2C_Trang%2C_Thailand_-_panoramio_%2811%29.jpg",
+    "maps": "https://maps.google.com/?q=Koh+Libong"
+  },
+  "koh-kradan": {
+    "desc": "Koh Kradan priklauso Hat Chao Mai NP – atvykus reikia sumokėti 200 THB mokestį, o paviršinis nardymas tarp Ko Waen ir Paradise Beach stebina rifų žuvimis.",
+    "source": "https://www.travelfish.org/island/thailand/southern_thailand/trang/ko_kradan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/5/54/2016_Prowincja_Trang%2C_Ko_Kradan_%2801%29.jpg",
+    "maps": "https://maps.google.com/?q=Koh+Kradan"
+  },
+  "koh-yao-noi": {
+    "desc": "Koh Yao Noi ryžių laukai ir žuvėdrių užuolankos žvelgia į Phang Nga kalkakmenio bokštus; čia galima išsinuomoti kajakus iki Hong salų ir lankytis Muay Thai dirbtuvėse.",
+    "source": "https://www.tourismthailand.org/Attraction/ko-yao-noi",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Crab_sand_balls%2C_Koh_Yao_Noi%2C_Phang_Nga_Bay%2C_Thailand.jpg",
+    "maps": "https://maps.google.com/?q=Koh+Yao+Noi"
+  },
+  "koh-phra-thong": {
+    "desc": "Koh Phra Thong garsėja savanos tipo peizažu, apleistais paplūdimiais ir Moken jūros čigonų kaimais Thung Dap bei Thapayoi.",
+    "source": "https://www.xyzasia.com/home/koh-phra-thong-secret-getaway-for-nature-lovers",
+    "image": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=80",
+    "maps": "https://maps.google.com/?q=Koh+Phra+Thong"
+  },
+  "nan": {
+    "desc": "Nan senamiestis – Wat Phumin freskų, Wat Ming Muang auksinių vartų ir Kuang Muang turgaus trio; aplink galima važiuoti Loop 1148 serpantinais.",
+    "source": "https://www.tourismthailand.org/Destinations/Provinces/Nan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Wat_Phumin_devant%2C_Nan.jpg",
+    "maps": "https://maps.google.com/?q=Nan+Old+Town"
+  },
+  "khao-sok": {
+    "desc": "Khao Sok nacionalinis parkas kviečia į Cheow Lan ežero longtail safarius, nakvynę plaukiojančiuose rafthouse nameliuose ir naktinius žygius klausantis gibonų.",
+    "source": "https://www.thainationalparks.com/khao-sok-national-park",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Trees_rising_out_of_Cheow_Lan_Lake%2C_blue_sky%2C_eternal_summer_in_Surat_Thani_edited.jpg",
+    "maps": "https://maps.google.com/?q=Cheow+Lan+Lake"
   }
 }

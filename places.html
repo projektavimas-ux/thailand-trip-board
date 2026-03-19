@@ -267,14 +267,14 @@
       const stageSelect = document.getElementById('stageSelect');
       const searchBox = document.getElementById('searchBox');
       const params = new URLSearchParams(window.location.search);
-      const assetVersion = '2026-03-14-d';
+      const assetVersion = '2026-03-19-a';
       let placeOverrides = {};
     const overridesReady = fetch(`./data/places_overrides.json?v=${assetVersion}`)
       .then(r => r.json())
       .then(data => { placeOverrides = data; })
       .catch(() => { placeOverrides = {}; });
 
-    const stageSequence = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','4 ETAPAS','4 ETAPAS (Alternatyva)','5 ETAPAS','Finalas','Papildomos idėjos','Kita'];
+    const stageSequence = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','4 ETAPAS','4 ETAPAS (Alternatyva)','5 ETAPAS','Finalas','Slapta vieta','Papildomos idėjos','Kita'];
       function slugify(text = ''){
         return text.toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
       }
