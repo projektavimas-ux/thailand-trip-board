@@ -22,9 +22,9 @@
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Ao_Nang_Beach.jpg/1280px-Ao_Nang_Beach.jpg",
     "maps": "https://maps.google.com/?q=Ao+Nang+Beach",
     "pricing": {
-      "badge": "60–100 THB gatvės patiekalai",
-      "level": "฿",
-      "details": "BetweenEnglandAndIowa mini roti už 60 THB; CKTravels – Pad Thai 80 THB ir Chang alus 100 THB",
+      "badge": "€1.62– €2.71 gatvės patiekalai",
+      "level": "€",
+      "details": "BetweenEnglandAndIowa mini roti už €1.62; CKTravels – Pad Thai €2.16 ir Chang alus €2.71",
       "note": "Šaltiniai: BetweenEngland&Iowa (2025-05-23), CKTravels (2024-05-15)"
     }
   },
@@ -89,7 +89,7 @@
     "maps": "https://maps.google.com/?q=Railay+Viewpoint"
   },
   "poda-island": {
-    "desc": "Koh Poda yra 20 min. nuo Ao Nang; čia taikomas 200 THB nacionalinio parko mokestis ir draudžiama vartoti alkoholį paplūdimyje. Verta atplaukti žemo potvynio metu, kai atsiveria smėlio liežuvis link gretimų salų.",
+    "desc": "Koh Poda yra 20 min. nuo Ao Nang; čia taikomas €5.41 nacionalinio parko mokestis ir draudžiama vartoti alkoholį paplūdimyje. Verta atplaukti žemo potvynio metu, kai atsiveria smėlio liežuvis link gretimų salų.",
     "source": "https://www.krabitravelguide.com/poda-island/",
     "image": "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80",
     "maps": "https://maps.google.com/?q=Ko+Poda"
@@ -112,7 +112,7 @@
     "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop"
   },
   "emerald-pool": {
-    "desc": "Thung Teao miško takas (1,4 km) veda į Emerald Pool; anksti ryte vanduo krištolo skaidrumo, o netoliese yra gilesnė Blue Pool (uždaryta 12:00–13:00 pauzei). Lankytojo mokestis 200 THB, todėl verta atvykti 08:00.",
+    "desc": "Thung Teao miško takas (1,4 km) veda į Emerald Pool; anksti ryte vanduo krištolo skaidrumo, o netoliese yra gilesnė Blue Pool (uždaryta 12:00–13:00 pauzei). Lankytojo mokestis €5.41, todėl verta atvykti 08:00.",
     "source": "https://www.krabivillasvillas.com/emerald-pool",
     "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
   },
@@ -122,7 +122,7 @@
     "image": "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=1200&q=80"
   },
   "wat-rong-khun": {
-    "desc": "Chalermchai Kositpipat modernioji baltoji šventykla išmarginta veidrodžių mozaikomis ir simbolinėmis skulptūromis apie karmą. Viduje tapytos freskos jungia budistinius motyvus ir popkultūrą; atidaryta 08:00–17:00, bilietas 100 THB.",
+    "desc": "Chalermchai Kositpipat modernioji baltoji šventykla išmarginta veidrodžių mozaikomis ir simbolinėmis skulptūromis apie karmą. Viduje tapytos freskos jungia budistinius motyvus ir popkultūrą; atidaryta 08:00–17:00, bilietas €2.71.",
     "source": "https://www.tourismchiangrai.org/white-temple",
     "image": "https://upload.wikimedia.org/wikipedia/commons/5/57/THIAN_2022.jpg",
     "maps": "https://maps.google.com/?q=Wat+Rong+Khun"
@@ -170,7 +170,7 @@
     "maps": "https://maps.google.com/?q=Grand+Palace+Bangkok"
   },
   "ayutthaya-historical-park": {
-    "desc": "UNESCO parkas apima Wat Mahathat Budos galvą medžio šakose ir upės pakrantės Wat Chaiwatthanaram šventyklą. Geriausia išsinuomoti dviratį (50 THB) ir kelionę pradėti 08:00, kad išvengtum karščio.",
+    "desc": "UNESCO parkas apima Wat Mahathat Budos galvą medžio šakose ir upės pakrantės Wat Chaiwatthanaram šventyklą. Geriausia išsinuomoti dviratį (€1.35) ir kelionę pradėti 08:00, kad išvengtum karščio.",
     "source": "https://whc.unesco.org/en/list/576/",
     "image": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=1200&auto=format&fit=crop",
     "maps": "https://maps.google.com/?q=Ayutthaya+Historical+Park"
@@ -236,14 +236,14 @@
     "maps": "https://maps.google.com/?q=Promthep+Cape"
   },
   "lard-yai-sekmadienio-turgus": {
-    "desc": "Lard Yai gatvė kiekvieną sekmadienį 16:00–22:00 uždaroma automobiliams – čia gausu craft ledų, seno stiliaus žaislų ir indie muzikantų. Tai puiki vieta nusipirkti suvenyrų ar pasiklausyti tradicinių ranard instrumentų. Gatvės maistas (Street food): 50-150 THB (~1.5-4 EUR) už porciją.",
+    "desc": "Lard Yai gatvė kiekvieną sekmadienį 16:00–22:00 uždaroma automobiliams – čia gausu craft ledų, seno stiliaus žaislų ir indie muzikantų. Tai puiki vieta nusipirkti suvenyrų ar pasiklausyti tradicinių ranard instrumentų. Gatvės maistas (Street food):€1.35– €4.06 (~1.5-4 EUR) už porciją.",
     "source": "https://www.thephuketnews.com/phuket-old-town-walking-street-4-76701.php",
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Phuket%20Weekend%20Market.jpg?width=1200",
     "maps": "https://maps.google.com/?q=Phuket+Walking+Street",
     "pricing": {
-      "badge": "50–150 THB / porcija",
-      "level": "฿",
-      "details": "Jamie’s Phuket fiksuoja Tuk Tuk Diner burgerius nuo 50 THB ir daugumą užkandžių iki ~150 THB",
+      "badge": "€1.35– €4.06 / porcija",
+      "level": "€",
+      "details": "Jamie’s Phuket fiksuoja Tuk Tuk Diner burgerius nuo €1.35 ir daugumą užkandžių iki ~€4.06",
       "note": "Šaltinis: JamiesPhuketBlog (2024-06)"
     }
   },
@@ -391,7 +391,7 @@
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Chatuchak%20weekend%20market%20roofs.jpg?width=1200"
   },
   "ayutthaya-day-trip": {
-    "desc": "Ayutthaya balsavimo kortelė rekomenduoja privatu van’ą su gidais 08:00–19:00 ir upės kruizą saulėlydžio metu. Pabrėžiamos pagrindinės šventyklos bei 50 THB įėjimo mokesčiai.",
+    "desc": "Ayutthaya balsavimo kortelė rekomenduoja privatu van’ą su gidais 08:00–19:00 ir upės kruizą saulėlydžio metu. Pabrėžiamos pagrindinės šventyklos bei €1.35 įėjimo mokesčiai.",
     "source": "https://www.lonelyplanet.com/thailand/central-thailand/ayutthaya",
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Templo%20Mahathat%2C%20Ayutthaya%2C%20Tailandia%2C%202013-08-23%2C%20DD%2006.jpg?width=1200"
   },
@@ -552,25 +552,25 @@
   },
   "wassa-homemade-bar": {
     "pricing": {
-      "badge": "Cocktail ~250 THB",
-      "level": "฿฿",
-      "details": "Tripadvisor lankytojai mini 100–120 THB alų ir ~250 THB kokteilius su saulėlydžiu",
+      "badge": "Cocktail ~€6.76",
+      "level": "€€",
+      "details": "Tripadvisor lankytojai mini €2.71– €3.25 alų ir ~€6.76 kokteilius su saulėlydžiu",
       "note": "Šaltinis: Tripadvisor (2025-07)"
     }
   },
   "roost-coffee-roastery": {
     "pricing": {
-      "badge": "849 THB plaukiojantis pusryčių setas",
-      "level": "฿฿",
-      "details": "PhuketWalk aprašo smoothie bowl + pusryčių rinkinį (floating breakfast) už 849 THB",
+      "badge": "€22.97 plaukiojantis pusryčių setas",
+      "level": "€€",
+      "details": "PhuketWalk aprašo smoothie bowl + pusryčių rinkinį (floating breakfast) už €22.97",
       "note": "Šaltinis: PhuketWalk (2025-05-18)"
     }
   },
   "rawai-sea-gypsy-market": {
     "pricing": {
-      "badge": "250–1,500 THB / kg",
-      "level": "฿฿",
-      "details": "Thai2Siam mini snapper ~250 THB/kg, tigro krevetės 850–1,500 THB/kg + ~100 THB gaminimo mokestis",
+      "badge": "€6.76– €40.58 / kg",
+      "level": "€€",
+      "details": "Thai2Siam mini snapper ~€6.76/kg, tigro krevetės €22.99– €40.58/kg + ~€2.71 gaminimo mokestis",
       "note": "Šaltiniai: Phuket101 (2025-11) ir Thai2Siam"
     }
   },
@@ -590,32 +590,32 @@
   },
   "ton-sai-bungalows": {
     "pricing": {
-      "badge": "950 THB (~€26) / naktis",
-      "details": "Basecamp Tonsai Forest Cottage tarifai 950 THB už naktį",
+      "badge": "€25.70 (~€26) / naktis",
+      "details": "Basecamp Tonsai Forest Cottage tarifai €25.70 už naktį",
       "note": "Šaltinis: Basecamptonsai (2025-07)"
     }
   },
   "landmark-night-market-ao-nang": {
     "pricing": {
-      "badge": "80–120 THB / patiekalas",
-      "level": "฿",
-      "details": "Tripadvisor lankytojai aprašo Pad Thai ~60 THB ir satay 60–80 THB; airial.travel – dauguma porcijų apie 100 THB",
+      "badge": "€2.16– €3.25 / patiekalas",
+      "level": "€",
+      "details": "Tripadvisor lankytojai aprašo Pad Thai ~€1.62 ir satay €1.62– €2.16; airial.travel – dauguma porcijų apie €2.71",
       "note": "Šaltiniai: Tripadvisor r.563ed7d ir airial.travel (2025)"
     }
   },
   "tew-lay-bar-railay": {
     "pricing": {
-      "badge": "Kokteiliai ~200 THB",
-      "level": "฿฿",
-      "details": "Krabi LocalPlus rašo apie ~200 THB kokteilius su vaizdu į Railay East",
+      "badge": "Kokteiliai ~€5.41",
+      "level": "€€",
+      "details": "Krabi LocalPlus rašo apie ~€5.41 kokteilius su vaizdu į Railay East",
       "note": "Šaltinis: krabi.localplus.city (2021-11-01)"
     }
   },
   "krua-thara-seafood": {
     "pricing": {
-      "badge": "Seafood 1,100–1,550 THB",
-      "level": "฿฿฿",
-      "details": "MenuWeb svečiai užsisakė scallops+krevetes už 1,550 THB; Tripadvisor pažymi krabą ~1,100 THB",
+      "badge": "Seafood €29.76– €41.93",
+      "level": "€€€",
+      "details": "MenuWeb svečiai užsisakė scallops+krevetes už €41.93; Tripadvisor pažymi krabą ~€29.76",
       "note": "Šaltiniai: menuweb.menu ir Tripadvisor (2025)"
     }
   },
@@ -626,9 +626,9 @@
     "maps": "https://maps.google.com/?q=Koh+Wai+Paradise",
     "hidden": true,
     "pricing": {
-      "badge": "400–800 THB / naktis",
-      "level": "฿",
-      "details": "Paradise / Grandma hut'ai prasideda ~400 THB su bendromis dušo blokais, Good Feeling (~600 THB) turi nuosavus dušus; elektra ir Wi-Fi veikia tik vakare.",
+      "badge": "€10.82– €21.64 / naktis",
+      "level": "€",
+      "details": "Paradise / Grandma hut'ai prasideda ~€10.82 su bendromis dušo blokais, Good Feeling (~€16.23) turi nuosavus dušus; elektra ir Wi-Fi veikia tik vakare.",
       "note": "Šaltiniai: 12Go Asia (2024-11) ir iamkohchang (2025-11)."
     },
     "long_desc": "30 min. greitaeigiu laivu nuo Laem Ngop (Bang Bao prieplauka). Saloje nėra kelių – nuo Paradise paplūdimio mediniai takai jungia bungalow'us, o generatorius įjungiamas tik 18:00–22:00. Prie stovyklos yra naminis rifas su mėlynosiomis žuvimis, todėl užtenka savo kaukės ir žibintuvėlio naktiniam planktono stebėjimui.",
@@ -636,7 +636,7 @@
     "booking": {
       "label": "Koh Wai Paradise rezervacija",
       "url": "https://www.kohwaiparadise.com/reservation/",
-      "notes": "Formoje nurodyk datas ir ar reikia greitaeigio bilieto (650 THB/asm.). Patvirtinimą siunčia iki 24 val."
+      "notes": "Formoje nurodyk datas ir ar reikia greitaeigio bilieto (€17.58/asm.). Patvirtinimą siunčia iki 24 val."
     },
     "essentials": [
       "Generatorius tiekia elektrą tik 18:00–22:00 – pasiimk power bank ir žibintuvėlį.",
@@ -654,12 +654,12 @@
     "booking": {
       "label": "Ranong → Koh Phayam bilietai",
       "url": "https://12go.asia/en/travel/ranong/koh-phayam",
-      "notes": "Greitaeigiai (350–450 THB) išvyksta 07:30 ir 13:30, lėtesni keltai – 09:30. Į kainą įskaičiuotas bagažas iki 20 kg."
+      "notes": "Greitaeigiai (€9.47– €12.17) išvyksta 07:30 ir 13:30, lėtesni keltai – 09:30. Į kainą įskaičiuotas bagažas iki 20 kg."
     },
     "pricing": {
-      "badge": "Bungalow'ai 800–1 500 THB",
-      "level": "฿",
-      "details": "Hornbill Hut ir PP Land nakvynės kainuoja 800–1 500 THB / naktis, motorolerio nuoma ~120 THB/d.",
+      "badge": "Bungalow'ai €21.64– €40.58",
+      "level": "€",
+      "details": "Hornbill Hut ir PP Land nakvynės kainuoja €21.64– €40.58 / naktis, motorolerio nuoma ~€3.25/d.",
       "note": "Šaltinis: KohPhayamThailand.com ir vietiniai skelbimai (2025-02)."
     },
     "essentials": [
@@ -681,13 +681,13 @@
       "notes": "Seatran Discovery išplaukia 09:30 ir 14:30 iš Laem Ngop; bilietą patogu nusipirkti online ir atsiimti prieplaukoje."
     },
     "pricing": {
-      "badge": "450–600 THB kelionė",
-      "level": "฿",
-      "details": "Seatran Discovery 450 THB vienam asmeniui, Leelawadee Speedboat – 600 THB (2025 m. tarifai).",
+      "badge": "€12.17– €16.23 kelionė",
+      "level": "€",
+      "details": "Seatran Discovery €12.17 vienam asmeniui, Leelawadee Speedboat – €16.23 (2025 m. tarifai).",
       "note": "Šaltinis: KohMak.com bilietų sistema (2025-01)."
     },
     "essentials": [
-      "Nuomos punktai siūlo elektrinius dviračius (~250 THB/d.), todėl salą galima apeiti per pusdienį.",
+      "Nuomos punktai siūlo elektrinius dviračius (~€6.76/d.), todėl salą galima apeiti per pusdienį.",
       "Koh Mak neturi didelių parduotuvių – SPF ir vaistus įsidėk iš anksto."
     ]
   },
@@ -702,17 +702,17 @@
     "booking": {
       "label": "Boonsiri Koh Kood pervežimai",
       "url": "https://www.boonsiriresort-kohkood.com/transfer.html",
-      "notes": "10:45 ir 14:20 greitaeigiai (600–750 THB) iš Laem Sok apima mikroautobusą nuo Trat ir pervežimą iki viešbučio."
+      "notes": "10:45 ir 14:20 greitaeigiai (€16.23– €20.29) iš Laem Sok apima mikroautobusą nuo Trat ir pervežimą iki viešbučio."
     },
     "pricing": {
-      "badge": "600–750 THB greitaeigiai",
-      "level": "฿฿",
-      "details": "Boonsiri kombinuotas bilietas su pervežimu ~750 THB; grynas speedboat bilietas 600 THB.",
+      "badge": "€16.23– €20.29 greitaeigiai",
+      "level": "€€",
+      "details": "Boonsiri kombinuotas bilietas su pervežimu ~€20.29; grynas speedboat bilietas €16.23.",
       "note": "Šaltinis: Boonsiri Ferry tarifai (2025-01)."
     },
     "essentials": [
       "Koh Kood nėra bankomatų – atsivežk grynųjų.",
-      "4x4 taksi iki šiaurinių paplūdimių kainuoja 150–200 THB/asm.; pigiau dalintis su kitomis poromis."
+      "4x4 taksi iki šiaurinių paplūdimių kainuoja €4.06– €5.41/asm.; pigiau dalintis su kitomis poromis."
     ]
   },
   "koh-jum": {
@@ -726,12 +726,12 @@
     "booking": {
       "label": "Krabi → Koh Jum transferis",
       "url": "https://www.kohjumonline.com/transfer/",
-      "notes": "Privačios longtail valtys iš Laem Kruat kainuoja 400–600 THB ir trunka ~45 min.; iš anksto susitark dėl atvykimo laiko."
+      "notes": "Privačios longtail valtys iš Laem Kruat kainuoja €10.82– €16.23 ir trunka ~45 min.; iš anksto susitark dėl atvykimo laiko."
     },
     "pricing": {
-      "badge": "Longtail 400–600 THB",
-      "level": "฿",
-      "details": "Bendra longtail valtis 400 THB/asm., privati su lagaminais – 600 THB (2025 sezono kainos).",
+      "badge": "Longtail €10.82– €16.23",
+      "level": "€",
+      "details": "Bendra longtail valtis €10.82/asm., privati su lagaminais – €16.23 (2025 sezono kainos).",
       "note": "Šaltinis: KohJumOnline (2025-02)."
     },
     "essentials": [
@@ -753,9 +753,9 @@
       "notes": "Į paketą įskaičiuota dugongų valtis, angliškai kalbantis gidas ir pietūs ant paplūdimio."
     },
     "pricing": {
-      "badge": "Dugong turas 900–1 200 THB",
-      "level": "฿",
-      "details": "Privati valtis 1 200 THB (iki 6 asm.), prisijungimas prie grupės – 900 THB/asm.",
+      "badge": "Dugong turas €24.35– €32.46",
+      "level": "€",
+      "details": "Privati valtis €32.46 (iki 6 asm.), prisijungimas prie grupės – €24.35/asm.",
       "note": "Šaltinis: LibongNatureTour kainoraštis (2024-12)."
     },
     "essentials": [
@@ -764,12 +764,12 @@
     ]
   },
   "koh-kradan": {
-    "desc": "Koh Kradan priklauso Hat Chao Mai NP – atvykus reikia sumokėti 200 THB mokestį, o paviršinis nardymas tarp Ko Waen ir Paradise Beach stebina rifų žuvimis.",
+    "desc": "Koh Kradan priklauso Hat Chao Mai NP – atvykus reikia sumokėti €5.41 mokestį, o paviršinis nardymas tarp Ko Waen ir Paradise Beach stebina rifų žuvimis.",
     "source": "https://www.travelfish.org/island/thailand/southern_thailand/trang/ko_kradan",
     "image": "https://upload.wikimedia.org/wikipedia/commons/5/54/2016_Prowincja_Trang%2C_Ko_Kradan_%2801%29.jpg",
     "maps": "https://maps.google.com/?q=Koh+Kradan",
     "hidden": true,
-    "long_desc": "Hat Chao Mai nacionalinio parko sala – lankytojai privalo susimokėti 200 THB bilietą ir registruotis prie Ranger stoties. Dieną galima snorkelinti tarp Ko Waen ir Paradise paplūdimių, vakare mėgautis stovyklavietės restoranėliu.",
+    "long_desc": "Hat Chao Mai nacionalinio parko sala – lankytojai privalo susimokėti €5.41 bilietą ir registruotis prie Ranger stoties. Dieną galima snorkelinti tarp Ko Waen ir Paradise paplūdimių, vakare mėgautis stovyklavietės restoranėliu.",
     "duration": "Dienos turas arba 1 nakties sustojimas",
     "booking": {
       "label": "Trang Sea Tour dienos išvyka",
@@ -777,14 +777,14 @@
       "notes": "Laivai iš Kuantungu Pier išplaukia 09:00, į kainą įskaičiuota pietūs ir įėjimo mokestis (jei pasirinktas pilnas paketas)."
     },
     "pricing": {
-      "badge": "200 THB parkas + 450–550 THB laivas",
-      "level": "฿",
-      "details": "Greitaeigiai iš Pak Meng kainuoja 450–550 THB/asm., nacionalinio parko mokestis 200 THB.",
+      "badge": "€5.41 parkas +€12.17– €14.88 laivas",
+      "level": "€",
+      "details": "Greitaeigiai iš Pak Meng kainuoja €12.17– €14.88/asm., nacionalinio parko mokestis €5.41.",
       "note": "Šaltinis: TrangSeaTour (2025-01)."
     },
     "essentials": [
       "Pasiimk grynųjų – Parko rangeriai nepriima kortelių.",
-      "Ant paplūdimio nedaug pavėsio, todėl susiplanuok palapinę arba rent parasol nuo vietinių (150 THB/d.)."
+      "Ant paplūdimio nedaug pavėsio, todėl susiplanuok palapinę arba rent parasol nuo vietinių (€4.06/d.)."
     ]
   },
   "koh-yao-noi": {
@@ -798,17 +798,17 @@
     "booking": {
       "label": "Koh Yao Travel privatūs turai",
       "url": "https://www.kohyaotravel.com/tours/",
-      "notes": "Rezervuok longtail Hong saloms (1 200–1 500 THB/valtis, 4–6 asm.) ir iš anksto nurodyk startą iš Manoh ar Tha Khao prieplaukos."
+      "notes": "Rezervuok longtail Hong saloms (€32.46– €40.58/valtis, 4–6 asm.) ir iš anksto nurodyk startą iš Manoh ar Tha Khao prieplaukos."
     },
     "pricing": {
-      "badge": "Longtail 1 200–1 500 THB",
-      "level": "฿฿",
-      "details": "Privati valtis iki 6 žmonių kainuoja 1 500 THB; papildomas Hong salų NP mokestis 300 THB/asm.",
+      "badge": "Longtail €32.46– €40.58",
+      "level": "€€",
+      "details": "Privati valtis iki 6 žmonių kainuoja €40.58; papildomas Hong salų NP mokestis €8.12/asm.",
       "note": "Šaltinis: KohYaoTravel pasiūlymai (2025-02)."
     },
     "essentials": [
       "Sala turi tik vieną 7-Eleven parduotuvę – specialius ingredientus atsivežk.",
-      "Dviračiai ir e-step'ai nuomojami už 150–250 THB/d., keliuose mažai automobilių."
+      "Dviračiai ir e-step'ai nuomojami už €4.06– €6.76/d., keliuose mažai automobilių."
     ]
   },
   "koh-phra-thong": {
@@ -822,16 +822,16 @@
     "booking": {
       "label": "Golden Buddha Resort",
       "url": "https://www.goldenbuddharesort.com/",
-      "notes": "Rezervuodami nurodykite Khura Buri longtail atvykimo laiką; resortas gali suorganizuoti valtį (1 500–1 800 THB/valtis)."
+      "notes": "Rezervuodami nurodykite Khura Buri longtail atvykimo laiką; resortas gali suorganizuoti valtį (€40.58– €48.69/valtis)."
     },
     "pricing": {
-      "badge": "Longtail 1 500–1 800 THB",
-      "level": "฿฿",
-      "details": "Khura Buri → Koh Phra Thong privati valtis kainuoja 1 500–1 800 THB; sala neturi ATM, todėl pasirūpink grynaisiais.",
+      "badge": "Longtail €40.58– €48.69",
+      "level": "€€",
+      "details": "Khura Buri → Koh Phra Thong privati valtis kainuoja €40.58– €48.69; sala neturi ATM, todėl pasirūpink grynaisiais.",
       "note": "Šaltinis: GoldenBuddhaResort (2025-02)."
     },
     "essentials": [
-      "4x4 transferas iki nakvynės kainuoja papildomai (150–200 THB/asm.).",
+      "4x4 transferas iki nakvynės kainuoja papildomai (€4.06– €5.41/asm.).",
       "Laukinėje savanoje gausu smėlio muselių – įsidėk repelentą."
     ]
   },
@@ -846,12 +846,12 @@
     "booking": {
       "label": "BKK → NAN skrydžiai / autobusai",
       "url": "https://12go.asia/en/travel/bangkok/nan",
-      "notes": "Nok Air ir Thai Smile skrenda ~90 min. (1 600–2 200 THB), naktiniai autobusai iš Mo Chit trunka 9 val."
+      "notes": "Nok Air ir Thai Smile skrenda ~90 min. (€43.28– €59.51), naktiniai autobusai iš Mo Chit trunka 9 val."
     },
     "pricing": {
-      "badge": "Skrydis 1 600–2 200 THB",
-      "level": "฿฿",
-      "details": "Nok Air į vieną pusę ~1 600 THB, dviračių nuoma Nan mieste 150 THB/d.",
+      "badge": "Skrydis €43.28– €59.51",
+      "level": "€€",
+      "details": "Nok Air į vieną pusę ~€43.28, dviračių nuoma Nan mieste €4.06/d.",
       "note": "Šaltinis: 12Go Asia (2025-02)."
     },
     "essentials": [
@@ -870,12 +870,12 @@
     "booking": {
       "label": "Cheow Lan 2D1N paketas",
       "url": "https://www.khaosok.com/cheow-lan-lake-tour/",
-      "notes": "Rekomenduojama rezervuoti bent 30 dienų prieš. Į kainą įskaičiuotas pervežimas iš Khao Sok miestelio ir 300 THB parko mokestis."
+      "notes": "Rekomenduojama rezervuoti bent 30 dienų prieš. Į kainą įskaičiuotas pervežimas iš Khao Sok miestelio ir €8.12 parko mokestis."
     },
     "pricing": {
-      "badge": "3 800–4 500 THB / asm.",
-      "level": "฿฿฿",
-      "details": "Standartinis 2D1N paketas su rafthouse, maitinimu ir longtail safari kainuoja 3 800–4 500 THB (priklausomai nuo nakvynės tipo).",
+      "badge": "€102.79– €121.73 / asm.",
+      "level": "€€€",
+      "details": "Standartinis 2D1N paketas su rafthouse, maitinimu ir longtail safari kainuoja €102.79– €121.73 (priklausomai nuo nakvynės tipo).",
       "note": "Šaltinis: KhaoSok.com paketai (2025-02)."
     },
     "essentials": [
