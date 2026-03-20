@@ -70,6 +70,42 @@
       border-radius: 999px;
       font-weight: 600;
     }
+    .macro-card {
+      border-radius: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.12), #fff);
+      padding: 20px;
+      min-height: 200px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    }
+    .macro-step {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: #15803d;
+      font-weight: 600;
+    }
+    .macro-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #065f46;
+      background: rgba(16, 185, 129, 0.15);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-top: 6px;
+    }
+    .macro-card ul {
+      margin-top: 10px;
+      padding-left: 18px;
+      color: #334155;
+      font-size: 0.95rem;
+    }
+    .macro-card p {
+      color: #1e293b;
+    }
     .timeline-bar {
       position: relative;
       height: 8px;
@@ -182,7 +218,37 @@
     </div>
 
     <div id="appBox" class="hidden space-y-6">
-<div class="bg-white rounded-2xl shadow-sm border border-slate-100">
+    <div class="bg-gradient-to-br from-brand-50/70 to-white border border-brand-100 rounded-2xl p-5 sm:p-6">
+      <p class="text-xs uppercase tracking-[0.4em] text-brand-700 font-semibold">Kelionė trimis žingsniais</p>
+      <h2 class="text-2xl font-display font-semibold text-slate-900 mt-1 mb-4">Stuburas vienoje akimirkoje</h2>
+      <div class="grid gap-4 lg:grid-cols-3">
+        <article class="macro-card">
+          <p class="macro-step">1 žingsnis</p>
+          <h3 class="text-xl font-display text-slate-900 mt-2">Skrydis iš Lietuvos</h3>
+          <p class="text-sm text-slate-600 mt-2" id="macroOutboundText">2026-12-11 · VNO/RIX → Phuket (HKT)</p>
+          <p class="text-xs text-slate-500 mt-4">Galimos opcijos: Finnair (per HEL), Turkish (per IST) arba Qatar (per DOH).</p>
+        </article>
+        <article class="macro-card">
+          <p class="macro-step">2 žingsnis</p>
+          <h3 class="text-xl font-display text-slate-900 mt-2">Vietiniai peršokimai</h3>
+          <span class="macro-chip" id="macroRouteChip">Pietūs → Chiang Rai → Bangkok</span>
+          <ul id="macroTransitList">
+            <li>Phuket → Ao Nang (privatus minivanas)</li>
+            <li>Krabi / Phuket → Chiang Rai (vidinis skrydis)</li>
+            <li>Chiang Rai → Bangkok (vidinis skrydis)</li>
+          </ul>
+          <p class="text-xs text-slate-500 mt-4">Ilgesni vandens perėjimai vyksta longtail/keltų kombinacija tarp salų.</p>
+        </article>
+        <article class="macro-card">
+          <p class="macro-step">3 žingsnis</p>
+          <h3 class="text-xl font-display text-slate-900 mt-2">Grįžimas į Lietuvą</h3>
+          <p class="text-sm text-slate-600 mt-2" id="macroInboundText">2027-01-02 · Bangkok (BKK) → VNO/RIX</p>
+          <p class="text-xs text-slate-500 mt-4">Tas pats aljansas (Finnair/Qatar/Turkish) – atgalinis reisas po Naujųjų.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100">
       <div class="px-5 sm:px-6 pt-6 pb-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold">13 dienų planas</p>
@@ -375,6 +441,10 @@
       const itinerarySummaryEl = document.getElementById('itinerarySummary');
       const itineraryListEl = document.getElementById('itineraryList');
       const nextActionsEl = document.getElementById('nextActionsBox');
+      const macroOutboundEl = document.getElementById('macroOutboundText');
+      const macroInboundEl = document.getElementById('macroInboundText');
+      const macroRouteChipEl = document.getElementById('macroRouteChip');
+      const macroTransitListEl = document.getElementById('macroTransitList');
       const networkFallbackEl = document.getElementById('networkFallback');
       const networkEdgesBox = document.getElementById('networkEdges');
       const stageTimelineBox = document.getElementById('stageWindowsTimeline');
@@ -409,6 +479,31 @@
         if (data.summary?.inbound) summaryParts.push(data.summary.inbound);
         if (data.summary?.team) summaryParts.push(data.summary.team);
         itinerarySummaryEl.textContent = summaryParts.join(' • ');
+        if (macroOutboundEl) {
+          macroOutboundEl.textContent = data.summary?.outbound || 'Pasirink skrydį iš VNO/RIX į HKT ar BKK.';
+        }
+        if (macroInboundEl) {
+          macroInboundEl.textContent = data.summary?.inbound || 'Išvykimas iš BKK po Naujųjų (pvz., 2027-01-02).';
+        }
+        if (macroRouteChipEl) {
+          let routeLabel = '';
+          if (data.title && data.title.includes('·')) {
+            routeLabel = data.title.split('·')[1].trim();
+          }
+          macroRouteChipEl.textContent = routeLabel || 'Pietūs → Chiang Rai → Bangkok';
+        }
+        if (macroTransitListEl) {
+          const hops = [];
+          (data.days || []).forEach(day => {
+            const area = (day.area || '').trim();
+            if (!area.includes('→')) return;
+            if (/VNO|RIX/i.test(area)) return;
+            if (!hops.includes(area)) hops.push(area);
+          });
+          macroTransitListEl.innerHTML = hops.length
+            ? hops.map(item => `<li>${item}</li>`).join('')
+            : '<li>Phuket → Ao Nang (kelias sausuma)</li><li>Krabi → Chiang Rai (vidinis skrydis)</li><li>Chiang Rai → Bangkok (vidinis skrydis)</li>';
+        }
         const days = data.days || [];
         itineraryListEl.innerHTML = days.length ? days.map(day => `
           <div class="plan-line">
