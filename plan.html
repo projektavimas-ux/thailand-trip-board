@@ -252,6 +252,7 @@
         }
         const seen = new Set();
         let khaoSokAdded = false;
+        let samuiAdded = false;
         (data?.days || []).forEach(day => {
           const area = (day.area || '').trim();
           const theme = (day.theme || '').trim();
@@ -267,6 +268,17 @@
               mode: 'Cheow Lan'
             });
             khaoSokAdded = true;
+            if (!samuiAdded) {
+              legs.push({
+                label: 'Samui / Phangan',
+                headline: 'Koh Samui · Ang Thong',
+                subline: 'Golfo salų bazė',
+                detail: 'Pervežimas į Surat Thani → Donsak (~2 h) ir ferry į Samui (~1 h 45). Dienos turai į Ang Thong ar Koh Phangan.',
+                icon: '🛥️',
+                mode: 'Golfo salos'
+              });
+              samuiAdded = true;
+            }
           }
           if (!area.includes('→')) return;
           if (/VNO|RIX/i.test(area)) return;
@@ -283,6 +295,23 @@
             mode: descriptor.label
           });
         });
+        if (!samuiAdded) {
+          const insertIdx = legs.findIndex(leg => leg.headline.includes('Krabi') && leg.headline.includes('Chiang Rai'));
+          const samuiLeg = {
+            label: 'Samui / Phangan',
+            headline: 'Koh Samui · Ang Thong',
+            subline: 'Golfo salų bazė',
+            detail: 'Pervežimas į Surat Thani → Donsak (~2 h) ir ferry į Samui (~1 h 45). Dienos turai į Ang Thong ar Koh Phangan.',
+            icon: '🛥️',
+            mode: 'Golfo salos'
+          };
+          if (insertIdx === -1) {
+            legs.push(samuiLeg);
+          } else {
+            legs.splice(insertIdx, 0, samuiLeg);
+          }
+          samuiAdded = true;
+        }
         if (data?.summary?.inbound) {
           legs.push({
             label: 'Grįžimas',
