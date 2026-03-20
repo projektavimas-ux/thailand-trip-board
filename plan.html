@@ -155,8 +155,7 @@
         <a class="pb-1 hover:text-slate-900" href="./index.html">Apžvalga</a>
         <a class="pb-1 hover:text-slate-900" href="./flights.html">Skrydžiai</a>
         <a class="pb-1 text-slate-900 border-b-2 border-brand-500" href="./plan.html">Kelionės planas</a>
-        <a class="pb-1 hover:text-slate-900" href="./routes-vertical.html">Maršruto tinklas</a>
-        <a class="pb-1 hover:text-slate-900" href="./routes-dashboard.html">Dashboard (eksperimentinis)</a>
+        <a class="pb-1 hover:text-slate-900" href="./routes-dashboard.html">Maršruto dashboard</a>
         <a class="pb-1 hover:text-slate-900" href="./places.html">Vietos ir balsai</a>
       </nav>
     </div>
@@ -233,7 +232,9 @@
             <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold">Laiko langai
             </p>
             <h2 class="text-xl font-display font-semibold text-slate-900">Etapų laikrodžio juosta</h2>
-            <p class="text-sm text-slate-500">Kraunama iš `data/stage_windows.json`.</p>
+            <p class="text-sm text-slate-500">
+              <span id="stageTimelineStatus">Kraunama iš data/stage_windows.json</span>
+            </p>
           </div>
           <a href="./data/stage_windows.json" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600" download>Parsisiųsti JSON →</a>
         </div>
@@ -350,10 +351,17 @@
         if (!place) return place;
         const override = getOverride(place.name);
         const base = { ...place };
-        if (override && typeof override.hidden === 'boolean'){
-          base.hidden = override.hidden;
+        let hiddenFlag = typeof place?.is_hidden === 'boolean' ? place.is_hidden : undefined;
+        if (hiddenFlag === undefined && typeof place?.hidden === 'boolean'){
+          hiddenFlag = place.hidden;
         }
-        base.hidden = base.hidden || false;
+        if (hiddenFlag === undefined && typeof base.hidden === 'boolean'){
+          hiddenFlag = base.hidden;
+        }
+        if (override && typeof override.hidden === 'boolean'){
+          hiddenFlag = override.hidden;
+        }
+        base.hidden = Boolean(hiddenFlag);
         return base;
       }
       function deriveStageLabel(label){
@@ -364,13 +372,13 @@
         return (parts[0] || label).trim();
       }
 
-
       const itinerarySummaryEl = document.getElementById('itinerarySummary');
       const itineraryListEl = document.getElementById('itineraryList');
       const nextActionsEl = document.getElementById('nextActionsBox');
       const networkFallbackEl = document.getElementById('networkFallback');
       const networkEdgesBox = document.getElementById('networkEdges');
       const stageTimelineBox = document.getElementById('stageWindowsTimeline');
+      const stageTimelineStatusEl = document.getElementById('stageTimelineStatus');
       const networkState = {
         nodes: [],
         edges: [],
@@ -551,15 +559,69 @@
         }).join('');
       }
 
-      function loadStageWindows(){
+      function updateStageTimelineStatus(message){
+        if (stageTimelineStatusEl && typeof message === 'string'){
+          stageTimelineStatusEl.textContent = message;
+        }
+      }
+
+      function loadStageWindowsFromFallback(options = {}){
         if (!stageTimelineBox) return;
+        const { statusOnLoad, statusOnSuccess } = options;
+        updateStageTimelineStatus(statusOnLoad || 'Kraunama iš data/stage_windows.json');
         stageTimelineBox.innerHTML = '<p class="text-sm text-slate-500">Kraunama…</p>';
-        fetch('./data/stage_windows.json')
+        fetch(`./data/stage_windows.json?v=${assetVersion}`)
           .then(res => res.json())
-          .then(data => renderStageTimeline((data && data.items) || []))
+          .then(data => {
+            renderStageTimeline((data && data.items) || []);
+            updateStageTimelineStatus(statusOnSuccess || 'Duomenys: data/stage_windows.json');
+          })
           .catch(() => {
             stageTimelineBox.innerHTML = '<p class="text-sm text-rose-500">Nepavyko įkelti laiko langų.</p>';
+            updateStageTimelineStatus('Nepavyko perskaityti data/stage_windows.json');
           });
+      }
+
+      async function loadStageWindowsFromSupabase(client){
+        if (!stageTimelineBox){
+          return;
+        }
+        if (!client){
+          loadStageWindowsFromFallback();
+          return;
+        }
+        updateStageTimelineStatus('Kraunama iš Supabase (stage_windows)…');
+        stageTimelineBox.innerHTML = '<p class="text-sm text-slate-500">Kraunama iš Supabase…</p>';
+        try {
+          const { data, error } = await client
+            .from('stage_windows')
+            .select('*')
+            .order('order_index', { ascending: true, nullsFirst: false })
+            .order('start_day', { ascending: true, nullsFirst: false });
+          if (error) throw error;
+          if (Array.isArray(data) && data.length){
+            const normalized = data.map(item => ({
+              stage: item.stage || '',
+              window: item.window_label || item.window || '',
+              start_day: typeof item.start_day === 'number' ? item.start_day : null,
+              end_day: typeof item.end_day === 'number' ? item.end_day : null,
+              focus: item.focus || ''
+            }));
+            renderStageTimeline(normalized);
+            updateStageTimelineStatus('Duomenys: Supabase · stage_windows');
+          } else {
+            loadStageWindowsFromFallback({
+              statusOnLoad: 'Supabase tuščias → jungiamas data/stage_windows.json',
+              statusOnSuccess: 'Duomenys: data/stage_windows.json (fallback)'
+            });
+          }
+        } catch (err){
+          console.error('Stage windows Supabase error', err);
+          loadStageWindowsFromFallback({
+            statusOnLoad: 'Supabase klaida → jungiamas data/stage_windows.json',
+            statusOnSuccess: 'Duomenys: data/stage_windows.json (fallback)'
+          });
+        }
       }
 
       function renderMap(){
@@ -833,6 +895,7 @@
           renderMap();
           renderTransfers();
           refreshData(client);
+          loadStageWindowsFromSupabase(client);
         },
         onSignedOut: () => {
           currentClient = null;
@@ -840,6 +903,7 @@
           lastVoteMap = {};
           document.getElementById('stagesBox').innerHTML = '';
           document.getElementById('boardBox').innerHTML = '';
+          loadStageWindowsFromFallback();
         }
       });
 
@@ -860,7 +924,7 @@
       renderMap();
       initTripNetwork();
       renderTransfers();
-      loadStageWindows();
+      loadStageWindowsFromFallback();
     });
   </script>
 </body>
