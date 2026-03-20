@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Thailand Control · Kelionės planas</title>
 
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -34,54 +32,20 @@
     }
   </script>
 
-  <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-sA+e2atnCo1hNWeSSz0pQ8U4C1uMBaDZI8q9d2LFw2g=" crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-o9N1j7kGStGkG2JxG2fE9JteLo75fW9n4nDYn7J4kL8=" crossorigin=""></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
   <style>
-    .plan-line {
-      border: 1px solid rgba(148, 163, 184, 0.3);
-      border-radius: 18px;
-      padding: 14px 16px;
-      margin-bottom: 12px;
-      background: #f8fafc;
-    }
-    .plan-line strong {
-      display: inline-block;
-      font-weight: 600;
-      font-size: 1rem;
-      color: #0f172a;
-    }
-    .plan-stage {
-      margin-bottom: 18px;
-    }
-    .hidden-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #b45309;
-      background: rgba(180, 83, 9, 0.15);
-      padding: 2px 10px;
-      border-radius: 999px;
-      font-weight: 600;
-    }
+    body { background: #f8fafc; color: #0f172a; }
     .macro-card {
       border-radius: 24px;
       border: 1px solid rgba(148, 163, 184, 0.35);
-      background: linear-gradient(135deg, rgba(34, 197, 94, 0.12), #fff);
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.08), #fff);
       padding: 20px;
       min-height: 200px;
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
     }
     .macro-step {
       font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.3em;
+      letter-spacing: 0.35em;
       color: #15803d;
       font-weight: 600;
     }
@@ -103,88 +67,90 @@
       color: #334155;
       font-size: 0.95rem;
     }
-    .macro-card p {
-      color: #1e293b;
-    }
-    .timeline-bar {
+    .macro-card p { color: #1e293b; }
+    .macro-timeline {
       position: relative;
-      height: 8px;
+      margin-top: 24px;
+      padding-left: 28px;
+    }
+    .macro-timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(15, 23, 42, 0.15);
+    }
+    .timeline-row {
+      position: relative;
+      margin-bottom: 28px;
+      padding-left: 16px;
+    }
+    .timeline-row:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -4px;
+      top: 4px;
+      width: 20px;
+      height: 20px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.08);
-      margin-top: 16px;
-      margin-bottom: 6px;
-    }
-    .timeline-bar .timeline-fill {
-      position: absolute;
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, #16a34a, #22c55e);
-      box-shadow: 0 2px 6px rgba(22, 163, 74, 0.35);
-    }
-    .timeline-point {
-      position: absolute;
-      top: 12px;
-      transform: translateX(-50%);
-      font-size: 10px;
+      background: #14532d;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.12em;
-      color: #475569;
-      text-transform: uppercase;
+      box-shadow: 0 0 0 6px rgba(20, 83, 45, 0.15);
     }
-    #routeMap {
-      width: 100%;
-      min-height: 320px;
+    .timeline-card {
+      background: #fff;
+      border: 1px solid rgba(148, 163, 184, 0.35);
       border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.3);
-      overflow: hidden;
+      padding: 18px;
+      box-shadow: 0 15px 30px rgba(15, 23, 42, 0.08);
     }
-    #networkGraph {
-      width: 100%;
-      height: 100%;
-      min-height: 360px;
-    }
-    #networkFallback {
-      pointer-events: none;
-    }
-    .network-link {
-      stroke: rgba(15, 23, 42, 0.18);
-      stroke-width: 2px;
-    }
-    .network-node circle {
-      fill: #fff;
-      stroke: #16a34a;
-      stroke-width: 3px;
-      transition: stroke 0.2s, stroke-width 0.2s, r 0.2s;
-    }
-    .network-node circle.active {
-      stroke: #0f172a;
-      stroke-width: 4px;
-    }
-    .network-node-label {
+    .timeline-mode {
       font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #475569;
       font-weight: 600;
-      fill: #0f172a;
-      pointer-events: none;
+    }
+    .timeline-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #0f172a;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+    .timeline-card p {
+      color: #374151;
+      font-size: 0.95rem;
+    }
+    .timeline-card small {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: #475569;
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen">
-  <!-- Hero -->
+<body class="font-sans antialiased">
   <div class="relative bg-brand-900 h-64 sm:h-80 w-full overflow-hidden">
     <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1920&auto=format&fit=crop" alt="Route planning" class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay">
     <div class="absolute inset-0 bg-gradient-to-t from-brand-900/95 to-transparent"></div>
     <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-10">
       <p class="text-xs text-brand-100 font-semibold uppercase tracking-[0.4em]">Kelionės stuburas</p>
-      <h1 class="text-4xl sm:text-5xl font-display font-bold text-white mb-2 drop-shadow">
-        🗺️ Kelionės planas pagal etapus
-      </h1>
-      <p class="text-brand-100 text-sm sm:text-base font-medium max-w-2xl drop-shadow">
-        `stage` laukas Supabase lentelėje – 1 ETAPAS → 2 ETAPAS → 3 ETAPAS → Finalas. Žemiau – 13 dienų stuburas, vietų balsai ir žemėlapis vienoje lentoje.
-      </p>
+      <h1 class="text-4xl sm:text-5xl font-display font-bold text-white mb-2 drop-shadow">🧭 Kelionės planas</h1>
+      <p class="text-brand-100 text-sm sm:text-base font-medium max-w-2xl drop-shadow">Trumpas makro žingsnių vaizdas: tarptautiniai skrydžiai + esminiai perėjimai tarp mazgų.</p>
     </div>
   </div>
 
-  <!-- Navigation -->
   <div class="bg-white border-b border-slate-200">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <nav class="flex overflow-x-auto py-4 space-x-8 text-sm sm:text-base font-medium text-slate-500 whitespace-nowrap">
@@ -197,36 +163,16 @@
     </div>
   </div>
 
-  <!-- Content -->
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
-        <div id="configBox" class="hidden bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-xl shadow-sm">
-      <p class="text-sm text-yellow-700"><strong>Supabase raktas būtinas.</strong> Įrašyk `window.SUPABASE_URL` ir `window.SUPABASE_ANON_KEY` faile `supabase-config.v2.js`.</p>
-    </div>
-
-    <div id="authBox" class="hidden max-w-md mx-auto bg-white rounded-2xl shadow-sm border border-slate-100 p-8">
-      <h3 class="text-2xl font-display font-semibold text-slate-900 mb-2">Prisijunk</h3>
-      <p class="text-sm text-slate-500 mb-6">Naudok tą patį Supabase el. paštą.</p>
-      <div class="space-y-4">
-        <input id="emailInput" type="email" placeholder="El. paštas" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
-        <input id="passInput" type="password" placeholder="Slaptažodis" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
-        <div class="flex space-x-3 pt-2">
-          <button id="loginBtn" class="flex-1 bg-brand-600 hover:bg-brand-500 text-white font-medium py-3 px-4 rounded-lg transition-colors shadow-sm">Prisijungti</button>
-          <button id="signupBtn" class="flex-1 bg-white hover:bg-slate-50 text-slate-700 font-medium py-3 px-4 rounded-lg border border-slate-200 transition-colors shadow-sm">Registruoti</button>
-        </div>
-        <p id="authStatus" class="text-sm text-center text-rose-500 min-h-[20px]"></p>
-      </div>
-    </div>
-
-    <div id="appBox" class="hidden space-y-6">
-    <div class="bg-gradient-to-br from-brand-50/70 to-white border border-brand-100 rounded-2xl p-5 sm:p-6">
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
+    <section class="bg-gradient-to-br from-brand-50/70 to-white border border-brand-100 rounded-2xl p-5 sm:p-6">
       <p class="text-xs uppercase tracking-[0.4em] text-brand-700 font-semibold">Kelionė trimis žingsniais</p>
       <h2 class="text-2xl font-display font-semibold text-slate-900 mt-1 mb-4">Stuburas vienoje akimirkoje</h2>
       <div class="grid gap-4 lg:grid-cols-3">
         <article class="macro-card">
           <p class="macro-step">1 žingsnis</p>
           <h3 class="text-xl font-display text-slate-900 mt-2">Skrydis iš Lietuvos</h3>
-          <p class="text-sm text-slate-600 mt-2" id="macroOutboundText">2026-12-11 · VNO/RIX → Phuket (HKT)</p>
-          <p class="text-xs text-slate-500 mt-4">Galimos opcijos: Finnair (per HEL), Turkish (per IST) arba Qatar (per DOH).</p>
+          <p class="text-sm text-slate-600 mt-2" id="macroOutboundText">Įrašoma...</p>
+          <p class="text-xs text-slate-500 mt-4">Finnair / Turkish / Qatar – 1 persėdimas HEL/IST/DOH.</p>
         </article>
         <article class="macro-card">
           <p class="macro-step">2 žingsnis</p>
@@ -237,264 +183,108 @@
             <li>Krabi / Phuket → Chiang Rai (vidinis skrydis)</li>
             <li>Chiang Rai → Bangkok (vidinis skrydis)</li>
           </ul>
-          <p class="text-xs text-slate-500 mt-4">Ilgesni vandens perėjimai vyksta longtail/keltų kombinacija tarp salų.</p>
+          <p class="text-xs text-slate-500 mt-4">Laivai ir keltai dengia salas, skrydžiai – ilgiausi šuoliai.</p>
         </article>
         <article class="macro-card">
           <p class="macro-step">3 žingsnis</p>
           <h3 class="text-xl font-display text-slate-900 mt-2">Grįžimas į Lietuvą</h3>
-          <p class="text-sm text-slate-600 mt-2" id="macroInboundText">2027-01-02 · Bangkok (BKK) → VNO/RIX</p>
-          <p class="text-xs text-slate-500 mt-4">Tas pats aljansas (Finnair/Qatar/Turkish) – atgalinis reisas po Naujųjų.</p>
+          <p class="text-sm text-slate-600 mt-2" id="macroInboundText">Įrašoma...</p>
+          <p class="text-xs text-slate-500 mt-4">Išskrendant iš BKK 2027-01-02 (po Naujųjų).</p>
         </article>
       </div>
-    </div>
+    </section>
 
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-100">
-      <div class="px-5 sm:px-6 pt-6 pb-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold">13 dienų planas</p>
-          <h2 class="text-2xl font-display font-semibold text-slate-900">Viešas stuburas</h2>
-          <p class="text-sm text-slate-500" id="itinerarySummary">Kraunama…</p>
+          <p class="text-xs uppercase tracking-[0.4em] text-brand-600 font-semibold">Esminiai mazgai</p>
+          <h2 class="text-2xl font-display font-semibold text-slate-900">Judėjimo planas</h2>
+          <p class="text-sm text-slate-500">Automatiškai sugeneruota iš `data/itinerary.json` – rodomi tik pereinamieji mazgai.</p>
         </div>
-        <a id="downloadItinerary" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors" href="./data/itinerary.json" download>Parsisiųsti JSON</a>
+        <a href="./data/itinerary.json" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600" download>Parsisiųsti JSON →</a>
       </div>
-      <div class="px-5 sm:px-6 py-6" id="itineraryList"></div>
-      <div class="px-5 sm:px-6 pb-6" id="nextActionsBox"></div>
-    </div>
-
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <div id="who" class="text-lg font-display font-semibold text-slate-900"></div>
-          <p class="text-sm text-slate-500 mt-1">Vietos ir balsai kraunami tiesiai iš Supabase.</p>
-        </div>
-        <button id="logoutBtn" class="px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors">Atsijungti</button>
+      <div id="macroTimeline" class="macro-timeline">
+        <p class="text-sm text-slate-500">Kraunama...</p>
       </div>
+    </section>
+  </main>
 
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h2 class="text-xl font-display font-semibold text-slate-900">Automatinė statuso lenta</h2>
-          <p class="text-sm text-slate-500">Spausk „Atnaujinti planą“ po naujų balsavimų ar vietų kūrimo.</p>
-        </div>
-        <button id="refreshBtn" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors">Atnaujinti planą</button>
-      </div>
-
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-100">
-        <div class="px-5 sm:px-6 pt-6 pb-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold">Maršruto žemėlapis</p>
-            <h2 class="text-xl font-display font-semibold text-slate-900">Interaktyvus maršrutas</h2>
-            <p class="text-sm text-slate-500">Pagrindiniai etapai nuo Phuketo iki Bankoko</p>
-          </div>
-          <a id="googleMapLink" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600" href="https://www.google.com/maps/dir/Kata+Beach,+Karon,+Phuket/Railay+Beach,+Krabi/Koh+Lanta,+Krabi/Bangkok+Old+Town/" target="_blank" rel="noopener">Google Maps →</a>
-        </div>
-        <div class="px-5 sm:px-6 py-6">
-          <div id="routeMap"></div>
-          <p class="text-sm text-slate-500 mt-3">Žemėlapyje parodyti pagrindiniai etapai ir langai.</p>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold">Laiko langai
-            </p>
-            <h2 class="text-xl font-display font-semibold text-slate-900">Etapų laikrodžio juosta</h2>
-            <p class="text-sm text-slate-500">
-              <span id="stageTimelineStatus">Kraunama iš data/stage_windows.json</span>
-            </p>
-          </div>
-          <a href="./data/stage_windows.json" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600" download>Parsisiųsti JSON →</a>
-        </div>
-        <div id="stageWindowsTimeline" class="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-          <p class="text-sm text-slate-500">Kraunama...</p>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6 space-y-6" id="networkCard">
-        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-          <div>
-            <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold">AI maršrutas</p>
-            <h2 class="text-2xl font-display font-semibold text-slate-900">Mazgų tinklas</h2>
-            <p class="text-sm text-slate-500 max-w-2xl">Dirbtinis asistentas susieja pagrindinius mazgus (pamatyti, kur pavalgyti, ką veikti, kur miegoti) ir parodyti jungiamuosius koridorius tarp jų.</p>
-          </div>
-          <div class="flex items-center gap-3 flex-wrap">
-            <button id="networkResetBtn" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors">Perstatyti grafiką</button>
-            <a href="./data/trip_network.json" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors" download>Parsisiųsti JSON</a>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)] gap-6">
-          <div class="space-y-4">
-            <div id="networkGraphWrapper" class="relative border border-dashed border-slate-200 rounded-2xl bg-slate-50">
-              <svg id="networkGraph" aria-label="Kelionės mazgų tinklas"></svg>
-              <p id="networkFallback" class="absolute inset-0 flex items-center justify-center text-sm text-slate-500"></p>
-            </div>
-          </div>
-          <div id="networkDetails" class="bg-slate-50 border border-slate-200 rounded-2xl p-5 min-h-[220px]">
-            <p class="text-sm text-slate-500">Pasirink mazgą, kad matytum veiksmą aplink jį.</p>
-          </div>
-        </div>
-        <div>
-          <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold mb-2">Transporto koridoriai</p>
-          <div id="networkEdges" class="flex flex-col gap-3"></div>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
-        <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold mb-2">Vidiniai pervažiavimai</p>
-        <h2 class="text-xl font-display font-semibold text-slate-900">Transferų planas</h2>
-        <div id="transferList" class="mt-4"></div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
-          <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold mb-2">Etapų lenta</p>
-          <h2 class="text-xl font-display font-semibold text-slate-900">Etapai</h2>
-          <div id="stagesBox" class="mt-4"></div>
-        </div>
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
-            <div>
-              <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold mb-1">Balsų lenta</p>
-              <h2 class="text-xl font-display font-semibold text-slate-900">Bendra lentelė</h2>
-            </div>
-            <select id="boardStageFilter" class="rounded-lg border border-slate-200 px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
-              <option value="all">Visi etapai</option>
-              <option value="1 ETAPAS">1 ETAPAS</option>
-              <option value="2 ETAPAS">2 ETAPAS</option>
-              <option value="3 ETAPAS">3 ETAPAS</option>
-              <option value="Finalas">Finalas</option>
-              <option value="Kita">Kita</option>
-            </select>
-          </div>
-          <div id="boardBox"></div>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
-        <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold mb-2">Pastabos</p>
-        <ul class="list-disc pl-6 text-sm text-slate-700 space-y-2">
-          <li>Etapų pavadinimai gali būti bet kokie (pvz., „Naktinis traukinys“), svarbu juos įvesti vienodai.</li>
-          <li>Jei etapas nenurodytas, jis patenka į skiltį „Kita“.</li>
-          <li>Balsavimas vyksta puslapyje „Vietos ir balsai“.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <script src="./supabase-config.v2.js?v=2026-03-12-c"></script>
-  <script src="./scripts/supabase-page.js"></script>
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const stageOrder = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','4 ETAPAS (Alternatyva)','Finalas','Kita'];
-      const mapStops = [
-        { name: 'Kata · Phuket', window: 'D1–D4', coords: [7.821, 98.296], note: 'Starto bazė pietuose' },
-        { name: 'Railay · Krabi', window: 'D5–D7', coords: [8.012, 98.839], note: 'Kalkakmenio įlankos' },
-        { name: 'Koh Lanta', window: 'D8–D10', coords: [7.514, 99.093], note: 'Ramesni paplūdimiai' },
-        { name: 'Bangkok Old Town', window: 'D11–D13', coords: [13.751, 100.491], note: 'Finalas + skrydis namo' }
-      ];
-      const transferPlan = [
-        { leg: 'OUT · VNO/RIX → Phuket (HKT) 2026-12-09..12', detail: 'OPEN-JAW 1 sustojimo skrydis (Qatar/Turkish). Nusileidus – privatus minivanas (45 min) iki Kata/Karon.' },
-        { leg: 'Phuket (Kata) → Railay Beach', detail: 'Privatus minivanas iki Ao Nang (~2h40) + long-tail valtis į Railay (15 min).' },
-        { leg: 'Railay → Koh Lanta', detail: 'Greitaeigė valtis nuo Ao Nang Pier (70 min) arba kombinuotas minivanas + keltas per Saladan.' },
-        { leg: 'Koh Lanta → Bangkok', detail: 'Pervežimas į Krabi oro uostą (2h) + AirAsia/Thai VietJet skrydis į DMK/BKK; iš oro uosto – „Grab“ ar MRT.' },
-        { leg: 'IN · Bangkok → VNO/RIX 2027-01-01..03', detail: 'BKK → VNO/RIX 1 sustojimo kryptis (Turkish/Qatar) + 3h buferis.' }
-      ];
-      const googleMapLink = 'https://www.google.com/maps/dir/Kata+Beach,+Karon,+Phuket/Railay+Beach,+Krabi/Koh+Lanta,+Krabi/Bangkok+Old+Town/';
-      const assetVersion = '2026-03-17';
-      let placeOverrides = {};
-      const overridesReady = fetch(`./data/places_overrides.json?v=${assetVersion}`)
-        .then(res => res.json())
-        .then(data => { placeOverrides = data || {}; })
-        .catch(() => { placeOverrides = {}; });
-
-      function slugify(text = ''){
-        return text.toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
-      }
-      function getOverride(name){
-        if (!name) return null;
-        return placeOverrides[slugify(name)] || null;
-      }
-      function decoratePlace(place){
-        if (!place) return place;
-        const override = getOverride(place.name);
-        const base = { ...place };
-        let hiddenFlag = typeof place?.is_hidden === 'boolean' ? place.is_hidden : undefined;
-        if (hiddenFlag === undefined && typeof place?.hidden === 'boolean'){
-          hiddenFlag = place.hidden;
-        }
-        if (hiddenFlag === undefined && typeof base.hidden === 'boolean'){
-          hiddenFlag = base.hidden;
-        }
-        if (override && typeof override.hidden === 'boolean'){
-          hiddenFlag = override.hidden;
-        }
-        base.hidden = Boolean(hiddenFlag);
-        return base;
-      }
-      function deriveStageLabel(label){
-        if (!label) return 'Kita';
-        const match = label.match(/^(\d+\s*ETAPAS)/i);
-        if (match) return match[1].replace(/etapas/i,'ETAPAS').trim();
-        const parts = label.split(':');
-        return (parts[0] || label).trim();
-      }
-
-      const itinerarySummaryEl = document.getElementById('itinerarySummary');
-      const itineraryListEl = document.getElementById('itineraryList');
-      const nextActionsEl = document.getElementById('nextActionsBox');
+    document.addEventListener('DOMContentLoaded', () => {
+      const macroTransitListEl = document.getElementById('macroTransitList');
+      const macroRouteChipEl = document.getElementById('macroRouteChip');
       const macroOutboundEl = document.getElementById('macroOutboundText');
       const macroInboundEl = document.getElementById('macroInboundText');
-      const macroRouteChipEl = document.getElementById('macroRouteChip');
-      const macroTransitListEl = document.getElementById('macroTransitList');
-      const networkFallbackEl = document.getElementById('networkFallback');
-      const networkEdgesBox = document.getElementById('networkEdges');
-      const stageTimelineBox = document.getElementById('stageWindowsTimeline');
-      const stageTimelineStatusEl = document.getElementById('stageTimelineStatus');
-      const networkState = {
-        nodes: [],
-        edges: [],
-        selectedId: null,
-        simulation: null,
-        nodeSelection: null
+      const timelineEl = document.getElementById('macroTimeline');
+
+      const detectMode = (text = '') => {
+        const lower = text.toLowerCase();
+        if (lower.includes('skrydis')) return { icon: '🛫', label: 'Skrydis' };
+        if (lower.includes('valtis') || lower.includes('longtail') || lower.includes('keltas')) return { icon: '🛥️', label: 'Vanduo' };
+        if (lower.includes('minivanas') || lower.includes('pervežimas') || lower.includes('privatus')) return { icon: '🚐', label: 'Sausuma' };
+        return { icon: '🧭', label: 'Perėjimas' };
       };
-      let networkResizeTimer = null;
 
-      const googleLinkEl = document.getElementById('googleMapLink');
-      if (googleLinkEl) googleLinkEl.href = googleMapLink;
+      const buildLegs = (data) => {
+        const legs = [];
+        if (data?.summary?.outbound) {
+          legs.push({
+            label: 'Išvykimas',
+            headline: data.summary.outbound,
+            subline: 'Tarpkontinentinis skrydis',
+            detail: 'Finnair / Turkish / Qatar (1 persėdimas)',
+            icon: '🛫',
+            mode: 'Skrydis'
+          });
+        }
+        const seen = new Set();
+        (data?.days || []).forEach(day => {
+          const area = (day.area || '').trim();
+          if (!area.includes('→')) return;
+          if (/VNO|RIX/i.test(area)) return;
+          if (seen.has(area)) return;
+          seen.add(area);
+          const firstBlock = (day.blocks && day.blocks[0]) ? day.blocks[0] : '';
+          const descriptor = detectMode(firstBlock + ' ' + (day.theme || ''));
+          legs.push({
+            label: 'Perėjimas',
+            headline: area,
+            subline: day.theme || 'Etapas',
+            detail: firstBlock || 'Detales pildysime arčiau datos.',
+            icon: descriptor.icon,
+            mode: descriptor.label
+          });
+        });
+        if (data?.summary?.inbound) {
+          legs.push({
+            label: 'Grįžimas',
+            headline: data.summary.inbound,
+            subline: 'Skrydis į Lietuvą',
+            detail: 'Tas pats aljansas (Finnair/Qatar/Turkish).',
+            icon: '🛫',
+            mode: 'Skrydis'
+          });
+        }
+        return legs;
+      };
 
-      let currentClient = null;
-      let lastPlaces = [];
-      let lastVoteMap = {};
-      let boardFilter = 'all';
-      let mapInstance = null;
-
-      function renderItinerary(data){
-        if (!data){
-          itinerarySummaryEl.textContent = 'Nepavyko įkelti plano.';
-          itineraryListEl.innerHTML = '<p class="text-sm text-slate-500">Patikrink failą data/itinerary.json</p>';
-          nextActionsEl.innerHTML = '';
-          return;
-        }
-        const summaryParts = [];
-        if (data.summary?.outbound) summaryParts.push(data.summary.outbound);
-        if (data.summary?.inbound) summaryParts.push(data.summary.inbound);
-        if (data.summary?.team) summaryParts.push(data.summary.team);
-        itinerarySummaryEl.textContent = summaryParts.join(' • ');
-        if (macroOutboundEl) {
-          macroOutboundEl.textContent = data.summary?.outbound || 'Pasirink skrydį iš VNO/RIX į HKT ar BKK.';
-        }
-        if (macroInboundEl) {
-          macroInboundEl.textContent = data.summary?.inbound || 'Išvykimas iš BKK po Naujųjų (pvz., 2027-01-02).';
-        }
+      const renderCards = (data) => {
         if (macroRouteChipEl) {
           let routeLabel = '';
-          if (data.title && data.title.includes('·')) {
+          if (data?.title?.includes('·')) {
             routeLabel = data.title.split('·')[1].trim();
           }
           macroRouteChipEl.textContent = routeLabel || 'Pietūs → Chiang Rai → Bangkok';
         }
+        if (macroOutboundEl) {
+          macroOutboundEl.textContent = data?.summary?.outbound || '2026-12-11 · VNO/RIX → Phuket (HKT)';
+        }
+        if (macroInboundEl) {
+          macroInboundEl.textContent = data?.summary?.inbound || '2027-01-02 · Bangkok (BKK) → VNO/RIX';
+        }
         if (macroTransitListEl) {
           const hops = [];
-          (data.days || []).forEach(day => {
+          (data?.days || []).forEach(day => {
             const area = (day.area || '').trim();
             if (!area.includes('→')) return;
             if (/VNO|RIX/i.test(area)) return;
@@ -502,524 +292,40 @@
           });
           macroTransitListEl.innerHTML = hops.length
             ? hops.map(item => `<li>${item}</li>`).join('')
-            : '<li>Phuket → Ao Nang (kelias sausuma)</li><li>Krabi → Chiang Rai (vidinis skrydis)</li><li>Chiang Rai → Bangkok (vidinis skrydis)</li>';
+            : '<li>Phuket → Ao Nang (sausuma)</li><li>Krabi → Chiang Rai (vidinis skrydis)</li><li>Chiang Rai → Bangkok (vidinis skrydis)</li>';
         }
-        const days = data.days || [];
-        itineraryListEl.innerHTML = days.length ? days.map(day => `
-          <div class="plan-line">
-            <strong>${day.day || ''}</strong> · ${day.area || ''}<br/>
-            ${day.theme ? `<span class=\"text-xs uppercase tracking-wide text-slate-500\">${day.theme}</span><br/>` : ''}
-            ${(day.blocks || []).map(block => `<div class=\"text-sm text-slate-600\">• ${block}</div>`).join('')}
-            ${day.notes ? `<small class=\"text-slate-500\">${day.notes}</small>` : ''}
-          </div>
-        `).join('') : '<p class="text-sm text-slate-500">Nėra dienų.</p>';
-        const acts = data.next_actions || [];
-        nextActionsEl.innerHTML = acts.length ? `
-          <div class="bg-brand-50 border border-brand-100 rounded-2xl p-4">
-            <p class="text-xs uppercase tracking-[0.35em] text-brand-700 font-semibold mb-2">Kiti veiksmai</p>
-            <ul class="list-disc pl-6 text-sm text-slate-700 space-y-1">${acts.map(item => `<li>${item}</li>`).join('')}</ul>
-          </div>
-        ` : '<p class="text-sm text-slate-500">Papildomų veiksmų kol kas nėra.</p>';
-      }
+      };
 
-      function loadItinerary(){
-        nextActionsEl.innerHTML = '<p class="text-sm text-slate-500">Kraunama…</p>';
-        fetch('./data/itinerary.json')
-          .then(res => res.json())
-          .then(renderItinerary)
-          .catch(() => {
-            itinerarySummaryEl.textContent = 'Nepavyko įkelti plano.';
-            itineraryListEl.innerHTML = '<p class="text-sm text-slate-500">Patikrink failą data/itinerary.json</p>';
-            nextActionsEl.innerHTML = '';
-          });
-      }
-
-      loadItinerary();
-
-      function renderStages(places, voteMap){
-        const box = document.getElementById('stagesBox');
-        if (!places.length){
-          box.innerHTML = '<p class="text-sm text-slate-500">Dar nėra pasiūlymų.</p>';
+      const renderTimeline = (data) => {
+        const legs = buildLegs(data);
+        if (!legs.length) {
+          timelineEl.innerHTML = '<p class="text-sm text-rose-500">Nepavyko gauti plano.</p>';
           return;
         }
-        const grouped = {};
-        stageOrder.forEach(key => grouped[key] = []);
-        places.forEach(p => {
-          const key = stageOrder.includes(p.stage) ? p.stage : (p.stage || 'Kita');
-          grouped[key].push(p);
-        });
-        box.innerHTML = '';
-        Object.entries(grouped).forEach(([stage, items]) => {
-          if (!items.length) return;
-          const wrapper = document.createElement('div');
-          wrapper.className = 'plan-stage';
-          wrapper.innerHTML = `<h3 class="text-lg font-display font-semibold text-slate-900 mb-2">${stage}</h3>`;
-          items.sort((a,b)=>(voteMap[b.id]||0)-(voteMap[a.id]||0)).forEach((p,i) => {
-            const line = document.createElement('div');
-            line.className = 'plan-line';
-            const hiddenChip = p.hidden ? '<span class=\"hidden-pill\">🔒 Hidden</span>' : '';
-            line.innerHTML = `<strong>${i+1}.</strong> ${p.name} ${hiddenChip}<br><span class="text-xs uppercase tracking-wide text-slate-500">${voteMap[p.id]||0} bals.</span>`;
-            wrapper.appendChild(line);
-          });
-          box.appendChild(wrapper);
-        });
-      }
-
-      function renderBoard(){
-        const box = document.getElementById('boardBox');
-        if (!lastPlaces.length){
-          box.innerHTML = '<p class="text-sm text-slate-500">Kol kas tuščia.</p>';
-          return;
-        }
-        const filtered = boardFilter === 'all' ? lastPlaces : lastPlaces.filter(p => (p.stage || 'Kita') === boardFilter);
-        if (!filtered.length){
-          box.innerHTML = '<p class="text-sm text-slate-500">Šiame etape dar nėra vietų.</p>';
-          return;
-        }
-        const sorted = [...filtered].sort((a,b)=>(lastVoteMap[b.id]||0)-(lastVoteMap[a.id]||0));
-        box.innerHTML = sorted.map((p,i) => {
-          const hiddenChip = p.hidden ? '<span class=\"hidden-pill\">🔒 Hidden</span>' : '';
-          return `
-          <div class=\"plan-line\"><strong>${i+1}.</strong> ${p.name} ${hiddenChip}<br><span class=\"text-xs uppercase tracking-wide text-slate-500\">${lastVoteMap[p.id]||0} bals.</span></div>
-        `;
-        }).join('');
-      }
-
-      function renderTransfers(){
-        const box = document.getElementById('transferList');
-        box.innerHTML = transferPlan.map(item => `
-          <div class="plan-line">
-            <strong>${item.leg}</strong><br>
-            <span class="text-sm text-slate-600">${item.detail}</span>
-          </div>
-        `).join('');
-      }
-
-      function formatDayRange(start, end){
-        if (typeof start === 'number' && typeof end === 'number'){
-          return `D${start} → D${end}`;
-        }
-        if (typeof start === 'number'){
-          return `Nuo D${start}`;
-        }
-        if (typeof end === 'number'){
-          return `Iki D${end}`;
-        }
-        return '';
-      }
-
-      function getTimelineTotalDays(items){
-        const maxDay = items.reduce((max, item) => {
-          const candidate = typeof item.end_day === 'number' ? item.end_day : item.start_day;
-          return Math.max(max, candidate || 0);
-        }, 0);
-        return maxDay || 13;
-      }
-
-      function dayPercent(day, total, inclusive = false){
-        if (typeof day !== 'number' || !total) return inclusive ? 100 : 0;
-        const clamped = Math.max(1, Math.min(total, day));
-        return inclusive ? (clamped / total) * 100 : ((clamped - 1) / total) * 100;
-      }
-
-      function renderStageTimeline(items){
-        if (!stageTimelineBox) return;
-        if (!items.length){
-          stageTimelineBox.innerHTML = '<p class="text-sm text-slate-500">Laiko langai dar nesudėti.</p>';
-          return;
-        }
-        const totalDays = getTimelineTotalDays(items);
-        stageTimelineBox.innerHTML = items.map((item, idx) => {
-          const dayRange = formatDayRange(item.start_day, item.end_day);
-          const startPct = dayPercent(item.start_day, totalDays, false);
-          const endPct = dayPercent(typeof item.end_day === 'number' ? item.end_day : (item.start_day || totalDays), totalDays, true);
-          const fillWidth = Math.min(100 - startPct, Math.max(endPct - startPct, 6));
-          const rightLabelPct = Math.min(100, startPct + fillWidth);
-          return `
-            <div class="relative border border-slate-200 rounded-2xl p-4 bg-slate-50">
-              <div class="flex items-center gap-2 text-xs uppercase tracking-[0.35em] text-slate-500 font-semibold">
-                <span>${idx+1}</span>
-                <span>${item.stage || ''}</span>
-              </div>
-              <p class="text-2xl font-display font-semibold text-slate-900 mt-2">${item.window || ''}</p>
-              <p class="text-sm text-slate-600 mt-1">${item.focus || ''}</p>
-              ${dayRange ? `<p class="text-xs text-slate-400 mt-1">${dayRange}</p>` : ''}
-              <div class="timeline-bar">
-                <span class="timeline-fill" style="left:${startPct}%;width:${fillWidth}%;"></span>
-                ${item.start_day ? `<span class="timeline-point" style="left:${startPct}%">D${item.start_day}</span>` : ''}
-                ${item.end_day ? `<span class="timeline-point" style="left:${rightLabelPct}%">D${item.end_day}</span>` : ''}
-              </div>
-            </div>
-          `;
-        }).join('');
-      }
-
-      function updateStageTimelineStatus(message){
-        if (stageTimelineStatusEl && typeof message === 'string'){
-          stageTimelineStatusEl.textContent = message;
-        }
-      }
-
-      function loadStageWindowsFromFallback(options = {}){
-        if (!stageTimelineBox) return;
-        const { statusOnLoad, statusOnSuccess } = options;
-        updateStageTimelineStatus(statusOnLoad || 'Kraunama iš data/stage_windows.json');
-        stageTimelineBox.innerHTML = '<p class="text-sm text-slate-500">Kraunama…</p>';
-        fetch(`./data/stage_windows.json?v=${assetVersion}`)
-          .then(res => res.json())
-          .then(data => {
-            renderStageTimeline((data && data.items) || []);
-            updateStageTimelineStatus(statusOnSuccess || 'Duomenys: data/stage_windows.json');
-          })
-          .catch(() => {
-            stageTimelineBox.innerHTML = '<p class="text-sm text-rose-500">Nepavyko įkelti laiko langų.</p>';
-            updateStageTimelineStatus('Nepavyko perskaityti data/stage_windows.json');
-          });
-      }
-
-      async function loadStageWindowsFromSupabase(client){
-        if (!stageTimelineBox){
-          return;
-        }
-        if (!client){
-          loadStageWindowsFromFallback();
-          return;
-        }
-        updateStageTimelineStatus('Kraunama iš Supabase (stage_windows)…');
-        stageTimelineBox.innerHTML = '<p class="text-sm text-slate-500">Kraunama iš Supabase…</p>';
-        try {
-          const { data, error } = await client
-            .from('stage_windows')
-            .select('*')
-            .order('order_index', { ascending: true, nullsFirst: false })
-            .order('start_day', { ascending: true, nullsFirst: false });
-          if (error) throw error;
-          if (Array.isArray(data) && data.length){
-            const normalized = data.map(item => ({
-              stage: item.stage || '',
-              window: item.window_label || item.window || '',
-              start_day: typeof item.start_day === 'number' ? item.start_day : null,
-              end_day: typeof item.end_day === 'number' ? item.end_day : null,
-              focus: item.focus || ''
-            }));
-            renderStageTimeline(normalized);
-            updateStageTimelineStatus('Duomenys: Supabase · stage_windows');
-          } else {
-            loadStageWindowsFromFallback({
-              statusOnLoad: 'Supabase tuščias → jungiamas data/stage_windows.json',
-              statusOnSuccess: 'Duomenys: data/stage_windows.json (fallback)'
-            });
-          }
-        } catch (err){
-          console.error('Stage windows Supabase error', err);
-          loadStageWindowsFromFallback({
-            statusOnLoad: 'Supabase klaida → jungiamas data/stage_windows.json',
-            statusOnSuccess: 'Duomenys: data/stage_windows.json (fallback)'
-          });
-        }
-      }
-
-      function renderMap(){
-        if (mapInstance || !document.getElementById('routeMap')) return;
-        mapInstance = L.map('routeMap', { scrollWheelZoom: false }).setView(mapStops[0].coords, 6);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(mapInstance);
-        const coords = mapStops.map(stop => stop.coords);
-        const poly = L.polyline(coords, { color: '#16a34a', weight: 3, opacity: 0.9 }).addTo(mapInstance);
-        mapStops.forEach((stop, idx) => {
-          L.marker(stop.coords).addTo(mapInstance)
-            .bindPopup(`<strong>${idx+1}. ${stop.name}</strong><br>${stop.window || ''}<br>${stop.note || ''}`);
-        });
-        mapInstance.fitBounds(poly.getBounds(), { padding: [20, 20] });
-      }
-
-      function buildNetworkList(label, items){
-        if (!Array.isArray(items) || !items.length) return '';
-        return `
-          <div class="space-y-2">
-            <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold">${label}</p>
-            <ul class="list-disc pl-4 text-sm text-slate-700 space-y-1">${items.map(item => `<li>${item}</li>`).join('')}</ul>
-          </div>
-        `;
-      }
-
-      function lookupNodeLabel(id){
-        return (networkState.nodes.find(node => node.id === id)?.label) || id;
-      }
-
-      function renderNetworkDetails(node){
-        const box = document.getElementById('networkDetails');
-        if (!box) return;
-        if (!node){
-          box.innerHTML = '<p class="text-sm text-slate-500">Pasirink mazgą, kad matytum veiksmą aplink jį.</p>';
-          return;
-        }
-        const windowLabel = node.window ? `${node.window} · ` : '';
-        box.innerHTML = `
-          <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold mb-1">${node.stage || ''}</p>
-          <h3 class="text-2xl font-display font-semibold text-slate-900">${node.label}</h3>
-          <p class="text-sm text-slate-500 mb-4">${windowLabel}${node.focus || ''}</p>
-          <div class="space-y-4">
-            ${buildNetworkList('Pamatyti', node.see)}
-            ${buildNetworkList('Kur pavalgyti', node.eat)}
-            ${buildNetworkList('Veiksmas', node.do)}
-            ${buildNetworkList('Kur miegoti', node.stay)}
-          </div>
-        `;
-      }
-
-      function renderNetworkEdges(edges){
-        if (!networkEdgesBox) return;
-        if (!edges || !edges.length){
-          networkEdgesBox.innerHTML = '<p class="text-sm text-slate-500">Kol kas nėra koridorių.</p>';
-          return;
-        }
-        networkEdgesBox.innerHTML = edges.map(edge => `
-          <div class="border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <p class="text-sm font-semibold text-slate-900">${lookupNodeLabel(edge.from)} → ${lookupNodeLabel(edge.to)}</p>
-              <p class="text-sm text-slate-500">${edge.notes || ''}</p>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-100">${edge.mode || ''}</span>
-              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700">${edge.duration || ''}</span>
+        timelineEl.innerHTML = legs.map((leg, idx) => `
+          <div class="timeline-row">
+            <div class="timeline-dot">${idx + 1}</div>
+            <div class="timeline-card">
+              <span class="timeline-mode">${leg.icon} ${leg.mode}</span>
+              <h3>${leg.headline}</h3>
+              <p class="text-sm text-slate-500">${leg.subline}</p>
+              <p>${leg.detail}</p>
+              <small>${leg.label}</small>
             </div>
           </div>
         `).join('');
-      }
+      };
 
-      function updateActiveNetworkNodes(){
-        if (!networkState.nodeSelection) return;
-        networkState.nodeSelection.select('circle')
-          .classed('active', d => d.id === networkState.selectedId)
-          .attr('r', d => d.id === networkState.selectedId ? 34 : 26);
-      }
-
-      function selectNetworkNode(node){
-        networkState.selectedId = node ? node.id : null;
-        renderNetworkDetails(node || null);
-        updateActiveNetworkNodes();
-      }
-
-      function setupNetworkGraph(){
-        if (!networkState.nodes.length) return;
-        const container = document.getElementById('networkGraphWrapper');
-        const width = container ? container.clientWidth : 640;
-        const height = Math.max(360, Math.min(520, width * 0.6));
-        const svg = d3.select('#networkGraph');
-        svg.selectAll('*').remove();
-        svg.attr('viewBox', `0 0 ${width} ${height}`);
-        svg.attr('preserveAspectRatio', 'xMidYMid meet');
-
-        const nodes = networkState.nodes.map(node => ({ ...node }));
-        const links = (networkState.edges || []).map(link => ({ ...link }));
-
-        const simulation = d3.forceSimulation(nodes)
-          .force('link', d3.forceLink(links).id(d => d.id).distance(190).strength(0.22))
-          .force('charge', d3.forceManyBody().strength(-420))
-          .force('center', d3.forceCenter(width / 2, height / 2))
-          .force('collision', d3.forceCollide().radius(90));
-
-        const link = svg.append('g')
-          .attr('class', 'network-links')
-          .selectAll('line')
-          .data(links)
-          .enter().append('line')
-          .attr('class', 'network-link');
-
-        link.append('title').text(d => `${lookupNodeLabel(d.from)} → ${lookupNodeLabel(d.to)}\n${d.mode || ''} · ${d.duration || ''}\n${d.notes || ''}`);
-
-        const node = svg.append('g')
-          .attr('class', 'network-nodes')
-          .selectAll('g')
-          .data(nodes)
-          .enter().append('g')
-          .attr('class', 'network-node')
-          .call(
-            d3.drag()
-              .on('start', (event, d) => {
-                if (!event.active) simulation.alphaTarget(0.3).restart();
-                d.fx = d.x;
-                d.fy = d.y;
-              })
-              .on('drag', (event, d) => {
-                d.fx = event.x;
-                d.fy = event.y;
-              })
-              .on('end', (event, d) => {
-                if (!event.active) simulation.alphaTarget(0);
-                d.fx = null;
-                d.fy = null;
-              })
-          )
-          .on('click', (_, d) => selectNetworkNode(d));
-
-        node.append('circle').attr('r', 26).append('title').text(d => d.label);
-
-        node.append('text')
-          .attr('class', 'network-node-label')
-          .attr('text-anchor', 'middle')
-          .attr('y', 44)
-          .each(function(d){
-            const text = d3.select(this);
-            const parts = d.label.split(' · ');
-            if (parts.length > 1){
-              text.append('tspan').attr('x', 0).text(parts[0]);
-              text.append('tspan').attr('x', 0).attr('dy', '1.2em').text('· ' + parts[1]);
-            } else {
-              text.append('tspan').attr('x', 0).text(d.label);
-            }
-          });
-
-        simulation.on('tick', () => {
-          link
-            .attr('x1', d => Math.max(20, Math.min(width - 20, d.source.x)))
-            .attr('y1', d => Math.max(20, Math.min(height - 20, d.source.y)))
-            .attr('x2', d => Math.max(20, Math.min(width - 20, d.target.x)))
-            .attr('y2', d => Math.max(20, Math.min(height - 20, d.target.y)));
-          node.attr('transform', d => {
-            d.x = Math.max(40, Math.min(width - 40, d.x));
-            d.y = Math.max(40, Math.min(height - 40, d.y));
-            return `translate(${d.x},${d.y})`;
-          });
+      fetch(`./data/itinerary.json?v=${Date.now()}`)
+        .then(res => res.json())
+        .then(data => {
+          renderCards(data);
+          renderTimeline(data);
+        })
+        .catch(() => {
+          renderCards(null);
+          timelineEl.innerHTML = '<p class="text-sm text-rose-500">Nepavyko gauti plano (patikrink data/itinerary.json).</p>';
         });
-
-        networkState.simulation = simulation;
-        networkState.nodeSelection = node;
-        if (!networkState.selectedId && nodes.length){
-          networkState.selectedId = nodes[0].id;
-        }
-        const activeNode = nodes.find(n => n.id === networkState.selectedId) || nodes[0] || null;
-        selectNetworkNode(activeNode);
-        renderNetworkEdges(networkState.edges);
-      }
-
-      function initTripNetwork(){
-        const graph = document.getElementById('networkGraph');
-        if (!graph) return;
-        if (networkFallbackEl){
-          networkFallbackEl.textContent = 'Kraunama tinklo schema...';
-        }
-        fetch('./data/trip_network.json', { cache: 'no-cache' })
-          .then(res => (res.ok ? res.json() : null))
-          .then(data => {
-            if (!data || !Array.isArray(data.nodes) || !data.nodes.length) throw new Error('nėra duomenų');
-            networkState.nodes = data.nodes;
-            networkState.edges = Array.isArray(data.edges) ? data.edges : [];
-            if (networkFallbackEl) networkFallbackEl.textContent = '';
-            setupNetworkGraph();
-          })
-          .catch(() => {
-            if (networkFallbackEl) networkFallbackEl.textContent = 'Nepavyko įkelti tinklo duomenų.';
-            renderNetworkDetails(null);
-            renderNetworkEdges([]);
-          });
-
-        const resetBtn = document.getElementById('networkResetBtn');
-        if (resetBtn){
-          resetBtn.addEventListener('click', () => {
-            if (networkState.simulation){
-              networkState.simulation.alpha(1).restart();
-            }
-          });
-        }
-
-        window.addEventListener('resize', () => {
-          if (!networkState.nodes.length) return;
-          clearTimeout(networkResizeTimer);
-          networkResizeTimer = setTimeout(() => {
-            setupNetworkGraph();
-          }, 250);
-        });
-      }
-
-      async function refreshData(client){
-        await overridesReady;
-        const [placesRes, votesRes] = await Promise.all([
-          client.from('places').select('*').order('created_at', { ascending: false }),
-          client.from('votes').select('place_id,user_id')
-        ]);
-        if (placesRes.error || votesRes.error){
-          document.getElementById('stagesBox').innerHTML = '<p class="text-sm text-rose-500">Nepavyko gauti duomenų.</p>';
-          document.getElementById('boardBox').innerHTML = '';
-          return;
-        }
-        lastVoteMap = {};
-        (votesRes.data || []).forEach(v => { lastVoteMap[v.place_id] = (lastVoteMap[v.place_id] || 0) + 1; });
-        lastPlaces = (placesRes.data || []).map(decoratePlace);
-        renderStages(lastPlaces, lastVoteMap);
-        renderBoard();
-      }
-
-      function enableDemoAppView(){
-        document.getElementById('configBox')?.classList.add('hidden');
-        document.getElementById('authBox')?.classList.add('hidden');
-        document.getElementById('appBox')?.classList.remove('hidden');
-        const whoEl = document.getElementById('who');
-        if (whoEl) whoEl.textContent = 'Demo režimas (Supabase neįjungtas)';
-      }
-
-      async function loadDemoPlaces(){
-        await overridesReady;
-        try {
-          const catalog = await fetch(`./data/places_catalog.json?v=${assetVersion}`).then(res => res.json());
-          const items = [];
-          (catalog?.stages || []).forEach(stage => {
-            const stageKey = deriveStageLabel(stage.title || stage.id || '');
-            (stage.items || []).forEach((item, idx) => {
-              items.push(decoratePlace({
-                id: `${stageKey || 'stage'}-${idx}`,
-                name: item.name || `Vieta ${idx+1}`,
-                stage: stageKey || 'Kita',
-                hidden: false
-              }));
-            });
-          });
-          lastPlaces = items;
-          lastVoteMap = {};
-          renderStages(lastPlaces, lastVoteMap);
-          renderBoard();
-        } catch (err){
-          document.getElementById('stagesBox').innerHTML = '<p class="text-sm text-rose-500">Nepavyko įkrauti demo duomenų.</p>';
-        }
-      }
-
-      const supabaseSession = initSupabasePage({
-        onReady: ({ client }) => {
-          currentClient = client;
-          document.getElementById('googleMapLink').href = googleMapLink;
-          renderMap();
-          renderTransfers();
-          refreshData(client);
-          loadStageWindowsFromSupabase(client);
-        },
-        onSignedOut: () => {
-          currentClient = null;
-          lastPlaces = [];
-          lastVoteMap = {};
-          document.getElementById('stagesBox').innerHTML = '';
-          document.getElementById('boardBox').innerHTML = '';
-          loadStageWindowsFromFallback();
-        }
-      });
-
-      if (!supabaseSession){
-        enableDemoAppView();
-        loadDemoPlaces();
-      }
-
-      document.getElementById('refreshBtn').addEventListener('click', () => {
-        if (currentClient) refreshData(currentClient);
-      });
-
-      document.getElementById('boardStageFilter').addEventListener('change', (e) => {
-        boardFilter = e.target.value;
-        renderBoard();
-      });
-
-      renderMap();
-      initTripNetwork();
-      renderTransfers();
-      loadStageWindowsFromFallback();
     });
   </script>
 </body>
