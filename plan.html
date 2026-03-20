@@ -49,6 +49,59 @@
       color: #15803d;
       font-weight: 600;
     }
+    .stage-windows-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+    .stage-window-card {
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 18px;
+      padding: 16px 18px;
+      background: rgba(248, 250, 252, 0.9);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+    }
+    .stage-window-card h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .stage-window-card p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: #475569;
+    }
+    .stage-window-focus {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: 8px;
+    }
+    .stage-progress-track {
+      position: relative;
+      height: 10px;
+      background: rgba(148, 163, 184, 0.25);
+      border-radius: 999px;
+      margin-top: 16px;
+      overflow: hidden;
+    }
+    .stage-progress-fill {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--start, 0%);
+      width: var(--width, 50%);
+      background: linear-gradient(90deg, #6366f1, #14b8a6);
+      border-radius: 999px;
+    }
+    .stage-progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      margin-top: 6px;
+    }
     .macro-chip {
       display: inline-flex;
       align-items: center;
@@ -207,6 +260,21 @@
         <p class="text-sm text-slate-500">Kraunama...</p>
       </div>
     </section>
+
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div>
+          <p class="text-xs uppercase tracking-[0.4em] text-brand-600 font-semibold">Etapų langai</p>
+          <h2 class="text-2xl font-display font-semibold text-slate-900">Kelionės ritmas</h2>
+          <p class="text-sm text-slate-500">Vizualus D1–D23 stuburas pagal `data/stage_windows.json`.</p>
+        </div>
+        <a href="./data/stage_windows.json" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600" download>Parsisiųsti langus →</a>
+      </div>
+      <div id="stageWindowsGrid" class="stage-windows-grid">
+        <p class="text-sm text-slate-500">Kraunama...</p>
+      </div>
+    </section>
+
     <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
       <p class="text-xs uppercase tracking-[0.4em] text-brand-600 font-semibold">Sustambintas maršrutas</p>
       <h2 class="text-2xl font-display font-semibold text-slate-900 mt-1 mb-4">Kelionės tikslai · iki Chiang Rai ir Naujųjų Bankoke</h2>
@@ -229,6 +297,7 @@
       const macroOutboundEl = document.getElementById('macroOutboundText');
       const macroInboundEl = document.getElementById('macroInboundText');
       const timelineEl = document.getElementById('macroTimeline');
+      const stageWindowsGrid = document.getElementById('stageWindowsGrid');
 
       const detectMode = (text = '') => {
         const lower = text.toLowerCase();
@@ -362,6 +431,37 @@
         }
       };
 
+      const renderStageWindows = (payload) => {
+        if (!stageWindowsGrid) return;
+        const items = payload?.items || [];
+        if (!items.length) {
+          stageWindowsGrid.innerHTML = '<p class="text-sm text-rose-500">Nėra suvestų etapų langų.</p>';
+          return;
+        }
+        const totalDays = Math.max(...items.map(item => Number(item.end_day) || Number(item.start_day) || 1)) || 1;
+        stageWindowsGrid.innerHTML = items.map(item => {
+          const start = Number(item.start_day) || 1;
+          const end = Number(item.end_day) || start;
+          const left = Math.max(0, ((start - 1) / totalDays) * 100);
+          const spanDays = Math.max(1, end - start + 1);
+          const width = Math.max(6, (spanDays / totalDays) * 100);
+          return `
+            <article class="stage-window-card">
+              <h4>${item.stage || ''} · ${item.window || ''}</h4>
+              <p>${start ? `D${start}` : ''}${end ? ` → D${end}` : ''}</p>
+              <p class="stage-window-focus">${item.focus || ''}</p>
+              <div class="stage-progress-track">
+                <div class="stage-progress-fill" style="--start:${left}%; --width:${width}%;"></div>
+              </div>
+              <div class="stage-progress-meta">
+                <span>${spanDays} d.</span>
+                <span>${Math.round((spanDays / totalDays) * 100)}% maršruto</span>
+              </div>
+            </article>
+          `;
+        }).join('');
+      };
+
       const renderTimeline = (data) => {
         const legs = buildLegs(data);
         if (!legs.length) {
@@ -391,6 +491,13 @@
         .catch(() => {
           renderCards(null);
           timelineEl.innerHTML = '<p class="text-sm text-rose-500">Nepavyko gauti plano (patikrink data/itinerary.json).</p>';
+        });
+
+      fetch(`./data/stage_windows.json?v=${Date.now()}`)
+        .then(res => res.json())
+        .then(data => renderStageWindows(data))
+        .catch(() => {
+          if (stageWindowsGrid) stageWindowsGrid.innerHTML = '<p class="text-sm text-rose-500">Nepavyko gauti etapų langų (patikrink data/stage_windows.json).</p>';
         });
     });
   </script>
