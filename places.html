@@ -85,6 +85,19 @@
       border-radius: 999px;
       font-weight: 600;
     }
+    .avatar-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0ea5e9;
+      background: rgba(14, 165, 233, 0.18);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
     .place-card .footer {
       display: flex;
       justify-content: space-between;
@@ -300,8 +313,10 @@
           base.pricing = override.pricing || null;
           base.booking = override.booking || null;
           base.essentials = override.essentials || null;
+          if (typeof override.avatar === 'boolean') { base.avatar = override.avatar; }
           if (typeof override.hidden === 'boolean') { base.hidden = override.hidden; }
         }
+        base.avatar = base.avatar || false;
         base.hidden = base.hidden || false;
         base.status = base.status || ((base.stage || '').includes('ETAPAS') ? 'plan' : 'idea');
         return base;
@@ -362,7 +377,8 @@
             duration: decorated.duration || '',
             pricing: decorated.pricing || null,
             booking: decorated.booking || null,
-            essentials: decorated.essentials || null
+            essentials: decorated.essentials || null,
+            avatar: decorated.avatar || false
           });
         });
         });
@@ -453,7 +469,8 @@
               duration: decorated.duration || '',
               pricing: decorated.pricing || null,
               booking: decorated.booking || null,
-              essentials: decorated.essentials || null
+              essentials: decorated.essentials || null,
+              avatar: decorated.avatar || false
             });
           });
         }
@@ -515,7 +532,8 @@
             duration: decorated.duration || '',
             pricing: decorated.pricing || null,
             booking: decorated.booking || null,
-            essentials: decorated.essentials || null
+            essentials: decorated.essentials || null,
+            avatar: decorated.avatar || false
           });
         });
       });
@@ -537,6 +555,7 @@
             <div class="body">
               <div class="tag">${item.stage || 'Etapas nenurodytas'}</div>
               ${item.hidden ? '<span class=\"hidden-pill\">🔒 Hidden</span>' : ''}
+              ${item.avatar ? '<span class=\"avatar-pill\">💠 Avatar</span>' : ''}
               <h3 class="text-lg font-display text-slate-900 mt-2 mb-2">${item.name}</h3>
               <p class="text-sm text-slate-600">${item.desc || ''}</p>
               <div class="mt-2 flex flex-wrap gap-4">
@@ -616,6 +635,9 @@
         const rows = [];
         const longText = entry.long_desc || entry.description || entry.desc || 'Aprašymas ruošiama.';
         rows.push(`<p class="text-sm text-slate-700 leading-relaxed">${longText}</p>`);
+        if (entry.avatar) {
+          rows.push('<div class="text-sm font-semibold text-sky-600">💠 Avatar filmavimo vieta</div>');
+        }
         if (entry.duration) {
           rows.push(`<div class="text-sm"><strong class="font-medium text-slate-900">Trukmė:</strong> <span class="text-slate-600">${entry.duration}</span></div>`);
         } else {
@@ -673,6 +695,7 @@
                 <div class="flex items-center gap-2 flex-wrap">
                   <div class="tag">${stage}</div>
                   ${p.hidden ? '<span class=\"hidden-pill\">🔒 Hidden</span>' : ''}
+                  ${p.avatar ? '<span class=\"avatar-pill\">💠 Avatar</span>' : ''}
                   <span class="text-[11px] uppercase tracking-[0.3em] ${statusColor}">${statusLabel}</span>
                 </div>
                 <h3 class="text-lg font-display text-slate-900 mt-2 mb-2">${p.name}</h3>
