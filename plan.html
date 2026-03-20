@@ -238,18 +238,33 @@
           });
         }
         const seen = new Set();
+        let khaoSokAdded = false;
         (data?.days || []).forEach(day => {
           const area = (day.area || '').trim();
+          const theme = (day.theme || '').trim();
+          const combo = `${area} ${theme}`.toLowerCase();
+          if (!khaoSokAdded && combo.includes('khao sok')) {
+            const ksBlock = (day.blocks || []).find(block => block.toLowerCase().includes('khao sok')) || 'Khao Sok / Cheow Lan longtail safaris ir naktis rafthouse.';
+            legs.push({
+              label: 'Khao Sok / Cheow Lan',
+              headline: 'Khao Sok · Cheow Lan Lake',
+              subline: 'Avatar stiliaus kalkakmenio bokštai',
+              detail: ksBlock,
+              icon: '🛶',
+              mode: 'Cheow Lan'
+            });
+            khaoSokAdded = true;
+          }
           if (!area.includes('→')) return;
           if (/VNO|RIX/i.test(area)) return;
           if (seen.has(area)) return;
           seen.add(area);
           const firstBlock = (day.blocks && day.blocks[0]) ? day.blocks[0] : '';
-          const descriptor = detectMode(firstBlock + ' ' + (day.theme || ''));
+          const descriptor = detectMode(firstBlock + ' ' + theme);
           legs.push({
             label: 'Perėjimas',
             headline: area,
-            subline: day.theme || 'Etapas',
+            subline: theme || 'Etapas',
             detail: firstBlock || 'Detales pildysime arčiau datos.',
             icon: descriptor.icon,
             mode: descriptor.label
