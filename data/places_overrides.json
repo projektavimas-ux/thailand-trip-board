@@ -630,66 +630,257 @@
       "level": "฿",
       "details": "Paradise / Grandma hut'ai prasideda ~400 THB su bendromis dušo blokais, Good Feeling (~600 THB) turi nuosavus dušus; elektra ir Wi-Fi veikia tik vakare.",
       "note": "Šaltiniai: 12Go Asia (2024-11) ir iamkohchang (2025-11)."
-    }
+    },
+    "long_desc": "30 min. greitaeigiu laivu nuo Laem Ngop (Bang Bao prieplauka). Saloje nėra kelių – nuo Paradise paplūdimio mediniai takai jungia bungalow'us, o generatorius įjungiamas tik 18:00–22:00. Prie stovyklos yra naminis rifas su mėlynosiomis žuvimis, todėl užtenka savo kaukės ir žibintuvėlio naktiniam planktono stebėjimui.",
+    "duration": "2–3 naktys lapkričio–balandžio sezonu",
+    "booking": {
+      "label": "Koh Wai Paradise rezervacija",
+      "url": "https://www.kohwaiparadise.com/reservation/",
+      "notes": "Formoje nurodyk datas ir ar reikia greitaeigio bilieto (650 THB/asm.). Patvirtinimą siunčia iki 24 val."
+    },
+    "essentials": [
+      "Generatorius tiekia elektrą tik 18:00–22:00 – pasiimk power bank ir žibintuvėlį.",
+      "Laivai kursuoja 10:30 ir 14:00, todėl atgalinį bilietą rezervuok iš anksto, ypač piko metu."
+    ]
   },
   "koh-phayam": {
     "desc": "Sala be automobilių Andamanų pakrantėje: Ao Yai (Long Beach) garsėja vakariniais saulėlydžiais ir banglentėmis, o Buffalo Bay – ramiu vandeniu, mangrovėmis bei ragų snapiais virš kabančių hamakų.",
     "source": "https://homeiswhereyourbagis.com/en/koh-phayam-things-to-do/",
     "image": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Ko_Phayam_v5.jpg",
-    "maps": "https://maps.google.com/?q=Ko+Phayam"
+    "maps": "https://maps.google.com/?q=Ko+Phayam",
+    "hidden": true,
+    "long_desc": "Sala be automobilių – tarp Ao Yai banglenčių paplūdimio ir ramesnės Buffalo Bay važinėjama tik motoroleriais arba taksi vežimėliais. Dieną galima lankyti permakultūrinius ūkius ir kavines „Hippy Bar“, o vakare klausytis gyvos muzikos bambukiniuose baruose.",
+    "duration": "3–4 naktys (sausis–kovas)",
+    "booking": {
+      "label": "Ranong → Koh Phayam bilietai",
+      "url": "https://12go.asia/en/travel/ranong/koh-phayam",
+      "notes": "Greitaeigiai (350–450 THB) išvyksta 07:30 ir 13:30, lėtesni keltai – 09:30. Į kainą įskaičiuotas bagažas iki 20 kg."
+    },
+    "pricing": {
+      "badge": "Bungalow'ai 800–1 500 THB",
+      "level": "฿",
+      "details": "Hornbill Hut ir PP Land nakvynės kainuoja 800–1 500 THB / naktis, motorolerio nuoma ~120 THB/d.",
+      "note": "Šaltinis: KohPhayamThailand.com ir vietiniai skelbimai (2025-02)."
+    },
+    "essentials": [
+      "AO Yai turi švelnią srovę rytiniam plaukimui, bet vakare pakyla bangos – planuok banglenčių pamokoms.",
+      "Sala neturi bankomatų, todėl grynuosius pasiimk Ranonge."
+    ]
   },
   "koh-mak": {
     "desc": "Trat provincijos koh Mak siūlo 27 km dviračių takų tarp gumos plantacijų, o Ao Suan Yai sekluma žemo potvynio metu atveria smėlio liežuvį link Koh Kham.",
     "source": "https://iamkohchang.com/guide/koh-mak-travel-guide.html",
     "image": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Ko_Mak%2C_Thailand_-_panoramio.jpg",
-    "maps": "https://maps.google.com/?q=Koh+Mak"
+    "maps": "https://maps.google.com/?q=Koh+Mak",
+    "hidden": true,
+    "long_desc": "27 km dviračių takų juosta vingiuoja tarp gumos plantacijų ir mažų kavinių. Dieną galima aplankyti Koh Mak muziejų, o žemo potvynio metu nuo Ao Suan Yai išeiti pėsčiomis į Koh Kham salą su juodais lavos akmenimis.",
+    "duration": "2–3 naktys (gruodis–kovas)",
+    "booking": {
+      "label": "Trat → Koh Mak greitaeigiai",
+      "url": "https://www.kohmak.com/ferry-ticket/",
+      "notes": "Seatran Discovery išplaukia 09:30 ir 14:30 iš Laem Ngop; bilietą patogu nusipirkti online ir atsiimti prieplaukoje."
+    },
+    "pricing": {
+      "badge": "450–600 THB kelionė",
+      "level": "฿",
+      "details": "Seatran Discovery 450 THB vienam asmeniui, Leelawadee Speedboat – 600 THB (2025 m. tarifai).",
+      "note": "Šaltinis: KohMak.com bilietų sistema (2025-01)."
+    },
+    "essentials": [
+      "Nuomos punktai siūlo elektrinius dviračius (~250 THB/d.), todėl salą galima apeiti per pusdienį.",
+      "Koh Mak neturi didelių parduotuvių – SPF ir vaistus įsidėk iš anksto."
+    ]
   },
   "koh-kood": {
     "desc": "Koh Kood vilioja krištolo skaidriais Bang Bao paplūdimiais ir džiunglėmis apsuptu Klong Chao kriokliu, kur galima maudytis natūraliuose baseinuose.",
     "source": "https://www.tourismthailand.org/Attraction/ko-kut",
     "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Koh_Kut%2C_Thailand%2C_Bang_Bao_Beach.jpg",
-    "maps": "https://maps.google.com/?q=Koh+Kood"
+    "maps": "https://maps.google.com/?q=Koh+Kood",
+    "hidden": true,
+    "long_desc": "Bang Bao paplūdimys ir Klong Chao krioklys dera su džiunglių takais, todėl verta iš anksto susiplanuoti motorolerio maršrutą. Dauguma kurortų dirba su Boonsiri greitaeigiais, kurie atveža iki privataus prieplaukos ir įskaičiuoja pervežimą į viešbutį.",
+    "duration": "3–4 naktys (lapkritis–kovas)",
+    "booking": {
+      "label": "Boonsiri Koh Kood pervežimai",
+      "url": "https://www.boonsiriresort-kohkood.com/transfer.html",
+      "notes": "10:45 ir 14:20 greitaeigiai (600–750 THB) iš Laem Sok apima mikroautobusą nuo Trat ir pervežimą iki viešbučio."
+    },
+    "pricing": {
+      "badge": "600–750 THB greitaeigiai",
+      "level": "฿฿",
+      "details": "Boonsiri kombinuotas bilietas su pervežimu ~750 THB; grynas speedboat bilietas 600 THB.",
+      "note": "Šaltinis: Boonsiri Ferry tarifai (2025-01)."
+    },
+    "essentials": [
+      "Koh Kood nėra bankomatų – atsivežk grynųjų.",
+      "4x4 taksi iki šiaurinių paplūdimių kainuoja 150–200 THB/asm.; pigiau dalintis su kitomis poromis."
+    ]
   },
   "koh-jum": {
     "desc": "Krabi provincijos Koh Jum jungia Ting Rai žvejų kaimą ir 4 km ilgio Golden Pearl paplūdimį; čia dar vis važinėjama motociklais purvo keliais.",
     "source": "https://www.travelfish.org/island/thailand/southern_thailand/krabi/ko_jum",
     "image": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Ko_Jum_boat.jpg",
-    "maps": "https://maps.google.com/?q=Koh+Jum"
+    "maps": "https://maps.google.com/?q=Koh+Jum",
+    "hidden": true,
+    "long_desc": "Koh Jum Golden Pearl pakrantė išlieka laukinė – paplūdimiuose veikia tik kelios bungalow'ų eilės, o elektra įjungiama generatoriais vakarais. Apsistojus Ting Rai kaime gali užsisakyti gido vedamą žvejybos ar guminukų turą su vietos šeimomis.",
+    "duration": "2–3 naktys (gruodis–kovas)",
+    "booking": {
+      "label": "Krabi → Koh Jum transferis",
+      "url": "https://www.kohjumonline.com/transfer/",
+      "notes": "Privačios longtail valtys iš Laem Kruat kainuoja 400–600 THB ir trunka ~45 min.; iš anksto susitark dėl atvykimo laiko."
+    },
+    "pricing": {
+      "badge": "Longtail 400–600 THB",
+      "level": "฿",
+      "details": "Bendra longtail valtis 400 THB/asm., privati su lagaminais – 600 THB (2025 sezono kainos).",
+      "note": "Šaltinis: KohJumOnline (2025-02)."
+    },
+    "essentials": [
+      "Generatoriai įjungiami tik 18:00–23:00, todėl pasikrauk elektronika iš anksto.",
+      "Užsakyk longtail grįžimui iš anksto – potvynių metu kai kurios prieplaukos neveikia."
+    ]
   },
   "koh-libong": {
     "desc": "Trang provincijos Koh Libong žinoma kaip Tailando dugongų prieglauda; nuo Tung Yaka mangrovių tako stebimos jūros karvės ir paukščiai.",
     "source": "https://www.tourismthailand.org/Attraction/ko-libong",
     "image": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Ko_Libong%2C_Kantang_District%2C_Trang%2C_Thailand_-_panoramio_%2811%29.jpg",
-    "maps": "https://maps.google.com/?q=Koh+Libong"
+    "maps": "https://maps.google.com/?q=Koh+Libong",
+    "hidden": true,
+    "long_desc": "Trang provincijos Libong sala garsėja dugongų stebėjimu – bendruomenės gidai plukdo mažomis longtail valtimis aplink seklumas ir mangroves. Ban Lang Khao homestay siūlo paprastus namelius, o vakarais galima prisijungti prie žvejybos ar batik dirbtuvių.",
+    "duration": "1–2 naktys (sausis–kovas)",
+    "booking": {
+      "label": "Libong Nature Tour",
+      "url": "https://libongnaturetour.com/",
+      "notes": "Į paketą įskaičiuota dugongų valtis, angliškai kalbantis gidas ir pietūs ant paplūdimio."
+    },
+    "pricing": {
+      "badge": "Dugong turas 900–1 200 THB",
+      "level": "฿",
+      "details": "Privati valtis 1 200 THB (iki 6 asm.), prisijungimas prie grupės – 900 THB/asm.",
+      "note": "Šaltinis: LibongNatureTour kainoraštis (2024-12)."
+    },
+    "essentials": [
+      "Geriausias dugongų matomumas – rytinio potvynio metu (08:00–10:30).",
+      "Sala turi ribotą internetą; homestay paprašo iš anksto pranešti apie maisto alergijas."
+    ]
   },
   "koh-kradan": {
     "desc": "Koh Kradan priklauso Hat Chao Mai NP – atvykus reikia sumokėti 200 THB mokestį, o paviršinis nardymas tarp Ko Waen ir Paradise Beach stebina rifų žuvimis.",
     "source": "https://www.travelfish.org/island/thailand/southern_thailand/trang/ko_kradan",
     "image": "https://upload.wikimedia.org/wikipedia/commons/5/54/2016_Prowincja_Trang%2C_Ko_Kradan_%2801%29.jpg",
-    "maps": "https://maps.google.com/?q=Koh+Kradan"
+    "maps": "https://maps.google.com/?q=Koh+Kradan",
+    "hidden": true,
+    "long_desc": "Hat Chao Mai nacionalinio parko sala – lankytojai privalo susimokėti 200 THB bilietą ir registruotis prie Ranger stoties. Dieną galima snorkelinti tarp Ko Waen ir Paradise paplūdimių, vakare mėgautis stovyklavietės restoranėliu.",
+    "duration": "Dienos turas arba 1 nakties sustojimas",
+    "booking": {
+      "label": "Trang Sea Tour dienos išvyka",
+      "url": "https://www.trangseatour.com/koh-kradan-day-trip/",
+      "notes": "Laivai iš Kuantungu Pier išplaukia 09:00, į kainą įskaičiuota pietūs ir įėjimo mokestis (jei pasirinktas pilnas paketas)."
+    },
+    "pricing": {
+      "badge": "200 THB parkas + 450–550 THB laivas",
+      "level": "฿",
+      "details": "Greitaeigiai iš Pak Meng kainuoja 450–550 THB/asm., nacionalinio parko mokestis 200 THB.",
+      "note": "Šaltinis: TrangSeaTour (2025-01)."
+    },
+    "essentials": [
+      "Pasiimk grynųjų – Parko rangeriai nepriima kortelių.",
+      "Ant paplūdimio nedaug pavėsio, todėl susiplanuok palapinę arba rent parasol nuo vietinių (150 THB/d.)."
+    ]
   },
   "koh-yao-noi": {
     "desc": "Koh Yao Noi ryžių laukai ir žuvėdrių užuolankos žvelgia į Phang Nga kalkakmenio bokštus; čia galima išsinuomoti kajakus iki Hong salų ir lankytis Muay Thai dirbtuvėse.",
     "source": "https://www.tourismthailand.org/Attraction/ko-yao-noi",
     "image": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Crab_sand_balls%2C_Koh_Yao_Noi%2C_Phang_Nga_Bay%2C_Thailand.jpg",
-    "maps": "https://maps.google.com/?q=Koh+Yao+Noi"
+    "maps": "https://maps.google.com/?q=Koh+Yao+Noi",
+    "hidden": true,
+    "long_desc": "Ryžių laukai ir gumos plantacijos žvelgia į Phang Nga bokštus, todėl sala puiki bazė privatiems longtail turams į Hong salas. Rekomenduojama apsistoti Baan Tha Khao kaime, kur siūlomos Muay Thai treniruotės ir keraminių dirbtuvių pamokos.",
+    "duration": "2–3 naktys (lapkritis–balandis)",
+    "booking": {
+      "label": "Koh Yao Travel privatūs turai",
+      "url": "https://www.kohyaotravel.com/tours/",
+      "notes": "Rezervuok longtail Hong saloms (1 200–1 500 THB/valtis, 4–6 asm.) ir iš anksto nurodyk startą iš Manoh ar Tha Khao prieplaukos."
+    },
+    "pricing": {
+      "badge": "Longtail 1 200–1 500 THB",
+      "level": "฿฿",
+      "details": "Privati valtis iki 6 žmonių kainuoja 1 500 THB; papildomas Hong salų NP mokestis 300 THB/asm.",
+      "note": "Šaltinis: KohYaoTravel pasiūlymai (2025-02)."
+    },
+    "essentials": [
+      "Sala turi tik vieną 7-Eleven parduotuvę – specialius ingredientus atsivežk.",
+      "Dviračiai ir e-step'ai nuomojami už 150–250 THB/d., keliuose mažai automobilių."
+    ]
   },
   "koh-phra-thong": {
     "desc": "Koh Phra Thong garsėja savanos tipo peizažu, apleistais paplūdimiais ir Moken jūros čigonų kaimais Thung Dap bei Thapayoi.",
     "source": "https://www.xyzasia.com/home/koh-phra-thong-secret-getaway-for-nature-lovers",
     "image": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=80",
-    "maps": "https://maps.google.com/?q=Koh+Phra+Thong"
+    "maps": "https://maps.google.com/?q=Koh+Phra+Thong",
+    "hidden": true,
+    "long_desc": "Koh Phra Thong savanos tipo peizažai primena Afriką: aukšti žolynai, šimtai palmės ir Moken jūros čigonų kaimai Thung Dap bei Thapayoi. Atplaukus į Ao Siad prieplauką, 4x4 pikapai veža per smėlio kelius iki Golden Buddha Beach ar kitų ekolodžių.",
+    "duration": "2–3 naktys (gruodis–kovas)",
+    "booking": {
+      "label": "Golden Buddha Resort",
+      "url": "https://www.goldenbuddharesort.com/",
+      "notes": "Rezervuodami nurodykite Khura Buri longtail atvykimo laiką; resortas gali suorganizuoti valtį (1 500–1 800 THB/valtis)."
+    },
+    "pricing": {
+      "badge": "Longtail 1 500–1 800 THB",
+      "level": "฿฿",
+      "details": "Khura Buri → Koh Phra Thong privati valtis kainuoja 1 500–1 800 THB; sala neturi ATM, todėl pasirūpink grynaisiais.",
+      "note": "Šaltinis: GoldenBuddhaResort (2025-02)."
+    },
+    "essentials": [
+      "4x4 transferas iki nakvynės kainuoja papildomai (150–200 THB/asm.).",
+      "Laukinėje savanoje gausu smėlio muselių – įsidėk repelentą."
+    ]
   },
   "nan": {
     "desc": "Nan senamiestis – Wat Phumin freskų, Wat Ming Muang auksinių vartų ir Kuang Muang turgaus trio; aplink galima važiuoti Loop 1148 serpantinais.",
     "source": "https://www.tourismthailand.org/Destinations/Provinces/Nan",
     "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Wat_Phumin_devant%2C_Nan.jpg",
-    "maps": "https://maps.google.com/?q=Nan+Old+Town"
+    "maps": "https://maps.google.com/?q=Nan+Old+Town",
+    "hidden": true,
+    "long_desc": "Nan senamiestyje galima iš arti pamatyti Wat Phumin freskas („Meilės apkabinimas“), o vakarais užsukti į Kuang Muang naktinį turgų. Kitą dieną verta leistis į garsųjį Loop 1148 serpantiną – nuomoti motociklą ar automobilį ir aplankyti kavinę „Route 1148“ su vaizdu į kalnus.",
+    "duration": "Mažiausiai 2 pilnos dienos (1 d. mieste, 1 d. serpantinams)",
+    "booking": {
+      "label": "BKK → NAN skrydžiai / autobusai",
+      "url": "https://12go.asia/en/travel/bangkok/nan",
+      "notes": "Nok Air ir Thai Smile skrenda ~90 min. (1 600–2 200 THB), naktiniai autobusai iš Mo Chit trunka 9 val."
+    },
+    "pricing": {
+      "badge": "Skrydis 1 600–2 200 THB",
+      "level": "฿฿",
+      "details": "Nok Air į vieną pusę ~1 600 THB, dviračių nuoma Nan mieste 150 THB/d.",
+      "note": "Šaltinis: 12Go Asia (2025-02)."
+    },
+    "essentials": [
+      "Wat Phumin ir Wat Ming Muang atidaryti 06:00–18:00; rytinis užėjimas leidžia pamatyti freskas be minių.",
+      "Loop 1148 turi kelias degalines – degalais pasirūpink Nan mieste."
+    ]
   },
   "khao-sok": {
     "desc": "Khao Sok nacionalinis parkas kviečia į Cheow Lan ežero longtail safarius, nakvynę plaukiojančiuose rafthouse nameliuose ir naktinius žygius klausantis gibonų.",
     "source": "https://www.thainationalparks.com/khao-sok-national-park",
     "image": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Trees_rising_out_of_Cheow_Lan_Lake%2C_blue_sky%2C_eternal_summer_in_Surat_Thani_edited.jpg",
-    "maps": "https://maps.google.com/?q=Cheow+Lan+Lake"
+    "maps": "https://maps.google.com/?q=Cheow+Lan+Lake",
+    "hidden": true,
+    "long_desc": "Cheow Lan ežero 2D/1N programa prasideda 07:30 Khao Sok miestelyje: longtail safaris tarp kalkakmenio bokštų, džiunglių trekas iki Pang Ga urvo ir naktinis plaukimas klausantis gibonų. Vakare nakvojama plaukiojančiuose rafthouse nameliuose su paprastomis kambarių sąlygomis.",
+    "duration": "2 dienos / 1 naktis (07:30–15:30)",
+    "booking": {
+      "label": "Cheow Lan 2D1N paketas",
+      "url": "https://www.khaosok.com/cheow-lan-lake-tour/",
+      "notes": "Rekomenduojama rezervuoti bent 30 dienų prieš. Į kainą įskaičiuotas pervežimas iš Khao Sok miestelio ir 300 THB parko mokestis."
+    },
+    "pricing": {
+      "badge": "3 800–4 500 THB / asm.",
+      "level": "฿฿฿",
+      "details": "Standartinis 2D1N paketas su rafthouse, maitinimu ir longtail safari kainuoja 3 800–4 500 THB (priklausomai nuo nakvynės tipo).",
+      "note": "Šaltinis: KhaoSok.com paketai (2025-02)."
+    },
+    "essentials": [
+      "Į rafthouse leidžiama atsivežti tik minkštus krepšius; lagaminus palik miestelio „left luggage“ kambaryje.",
+      "Vakare temperatūra krenta iki 18–20 °C, todėl pasiimk lengvą megztinį."
+    ]
   }
 }
