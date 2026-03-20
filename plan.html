@@ -212,10 +212,10 @@
       <h2 class="text-2xl font-display font-semibold text-slate-900 mt-1 mb-4">Kelionės tikslai · iki Chiang Rai ir Naujųjų Bankoke</h2>
       <ol class="list-decimal pl-5 space-y-3 text-slate-700">
         <li><strong>Phuket regionas.</strong> Atvykimas į HKT, 2 n. Old Town + Koh Yao / Racha / Coral Island dienos turai.</li>
-        <li><strong>Krabi / Railay mazgas.</strong> Perėjimas į Ao Nang (privatus minivanas), Railay, Hong Islands, Phi Phi.</li>
+        <li><strong>Phuket + Krabi / Railay.</strong> Tas pats Andamano etapas: Phuket Old Town → Ao Nang (privatus minivanas), Railay, Hong Islands, Phi Phi.</li>
         <li><strong>Khao Sok nacionalinis parkas.</strong> Cheow Lan ežeras, longtail + rafthouse, Avatar stiliaus kalkakmeniai.</li>
         <li><strong>Samui / Phangan regionas.</strong> Sausuma iki Surat Thani + ferry į Koh Samui (arba skrydis HKT → USM), bazė pietuose ir Ang Thong/Koh Phangan turai.</li>
-        <li><strong>Chiang Rai.</strong> Vidinis skrydis KBV/HKT → BKK → CEI, White/Blue/Black templai, Golden Triangle.</li>
+        <li><strong>Chiang Rai.</strong> Vidinis skrydis iš Samui (USM → BKK/DMK → CEI) ir visas šiaurės paketas – White/Blue/Black templai, Golden Triangle.</li>
         <li><strong>Bankokas ir Naujieji.</strong> Chao Phraya upė, ICONSIAM/ASIATIQUE fejerverkai ir skrydis BKK → VNO/RIX.</li>
       </ol>
     </section>
@@ -286,11 +286,19 @@
           seen.add(area);
           const firstBlock = (day.blocks && day.blocks[0]) ? day.blocks[0] : '';
           const descriptor = detectMode(firstBlock + ' ' + theme);
+          let headline = area;
+          let subline = theme || 'Etapas';
+          let detailText = firstBlock || 'Detales pildysime arčiau datos.';
+          if (area.includes('Krabi') && area.includes('Chiang Rai')) {
+            headline = 'Samui (USM) → Chiang Rai';
+            subline = 'USM → BKK/DMK → CEI';
+            detailText = 'Skrydis iš Samui (USM) per Bangkoką į Chiang Rai (Bangkok Airways + Thai Smile).';
+          }
           legs.push({
             label: 'Perėjimas',
-            headline: area,
-            subline: theme || 'Etapas',
-            detail: firstBlock || 'Detales pildysime arčiau datos.',
+            headline,
+            subline,
+            detail: detailText,
             icon: descriptor.icon,
             mode: descriptor.label
           });
@@ -347,9 +355,10 @@
             if (/VNO|RIX/i.test(area)) return;
             if (!hops.includes(area)) hops.push(area);
           });
-          macroTransitListEl.innerHTML = hops.length
-            ? hops.map(item => `<li>${item}</li>`).join('')
-            : '<li>Phuket → Ao Nang (sausuma)</li><li>Krabi → Chiang Rai (vidinis skrydis)</li><li>Chiang Rai → Bangkok (vidinis skrydis)</li>';
+          const normalizedHops = hops.map(item => (item.includes('Krabi') && item.includes('Chiang Rai')) ? 'Samui (USM) → Chiang Rai (per Bangkok)' : item);
+          macroTransitListEl.innerHTML = normalizedHops.length
+            ? normalizedHops.map(item => `<li>${item}</li>`).join('')
+            : '<li>Phuket → Ao Nang (sausuma)</li><li>Samui (USM) → Chiang Rai (vidinis skrydis per BKK)</li><li>Chiang Rai → Bangkok (vidinis skrydis)</li>';
         }
       };
 
