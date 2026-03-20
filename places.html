@@ -357,7 +357,12 @@
             source: decorated.source || base.source,
             maps: decorated.maps || base.maps || '',
             status: decorated.status || 'idea',
-            hidden: decorated.hidden || false
+            hidden: decorated.hidden || false,
+            long_desc: decorated.long_desc || '',
+            duration: decorated.duration || '',
+            pricing: decorated.pricing || null,
+            booking: decorated.booking || null,
+            essentials: decorated.essentials || null
           });
         });
         });
@@ -442,7 +447,13 @@
               image: decorated.image_url || base.image_url,
               stage: decorated.stage || base.stage,
               status: decorated.status || base.status,
-              source: decorated.source || base.source || ''
+              source: decorated.source || base.source || '',
+              maps: decorated.maps || base.maps || '',
+              long_desc: decorated.long_desc || '',
+              duration: decorated.duration || '',
+              pricing: decorated.pricing || null,
+              booking: decorated.booking || null,
+              essentials: decorated.essentials || null
             });
           });
         }
@@ -498,7 +509,13 @@
             image: decorated.image_url || base.image_url,
             stage: decorated.stage || base.stage,
             status: decorated.status || base.status,
-            source: decorated.source || base.source
+            source: decorated.source || base.source,
+            maps: decorated.maps || base.maps || '',
+            long_desc: decorated.long_desc || '',
+            duration: decorated.duration || '',
+            pricing: decorated.pricing || null,
+            booking: decorated.booking || null,
+            essentials: decorated.essentials || null
           });
         });
       });
@@ -526,17 +543,7 @@
                 ${item.source ? `<a class="text-sm font-semibold text-brand-600" href="${item.source}" target="_blank" rel="noopener">Šaltinis →</a>` : ''}
                 ${item.maps ? `<a class="text-sm font-semibold text-brand-600" href="${item.maps}" target="_blank" rel="noopener">Google Maps →</a>` : ''}
               </div>
-              ${(item.long_desc || item.duration || item.booking || item.pricing || (item.essentials && item.essentials.length)) ? `
-              <button class="mt-3 text-xs font-semibold text-brand-600 hover:text-brand-700 toggle-offline-extra" data-target="offline-extra-${item.id}">Išskleisti aprašymą ↓</button>
-              <div class="mt-4 hidden" id="offline-extra-${item.id}">
-                <div class="pt-4 border-t border-slate-100 space-y-3">
-                  ${item.long_desc ? `<p class="text-sm text-slate-700 leading-relaxed">${item.long_desc}</p>` : ''}
-                  ${item.duration ? `<div class="text-sm"><strong class="font-medium text-slate-900">Trukmė:</strong> <span class="text-slate-600">${item.duration}</span></div>` : ''}
-                  ${item.pricing ? `<div class="text-sm"><strong class="font-medium text-slate-900">Kaina:</strong> <span class="text-slate-600">${item.pricing.badge} ${item.pricing.details ? `(${item.pricing.details})` : ''}</span></div>` : ''}
-                  ${item.booking ? `<div class="text-sm"><strong class="font-medium text-slate-900">Rezervacija:</strong> <a href="${item.booking.url}" target="_blank" rel="noopener" class="text-brand-600 hover:underline">${item.booking.label} ↗</a> <span class="text-slate-500 block mt-1 text-xs">${item.booking.notes || ''}</span></div>` : ''}
-                  ${item.essentials && item.essentials.length ? `<div class="text-sm"><strong class="font-medium text-slate-900">Būtina žinoti:</strong><ul class="list-disc pl-4 mt-1 text-slate-600">${item.essentials.map(e => `<li>${e}</li>`).join('')}</ul></div>` : ''}
-                </div>
-              </div>` : ''}
+              ${buildDetailBlock(item, 'offline', 'toggle-offline-extra')}
             </div>
           </div>`).join('') : '<p class="text-sm text-slate-500">Atitinkančių vietų nėra.</p>';
           
@@ -603,6 +610,43 @@
         renderBoard(filtered);
       }
 
+      function buildDetailBlock(entry, scope, toggleClass){
+        const rawId = entry.id ? String(entry.id) : Math.random().toString(36).slice(2, 8);
+        const detailId = `${scope}-${rawId}`;
+        const rows = [];
+        const longText = entry.long_desc || entry.description || entry.desc || 'Aprašymas ruošiama.';
+        rows.push(`<p class="text-sm text-slate-700 leading-relaxed">${longText}</p>`);
+        if (entry.duration) {
+          rows.push(`<div class="text-sm"><strong class="font-medium text-slate-900">Trukmė:</strong> <span class="text-slate-600">${entry.duration}</span></div>`);
+        } else {
+          rows.push('<div class="text-sm"><strong class="font-medium text-slate-900">Trukmė:</strong> <span class="text-slate-600">Derinama pagal komandą / etapą.</span></div>');
+        }
+        if (entry.pricing) {
+          rows.push(`<div class="text-sm"><strong class="font-medium text-slate-900">Kaina:</strong> <span class="text-slate-600">${entry.pricing.badge || ''} ${entry.pricing.details ? `(${entry.pricing.details})` : ''}</span></div>`);
+        } else {
+          rows.push('<div class="text-sm"><strong class="font-medium text-slate-900">Kaina:</strong> <span class="text-slate-600">Tikslesnės sumos žemiau šaltiniuose / vietoje.</span></div>');
+        }
+        if (entry.booking) {
+          rows.push(`<div class="text-sm"><strong class="font-medium text-slate-900">Rezervacija:</strong> <a href="${entry.booking.url}" target="_blank" rel="noopener" class="text-brand-600 hover:underline">${entry.booking.label} ↗</a>${entry.booking.notes ? `<span class="text-slate-500 block mt-1 text-xs">${entry.booking.notes}</span>` : ''}</div>`);
+        } else if (entry.source) {
+          rows.push(`<div class="text-sm"><strong class="font-medium text-slate-900">Rezervacija / info:</strong> <a href="${entry.source}" target="_blank" rel="noopener" class="text-brand-600 hover:underline">Šaltinis ↗</a></div>`);
+        }
+        if (entry.maps) {
+          rows.push(`<div class="text-sm"><strong class="font-medium text-slate-900">Lokacija:</strong> <a href="${entry.maps}" target="_blank" rel="noopener" class="text-brand-600 hover:underline">Google Maps ↗</a></div>`);
+        }
+        if (entry.essentials && entry.essentials.length){
+          rows.push(`<div class="text-sm"><strong class="font-medium text-slate-900">Būtina žinoti:</strong><ul class="list-disc pl-4 mt-1 text-slate-600">${entry.essentials.map(e => `<li>${e}</li>`).join('')}</ul></div>`);
+        }
+        return `
+        <button class="mt-3 text-xs font-semibold text-brand-600 hover:text-brand-700 ${toggleClass}" data-target="${detailId}">Išskleisti aprašymą ↓</button>
+        <div class="mt-4 hidden" id="${detailId}">
+          <div class="pt-4 border-t border-slate-100 space-y-3">
+            ${rows.join('')}
+          </div>
+        </div>
+        `;
+      }
+
       function renderPlaces(list){
       const container = document.getElementById('placesList');
       if (!list.length){
@@ -637,18 +681,7 @@
                   ${p.source ? `<a class="text-sm font-semibold text-brand-600" href="${p.source}" target="_blank" rel="noopener">Šaltinis →</a>` : ''}
                   ${p.maps ? `<a class="text-sm font-semibold text-brand-600" href="${p.maps}" target="_blank" rel="noopener">Google Maps →</a>` : ''}
                 </div>
-                ${(p.long_desc || p.duration || p.booking || p.pricing || (p.essentials && p.essentials.length)) ? `
-                <button class="mt-3 text-xs font-semibold text-brand-600 hover:text-brand-700 toggle-extra" data-target="extra-${p.id}">Išskleisti aprašymą ↓</button>
-                <div class="mt-4 hidden" id="extra-${p.id}">
-                  <div class="pt-4 border-t border-slate-100 space-y-3">
-                    ${p.long_desc ? `<p class="text-sm text-slate-700 leading-relaxed">${p.long_desc}</p>` : ''}
-                    ${p.duration ? `<div class="text-sm"><strong class="font-medium text-slate-900">Trukmė:</strong> <span class="text-slate-600">${p.duration}</span></div>` : ''}
-                    ${p.pricing ? `<div class="text-sm"><strong class="font-medium text-slate-900">Kaina:</strong> <span class="text-slate-600">${p.pricing.badge} ${p.pricing.details ? `(${p.pricing.details})` : ''}</span></div>` : ''}
-                    ${p.booking ? `<div class="text-sm"><strong class="font-medium text-slate-900">Rezervacija:</strong> <a href="${p.booking.url}" target="_blank" rel="noopener" class="text-brand-600 hover:underline">${p.booking.label} ↗</a> <span class="text-slate-500 block mt-1 text-xs">${p.booking.notes || ''}</span></div>` : ''}
-                    ${p.essentials && p.essentials.length ? `<div class="text-sm"><strong class="font-medium text-slate-900">Būtina žinoti:</strong><ul class="list-disc pl-4 mt-1 text-slate-600">${p.essentials.map(e => `<li>${e}</li>`).join('')}</ul></div>` : ''}
-                  </div>
-                </div>
-                ` : ''}
+                ${buildDetailBlock(p, 'main', 'toggle-extra')}
                 <div class="footer">
                   <span class="text-xs uppercase tracking-wide text-slate-500">${voteMapCache[p.id]||0} bals.</span>
                   <button class="px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors" data-place="${p.id}">${userVotes.has(p.id)?'Atimti':'Balsuoti'}</button>
