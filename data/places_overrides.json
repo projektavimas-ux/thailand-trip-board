@@ -64,9 +64,10 @@
     "image": "https://upload.wikimedia.org/wikipedia/commons/6/64/Playa_Maya%2C_Ko_Phi_Phi%2C_Tailandia%2C_2013-08-19%2C_DD_04.JPG",
     "maps": "https://maps.google.com/?q=Maya+Bay",
     "avatar": true,
-    "long_desc": "Nuo 2022 m. į Maya Bay įleidžiama ribotai – laivai prisišvartuoja Loh Samah pusėje, o lankytojai eina mediniu taku į paplūdimį, kuriame maudytis draudžiama. Turo operatoriai išplaukia ~05:30, kad iki 09:00 aplenktų didžiąsias minias.  💠 Maya Bay / Koh Phi Phi Leh taip pat naudota 'Avatar' scenoms – smaragdiniai vandenys ir uolos tapo Pandoros įkvėpimu.",
+    "long_desc": "Maya Bay (Koh Phi Phi Leh) pasiekiama sunrise speedboat turais iš Phuket/Ao Nang (SeaStar, 5 Star Marine) – startas 05:30, kad lagūna būtų tuščia. 💠 Tai viena iš 'Avatar' filmavimo vietų – čia fiksuoti Pandoros paplūdimiai.",
     "essentials": [
-      "💠 Maya Bay / Koh Phi Phi Leh taip pat naudota 'Avatar' scenoms – smaragdiniai vandenys ir uolos tapo Pandoros įkvėpimu."
+      "💠 Maya Bay / Koh Phi Phi Leh taip pat naudota 'Avatar' scenoms – smaragdiniai vandenys ir uolos tapo Pandoros įkvėpimu.",
+      "Rekomenduojamas turas: Phi Phi Sunrise speedboat (SeaStar / 5 Star Marine)."
     ]
   },
   "phang-nga-bay": {
@@ -75,9 +76,10 @@
     "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/James_Bond_Felsen_phang_nga_bay_DSC02997.JPG",
     "maps": "https://maps.google.com/?q=Ao+Phang+Nga+National+Park",
     "avatar": true,
-    "long_desc": "Ao Phang Nga įlanka garsėja kalkakmenio stulpais ir slaptomis lagūnomis; populiariausia programą – vakariniai sea-cave kanojų turai su bioliuminescencijos stebėjimu. Dieną galima aplankyti James Bond salą ir muslimų kaimą Koh Panyee.  💠 Phang Nga įlanka minima 'Avatar' filmavimo lokacijų sąraše dėl hong lagūnų ir karstų.",
+    "long_desc": "Phang Nga įlanka – hong lagūnos, mangrovės ir kalkakmenio bokštai, geriausiai patiriami kanojų turu 'Hong by Starlight' (John Gray Sea Canoe) arba privatu sunrise speedboat. 💠 'Avatar' scenoms naudota būtent ši karstinė panorama.",
     "essentials": [
-      "💠 Phang Nga įlanka minima 'Avatar' filmavimo lokacijų sąraše dėl hong lagūnų ir karstų."
+      "💠 Phang Nga įlanka minima 'Avatar' filmavimo lokacijų sąraše dėl hong lagūnų ir karstų.",
+      "Rekomenduojamas turas: John Gray Sea Canoe 'Hong by Starlight' (popietė + loya kratong)."
     ]
   },
   "hong-islands": {
@@ -875,7 +877,7 @@
     "image": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Trees_rising_out_of_Cheow_Lan_Lake%2C_blue_sky%2C_eternal_summer_in_Surat_Thani_edited.jpg",
     "maps": "https://maps.google.com/?q=Cheow+Lan+Lake",
     "hidden": true,
-    "long_desc": "Cheow Lan ežero 2D/1N programa prasideda 07:30 Khao Sok miestelyje: longtail safaris tarp kalkakmenio bokštų, džiunglių trekas iki Pang Ga urvo ir naktinis plaukimas klausantis gibonų. Vakare nakvojama plaukiojančiuose rafthouse nameliuose su paprastomis kambarių sąlygomis.  💠 Pažymėta kaip vienas iš 'Avatar' filmavimo fonų – kalkakmenio bokštai ir Cheow Lan ežeras atitiko Pandoros peizažus.",
+    "long_desc": "Cheow Lan ežeras – 2D/1N longtail safaris su nakvyne plūduriuojančiuose rafthouse (Panvaree, Sai Chon), naktiniai džiunglių žygiai ir rytinis rūkas tarp kalkakmenio bokštų. 💠 Pažymėta kaip viena iš 'Avatar' filmavimo lokacijų – čia fiksuoti Pandoros peizažai.",
     "duration": "2 dienos / 1 naktis (07:30–15:30)",
     "booking": {
       "label": "Cheow Lan 2D1N paketas",
@@ -891,7 +893,8 @@
     "essentials": [
       "Į rafthouse leidžiama atsivežti tik minkštus krepšius; lagaminus palik miestelio „left luggage“ kambaryje.",
       "Vakare temperatūra krenta iki 18–20 °C, todėl pasiimk lengvą megztinį.",
-      "💠 Pažymėta kaip vienas iš 'Avatar' filmavimo fonų – kalkakmenio bokštai ir Cheow Lan ežeras atitiko Pandoros peizažus."
+      "💠 Pažymėta kaip vienas iš 'Avatar' filmavimo fonų – kalkakmenio bokštai ir Cheow Lan ežeras atitiko Pandoros peizažus.",
+      "Rekomenduojamas turas: 2D/1N Cheow Lan Lake (KhaoSok.com / Limestone Lake Rainforest)."
     ],
     "avatar": true
   }
