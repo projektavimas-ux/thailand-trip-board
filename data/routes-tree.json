@@ -6,7 +6,7 @@
   "meta": {
     "komanda": "4 suaugę",
     "statusas": "Draft v0.4",
-    "prioritetas": "Užtikrinti sklandų perėjimą Pietūs → Šiaurė (skrydis KBV → CEI)"
+    "prioritetas": "Užtikrinti sklandų perėjimą Pietūs → Šiaurė (skrydis USM → CEI)"
   },
   "children": [
     {
@@ -28,8 +28,8 @@
     {
       "id": "south-axis",
       "type": "legs",
-      "label": "Pietų Tailando ašis (Phuket · Krabi · Lanta)",
-      "description": "D1-D10. Bazė Phuket Old Town + Ao Nang; moduliai saloms ir parkams.",
+      "label": "Pietų Tailando ašis (Phuket · Krabi · Khao Sok · Samui)",
+      "description": "D1-D13: Phuket + Krabi bazė, Avatar stiliaus Khao Sok ir perėjimas į Samui prieš skrydį į šiaurę.",
       "meta": {
         "logistika": "Privatūs minivanai, speedboat'ai, longtail'ai",
         "oro_langas": "Stebėti NE monsooną (gruodis palankus)",
@@ -39,12 +39,12 @@
         {
           "id": "stage-1",
           "type": "stage",
-          "label": "1 ETAPAS (12-11 → 12-14): Phuket adaptacija",
-          "description": "Old Town, Big Buddha, Wat Chalong, Nai Harn ir panoramos.",
+          "label": "1 ETAPAS (12-11 → 12-18): Phuket + Krabi / Railay",
+          "description": "Phuket Old Town adaptacija su perėjimu į Ao Nang / Railay – visi Andamano moduliai viename kvėpavime.",
           "meta": {
-            "bazes": "Old Phuket Town",
-            "rytinis_langas": "06:30-11:00",
-            "vakarinis_langas": "17:00-22:00"
+            "bazes": "Old Phuket Town + Ao Nang",
+            "rytinis_langas": "06:30-11:00 / 05:30-09:00 turams",
+            "vakarinis_langas": "17:00-22:30 (saulėlydžiai + marketai)"
           },
           "children": [
             {
@@ -151,7 +151,14 @@
                 "Karon Viewpoint",
                 "Nai Harn Beach",
                 "Freedom Beach",
-                "Ao Sane snorkelinimas"
+                "Ao Sane snorkelinimas",
+                "Railay Beach",
+                "Railay Viewpoint trail",
+                "Hong Islands",
+                "Phi Phi (Maya Bay)",
+                "Phang Nga Bay",
+                "Ao Thalane mangrovės",
+                "Poda Island"
               ]
             },
             {
@@ -164,7 +171,11 @@
                 "Lard Yai sekmadienio turgus",
                 "Wassa Homemade Bar",
                 "Roost Coffee & Roastery",
-                "Rawai Sea Gypsy Market"
+                "Rawai Sea Gypsy Market",
+                "Landmark Night Market (Ao Nang)",
+                "Tew Lay Bar (Railay)",
+                "Krua Thara Seafood",
+                "Koh Poda picnic lunch"
               ]
             },
             {
@@ -175,7 +186,9 @@
               "description": "Old Town + Kata/Nai Harn",
               "options": [
                 "Blu Monkey Hub & Hotel Phuket",
-                "Casa Blanca Boutique (Old Town)"
+                "Casa Blanca Boutique (Old Town)",
+                "Railay Garden View Resort",
+                "Ava Sea Resort"
               ]
             },
             {
@@ -205,174 +218,7 @@
                   "mode": "Motoroleriai",
                   "duration": "~1 h",
                   "notes": "Saulėlydžio kilpa per Nai Harn"
-                }
-              ]
-            }
-          ],
-          "cover": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1600&auto=format&fit=crop"
-        },
-        {
-          "id": "stage-2",
-          "type": "stage",
-          "label": "2 ETAPAS (12-15 → 12-20): Krabi, Railay ir salos",
-          "description": "Ao Nang bazė, Railay, Hong, Phi Phi, Phang Nga kayaking.",
-          "meta": {
-            "bazes": "Ao Nang",
-            "laivu_langas": "07:00-18:30",
-            "oro_langas": "Monitoringas dėl bangavimo"
-          },
-          "children": [
-            {
-              "id": "stage-2-experience",
-              "type": "experience",
-              "label": "Ekskursijos ir salos",
-              "description": "Krabi regiono akcentai.",
-              "options": [
-                "Railay Beach",
-                "Hong Islands",
-                "Phi Phi (Maya Bay)",
-                "Phang Nga Bay",
-                "Ao Thalane mangrovės",
-                "Railay Viewpoint trail",
-                "Poda Island"
-              ]
-            },
-            {
-              "id": "stage-2-food",
-              "type": "food",
-              "label": "Maitinimas ir barai",
-              "description": "Naktiniai turgūs ir paplūdimio vakarai.",
-              "options": [
-                "Ao Nang Promenada",
-                "Landmark Night Market",
-                "Tew Lay Bar (Railay)",
-                "Krua Thara Seafood"
-              ]
-            },
-            {
-              "id": "stage-2-stay",
-              "type": "stay",
-              "label": "Nakvynės bazės",
-              "description": "Ao Nang arba Railay lokacijos.",
-              "options": [
-                "Railay Garden View Resort",
-                "Ava Sea Resort"
-              ]
-            },
-            {
-              "id": "stage-2-transport",
-              "type": "transport",
-              "label": "Transporto kanalai",
-              "description": "Laivai ir turų logistika.",
-              "routes": [
-                {
-                  "from": "Ao Nang",
-                  "to": "Railay",
-                  "mode": "Longtail valtis",
-                  "duration": "15 min",
-                  "notes": "Išplaukti nuo 07:00"
                 },
-                {
-                  "from": "Ao Nang",
-                  "to": "Hong / Phi Phi",
-                  "mode": "Speedboat",
-                  "duration": "40-60 min",
-                  "notes": "Dienos turai (05:30 arba 09:00)"
-                },
-                {
-                  "from": "Ao Nang",
-                  "to": "Phang Nga",
-                  "mode": "Minivanas + Laivas",
-                  "duration": "Pusė dienos",
-                  "notes": "Hong by Starlight programa"
-                }
-              ]
-            },
-            {
-              "id": "day-5",
-              "type": "day",
-              "label": "D5 · Railay ir urvai",
-              "meta": {
-                "transportas": "Longtail",
-                "pastaba": "Sugrįžti iki 18:00"
-              },
-              "cover": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80"
-            },
-            {
-              "id": "day-6",
-              "type": "day",
-              "label": "D6 · Hong Islands slow day",
-              "meta": {
-                "akcentas": "Lagūnos, 360° viewpoint"
-              },
-              "cover": "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1600&q=80"
-            },
-            {
-              "id": "day-7",
-              "type": "day",
-              "label": "D7 · Phi Phi sunrise",
-              "meta": {
-                "operatorius": "Speedboat",
-                "biudzetas": "฿4k/asm"
-              },
-              "cover": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80"
-            },
-            {
-              "id": "day-8",
-              "type": "day",
-              "label": "D8 · Phang Nga canoe",
-              "meta": {
-                "planas": "Hong by Starlight / John Gray"
-              },
-              "cover": "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80"
-            },
-            {
-              "id": "stage-2-experiences",
-              "type": "category",
-              "category": "experience",
-              "label": "Ekskursijos ir salos",
-              "description": "Ao Nang bazė + salų moduliai",
-              "options": [
-                "Railay Beach",
-                "Railay Viewpoint trail",
-                "Hong Islands",
-                "Phi Phi (Maya Bay)",
-                "Phang Nga Bay",
-                "Ao Thalane mangrovės",
-                "Poda Island"
-              ]
-            },
-            {
-              "id": "stage-2-food",
-              "type": "category",
-              "category": "food",
-              "label": "Maitinimas ir barai",
-              "description": "Ao Nang + Railay",
-              "options": [
-                "Landmark Night Market (Ao Nang)",
-                "Tew Lay Bar (Railay)",
-                "Krua Thara Seafood",
-                "Koh Poda picnic lunch"
-              ]
-            },
-            {
-              "id": "stage-2-stay",
-              "type": "category",
-              "category": "stay",
-              "label": "Nakvynės bazės",
-              "description": "Ao Nang / Railay pasirinkimai",
-              "options": [
-                "Railay Garden View Resort",
-                "Ava Sea Resort"
-              ]
-            },
-            {
-              "id": "stage-2-transport",
-              "type": "category",
-              "category": "transport",
-              "label": "Transporto kanalai",
-              "description": "Longtail + speedboat + dienos turai",
-              "routes": [
                 {
                   "from": "Ao Nang",
                   "to": "Railay",
@@ -407,167 +253,209 @@
           "cover": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80"
         },
         {
-          "id": "stage-3",
+          "id": "stage-2-khaosok",
           "type": "stage",
-          "label": "3 ETAPAS (12-21 → 12-23): Koh Lanta · Khao Sok rezervas",
-          "description": "Lėtesnės dienos prieš skrydį į šiaurę: Koh Lanta paplūdimiai arba Khao Sok ežeras.",
+          "label": "2 ETAPAS (12-19 → 12-21): Khao Sok · Cheow Lan Lake",
+          "description": "Avatar stiliaus kalkakmenių safaris Cheow Lan ežere: 2D/1N longtail turas, rafthouse nakvynė ir rytiniai džunglių žygiai.",
           "meta": {
-            "pervezimai": "Ao Nang → Koh Lanta (2h) / Ao Nang → Khao Sok (3.5h)",
-            "dienos": "D9-D10",
-            "pastaba": "Rezervinis langas audroms"
+            "bazes": "Cheow Lan rafthouse",
+            "logistika": "Privatus minivanas iš Ao Nang/Phuket → Ratchaprapha, longtail turas, 2D/1N programa",
+            "rytinis_langas": "05:30-09:00 rūko safari"
           },
           "children": [
             {
-              "id": "stage-3-experience",
-              "type": "experience",
-              "label": "Ekskursijos ir gamta",
-              "description": "Lėtesnis tempas prieš šiaurę.",
+              "id": "stage-2-khaosok-experiences",
+              "type": "category",
+              "category": "experience",
+              "label": "Ekskursijos ir veiklos",
+              "description": "Cheow Lan Lake programa",
               "options": [
-                "Long Beach (Pra-Ae)",
-                "Kantiang Bay",
                 "Khao Sok · Cheow Lan Lake",
-                "Emerald Pool",
-                "Tha Pom Klong Song Nam"
+                "Longtail safari + kalkakmenių bokštai",
+                "Plūduriuojantys rafthouse (Panvaree, Sai Chon)",
+                "Naktinis džiunglių žygis",
+                "Morning wildlife safari",
+                "Nam Taloo / Pakarang urvo turas"
               ]
             },
             {
-              "id": "stage-3-food",
-              "type": "food",
+              "id": "stage-2-khaosok-food",
+              "type": "category",
+              "category": "food",
               "label": "Maitinimas",
-              "description": "Pakrantės barai ir lėtas maistas.",
+              "description": "Rafthouse virtuvė ir džiunglių vakarienės",
               "options": [
-                "Lanta Old Town restoranai",
-                "Shanti Shanti Beach Bar",
-                "Klong Nin sunset BBQ"
+                "Panvaree The Greenery dinner",
+                "Sai Chon Jungle grill",
+                "Ratchaprapha pier lunch stop"
               ]
             },
             {
-              "id": "stage-3-stay",
-              "type": "stay",
+              "id": "stage-2-khaosok-stay",
+              "type": "category",
+              "category": "stay",
               "label": "Nakvynės bazės",
-              "description": "Ramios vilos ar rafthouse ant vandens.",
+              "description": "Rafthouse ir lodge pasirinkimai",
               "options": [
-                "Thai House Beach Resort",
-                "Long Beach Chalet"
+                "Panvaree The Greenery",
+                "Sai Chon Floating Resort",
+                "Our Jungle Camp (Khao Sok Town)"
               ]
             },
             {
-              "id": "stage-3-transport",
-              "type": "transport",
+              "id": "stage-2-khaosok-transport",
+              "type": "category",
+              "category": "transport",
               "label": "Transporto kanalai",
-              "description": "Ilgesni tarpmiestiniai pervežimai.",
+              "description": "Perėjimai į ir iš Khao Sok",
               "routes": [
                 {
-                  "from": "Ao Nang",
-                  "to": "Koh Lanta",
-                  "mode": "Privatus vanas + keltas",
-                  "duration": "2 h",
-                  "notes": "Įtraukti 30 min keltui"
-                },
-                {
-                  "from": "Ao Nang",
-                  "to": "Khao Sok",
-                  "mode": "Minivanas",
+                  "from": "Ao Nang / Phuket",
+                  "to": "Ratchaprapha Pier",
+                  "mode": "Privatus minivanas",
                   "duration": "3.5 h",
-                  "notes": "Jei aktyvuojamas Khao Sok turas"
+                  "notes": "Išvykimas 07:00, sustojimas Surat Thani pusryčiams"
                 },
                 {
-                  "from": "Koh Lanta",
-                  "to": "KBV oro uostas",
+                  "from": "Ratchaprapha Pier",
+                  "to": "Rafthouse",
+                  "mode": "Longtail valtis",
+                  "duration": "45 min",
+                  "notes": "Įskaičiuota į 2D/1N programą"
+                },
+                {
+                  "from": "Khao Sok",
+                  "to": "Surat Thani (Donsak) / HKT / USM",
                   "mode": "Privatus vanas",
-                  "duration": "2.5 h",
-                  "notes": "Rytinis transferas skrydžiui į šiaurę"
+                  "duration": "2-3 h",
+                  "notes": "Toliau kelionė į Samui arba atgal į HKT"
                 }
               ]
             },
             {
-              "id": "day-9",
+              "id": "day-9-khaosok",
               "type": "day",
-              "label": "D9 · Koh Lanta chill",
+              "label": "D9 · Atvykimas į Khao Sok",
               "meta": {
-                "veikla": "Long Beach, sunset"
-              },
-              "cover": "https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=1600&q=80"
-            },
-            {
-              "id": "day-10",
-              "type": "day",
-              "label": "D10 · Khao Sok dienos turas",
-              "meta": {
-                "pervezimas": "Minivanas + longtail"
+                "planas": "Minivanas → longtail → rafthouse"
               },
               "cover": "https://images.unsplash.com/photo-1504280390368-3976a42be078?auto=format&fit=crop&w=1600&q=80"
             },
             {
-              "id": "stage-3-experiences",
+              "id": "day-10-khaosok",
+              "type": "day",
+              "label": "D10 · Morning safari + žygiai",
+              "meta": {
+                "rytas": "05:30 safari",
+                "diena": "Pakrang urvas / džiunglių žygis"
+              }
+            }
+          ],
+          "cover": "https://images.unsplash.com/photo-1504280390368-3976a42be078?auto=format&fit=crop&w=1600&q=80"
+        },
+        {
+          "id": "stage-3-samui",
+          "type": "stage",
+          "label": "3 ETAPAS (12-22 → 12-24): Samui / Ang Thong",
+          "description": "Golfo salų bazė: Fisherman’s Village, Ang Thong marine parkas, Koh Phangan / Pig Island išvykos ir pasiruošimas šuoliui į šiaurę.",
+          "meta": {
+            "bazes": "Bophut / Lamai",
+            "laivu_langas": "05:30 sunrise turams / 09:00 day trips",
+            "oro_langas": "Stebėti šiaurės rytų vėjus (sausis palankus)"
+          },
+          "children": [
+            {
+              "id": "stage-3-samui-experiences",
               "type": "category",
               "category": "experience",
-              "label": "Ekskursijos ir gamta",
-              "description": "Koh Lanta + rezervinis Khao Sok",
+              "label": "Ekskursijos ir salos",
+              "description": "Samui + Ang Thong moduliai",
               "options": [
-                "Long Beach (Pra-Ae)",
-                "Kantiang Bay",
-                "Khao Sok · Cheow Lan Lake",
-                "Emerald Pool",
-                "Tha Pom Klong Song Nam"
+                "Fisherman's Village (Bophut)",
+                "Ang Thong National Marine Park",
+                "Wat Plai Laem",
+                "Samui Elephant Sanctuary (morning program)",
+                "Koh Phangan day trip",
+                "Pig Island / Koh Madsum",
+                "Lamai Viewpoints + Overlap Stone"
               ]
             },
             {
-              "id": "stage-3-food",
+              "id": "stage-3-samui-food",
               "type": "category",
               "category": "food",
-              "label": "Maitinimas ir vakarai",
-              "description": "Lanta Old Town + paplūdimiai",
+              "label": "Maitinimas ir vakarojimas",
+              "description": "Bophut / Lamai vakarai",
               "options": [
-                "Lanta Old Town pier restoranai",
-                "Shanti Shanti Beach Bar",
-                "Time for Lime cooking class",
-                "Klong Nin sunset BBQ"
+                "Fisherman's Village Night Market",
+                "Coco Tam's",
+                "Jahn (Conrad Koh Samui)",
+                "Seaside more (Seafood by 4 Monkeys)"
               ]
             },
             {
-              "id": "stage-3-stay",
+              "id": "stage-3-samui-stay",
               "type": "category",
               "category": "stay",
               "label": "Nakvynės bazės",
-              "description": "Beachfront + kalnų lodge",
+              "description": "Resortai ir vilos",
               "options": [
-                "Thai House Beach Resort",
-                "Long Beach Chalet"
+                "Avani+ Samui Resort",
+                "SALA Samui Chaweng Beach",
+                "Buri Rasa Village Samui"
               ]
             },
             {
-              "id": "stage-3-transport",
+              "id": "stage-3-samui-transport",
               "type": "category",
               "category": "transport",
               "label": "Transporto kanalai",
-              "description": "Perėjimas tarp Ao Nang, Lanta ir Khao Sok",
+              "description": "Perėjimas iš Khao Sok ir skrydis į šiaurę",
               "routes": [
                 {
-                  "from": "Ao Nang",
-                  "to": "Koh Lanta",
-                  "mode": "Privatus vanas + keltas",
-                  "duration": "~2 h",
-                  "notes": "Įtraukti 30 min keltui"
+                  "from": "Khao Sok / Surat Thani (Donsak)",
+                  "to": "Koh Samui",
+                  "mode": "Privatus vanas + Seatran ferry",
+                  "duration": "3.5 h",
+                  "notes": "D11 ryto perėjimas"
                 },
                 {
-                  "from": "Ao Nang",
-                  "to": "Khao Sok",
-                  "mode": "Minivanas",
-                  "duration": "~3.5 h",
-                  "notes": "D10 turas (05:30 startas)"
-                },
-                {
-                  "from": "Koh Lanta",
-                  "to": "KBV oro uostas",
-                  "mode": "Privatus vanas",
-                  "duration": "~3 h",
-                  "notes": "D11 rytinis transferas į skrydį"
+                  "from": "Samui (USM)",
+                  "to": "Chiang Rai (CEI)",
+                  "mode": "Skrydis per BKK/DMK",
+                  "duration": "4-5 h door-to-door",
+                  "notes": "Bangkok Airways + Thai Smile jungtys"
                 }
               ]
+            },
+            {
+              "id": "day-11-samui",
+              "type": "day",
+              "label": "D11 · Fisherman’s Village + night market",
+              "meta": {
+                "vakaro_planas": "Bophut, Coco Tam’s"
+              },
+              "cover": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1600&q=80"
+            },
+            {
+              "id": "day-12-samui",
+              "type": "day",
+              "label": "D12 · Ang Thong marine park",
+              "meta": {
+                "operatorius": "Sunrise speedboat",
+                "pastaba": "lipimas į Koh Wua Ta Lap"
+              }
+            },
+            {
+              "id": "day-13-samui",
+              "type": "day",
+              "label": "D13 · Koh Phangan / Pig Island",
+              "meta": {
+                "planas": "Half-day Phangan arba Koh Madsum su kiaulytėmis"
+              }
             }
           ],
-          "cover": "https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=1600&q=80"
+          "cover": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1600&q=80"
         }
       ]
     },
@@ -575,9 +463,9 @@
       "id": "north-loop",
       "type": "legs",
       "label": "Šiaurės Tailando kilimas (Chiang Rai)",
-      "description": "Skrydis KBV/HKT → Chiang Rai (CEI). D11-D16 skiriame šventykloms, Golden Triangle ir kalnų kultūrai.",
+      "description": "Skrydis Samui (USM) → Chiang Rai (CEI) per Bangkoką. D14-D18 skirtos šventykloms, Golden Triangle ir kalnų kultūrai.",
       "meta": {
-        "skrydis": "AirAsia/Thai VietJet per BKK",
+        "skrydis": "Bangkok Airways USM → BKK + Thai Smile į CEI",
         "bazes": "Chiang Rai Old Town",
         "transportas": "Privatus mikroautobusas + vietiniai gidai"
       },
@@ -642,11 +530,11 @@
               "description": "Skrydis ir kalnų maršrutai.",
               "routes": [
                 {
-                  "from": "KBV / HKT",
+                  "from": "Samui (USM)",
                   "to": "CEI (Chiang Rai)",
                   "mode": "Skrydis per BKK",
                   "duration": "4-5 h",
-                  "notes": "D11 perėjimas į šiaurę"
+                  "notes": "USM → BKK → CEI (Bangkok Airways + Thai Smile)"
                 },
                 {
                   "from": "Chiang Rai",
@@ -667,16 +555,17 @@
             {
               "id": "day-11",
               "type": "day",
-              "label": "D11 · Skrydis į Chiang Rai",
+              "label": "D13 · Skrydis Samui → Chiang Rai",
               "meta": {
-                "transportas": "KBV/HKT → BKK → CEI",
-                "vakaras": "Night Bazaar food court"
+                "transportas": "USM → BKK → CEI",
+                "vakaras": "Night Bazaar food court",
+                "vakaro_planas": "Night Bazaar food court"
               }
             },
             {
               "id": "day-12",
               "type": "day",
-              "label": "D12 · Baltas + Mėlynas + Juodas",
+              "label": "D14 · Baltas + Mėlynas + Juodas",
               "meta": {
                 "maršrutas": "Wat Rong Khun → Wat Rong Suea Ten → Baan Dam",
                 "maistas": "Chivit Thamma Da"
@@ -686,7 +575,7 @@
             {
               "id": "day-13",
               "type": "day",
-              "label": "D13 · Golden Triangle",
+              "label": "D15 · Golden Triangle",
               "meta": {
                 "sustabdymai": "Mae Sai, Sop Ruak, Hall of Opium",
                 "upė": "Mekongo kruizas"
@@ -696,7 +585,7 @@
             {
               "id": "day-14",
               "type": "day",
-              "label": "D14 · Doi Tung / Mae Salong",
+              "label": "D16 · Doi Tung / Mae Salong",
               "meta": {
                 "veikla": "Karališkieji sodai, arbatos degustacija, karštosios versmės"
               },
@@ -755,11 +644,11 @@
               "description": "Skrydis į CEI + kalnų maršrutai",
               "routes": [
                 {
-                  "from": "KBV/HKT",
+                  "from": "Samui (USM)",
                   "to": "CEI (per BKK)",
                   "mode": "Thai Smile / AirAsia",
                   "duration": "~4 h door-to-door",
-                  "notes": "D11 perėjimas į šiaurę"
+                  "notes": "USM → BKK → CEI (Bangkok Airways + Thai Smile)"
                 },
                 {
                   "from": "Chiang Rai Old Town",

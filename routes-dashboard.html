@@ -142,14 +142,15 @@
 
     async function bootstrapDashboard() {
       try {
-        const [tripRes, windowsRes, radarRes, placesRes] = await Promise.all([
+        const [tripRes, windowsRes, radarRes, placesRes, overridesRes] = await Promise.all([
           fetch('./data/routes-tree.json').then(r => r.json()),
           fetch('./data/stage_windows.json').then(r => r.json()).catch(() => null),
           fetch('./data/signal_radar.json').then(r => r.json()).catch(() => null),
-          fetch('./data/places_catalog.json').then(r => r.json()).catch(() => null)
+          fetch('./data/places_catalog.json').then(r => r.json()).catch(() => null),
+          fetch('./data/places_overrides.json').then(r => r.json()).catch(() => ({}))
         ]);
         const stages = collectStages(tripRes);
-        const placeIndex = buildPlacesIndex(placesRes);
+        const placeIndex = buildPlacesIndex(placesRes, overridesRes);
         renderTripHero(tripRes);
         renderStageWindows(windowsRes);
         renderStages(stages);
@@ -160,13 +161,29 @@
       }
     }
 
-    function buildPlacesIndex(payload) {
+    function buildPlacesIndex(payload, overrides = {}) {
       const index = new Map();
       const stageBlocks = payload?.stages || [];
       stageBlocks.forEach(block => {
         (block.items || []).forEach(item => {
-          if (!item?.name) return;
-          index.set(normalizeKey(item.name), item);
+          const rawName = item?.name || item?.label;
+          if (!rawName) return;
+          const key = normalizeKey(rawName);
+          const override = overrides[slugify(rawName)] || null;
+          index.set(key, {
+            ...item,
+            desc: override?.desc || item.desc || '',
+            description: override?.desc || item.desc || '',
+            image: override?.image || item.image || '',
+            source: override?.source || item.source || '',
+            maps: override?.maps || item.maps || '',
+            long_desc: override?.long_desc || item.long_desc || '',
+            duration: override?.duration || item.duration || '',
+            pricing: override?.pricing || item.pricing || null,
+            booking: override?.booking || item.booking || null,
+            essentials: override?.essentials || item.essentials || null,
+            avatar: override?.avatar || item.avatar || false
+          });
         });
       });
       return index;
@@ -174,6 +191,16 @@
 
     function normalizeKey(value = '') {
       return value.trim().toLowerCase();
+    }
+
+    function slugify(value = '') {
+      return value
+        .toString()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[̀-ͯ]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
     }
 
     function renderTripHero(trip) {
@@ -354,8 +381,9 @@
           </div>
           <div class="p-4 flex-1 flex flex-col">
             <h3 class="text-sm font-semibold text-gray-900">${entry.name}</h3>
-            <p class="mt-2 text-xs text-gray-600 flex-1">${entry.description || 'Aprašymas ruošiama.'}</p>
-            ${entry.source ? `<a href="${entry.source}" target="_blank" rel="noopener" class="mt-3 text-xs font-medium text-brand-600 hover:text-brand-500">Nuoroda ↗</a>` : ''}
+            <p class="mt-2 text-xs text-gray-600">${entry.description || 'Aprašymas ruošiama.'}</p>
+            ${entry.source ? `<a href="${entry.source}" target="_blank" rel="noopener" class="mt-2 text-xs font-medium text-brand-600 hover:text-brand-500">Nuoroda ↗</a>` : ''}
+            ${renderDetailAccordion(entry)}
           </div>
         </article>
       `;
@@ -398,6 +426,13 @@
           description: place?.desc || extra.description || '',
           image: place?.image || extra.image,
           source: place?.source || extra.source || '',
+          maps: place?.maps || extra.maps || '',
+          long_desc: place?.long_desc || extra.long_desc || '',
+          duration: place?.duration || extra.duration || '',
+          pricing: place?.pricing || extra.pricing || null,
+          booking: place?.booking || extra.booking || null,
+          essentials: place?.essentials || extra.essentials || null,
+          avatar: place?.avatar || extra.avatar || false
         });
       };
       items.forEach(item => {
@@ -420,8 +455,35 @@
             <p class="text-sm font-semibold text-gray-900">${entry.name}</p>
             <p class="text-xs text-gray-500 line-clamp-2">${entry.description || 'Aprašymas bus pridėtas.'}</p>
             ${entry.source ? `<a href="${entry.source}" target="_blank" rel="noopener" class="mt-1 inline-flex items-center text-xs font-medium text-brand-600 hover:text-brand-500">Plačiau<span class="ml-1">↗</span></a>` : ''}
+            ${renderDetailAccordion(entry)}
           </div>
         </div>
+      `;
+    }
+
+
+
+    function renderDetailAccordion(entry) {
+      const rows = [];
+      const longText = entry.long_desc || entry.description || entry.desc || '';
+      if (longText) rows.push(`<p class="text-[11px] leading-relaxed text-gray-600">${longText}</p>`);
+      if (entry.duration) rows.push(`<p class="text-[11px] text-gray-500"><strong class="text-gray-800">Trukmė:</strong> ${entry.duration}</p>`);
+      if (entry.pricing) rows.push(`<p class="text-[11px] text-gray-500"><strong class="text-gray-800">Kaina:</strong> ${entry.pricing.badge || ''} ${entry.pricing.details ? `(${entry.pricing.details})` : ''}</p>`);
+      if (entry.booking) {
+        rows.push(`<p class="text-[11px]"><strong class="text-gray-800">Rezervacija:</strong> <a class="text-brand-600 hover:text-brand-500" target="_blank" rel="noopener" href="${entry.booking.url}">${entry.booking.label} ↗</a>${entry.booking.notes ? `<span class="block text-[10px] text-gray-400">${entry.booking.notes}</span>` : ''}</p>`);
+      } else if (entry.source) {
+        rows.push(`<p class="text-[11px]"><strong class="text-gray-800">Info:</strong> <a class="text-brand-600 hover:text-brand-500" target="_blank" rel="noopener" href="${entry.source}">Šaltinis ↗</a></p>`);
+      }
+      if (entry.maps) rows.push(`<p class="text-[11px]"><strong class="text-gray-800">Lokacija:</strong> <a class="text-brand-600 hover:text-brand-500" target="_blank" rel="noopener" href="${entry.maps}">Google Maps ↗</a></p>`);
+      if (Array.isArray(entry.essentials) && entry.essentials.length) {
+        rows.push(`<ul class="text-[11px] text-gray-500 list-disc pl-4 space-y-1">${entry.essentials.map(item => `<li>${item}</li>`).join('')}</ul>`);
+      }
+      if (!rows.length) return '';
+      return `
+        <details class="mt-2 text-xs text-gray-600 border border-gray-200 rounded-lg bg-white/70 overflow-hidden">
+          <summary class="px-3 py-2 cursor-pointer font-semibold text-gray-800 select-none">Plačiau</summary>
+          <div class="px-3 pb-3 space-y-2">${rows.join('')}</div>
+        </details>
       `;
     }
 

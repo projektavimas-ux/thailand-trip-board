@@ -1,10 +1,40 @@
 {
-  "updated_at": "2026-03-17T10:00:00+02:00",
+  "updated_at": "2026-03-20T16:30:00+02:00",
   "items": [
-    {"stage": "1 ETAPAS", "window": "D1–D4", "start_day": 1, "end_day": 4, "focus": "Phuket · Kata / Old Town"},
-    {"stage": "2 ETAPAS", "window": "D5–D7", "start_day": 5, "end_day": 7, "focus": "Railay / Ao Nang įlankos"},
-    {"stage": "3 ETAPAS", "window": "D8–D10", "start_day": 8, "end_day": 10, "focus": "Koh Lanta / Khao Sok"},
-    {"stage": "4 ETAPAS (Alternatyva)", "window": "D8–D10", "start_day": 8, "end_day": 10, "focus": "Koh Samui / Gulf of Thailand"},
-    {"stage": "Finalas", "window": "D11–D13", "start_day": 11, "end_day": 13, "focus": "Bangkok Old Town + išvykimas"}
+    {
+      "stage": "1 ETAPAS",
+      "window": "D1–D7",
+      "start_day": 1,
+      "end_day": 7,
+      "focus": "Phuket Old Town + Krabi/Railay moduliai"
+    },
+    {
+      "stage": "2 ETAPAS",
+      "window": "D8–D9",
+      "start_day": 8,
+      "end_day": 9,
+      "focus": "Khao Sok · Cheow Lan 2D/1N"
+    },
+    {
+      "stage": "3 ETAPAS",
+      "window": "D10–D12",
+      "start_day": 10,
+      "end_day": 12,
+      "focus": "Samui / Ang Thong / Koh Phangan"
+    },
+    {
+      "stage": "4 ETAPAS",
+      "window": "D13–D17",
+      "start_day": 13,
+      "end_day": 17,
+      "focus": "Chiang Rai · Golden Triangle"
+    },
+    {
+      "stage": "5 ETAPAS",
+      "window": "D18–D23",
+      "start_day": 18,
+      "end_day": 23,
+      "focus": "Bangkokas + Naujieji"
+    }
   ]
 }
