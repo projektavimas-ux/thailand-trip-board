@@ -1,0 +1,164 @@
+{
+  "updated_at": "2026-03-21T08:45:00+02:00",
+  "items": [
+    {
+      "id": "koh-phayam",
+      "name": "Koh Phayam",
+      "region": "Ranongo archipelagas (Andamanas)",
+      "best_window": "D6–D8 · 2026-12-16 → 2026-12-18",
+      "ideal_months": "Gruodis–kovas (sausra)",
+      "focus": "Car-free basecamp + Buffalo Bay sunrise",
+      "why_now": "Sala išlieka be automobilių – tik dviračiai ir motoroleriai, todėl išsaugota senasis Tailando tempas (Journee-Mondiale, 2025-12-11).",
+      "logistics": "Skrydis BKK → Ranong, tada 35–45 min greitaeigė valtis į Ao Yai; vietoje moto taxi 50–100 THB arba nuoma ~250 THB/d. (TangyOcean, 2025-10-10).",
+      "signal": "Tinkama vieta „digital detox“ stovyklai prieš pereinant prie Krabi scenarijų.",
+      "score": 4.7,
+      "sources": [
+        {"label": "TangyOcean Koh Phayam guide", "url": "https://tangyocean.com/the-ultimate-koh-phayam-thailand-guide-beaches-bungalows-back-to-nature-bliss/"},
+        {"label": "Journee-Mondiale report", "url": "https://www.journee-mondiale.com/en/forget-phuket-where-12-million-tourists-crowd-beaches-and-koh-phayam-keeps-thailand-car-free-for-38/"}
+      ]
+    },
+    {
+      "id": "koh-mak",
+      "name": "Koh Mak",
+      "region": "Trat provincija (Kambodžos pasienis)",
+      "best_window": "D20–D22 · 2026-12-30 → 2027-01-01",
+      "ideal_months": "Gruodis–vasaris: ramūs vandenys ir retesnės minios",
+      "focus": "Plastiko nenaudojanti sala + Turtle Beach pabėgimas",
+      "why_now": "Sala orientuota į lėtą ir tvarią patirtį – keli šeimų valdomi kurortai ir tušti paplūdimiai (Wander Travel, 2025-07-23).",
+      "logistics": "Kombinuotas greitaeigis iš Laem Ngop (Trat) arba tiesioginis perėjimas nuo Koh Chang; piko metu būtina rezervuoti nakvynę.",
+      "signal": "Gera vieta Naujųjų metų nakties „barefoot luxury“ scenarijui.",
+      "score": 4.6,
+      "sources": [
+        {"label": "Wander Travel – Hidden islands 2025", "url": "https://wandertravel.travel/hidden-islands-in-thailand-2025/"},
+        {"label": "Adventures of Jellie – Koh Mak", "url": "https://www.adventuresofjellie.com/thailand/koh-mak-guide"}
+      ]
+    },
+    {
+      "id": "koh-kood",
+      "name": "Koh Kood",
+      "region": "Trat provincija (Golfo pusė)",
+      "best_window": "D18–D20 · 2026-12-28 → 2026-12-30",
+      "ideal_months": "Gruodis–kovas: skaidrus vanduo ir stabilūs perėjimai",
+      "focus": "Barefoot luxury + kriokliai ir žvejų kaimai",
+      "why_now": "Sala laikoma paskutine menkai urbanizuota vieta su krištolo paplūdimiais (WanderOn.lt, 2025).",
+      "logistics": "Aviacija iki Trat, tada 1,5 h greitaeigė valtis; bilietai dažniausiai su pervežimu į viešbutį (iamkohchang.com, 2025-10).",
+      "signal": "Rezervuoti Ao Phrao arba Soneva Kiri tipo patirtį dar prieš rugsėjį, kol kainos neišaugo.",
+      "score": 4.8,
+      "sources": [
+        {"label": "Wanderon – Koh Kood guide", "url": "https://wanderon.in/blogs/koh-kood-thailand"},
+        {"label": "iamkohchang – Koh Kood transport", "url": "https://iamkohchang.com/guide/koh-kood-island.html"}
+      ]
+    },
+    {
+      "id": "koh-jum",
+      "name": "Koh Jum / Koh Pu",
+      "region": "Krabi įlanka",
+      "best_window": "D9–D11 · 2026-12-19 → 2026-12-21",
+      "ideal_months": "Lapkritis–balandis; geriausia sausas sezonas (Samui Island Explorer)",
+      "focus": "Žvejų kaimų patirtis + ilgi paplūdimiai",
+      "why_now": "Sala tebėra ramus „laid-back“ pasirinkimas vos kelioms viloms (Adventures of Jellie, 2024-11-02).",
+      "logistics": "Longtail iš Laem Kruat (Krabi) arba trumpas perplaukimas iš Koh Lantos; ribotas elektros grafikas upės pusėje.",
+      "signal": "Galima naudoti kaip „buffer“ dienas tarp Krabi logistikos ir Trang archipelago.",
+      "score": 4.4,
+      "sources": [
+        {"label": "Adventures of Jellie – Koh Jum", "url": "https://www.adventuresofjellie.com/thailand/koh-jum"},
+        {"label": "Samui Island Explorer – Koh Jum seasonality", "url": "https://www.samuiislandexplorer.com/travel-planning-around-thailand/koh-jum-and-koh-pu-krabi/"}
+      ]
+    },
+    {
+      "id": "koh-libong",
+      "name": "Koh Libong",
+      "region": "Trang jūra",
+      "best_window": "D12–D14 · 2026-12-22 → 2026-12-24",
+      "ideal_months": "Lapkritis–balandis; sausis–vasaris populiariausi (Travelfish)",
+      "focus": "Dugongų stebėsena + mangrovių žygiai",
+      "why_now": "Sala yra natūralus dugongų rezervatas, vietiniai riboja ekskursijas (Wayward Wayfarer, 2025-12-10).",
+      "logistics": "Skrydis į Trang, minivenas iki Hat Yao, tada vietinis longtail (~40 min).",
+      "signal": "Pridėti kaip edukacinį „wildlife“ bloką tarp Koh Kradan ir žemyninės dalies.",
+      "score": 4.5,
+      "sources": [
+        {"label": "Wayward Wayfarer – Koh Libong", "url": "https://waywardwayfarer.com/koh-libong-travel-guide/"},
+        {"label": "Travelfish – Ko Libong", "url": "https://www.travelfish.org/location/thailand/southern_thailand/trang/ko_libong"}
+      ]
+    },
+    {
+      "id": "koh-kradan",
+      "name": "Koh Kradan",
+      "region": "Trang archipelago",
+      "best_window": "D14–D15 · 2026-12-24 → 2026-12-25",
+      "ideal_months": "Gruodis–kovas (skaidriausias vanduo)",
+      "focus": "UNESCO lygio paplūdimys + snorkelinimas",
+      "why_now": "Travel & Tour World (2025-06-29) vadina salą „world’s best beach“ dėl skaidraus vandens ir autentiškų NP taisyklių.",
+      "logistics": "Greitaeigė valtis iš Trang / Koh Lantos; saloje nėra kelių, todėl reikia iš anksto rezervuoti longtail meet-up.",
+      "signal": "Galima naudoti kaip „hero day“ prieš skrydį į Bangkoką.",
+      "score": 4.9,
+      "sources": [
+        {"label": "Travel & Tour World – Hidden gems 2025", "url": "https://www.travelandtourworld.com/news/article/thailands-hidden-gems-to-visit-in-2025-discover-koh-kradan-khao-yai-national-park-koh-kood-and-more/"}
+      ]
+    },
+    {
+      "id": "koh-yao-noi",
+      "name": "Koh Yao Noi",
+      "region": "Phang Nga įlanka",
+      "best_window": "D4–D5 · 2026-12-14 → 2026-12-15",
+      "ideal_months": "Lapkritis–balandis; sausros sezonas ir ramūs perplaukimai",
+      "focus": "Regeneratyvus kaimo turizmas + kavos/pasėlių vizitai",
+      "why_now": "Sala atnaujino infrastruktūrą (gera kelių danga, Wi-Fi) išlaikydama mažas minias (Koyao Bay Pavilions, 2025-07-26).",
+      "logistics": "30 min greitaeigė iš Bang Rong (Phuket) ar Ao Thalane (Krabi); daug e-bike nuomos.",
+      "signal": "Galima naudoti kaip „reset“ po Phuket logistikos – tinkama nuotoliniam darbui ir vietos žuvų ūkiams aplankyti.",
+      "score": 4.5,
+      "sources": [
+        {"label": "Koyaobay – Koh Yao 2025 update", "url": "https://www.koyaobay.com/koh-yao-noi/koh-yao-2025/"},
+        {"label": "Life in the Fast Jane – Koh Yao Noi", "url": "https://lifeinthefastjane.com/koh-yao-noi-thailand-travel-guide/"}
+      ]
+    },
+    {
+      "id": "koh-phra-thong",
+      "name": "Koh Phra Thong",
+      "region": "Phang Nga šiaurė",
+      "best_window": "D2–D4 · 2026-12-12 → 2026-12-14",
+      "ideal_months": "Gruodis–kovas; sausuma primena savaną",
+      "focus": "„Thai savannah“ + safari tipo džipų turai",
+      "why_now": "Sala pasižymi unikaliu aukso savanos kraštovaizdžiu ir 9 km tuščių paplūdimių (Travelfish & Experience Travel Group).",
+      "logistics": "Iš Khuraburi prieplaukos 20 min longtail; ribota elektra, todėl tinka „glamping“ lodge planui.",
+      "signal": "Suteikia kontrastą tarp Phuket urbanistikos ir laukinės gamtos.",
+      "score": 4.3,
+      "sources": [
+        {"label": "Travelfish – Ko Phra Thong", "url": "https://www.travelfish.org/location/thailand/southern_thailand/phang_nga/ko_phra_thong"},
+        {"label": "Experience Travel Group – Savannah tour", "url": "https://www.experiencetravelgroup.com/destinations/thailand/experiences/savannah-grassland-jeep-tour"}
+      ]
+    },
+    {
+      "id": "nan",
+      "name": "Nan provincija",
+      "region": "Šiaurės Tailandas",
+      "best_window": "D24–D26 · 2027-01-01 → 2027-01-02 (post-trip išplėtimas)",
+      "ideal_months": "Gruodis–vasaris: migloti rytai ir kava",
+      "focus": "Slow roadtrip + kavos ir sidabro amatai",
+      "why_now": "Travel + Leisure Asia (2026) rekomenduoja Nan kaip „slow travel“ maršrutą su kavos fermomis ir galerijomis; ResponsibleThailand akcentuoja Bo Suak amatų kaimus.",
+      "logistics": "Skrydis BKK → NNT, tada 3–4 d. automobiliu per Route 1081 (Sakad, Bo Kluea).",
+      "signal": "Galima naudoti kaip papildomą modulį, jei komanda norės pabėgti nuo pietinės kaitros.",
+      "score": 4.2,
+      "sources": [
+        {"label": "Travel & Leisure Asia – Nan slow travel", "url": "https://www.travelandleisureasia.com/sea/destinations/southeast-asia/nan-province-thailand-slow-travel/"},
+        {"label": "Responsible Thailand – Slow life Nan", "url": "https://responsiblethailand.com/ease-into-the-slow-life-in-nan/"}
+      ]
+    },
+    {
+      "id": "khao-sok",
+      "name": "Khao Sok + Cheow Lan Lake",
+      "region": "Surat Thani",
+      "best_window": "D15–D17 · 2026-12-25 → 2026-12-27",
+      "ideal_months": "Gruodis–balandis – sausas sezonas ir žemas vanduo",
+      "focus": "Plaukiojančios vilos + naktiniai safari",
+      "why_now": "ShippedAway (2025-11-15) ir Khao-Sok Riverside (2025-05-27) rekomenduoja užsakyti sausros sezonu, nes ežeras ramiausias ir daug plūduriuojančių vilų renka tik mažas grupes.",
+      "logistics": "2 h minivenas iš Krabi/Surat Thani + 1 h longtail iki rafthouse; patogu derinti su DHL siunta (jei reikalinga įranga).",
+      "signal": "Galima naudoti kaip „deep jungle“ modulį tarp salas → Bangkok perėjimų.",
+      "score": 4.8,
+      "sources": [
+        {"label": "ShippedAway – Floating bungalows", "url": "https://shippedaway.com/floating-bungalows-khao-sok/"},
+        {"label": "Khao-Sok Riverside Cottages", "url": "https://www.khao-sok-riverside-cottages.com/khao-sok-floating-bungalows-3/"}
+      ]
+    }
+  ]
+}
