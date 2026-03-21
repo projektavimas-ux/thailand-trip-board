@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-16T11:45:00+02:00",
+  "generated_at": "2026-03-21T15:30:00+02:00",
   "signals": [
     {
       "id": "chiang-rai-flower-2026",
@@ -98,6 +98,48 @@
         "Prie D13 logistinio plano pridėti žymą sekti NOTAM / Middle East koridoriaus statusą likus 14 d. iki grįžimo."
       ],
       "source": "https://thailandinsiderguide.com/en/travel-essentials/visas-and-entry-requirements/"
+    },
+    {
+      "id": "koh-yao-noi-infra-2026",
+      "type": "destination",
+      "priority": "medium",
+      "title": "Koh Yao Noi infrastruktūros atnaujinimas",
+      "location": "Phang Nga · Koh Yao Noi",
+      "window": "2026-11-01 → 2026-12-31",
+      "summary": "Koyaobay (2025-07-26) rašo, kad saloje nutiestos naujos betoninės kelio atkarpos, įdiegtas stabilesnis šviesolaidinis internetas ir atsidaro keli nauji kavos barai – sala tampa gera „reset“ baze tarp Phuket/Krabi logistikos.",
+      "actions": [
+        "Plan.html blokui įterpti 1 „remote work" dieną Koh Yao Noi su e-bike maršrutu (Bang Rong → salos vidurys → kavinė).",
+        "Supabase 'todos' papildyti užduotimi pridėti 2 naujas kavines (Slow Life Journey, Koh Yao Travel hub) į vietų katalogą."
+      ],
+      "source": "https://www.koyaobay.com/koh-yao-noi/koh-yao-2025/"
+    },
+    {
+      "id": "koh-phra-thong-savannah-2026",
+      "type": "destination",
+      "priority": "low",
+      "title": "Koh Phra Thong savanos turai riboja vietas",
+      "location": "Phang Nga · Koh Phra Thong",
+      "window": "2026-12-01 → 2026-12-31",
+      "summary": "Experience Travel Group (2025-11-18) pažymi, kad savanos džipų turams saloje leidžiama tik kelios išvykos per dieną, nes stigdomas jautrus kraštovaizdis. Reikia rezervacijos bent 4 savaitėms į priekį.",
+      "actions": [
+        "Įtraukti planą B (glamping Khuraburi) jei džipo laiko nepavyks gauti – pažymėti `plan.html`.",
+        "Vietų kataloge pažymėti, kad sunrise turas yra prioritetinis, o lankytojai turi atvykti 05:00 registracijai."
+      ],
+      "source": "https://www.experiencetravelgroup.com/destinations/thailand/experiences/savannah-grassland-jeep-tour"
+    },
+    {
+      "id": "nan-slow-coffee-2026",
+      "type": "destination",
+      "priority": "medium",
+      "title": "Nan provincijos kavos kelias ir rinkos",
+      "location": "Nan · Route 1081",
+      "window": "2026-12-27 → 2026-12-31",
+      "summary": "Travel + Leisure Asia (2026-03) ir ResponsibleThailand (2025-06-28) rekomenduoja Nan „slow travel" maršrutą: Sakad Coffee, Bo Suak amatų kaimas ir rūko slėniai. Tai puikus papildomas modulis po pagrindinės kelionės.",
+      "actions": [
+        "Atskirame 'extensions' skyriuje parengti roadtrip schemą (Nan → Pua → Bo Kluea) ir įdėti nuorodas į kavos stoteles.",
+        "Vietų kataloge (chiang-rai-loop) pažymėti, kad Nan modulį galima aktyvuoti, jei komanda prasitęsia kelionę iki sausio 2 d."
+      ],
+      "source": "https://www.travelandleisureasia.com/sea/destinations/southeast-asia/nan-province-thailand-slow-travel/"
     }
   ]
 }
