@@ -1,3 +1,8 @@
+## 2026-03-22 11:40 EET
+- `places_catalog.json`: pridėjau „Koh Libong dugong patrol“ kortelę (2 etapas) – aprašiau DMCR 2026-02-18 dronų stebėjimą (32 dugongai, vienas su žvejybos lynu) ir rekomendacijas rezervuoti rangerių longtail.
+- `signal_radar.json`: atnaujinau laiko žymą ir įtraukiau du naujus signalus – \*QSNCC Thailand Travel Fair 2026 (event, medium) ir \*Koh Libong dugong entanglement (alert, high) su veiksmais dėl apsilankymo planų.
+- Šaltiniai: Travel & Tour World (2026-03-21) ir IndoThai News (2026-02-18).
+
 ## 2026-03-12 12:15 EET
 - Patikrinau naujienų šaltinius (TAT News, Phuket/Chiang Rai savivaldybių pranešimai, ICONSIAM event feed) – naujų signalų ar kelionės ribojimų nėra.
 - places_catalog.json / signal_radar.json papildymų šiandien nėra → **no update**.

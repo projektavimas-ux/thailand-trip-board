@@ -1,6 +1,34 @@
 {
-  "generated_at": "2026-03-21T15:30:00+02:00",
+  "generated_at": "2026-03-22T11:30:00+02:00",
   "signals": [
+    {
+      "id": "qsncc-travel-fair-2026",
+      "type": "event",
+      "priority": "medium",
+      "title": "Thailand Travel Fair 2026 @ QSNCC",
+      "location": "Bangkok · Queen Sirikit National Convention Center",
+      "window": "2026-03-25 → 2026-03-29",
+      "summary": "TAT subrikiavo devynias temines zonas (kiekvienam Tailando regionui + tvarumo kampanijos), kad skatintų trumpus maršrutus po šalį augančių kuro kainų fone. Geras langas išsirinkti operatorius Hidden Gems etapams ir užsirezervuoti kulinarinius / kultūrinius slotus dar prieš rudenį.",
+      "actions": [
+        "Užregistruoti bent 1 dienos apsilankymą (palydovui ar partneriui) – prioritetas Pietų ir Tvarumo zonoms, kad išsirinktume naujus longtail / community-based tiekėjus.",
+        "Susitikimuose užblokuoti laikus (kovo 26–27) su viešbučiais / restoranų grandimis, siūlančiomis 2026 Q4 paketų nuolaidas Hidden Gems kryptims."
+      ],
+      "source": "https://www.travelandtourworld.com/news/article/thailand-travel-fair-2026-a-cultural-journey-through-five-thai-regions-everything-you-need-to-know/"
+    },
+    {
+      "id": "koh-libong-dugong-rescue-2026",
+      "type": "alert",
+      "priority": "high",
+      "title": "Koh Libong dugong entanglement stebėjimas",
+      "location": "Trang · Mu Ko Libong Non-Hunting Area",
+      "window": "2026-02-15 → vyksta",
+      "summary": "DMCR dronai vasario 15 d. prie Laem Ju Hoi suskaičiavo 32 dugongus, vienas jų įsipainiojęs į žvejybos lyną. Jūra dabar drumsta ir srovės stiprios, todėl gelbėtojai laukia geresnių sąlygų, nuolat sekdami gyvūną 140–480 m zonoje.",
+      "actions": [
+        "Prieš planuojant Koh Libong edukacinę dieną gauti naujausią DMCR statusą ir laikytis 400+ m buferio – tai turi atsispindėti `plan.html` pastabose.",
+        "Parengti komunikaciją komandai apie žvejybos tinklų vengimą ir pasirinkti rangerių longtail (ne komercinį turą), kad nepablogintume situacijos."
+      ],
+      "source": "https://www.indothainews.com/dugong-entangled-near-koh-libong-rescue-underway/"
+    },
     {
       "id": "chiang-rai-flower-2026",
       "type": "event",
