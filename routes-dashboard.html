@@ -309,23 +309,29 @@
       const meta = stage.meta || {};
       const days = groups.day || [];
       box.innerHTML = `
-        <div class="grid md:grid-cols-2 gap-4">
-          <article class="p-4 rounded-2xl border border-gray-100 shadow-sm bg-gray-50">
-            <h3 class="text-lg font-display font-semibold text-gray-900">${stage.label}</h3>
-            <p class="mt-1 text-sm text-gray-600">${stage.description || ''}</p>
-            <dl class="mt-3 grid grid-cols-2 gap-3 text-xs text-gray-500">
-              ${meta.bazes ? `<div><dt>Bazės</dt><dd>${meta.bazes}</dd></div>` : ''}
-              ${meta.logistika ? `<div><dt>Logistika</dt><dd>${meta.logistika}</dd></div>` : ''}
-              ${meta.rytinis_langas ? `<div><dt>Rytinis langas</dt><dd>${meta.rytinis_langas}</dd></div>` : ''}
-              ${meta.vakarinis_langas ? `<div><dt>Vakarinis langas</dt><dd>${meta.vakarinis_langas}</dd></div>` : ''}
+        <div class="grid gap-6 xl:grid-cols-[380px,1fr]">
+          <article class="p-5 rounded-3xl border border-gray-100 shadow-sm bg-gray-50 space-y-3">
+            <div>
+              <p class="text-xs uppercase tracking-[0.25em] text-brand-500">Etapo santrauka</p>
+              <h3 class="text-2xl font-display font-semibold text-gray-900">${stage.label}</h3>
+            </div>
+            <p class="text-base leading-relaxed text-gray-700">${stage.description || ''}</p>
+            <dl class="grid grid-cols-2 gap-4 text-sm text-gray-600">
+              ${meta.bazes ? `<div><dt class="text-gray-400 uppercase tracking-wide text-xs">Bazės</dt><dd class="font-medium text-gray-900">${meta.bazes}</dd></div>` : ''}
+              ${meta.logistika ? `<div><dt class="text-gray-400 uppercase tracking-wide text-xs">Logistika</dt><dd class="font-medium text-gray-900">${meta.logistika}</dd></div>` : ''}
+              ${meta.rytinis_langas ? `<div><dt class="text-gray-400 uppercase tracking-wide text-xs">Rytinis langas</dt><dd class="font-medium text-gray-900">${meta.rytinis_langas}</dd></div>` : ''}
+              ${meta.vakarinis_langas ? `<div><dt class="text-gray-400 uppercase tracking-wide text-xs">Vakarinis langas</dt><dd class="font-medium text-gray-900">${meta.vakarinis_langas}</dd></div>` : ''}
             </dl>
           </article>
-          <article class="p-4 rounded-2xl border border-gray-100 shadow-sm">
-            <h4 class="text-sm font-semibold text-gray-900 uppercase tracking-widest">Dienų planas</h4>
-            ${days.length ? `<ul class="mt-3 space-y-2">${days.map(day => `<li class="p-3 rounded-xl bg-gray-50"><p class="text-sm font-semibold text-gray-800">${day.label || day.id}</p><p class="text-xs text-gray-500">${formatMetaPairs(day.meta)}</p></li>`).join('')}</ul>` : '<p class="mt-3 text-xs text-gray-500">Dar nėra suvestų dienų.</p>'}
+          <article class="p-5 rounded-3xl border border-gray-100 shadow-sm bg-white">
+            <div class="flex items-center justify-between gap-3">
+              <h4 class="text-base font-semibold text-gray-900 uppercase tracking-[0.3em]">Dienų planas</h4>
+              <span class="text-sm text-gray-500">${days.length} dienos</span>
+            </div>
+            ${days.length ? `<ul class="mt-4 space-y-3">${days.map(day => `<li class="p-4 rounded-2xl bg-gray-50 shadow-inner"><p class="text-base font-semibold text-gray-900">${day.label || day.id}</p><p class="text-sm text-gray-600 mt-1">${formatMetaPairs(day.meta)}</p></li>`).join('')}</ul>` : '<p class="mt-4 text-sm text-gray-500">Dar nėra suvestų dienų.</p>'}
           </article>
         </div>
-        <div class="grid md:grid-cols-2 gap-4 mt-4">
+        <div class="grid gap-6 xl:grid-cols-2 mt-8">
           ${renderCategoryBlock('Ekskursijos / veiklos', groups.experience, placeIndex)}
           ${renderCategoryBlock('Maitinimas', groups.food, placeIndex)}
           ${renderCategoryBlock('Nakvynė', groups.stay, placeIndex)}
@@ -406,10 +412,10 @@
     function renderCategoryBlock(title, items = [], placeIndex) {
       const entries = expandCategoryEntries(items, placeIndex);
       if (!entries.length) {
-        return `<article class="p-4 rounded-2xl border border-gray-100 bg-white shadow-sm"><h4 class="text-sm font-semibold text-gray-900">${title}</h4><p class="mt-2 text-xs text-gray-500">Dar nėra įrašų.</p></article>`;
+        return `<article class="p-5 rounded-3xl border border-gray-100 bg-white shadow-sm"><h4 class="text-lg font-semibold text-gray-900">${title}</h4><p class="mt-3 text-sm text-gray-500">Dar nėra įrašų.</p></article>`;
       }
       const cards = entries.map(entry => renderPlaceCard(entry)).join('');
-      return `<article class="p-4 rounded-2xl border border-gray-100 bg-white shadow-sm"><h4 class="text-sm font-semibold text-gray-900">${title}</h4><div class="mt-3 space-y-3">${cards}</div></article>`;
+      return `<article class="p-5 rounded-3xl border border-gray-100 bg-white shadow-sm"><h4 class="text-lg font-semibold text-gray-900">${title}</h4><div class="mt-4 space-y-4">${cards}</div></article>`;
     }
 
     function expandCategoryEntries(items = [], placeIndex) {
@@ -447,14 +453,14 @@
 
     function renderPlaceCard(entry) {
       return `
-        <div class="flex gap-3 rounded-xl border border-gray-100 bg-gray-50/80 p-3">
-          <div class="w-16 h-16 rounded-lg overflow-hidden bg-gray-200">
+        <div class="flex gap-4 rounded-2xl border border-gray-100 bg-gray-50/80 p-4">
+          <div class="w-20 h-20 rounded-xl overflow-hidden bg-gray-200 flex-shrink-0">
             ${entry.image ? `<img src="${entry.image}" alt="${entry.name}" class="w-full h-full object-cover">` : '<div class="w-full h-full bg-gradient-to-br from-brand-50 to-brand-100"></div>'}
           </div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-semibold text-gray-900">${entry.name}</p>
-            <p class="text-xs text-gray-500 line-clamp-2">${entry.description || 'Aprašymas bus pridėtas.'}</p>
-            ${entry.source ? `<a href="${entry.source}" target="_blank" rel="noopener" class="mt-1 inline-flex items-center text-xs font-medium text-brand-600 hover:text-brand-500">Plačiau<span class="ml-1">↗</span></a>` : ''}
+          <div class="flex-1 min-w-0 space-y-1">
+            <p class="text-base font-semibold text-gray-900">${entry.name}</p>
+            <p class="text-sm text-gray-600 line-clamp-2">${entry.description || 'Aprašymas bus pridėtas.'}</p>
+            ${entry.source ? `<a href="${entry.source}" target="_blank" rel="noopener" class="inline-flex items-center text-sm font-medium text-brand-600 hover:text-brand-500">Plačiau<span class="ml-1">↗</span></a>` : ''}
             ${renderDetailAccordion(entry)}
           </div>
         </div>
@@ -466,54 +472,54 @@
     function renderDetailAccordion(entry) {
       const rows = [];
       const longText = entry.long_desc || entry.description || entry.desc || '';
-      if (longText) rows.push(`<p class="text-[11px] leading-relaxed text-gray-600">${longText}</p>`);
-      if (entry.duration) rows.push(`<p class="text-[11px] text-gray-500"><strong class="text-gray-800">Trukmė:</strong> ${entry.duration}</p>`);
-      if (entry.pricing) rows.push(`<p class="text-[11px] text-gray-500"><strong class="text-gray-800">Kaina:</strong> ${entry.pricing.badge || ''} ${entry.pricing.details ? `(${entry.pricing.details})` : ''}</p>`);
+      if (longText) rows.push(`<p class="text-sm leading-relaxed text-gray-600">${longText}</p>`);
+      if (entry.duration) rows.push(`<p class="text-sm text-gray-600"><strong class="text-gray-800">Trukmė:</strong> ${entry.duration}</p>`);
+      if (entry.pricing) rows.push(`<p class="text-sm text-gray-600"><strong class="text-gray-800">Kaina:</strong> ${entry.pricing.badge || ''} ${entry.pricing.details ? `(${entry.pricing.details})` : ''}</p>`);
       if (entry.booking) {
-        rows.push(`<p class="text-[11px]"><strong class="text-gray-800">Rezervacija:</strong> <a class="text-brand-600 hover:text-brand-500" target="_blank" rel="noopener" href="${entry.booking.url}">${entry.booking.label} ↗</a>${entry.booking.notes ? `<span class="block text-[10px] text-gray-400">${entry.booking.notes}</span>` : ''}</p>`);
+        rows.push(`<p class="text-sm"><strong class="text-gray-800">Rezervacija:</strong> <a class="text-brand-600 hover:text-brand-500" target="_blank" rel="noopener" href="${entry.booking.url}">${entry.booking.label} ↗</a>${entry.booking.notes ? `<span class="block text-xs text-gray-400">${entry.booking.notes}</span>` : ''}</p>`);
       } else if (entry.source) {
-        rows.push(`<p class="text-[11px]"><strong class="text-gray-800">Info:</strong> <a class="text-brand-600 hover:text-brand-500" target="_blank" rel="noopener" href="${entry.source}">Šaltinis ↗</a></p>`);
+        rows.push(`<p class="text-sm"><strong class="text-gray-800">Info:</strong> <a class="text-brand-600 hover:text-brand-500" target="_blank" rel="noopener" href="${entry.source}">Šaltinis ↗</a></p>`);
       }
-      if (entry.maps) rows.push(`<p class="text-[11px]"><strong class="text-gray-800">Lokacija:</strong> <a class="text-brand-600 hover:text-brand-500" target="_blank" rel="noopener" href="${entry.maps}">Google Maps ↗</a></p>`);
+      if (entry.maps) rows.push(`<p class="text-sm"><strong class="text-gray-800">Lokacija:</strong> <a class="text-brand-600 hover:text-brand-500" target="_blank" rel="noopener" href="${entry.maps}">Google Maps ↗</a></p>`);
       if (Array.isArray(entry.essentials) && entry.essentials.length) {
-        rows.push(`<ul class="text-[11px] text-gray-500 list-disc pl-4 space-y-1">${entry.essentials.map(item => `<li>${item}</li>`).join('')}</ul>`);
+        rows.push(`<ul class="text-sm text-gray-600 list-disc pl-4 space-y-1">${entry.essentials.map(item => `<li>${item}</li>`).join('')}</ul>`);
       }
       if (!rows.length) return '';
       return `
-        <details class="mt-2 text-xs text-gray-600 border border-gray-200 rounded-lg bg-white/70 overflow-hidden">
-          <summary class="px-3 py-2 cursor-pointer font-semibold text-gray-800 select-none">Plačiau</summary>
-          <div class="px-3 pb-3 space-y-2">${rows.join('')}</div>
+        <details class="mt-3 text-sm text-gray-600 border border-gray-200 rounded-xl bg-white/80 overflow-hidden">
+          <summary class="px-4 py-3 cursor-pointer font-semibold text-gray-900 select-none">Plačiau</summary>
+          <div class="px-4 pb-4 space-y-3">${rows.join('')}</div>
         </details>
       `;
     }
 
     function renderTransportBlock(items = [], placeIndex) {
       if (!items.length) {
-        return `<article class="p-4 rounded-2xl border border-gray-100 bg-white shadow-sm"><h4 class="text-sm font-semibold text-gray-900">Transportas</h4><p class="mt-2 text-xs text-gray-500">Dar nėra įrašų.</p></article>`;
+        return `<article class="p-5 rounded-3xl border border-gray-100 bg-white shadow-sm"><h4 class="text-lg font-semibold text-gray-900">Transportas</h4><p class="mt-3 text-sm text-gray-500">Dar nėra įrašų.</p></article>`;
       }
       const routes = items.flatMap(item => item.routes || []);
       if (!routes.length) {
-        return `<article class="p-4 rounded-2xl border border-gray-100 bg-white shadow-sm"><h4 class="text-sm font-semibold text-gray-900">Transportas</h4><p class="mt-2 text-xs text-gray-500">Įrašai neapibrėžti.</p></article>`;
+        return `<article class="p-5 rounded-3xl border border-gray-100 bg-white shadow-sm"><h4 class="text-lg font-semibold text-gray-900">Transportas</h4><p class="mt-3 text-sm text-gray-500">Įrašai neapibrėžti.</p></article>`;
       }
       const list = routes.map(route => {
         const related = matchRoutePlaces(route, placeIndex);
         const badges = related.length
-          ? `<p class="mt-2 text-[11px] text-gray-500">Susietos veiklos ${related.map(name => `<span class="inline-flex items-center px-2 py-0.5 mr-1 rounded-full bg-white border border-gray-200">${name}</span>`).join('')}</p>`
+          ? `<p class="mt-3 text-sm text-gray-500">Susietos veiklos ${related.map(name => `<span class="inline-flex items-center px-2.5 py-0.5 mr-1 rounded-full bg-white border border-gray-200 text-xs">${name}</span>`).join('')}</p>`
           : '';
         return `
-          <li class="flex flex-col border border-gray-100 rounded-xl p-3 bg-gray-50">
-            <div class="flex items-center justify-between text-sm text-gray-800">
+          <li class="flex flex-col border border-gray-100 rounded-2xl p-4 bg-gray-50">
+            <div class="flex items-center justify-between text-base text-gray-900">
               <strong>${route.from}</strong>
-              <span class="text-gray-400 text-xs">→</span>
+              <span class="text-gray-400 text-sm">→</span>
               <strong>${route.to}</strong>
             </div>
-            <p class="text-xs text-gray-500 mt-1">${route.mode || ''}${route.duration ? ` · ${route.duration}` : ''}</p>
-            <p class="text-xs text-gray-400">${route.notes || ''}</p>
+            <p class="text-sm text-gray-600 mt-1">${route.mode || ''}${route.duration ? ` · ${route.duration}` : ''}</p>
+            ${route.notes ? `<p class="text-sm text-gray-500 mt-1">${route.notes}</p>` : ''}
             ${badges}
           </li>
         `;
       }).join('');
-      return `<article class="p-4 rounded-2xl border border-gray-100 bg-white shadow-sm"><h4 class="text-sm font-semibold text-gray-900">Transportas</h4><ul class="mt-3 space-y-2">${list}</ul></article>`;
+      return `<article class="p-5 rounded-3xl border border-gray-100 bg-white shadow-sm"><h4 class="text-lg font-semibold text-gray-900">Transportas</h4><ul class="mt-4 space-y-3">${list}</ul></article>`;
     }
 
     function matchRoutePlaces(route = {}, placeIndex) {
