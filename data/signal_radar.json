@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-22T11:30:00+02:00",
+  "generated_at": "2026-03-26T12:05:00+02:00",
   "signals": [
     {
       "id": "qsncc-travel-fair-2026",
@@ -72,6 +72,35 @@
       "source": "https://www.phuketmarine.go.th/news/maya-bay-visitor-cap-2026/"
     },
     {
+      "id": "cheow-lan-longtail-crunch-2026",
+      "type": "logistics",
+      "priority": "medium",
+      "title": "Cheow Lan ežero longtail trūkumas tęsiasi",
+      "location": "Surat Thani · Khao Sok NP",
+      "window": "2026-12-20 → 2027-01-05",
+      "summary": "ThaiNationalParks.com (2026 m. kovo atnaujinimas) įspėja, kad licencijuotų longtailų ir rafthouse vietų trūkumas „vis dar tęsiasi 2026 m. pradžioje“. Tai reiškia, kad kalėdiniu laikotarpiu spontaniškai gauti plaukimo į Panvaree/500 Rai slotą praktiškai neįmanoma.",
+      "actions": [
+        "Iki rugsėjo 1 d. pasiųsti depozitą pasirinktam operatoriui (Panvaree, 500 Rai ar Smiley) ir atskirai rezervuoti longtailą sunrise / sunset safariams.",
+        "Pridėti `plan.html` pastabą, kad 1n/2d Cheow Lan turui būtina patvirtinta longtail licencija (per parką), kitaip teks rinktis sausumos modulį Khao Sok kaime."
+      ],
+      "source": "https://www.thainationalparks.com/khao-sok-national-park"
+    },
+    {
+      "id": "cheow-lan-boat-surcharge-2026",
+      "type": "logistics",
+      "priority": "medium",
+      "title": "Nuo 2026-07-01 kyla Cheow Lan privačių turų kainos",
+      "location": "Surat Thani · Cheow Lan Lake",
+      "window": "nuo 2026-07-01",
+      "summary": "ThaiNationalParks (Laguna Cheow Lan, atnaujinta 2026-03-26) paskelbė +2 500 THB (mažos valtys) ir +4 000 THB (8+ svečių) kuro antkainį visoms rezervacijoms nuo liepos 1 d., todėl 2026-12 privatus 3D2N paketas brangs, jei nespėsime užfiksuoti seno tarifo.",
+      "actions": [
+        "Jei turą tvirtiname iki birželio, apmokėti longtail/paketo depozitą prieš 06-30 ir sutartyje pasižymėti 'old rate' nuorodą.",
+        "Jei rezervacija daroma po 07-01, padidinti Khao Sok biudžetą mažiausiai +4 000 THB grupei (didelėms valtims) ir atitinkamai koreguoti valiutų rezervą.",
+        "`plan.html` ir Supabase laukams pridėti kainų pastabą (mažos vs didelės valtys), kad kelionės valdiklyje matytųsi realūs 2026-07+ tarifai."
+      ],
+      "source": "https://www.thainationalparks.com/laguna-cheow-lan"
+    },
+    {
       "id": "iconsiam-nye-pass-2026",
       "type": "event",
       "priority": "high",
@@ -136,7 +165,7 @@
       "window": "2026-11-01 → 2026-12-31",
       "summary": "Koyaobay (2025-07-26) rašo, kad saloje nutiestos naujos betoninės kelio atkarpos, įdiegtas stabilesnis šviesolaidinis internetas ir atsidaro keli nauji kavos barai – sala tampa gera „reset“ baze tarp Phuket/Krabi logistikos.",
       "actions": [
-        "Plan.html blokui įterpti 1 „remote work" dieną Koh Yao Noi su e-bike maršrutu (Bang Rong → salos vidurys → kavinė).",
+        "Plan.html blokui įterpti 1 „remote work“ dieną Koh Yao Noi su e-bike maršrutu (Bang Rong → salos vidurys → kavinė).",
         "Supabase 'todos' papildyti užduotimi pridėti 2 naujas kavines (Slow Life Journey, Koh Yao Travel hub) į vietų katalogą."
       ],
       "source": "https://www.koyaobay.com/koh-yao-noi/koh-yao-2025/"
@@ -162,7 +191,7 @@
       "title": "Nan provincijos kavos kelias ir rinkos",
       "location": "Nan · Route 1081",
       "window": "2026-12-27 → 2026-12-31",
-      "summary": "Travel + Leisure Asia (2026-03) ir ResponsibleThailand (2025-06-28) rekomenduoja Nan „slow travel" maršrutą: Sakad Coffee, Bo Suak amatų kaimas ir rūko slėniai. Tai puikus papildomas modulis po pagrindinės kelionės.",
+      "summary": "Travel + Leisure Asia (2026-03) ir ResponsibleThailand (2025-06-28) rekomenduoja Nan „slow travel“ maršrutą: Sakad Coffee, Bo Suak amatų kaimas ir rūko slėniai. Tai puikus papildomas modulis po pagrindinės kelionės.",
       "actions": [
         "Atskirame 'extensions' skyriuje parengti roadtrip schemą (Nan → Pua → Bo Kluea) ir įdėti nuorodas į kavos stoteles.",
         "Vietų kataloge (chiang-rai-loop) pažymėti, kad Nan modulį galima aktyvuoti, jei komanda prasitęsia kelionę iki sausio 2 d."

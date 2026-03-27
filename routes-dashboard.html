@@ -87,7 +87,10 @@
           <p class="text-xs uppercase tracking-[0.2em] text-brand-600">Fazės</p>
           <h2 class="text-2xl font-display font-semibold text-gray-900">Etapų langai</h2>
         </div>
-        <p class="text-sm text-gray-500" data-windows-updated></p>
+        <div class="flex flex-col items-start gap-1 text-sm text-gray-500 sm:items-end sm:text-right">
+          <span class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-gray-100 text-gray-600" data-windows-source>Duomenys: tikrinama...</span>
+          <p class="text-sm text-gray-500" data-windows-updated>Sinchronizacija tikrinama...</p>
+        </div>
       </div>
       <div class="mt-6 grid grid-auto-fill gap-4" id="stageWindows"></div>
     </section>
@@ -135,24 +138,152 @@
 
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js?v=2026-03-23"></script>
   <script>
+    const stageStatus = { badge: null, note: null };
+    let cachedSupabaseClient = null;
+
     document.addEventListener('DOMContentLoaded', () => {
+      stageStatus.badge = document.querySelector('[data-windows-source]');
+      stageStatus.note = document.querySelector('[data-windows-updated]');
       bootstrapDashboard();
     });
 
+    const hasSupabaseConfig = () => Boolean(
+      typeof supabase !== 'undefined' &&
+      window?.SUPABASE_URL &&
+      window?.SUPABASE_ANON_KEY &&
+      !String(window.SUPABASE_URL).includes('YOUR_')
+    );
+
+    const getSupabaseClient = () => {
+      if (!hasSupabaseConfig()) return null;
+      if (!cachedSupabaseClient) {
+        cachedSupabaseClient = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+      }
+      return cachedSupabaseClient;
+    };
+
+    const formatDateTimeEet = (value) => {
+      if (!value) return null;
+      const parsed = new Date(value);
+      if (Number.isNaN(parsed.getTime())) return null;
+      try {
+        return new Intl.DateTimeFormat('lt-LT', {
+          dateStyle: 'medium',
+          timeStyle: 'short',
+          timeZone: 'Europe/Vilnius'
+        }).format(parsed);
+      } catch (err) {
+        return parsed.toLocaleString('lt-LT', { timeZone: 'Europe/Vilnius' });
+      }
+    };
+
+    const setStageSourceBadge = (text, variant = 'default') => {
+      const badge = stageStatus.badge;
+      if (!badge) return;
+      badge.textContent = text;
+      badge.classList.remove('text-gray-600', 'bg-gray-100', 'text-brand-600', 'bg-emerald-50', 'text-rose-600', 'bg-rose-100');
+      if (variant === 'supabase') {
+        badge.classList.add('text-brand-600', 'bg-emerald-50');
+      } else if (variant === 'error') {
+        badge.classList.add('text-rose-600', 'bg-rose-100');
+      } else {
+        badge.classList.add('text-gray-600', 'bg-gray-100');
+      }
+    };
+
+    const setStageSyncNote = (label = 'Etapų langai', isoString = null) => {
+      const note = stageStatus.note;
+      if (!note) return;
+      const formatted = formatDateTimeEet(isoString);
+      note.textContent = formatted
+        ? `${label} · atnaujinta ${formatted}`
+        : `${label} · atnaujinimo laikas nežinomas`;
+    };
+
+    async function loadStageWindows() {
+      let items = [];
+      let label = 'data/stage_windows.json';
+      let variant = 'default';
+      let updatedAt = null;
+      const client = getSupabaseClient();
+
+      if (client) {
+        try {
+          const { data, error } = await client
+            .from('stage_windows')
+            .select('stage, window_label, window, start_day, end_day, focus, order_index, inserted_at, updated_at')
+            .order('order_index', { ascending: true })
+            .order('start_day', { ascending: true });
+          if (error) throw error;
+          if (Array.isArray(data) && data.length) {
+            items = data.map(row => ({
+              stage: row.stage || '',
+              window: row.window_label || row.window || '',
+              start_day: row.start_day,
+              end_day: row.end_day,
+              focus: row.focus || ''
+            }));
+            const timestamps = data
+              .map(row => row.updated_at || row.inserted_at)
+              .filter(Boolean);
+            if (timestamps.length) {
+              updatedAt = timestamps.reduce((latest, current) => {
+                if (!latest) return current;
+                return new Date(current) > new Date(latest) ? current : latest;
+              }, null);
+            }
+            label = 'Supabase · stage_windows';
+            variant = 'supabase';
+          }
+        } catch (err) {
+          console.warn('Supabase stage_windows klaida', err);
+        }
+      }
+
+      if (!items.length) {
+        try {
+          const local = await fetch(`./data/stage_windows.json?v=${Date.now()}`).then(res => res.json());
+          if (Array.isArray(local)) {
+            items = local;
+          } else if (local && Array.isArray(local.items)) {
+            items = local.items;
+            updatedAt = local.updated_at || local.updatedAt || null;
+          }
+          label = 'data/stage_windows.json';
+          variant = 'default';
+        } catch (err) {
+          console.error('Lokalus stage_windows klaida', err);
+        }
+      }
+
+      return { items, label, variant, updatedAt };
+    }
+
     async function bootstrapDashboard() {
       try {
-        const [tripRes, windowsRes, radarRes, placesRes, overridesRes] = await Promise.all([
+        const [tripRes, radarRes, placesRes, overridesRes] = await Promise.all([
           fetch('./data/routes-tree.json').then(r => r.json()),
-          fetch('./data/stage_windows.json').then(r => r.json()).catch(() => null),
           fetch('./data/signal_radar.json').then(r => r.json()).catch(() => null),
           fetch('./data/places_catalog.json').then(r => r.json()).catch(() => null),
           fetch('./data/places_overrides.json').then(r => r.json()).catch(() => ({}))
         ]);
+        setStageSourceBadge('Duomenys: tikrinama...');
+        setStageSyncNote('Etapų langai', null);
+        const stagePayload = await loadStageWindows();
         const stages = collectStages(tripRes);
         const placeIndex = buildPlacesIndex(placesRes, overridesRes);
         renderTripHero(tripRes);
-        renderStageWindows(windowsRes);
+        renderStageWindows({ items: stagePayload.items });
+        if (stagePayload.items.length) {
+          setStageSourceBadge(`Duomenys: ${stagePayload.label}`, stagePayload.variant);
+          setStageSyncNote(stagePayload.label, stagePayload.updatedAt);
+        } else {
+          setStageSourceBadge('Duomenys: nepavyko užkrauti', 'error');
+          setStageSyncNote('Etapų langai', null);
+        }
         renderStages(stages);
         setupStageDetail(stages, placeIndex);
         renderSignals(radarRes);
@@ -217,9 +348,6 @@
       if (!payload?.items?.length) {
         container.innerHTML = '<p class="text-sm text-gray-500">Nėra suvestų langų.</p>';
         return;
-      }
-      if (payload.updated_at) {
-        document.querySelector('[data-windows-updated]').textContent = `Atnaujinta ${formatDate(payload.updated_at)}`;
       }
       container.innerHTML = payload.items.map(item => `
         <article class="p-4 rounded-2xl border border-gray-100 shadow-sm bg-gradient-to-br from-white to-brand-50/40">

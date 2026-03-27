@@ -286,7 +286,7 @@
         {
           "name": "Cheow Lan „deep jungle“ planas",
           "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80",
-          "desc": "ShippedAway (2025-11-15) ir Khao-Sok Riverside (2025-05-27) rekomenduoja sausros sezoną (gruodis–balandis), nes ežeras ramiausias ir rafthouse vietos ribotos. Rezervuoti 1n/2d turą bent 60 d. iš anksto, įtraukti naktinį safarį + kajakus prieš aušrą.",
+          "desc": "ShippedAway (2025-11-15) ir Khao-Sok Riverside (2025-05-27) rekomenduoja sausros sezoną (gruodis–balandis), nes ežeras ramiausias ir rafthouse vietos ribotos. Rezervuoti 1n/2d turą bent 60 d. iš anksto, įtraukti naktinį safarį + kajakus prieš aušrą. ThaiNationalParks (Laguna Cheow Lan, 2026-03-26) nuo 2026-07-01 taiko +2 500 THB mažoms ir +4 000 THB didelėms valtims, todėl gruodžio planui reikia papildomo biudžeto arba depozito iki 06-30, kad išlaikytume seną tarifą.",
           "source": "https://shippedaway.com/floating-bungalows-khao-sok/"
         },
         {
@@ -387,6 +387,13 @@
           "name": "Nangnon Coffee / Mae Salong arbatos",
           "desc": "Kavos ir oolong arbatos stotelės kalnuose aplink Doi Tung ir Mae Salong.",
           "image": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=800&q=80"
+        },
+        {
+          "name": "Nan Slow Coffee Ridge",
+          "image": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Travel + Leisure Asia (2026-03-05) vadina Nan provinciją „slow-travel dream“: 1256 kelio serpantinuose (Nan → Pua → Bo Kluea) kavinės ant debesų linijos (Sakad Coffee, Hug Nan Café, Ban Tai Lue) jungiasi su Bo Suak audėjų kaimu ir druskos šuliniais. Iš Chiang Rai modulio verta planuoti 2 dienas, startuoti 07:00, nes rūkas iki 10:00 paslepia panoramą, ir iš anksto rezervuoti vairuotoją arba 4x4 dėl aštrių nuokalnių.",
+          "source": "https://www.travelandleisureasia.com/sea/destinations/southeast-asia/nan-province-thailand-slow-travel/",
+          "maps": "https://maps.app.goo.gl/Ci7BfrpsbR9f7D4w9"
         },
         {
           "name": "Le Patta Chiang Rai",

@@ -191,6 +191,145 @@
       font-size: 0.85rem;
       color: #475569;
     }
+    .signal-card {
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 18px;
+      padding: 18px;
+      background: #fff;
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .signal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
+    .signal-type-label {
+      font-size: 0.75rem;
+      color: #64748b;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+    .signal-actions {
+      margin: 0;
+      padding-left: 18px;
+      color: #475569;
+      font-size: 0.9rem;
+    }
+    .signal-actions li {
+      margin-bottom: 4px;
+    }
+    .hidden-spot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+    .hidden-spot-card {
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 15px 25px rgba(15, 23, 42, 0.08);
+      background: linear-gradient(135deg, rgba(190, 242, 100, 0.25), #fff);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 220px;
+    }
+    .hidden-spot-card h3 {
+      font-size: 1.1rem;
+      font-family: 'Outfit', sans-serif;
+      margin: 0;
+      color: #0f172a;
+    }
+    .hidden-spot-cluster {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: #0f766e;
+      font-weight: 600;
+    }
+    .hidden-spot-score {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #14532d;
+      background: rgba(21, 128, 61, 0.12);
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
+    .hidden-spot-window {
+      font-size: 0.9rem;
+      color: #475569;
+    }
+    .hidden-spot-quick {
+      margin: 0;
+      padding-left: 18px;
+      color: #0f172a;
+      font-size: 0.9rem;
+    }
+    .hidden-spot-quick li {
+      margin-bottom: 4px;
+    }
+    .hidden-spot-link {
+      margin-top: auto;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #0f766e;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hidden-spot-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+    .hidden-spot-filter {
+      border: 1px solid rgba(15, 118, 110, 0.25);
+      background: rgba(13, 148, 136, 0.08);
+      color: #0f766e;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .hidden-spot-filter.active {
+      background: #0f766e;
+      color: #ecfdf5;
+      border-color: #0f766e;
+      box-shadow: 0 8px 16px rgba(15, 118, 110, 0.25);
+    }
+    .hidden-spot-meta {
+      font-size: 0.75rem;
+      color: #475569;
+      text-align: right;
+    }
+    @media (max-width: 640px) {
+      .hidden-spot-grid {
+        grid-template-columns: 1fr;
+      }
+      .hidden-spot-filters {
+        flex-wrap: nowrap;
+      }
+    }
   </style>
 </head>
 <body class="font-sans antialiased">
@@ -266,11 +405,46 @@
         <div>
           <p class="text-xs uppercase tracking-[0.4em] text-brand-600 font-semibold">Etapų langai</p>
           <h2 class="text-2xl font-display font-semibold text-slate-900">Kelionės ritmas</h2>
-          <p class="text-sm text-slate-500">Vizualus D1–D23 stuburas pagal `data/stage_windows.json`.</p>
+          <p class="text-sm text-slate-500">Vizualus D1–D23 stuburas pagal Supabase `stage_windows` arba lokalų JSON.</p>
         </div>
-        <a href="./data/stage_windows.json" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600" download>Parsisiųsti langus →</a>
+        <div class="flex flex-col sm:items-end gap-2 text-sm text-slate-500">
+          <a href="./data/stage_windows.json" class="inline-flex items-center gap-2 font-semibold text-brand-600" download>Parsisiųsti langus →</a>
+          <span id="stageSourceBadge" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-1 rounded-full">Duomenys: tikrinama...</span>
+          <span id="stageSyncNote" class="text-xs text-slate-500">Paskutinė sinchronizacija: tikrinama...</span>
+        </div>
       </div>
       <div id="stageWindowsGrid" class="stage-windows-grid">
+        <p class="text-sm text-slate-500">Kraunama...</p>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div>
+          <p class="text-xs uppercase tracking-[0.4em] text-brand-600 font-semibold">Signal radar</p>
+          <h2 class="text-2xl font-display font-semibold text-slate-900">Logistiniai signalai ir įspėjimai</h2>
+          <p class="text-sm text-slate-500">Automatiškai iš `data/signal_radar.json` – rodomi aukščiausio prioriteto elementai.</p>
+        </div>
+        <a href="./data/signal_radar.json" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600" download>Parsisiųsti signalus →</a>
+      </div>
+      <div id="signalList" class="grid gap-4 lg:grid-cols-2 mt-4">
+        <p class="text-sm text-slate-500">Signalai kraunami...</p>
+      </div>
+      <p id="signalSourceNote" class="text-xs text-slate-500 mt-4">Duomenys: tikrinama...</p>
+    </section>
+
+
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
+      <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p class="text-xs uppercase tracking-[0.4em] text-brand-600 font-semibold">Hidden Chain</p>
+          <h2 class="text-2xl font-display font-semibold text-slate-900">Slaptų spot'ų fokusas</h2>
+          <p class="text-sm text-slate-500">Top 10 regionų (Koh Phayam → Nan) iš <code>data/hidden_spot_focus.json</code> – greiti langai, klasteriai ir greitos durys.</p>
+        </div>
+        <div class="hidden-spot-meta" id="hiddenSpotMeta">Atnaujinimo data tikrinama...</div>
+      </div>
+      <div class="hidden-spot-filters" id="hiddenSpotFilters"></div>
+      <div id="hiddenSpotGrid" class="hidden-spot-grid" role="region" aria-live="polite" aria-busy="false" aria-label="Hidden Chain kortelės">
         <p class="text-sm text-slate-500">Kraunama...</p>
       </div>
     </section>
@@ -290,6 +464,8 @@
 
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js?v=2026-03-23"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const macroTransitListEl = document.getElementById('macroTransitList');
@@ -298,6 +474,146 @@
       const macroInboundEl = document.getElementById('macroInboundText');
       const timelineEl = document.getElementById('macroTimeline');
       const stageWindowsGrid = document.getElementById('stageWindowsGrid');
+      const stageSourceBadge = document.getElementById('stageSourceBadge');
+      const stageSyncNote = document.getElementById('stageSyncNote');
+      const signalListEl = document.getElementById('signalList');
+      const signalSourceNote = document.getElementById('signalSourceNote');
+      const hiddenSpotGrid = document.getElementById('hiddenSpotGrid');
+      const hiddenSpotFilters = document.getElementById('hiddenSpotFilters');
+      const hiddenSpotMeta = document.getElementById('hiddenSpotMeta');
+
+      let cachedSupabase = null;
+      const hiddenSpotState = { items: [], clusters: [], filter: 'all', notes: '', generatedAt: null };
+      const hasSupabaseConfig = () => Boolean(
+        typeof supabase !== 'undefined' &&
+        window.SUPABASE_URL &&
+        window.SUPABASE_ANON_KEY &&
+        !String(window.SUPABASE_URL).includes('YOUR_')
+      );
+      const getSupabaseClient = () => {
+        if (!hasSupabaseConfig()) return null;
+        if (!cachedSupabase) {
+          cachedSupabase = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+        }
+        return cachedSupabase;
+      };
+
+      const setStageSourceBadge = (text, variant = 'default') => {
+        if (!stageSourceBadge) return;
+        stageSourceBadge.textContent = text;
+        stageSourceBadge.classList.remove('text-slate-600', 'text-brand-600', 'text-rose-600', 'bg-slate-100', 'bg-emerald-50', 'bg-rose-100');
+        if (variant === 'supabase') {
+          stageSourceBadge.classList.add('text-brand-600', 'bg-emerald-50');
+        } else if (variant === 'error') {
+          stageSourceBadge.classList.add('text-rose-600', 'bg-rose-100');
+        } else {
+          stageSourceBadge.classList.add('text-slate-600', 'bg-slate-100');
+        }
+      };
+
+      const formatDateTimeEet = (isoString) => {
+        if (!isoString) return null;
+        const parsed = new Date(isoString);
+        if (Number.isNaN(parsed.getTime())) return null;
+        try {
+          return new Intl.DateTimeFormat('lt-LT', {
+            dateStyle: 'medium',
+            timeStyle: 'short',
+            timeZone: 'Europe/Vilnius'
+          }).format(parsed);
+        } catch (err) {
+          return parsed.toLocaleString('lt-LT', { timeZone: 'Europe/Vilnius' });
+        }
+      };
+
+      const setStageSyncNote = (sourceLabel = 'Duomenys', isoString = null) => {
+        if (!stageSyncNote) return;
+        const formatted = formatDateTimeEet(isoString);
+        stageSyncNote.textContent = formatted
+          ? `${sourceLabel} · atnaujinta ${formatted}`
+          : `${sourceLabel} · atnaujinimo laikas nežinomas`;
+      };
+
+      const priorityMeta = {
+        high: { label: 'Aukštas', classes: 'bg-rose-100 text-rose-700 border border-rose-200' },
+        medium: { label: 'Vidutinis', classes: 'bg-amber-50 text-amber-700 border border-amber-200' },
+        low: { label: 'Žemas', classes: 'bg-slate-100 text-slate-600 border border-slate-200' }
+      };
+      const typeMeta = {
+        event: { icon: '🎪', label: 'Renginys' },
+        alert: { icon: '⚠️', label: 'Alertas' },
+        logistics: { icon: '🔁', label: 'Logistika' },
+        destination: { icon: '📍', label: 'Destinacija' }
+      };
+      const priorityOrder = { high: 0, medium: 1, low: 2 };
+
+      const setSignalSourceMeta = (isoString = null) => {
+        if (!signalSourceNote) return;
+        const formatted = formatDateTimeEet(isoString);
+        signalSourceNote.textContent = formatted
+          ? `Signalų JSON · atnaujinta ${formatted}`
+          : 'Signalų JSON · atnaujinimo laikas nežinomas';
+      };
+
+      const renderSignalCard = (signal) => {
+        const priorityKey = String(signal?.priority || 'medium').toLowerCase();
+        const priority = priorityMeta[priorityKey] || priorityMeta.medium;
+        const signalTypeKey = String(signal?.type || 'logistics').toLowerCase();
+        const signalType = typeMeta[signalTypeKey] || { icon: '🧭', label: 'Signalas' };
+        const actions = Array.isArray(signal?.actions) ? signal.actions.slice(0, 3) : [];
+        const actionsHtml = actions.length
+          ? `<ul class="signal-actions">${actions.map(item => `<li>${item}</li>`).join('')}</ul>`
+          : '';
+        const sourceLink = signal?.source
+          ? `<a href="${signal.source}" target="_blank" rel="noopener" class="text-sm font-semibold text-brand-600">Šaltinis ↗</a>`
+          : '';
+        return `<article class="signal-card">
+          <div class="flex items-start justify-between">
+            <span class="signal-type-label">${signalType.icon} ${signalType.label}</span>
+            <span class="signal-badge ${priority.classes}">${priority.label}</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-display text-slate-900">${signal?.title || 'Nepavadintas signalas'}</h3>
+            <p class="text-sm text-slate-600">${signal?.summary || 'Aprašas nepateiktas.'}</p>
+          </div>
+          <div class="text-xs text-slate-500 flex flex-wrap gap-3">
+            <span>📍 ${signal?.location || 'Lokacija nenurodyta'}</span>
+            <span>🗓️ ${signal?.window || 'Laikotarpis nenurodytas'}</span>
+          </div>
+          ${actionsHtml}
+          ${sourceLink}
+        </article>`;
+      };
+
+      const renderSignalRadar = (payload) => {
+        if (!signalListEl) return;
+        const signals = Array.isArray(payload?.signals) ? payload.signals.slice() : [];
+        if (!signals.length) {
+          signalListEl.innerHTML = '<p class="text-sm text-slate-500">Signalų nėra.</p>';
+          setSignalSourceMeta(payload?.generated_at);
+          return;
+        }
+        signals.sort((a, b) => {
+          const pa = priorityOrder[String(a?.priority || 'medium').toLowerCase()] ?? 3;
+          const pb = priorityOrder[String(b?.priority || 'medium').toLowerCase()] ?? 3;
+          if (pa === pb) {
+            return (a.title || '').localeCompare(b.title || '');
+          }
+          return pa - pb;
+        });
+        const subset = signals.slice(0, 6);
+        signalListEl.innerHTML = subset.map(renderSignalCard).join('');
+        setSignalSourceMeta(payload?.generated_at || null);
+      };
+
+      const detectMode = (text = '') => {
+      const setStageSyncNote = (sourceLabel = 'Duomenys', isoString = null) => {
+        if (!stageSyncNote) return;
+        const formatted = formatDateTimeEet(isoString);
+        stageSyncNote.textContent = formatted
+          ? `${sourceLabel} · atnaujinta ${formatted}`
+          : `${sourceLabel} · atnaujinimo laikas nežinomas`;
+      };
 
       const detectMode = (text = '') => {
         const lower = text.toLowerCase();
@@ -482,6 +798,189 @@
         `).join('');
       };
 
+      const setHiddenSpotBusy = (isBusy) => {
+        if (!hiddenSpotGrid) return;
+        hiddenSpotGrid.setAttribute('aria-busy', isBusy ? 'true' : 'false');
+      };
+
+      const setHiddenSpotMeta = (notes = '', isoString = null) => {
+        if (!hiddenSpotMeta) return;
+        const formatted = formatDateTimeEet(isoString);
+        const label = notes || 'Hidden Chain top 10';
+        hiddenSpotMeta.textContent = formatted
+          ? `${label} · atnaujinta ${formatted}`
+          : label;
+      };
+
+      const hiddenSpotCardHtml = (item) => {
+        const quick = Array.isArray(item?.quick) ? item.quick : [];
+        const quickHtml = quick.length
+          ? `<ul class="hidden-spot-quick">${quick.map(entry => `<li>${entry}</li>`).join('')}</ul>`
+          : '';
+        const anchor = item?.slug ? `#${item.slug}` : '';
+        return `<article class="hidden-spot-card">
+          <div class="flex items-center justify-between gap-3">
+            <span class="hidden-spot-cluster">${item?.cluster || 'Cluster'}</span>
+            <span class="hidden-spot-score">${item?.score || '—'}</span>
+          </div>
+          <div>
+            <h3>${item?.label || "Nepavadintas spot'as"}</h3>
+            <p class="hidden-spot-window">🗓️ ${item?.window || 'Langas nenurodytas'}</p>
+          </div>
+          ${quickHtml}
+          <a class="hidden-spot-link" href="./places.html${anchor}" target="_blank" rel="noopener">Žiūrėti kortelę →</a>
+        </article>`;
+      };
+
+      const renderHiddenSpotCards = () => {
+        if (!hiddenSpotGrid) return;
+        setHiddenSpotBusy(true);
+        const items = hiddenSpotState.items || [];
+        if (!items.length) {
+          hiddenSpotGrid.innerHTML = '<p class="text-sm text-rose-500">Hidden Chain sąrašas tuščias.</p>';
+          setHiddenSpotBusy(false);
+          return;
+        }
+        const filter = hiddenSpotState.filter || 'all';
+        const filtered = filter === 'all'
+          ? items
+          : items.filter(item => (item?.cluster || '').toLowerCase() === filter);
+        if (!filtered.length) {
+          hiddenSpotGrid.innerHTML = '<p class="text-sm text-slate-500">Šiam klasteriui nėra kortelių.</p>';
+          setHiddenSpotBusy(false);
+          return;
+        }
+        hiddenSpotGrid.innerHTML = filtered.map(hiddenSpotCardHtml).join('');
+        setHiddenSpotBusy(false);
+      };
+
+      const renderHiddenSpotFilters = () => {
+        if (!hiddenSpotFilters) return;
+        const entries = [{ value: 'all', label: 'Visi klasteriai' }, ...hiddenSpotState.clusters];
+        hiddenSpotFilters.innerHTML = entries.map(entry => {
+          const active = hiddenSpotState.filter === entry.value ? ' active' : '';
+          return `<button type="button" class="hidden-spot-filter${active}" data-cluster="${entry.value}">${entry.label}</button>`;
+        }).join('');
+      };
+
+      const loadHiddenSpotFocus = async () => {
+        if (!hiddenSpotGrid) return;
+        hiddenSpotGrid.innerHTML = '<p class="text-sm text-slate-500">Kraunama...</p>';
+        setHiddenSpotBusy(true);
+        setHiddenSpotMeta('Hidden Chain top 10', null);
+        try {
+          const payload = await fetch(`./data/hidden_spot_focus.json?v=${Date.now()}`).then(res => res.json());
+          const items = Array.isArray(payload?.items) ? payload.items : [];
+          hiddenSpotState.items = items;
+          hiddenSpotState.filter = 'all';
+          hiddenSpotState.notes = payload?.notes || 'Hidden Chain top 10';
+          hiddenSpotState.generatedAt = payload?.generated_at || null;
+          const clusters = [];
+          items.forEach(item => {
+            const label = (item?.cluster || '').trim();
+            if (!label) return;
+            const value = label.toLowerCase();
+            if (clusters.some(entry => entry.value === value)) return;
+            clusters.push({ value, label });
+          });
+          hiddenSpotState.clusters = clusters;
+          renderHiddenSpotFilters();
+          renderHiddenSpotCards();
+          setHiddenSpotMeta(hiddenSpotState.notes, hiddenSpotState.generatedAt);
+        } catch (err) {
+          console.error('hidden_spot_focus klaida', err);
+          hiddenSpotState.items = [];
+          hiddenSpotState.clusters = [];
+          if (hiddenSpotGrid) hiddenSpotGrid.innerHTML = '<p class="text-sm text-rose-500">Nepavyko užkrauti Hidden Chain duomenų.</p>';
+          setHiddenSpotMeta('Hidden Chain · nepavyko užkrauti', null);
+          setHiddenSpotBusy(false);
+        }
+      };
+
+      if (hiddenSpotFilters) {
+        hiddenSpotFilters.addEventListener('click', (event) => {
+          const button = event.target.closest('button[data-cluster]');
+          if (!button) return;
+          const value = button.dataset.cluster || 'all';
+          if (hiddenSpotState.filter === value) return;
+          hiddenSpotState.filter = value;
+          renderHiddenSpotFilters();
+          renderHiddenSpotCards();
+        });
+      }
+
+      const loadStageWindows = async () => {
+        if (stageWindowsGrid) {
+          stageWindowsGrid.innerHTML = '<p class="text-sm text-slate-500">Kraunama...</p>';
+        }
+        setStageSourceBadge('Duomenys: tikrinama...');
+        setStageSyncNote('Duomenys: tikrinama...');
+        let items = [];
+        let badgeVariant = 'default';
+        let label = 'data/stage_windows.json';
+        let syncTimestamp = null;
+        const client = getSupabaseClient();
+
+        if (client) {
+          try {
+            const { data, error } = await client
+              .from('stage_windows')
+              .select('stage, window_label, start_day, end_day, focus, order_index, inserted_at, updated_at')
+              .order('order_index', { ascending: true })
+              .order('start_day', { ascending: true });
+            if (error) throw error;
+            if (Array.isArray(data) && data.length) {
+              items = data.map(row => ({
+                stage: row.stage || '',
+                window: row.window_label || row.window || '',
+                start_day: row.start_day,
+                end_day: row.end_day,
+                focus: row.focus || ''
+              }));
+              const timestamps = data
+                .map(row => row.updated_at || row.inserted_at)
+                .filter(Boolean);
+              if (timestamps.length) {
+                syncTimestamp = timestamps.reduce((latest, current) => {
+                  if (!latest) return current;
+                  return new Date(current) > new Date(latest) ? current : latest;
+                }, null);
+              }
+              label = 'Supabase · stage_windows';
+              badgeVariant = 'supabase';
+            }
+          } catch (err) {
+            console.warn('Supabase stage_windows klaida', err);
+          }
+        }
+
+        if (!items.length) {
+          try {
+            const local = await fetch(`./data/stage_windows.json?v=${Date.now()}`).then(res => res.json());
+            if (Array.isArray(local)) {
+              items = local;
+            } else if (local && Array.isArray(local.items)) {
+              items = local.items;
+            }
+            syncTimestamp = (local && (local.updated_at || local.updatedAt)) || null;
+            label = 'data/stage_windows.json';
+            badgeVariant = 'default';
+          } catch (err) {
+            console.error('Lokalus stage_windows klaida', err);
+          }
+        }
+
+        if (items.length) {
+          renderStageWindows({ items });
+          setStageSourceBadge(`Duomenys: ${label}`, badgeVariant);
+          setStageSyncNote(`Šaltinis: ${label}`, syncTimestamp);
+        } else {
+          if (stageWindowsGrid) stageWindowsGrid.innerHTML = '<p class="text-sm text-rose-500">Nepavyko gauti etapų langų.</p>';
+          setStageSourceBadge('Duomenys: nepavyko užkrauti', 'error');
+          setStageSyncNote('Etapų langai', null);
+        }
+      };
+
       fetch(`./data/itinerary.json?v=${Date.now()}`)
         .then(res => res.json())
         .then(data => {
@@ -493,12 +992,18 @@
           timelineEl.innerHTML = '<p class="text-sm text-rose-500">Nepavyko gauti plano (patikrink data/itinerary.json).</p>';
         });
 
-      fetch(`./data/stage_windows.json?v=${Date.now()}`)
+      fetch(`./data/signal_radar.json?v=${Date.now()}`)
         .then(res => res.json())
-        .then(data => renderStageWindows(data))
+        .then(data => {
+          renderSignalRadar(data);
+        })
         .catch(() => {
-          if (stageWindowsGrid) stageWindowsGrid.innerHTML = '<p class="text-sm text-rose-500">Nepavyko gauti etapų langų (patikrink data/stage_windows.json).</p>';
+          if (signalListEl) signalListEl.innerHTML = '<p class="text-sm text-rose-500">Nepavyko gauti signalų.</p>';
+          setSignalSourceMeta(null);
         });
+
+      loadHiddenSpotFocus();
+      loadStageWindows();
     });
   </script>
 </body>

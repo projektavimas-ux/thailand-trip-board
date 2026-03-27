@@ -116,6 +116,86 @@
     }
     .preview-stage h4 { margin-bottom: 6px; font-weight: 600; color: #0f172a; }
     .preview-stage .spot { margin-bottom: 8px; }
+    .hidden-cluster {
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 24px;
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.06), rgba(14, 165, 233, 0.04));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+    .hidden-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0ea5e9;
+      background: rgba(14, 165, 233, 0.18);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    .hidden-card {
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 20px;
+      overflow: hidden;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 18px 30px rgba(15, 23, 42, 0.09);
+      min-height: 100%;
+    }
+    .hidden-card__media {
+      position: relative;
+      padding-bottom: 52%;
+      background-size: cover;
+      background-position: center;
+    }
+    .hidden-card__media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15,23,42,0) 0%, rgba(15,23,42,0.55) 100%);
+    }
+    .hidden-card__body {
+      padding: 18px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+    .hidden-card__stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      font-size: 12px;
+      color: #475569;
+    }
+    .hidden-card__stats span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+    .hidden-card__facts {
+      margin-top: 4px;
+      padding-left: 18px;
+      color: #475569;
+      font-size: 13px;
+      list-style-type: disc;
+    }
+    .hidden-card__actions {
+      margin-top: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .hidden-card__actions a {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2563eb;
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -148,6 +228,9 @@
 
   <!-- Content -->
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
+    <div class="flex justify-end">
+      <span id="dataSourceBadge" class="inline-flex items-center text-xs font-semibold px-3 py-1 rounded-full border border-slate-200 bg-slate-100 text-slate-600">Duomenys: tikrinama...</span>
+    </div>
     <div id="previewBox" class="bg-white rounded-2xl shadow-sm border border-slate-100">
       <div class="px-5 sm:px-6 pt-6 pb-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -181,6 +264,47 @@
         </div>
       </div>
       <div id="offlineList" class="mt-6"></div>
+    </div>
+
+    <div id="hiddenBox" class="hidden bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6 space-y-5">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div>
+          <p class="text-xs uppercase tracking-[0.35em] text-brand-600 font-semibold">Hidden chain</p>
+          <h2 class="text-xl font-display font-semibold text-slate-900">Slaptų salų / regionų lenta</h2>
+          <p class="text-sm text-slate-500 max-w-2xl">Fokusas į 10 prioritetinių vietovių (Koh Phayam → Khao Sok), kurias rezervuosime iš anksto. Kortelės traukia informaciją iš `places_overrides.json`, todėl veikia net be Supabase.</p>
+        </div>
+        <div class="hidden-cluster text-sm text-slate-700 space-y-2">
+          <p class="font-semibold text-slate-900">Grandinės seka</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-600">
+            <span>1️⃣ Koh Phayam · Ranongo sala</span>
+            <span>2️⃣ Koh Mak · Trat</span>
+            <span>3️⃣ Koh Kood · Trat</span>
+            <span>4️⃣ Koh Jum · Krabi</span>
+            <span>5️⃣ Koh Libong · Trang</span>
+            <span>6️⃣ Koh Kradan · Trang</span>
+            <span>7️⃣ Koh Yao Noi · Phang Nga</span>
+            <span>8️⃣ Koh Phra Thong · Phang Nga</span>
+            <span>9️⃣ Nan · Šiaurės Tailandas</span>
+            <span>🔟 Khao Sok · Cheow Lan</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-3 text-sm">
+        <a href="./data/hidden_spot_focus.json" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 text-slate-700 font-medium hover:bg-slate-50 transition-colors">Hidden JSON ↗</a>
+        <a href="./data/places_overrides.json" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 text-slate-700 font-medium hover:bg-slate-50 transition-colors">Overrides JSON ↗</a>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div>
+          <label for="hiddenClusterFilter" class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Klasterio filtras</label>
+          <select id="hiddenClusterFilter" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+            <option value="all">Visi klasteriai</option>
+          </select>
+        </div>
+        <div class="flex flex-col justify-end">
+          <p id="hiddenMetaStamp" class="text-xs text-slate-500 hidden"></p>
+        </div>
+      </div>
+      <div id="hiddenGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
     </div>
 
     <div id="configBox" class="hidden bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-xl shadow-sm">
@@ -285,12 +409,188 @@
       const params = new URLSearchParams(window.location.search);
       const assetVersion = '2026-03-19-a';
       let placeOverrides = {};
+      let hiddenSpotFocus = [];
+      let hiddenFocusReady = false;
+      const hiddenGrid = document.getElementById('hiddenGrid');
+      const hiddenBox = document.getElementById('hiddenBox');
+      const hiddenClusterFilter = document.getElementById('hiddenClusterFilter');
+      const hiddenMetaStamp = document.getElementById('hiddenMetaStamp');
+      const hiddenMeta = { generatedAt: null, notes: '' };
+      if (hiddenBox) hiddenBox.classList.add('hidden');
+      if (hiddenClusterFilter) hiddenClusterFilter.addEventListener('change', renderHiddenShowcase);
+      const fallbackHiddenImage = 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=80';
+
+      function formatTimestamp(value){
+        if (!value) return '';
+        const parsed = new Date(value);
+        if (Number.isNaN(parsed.getTime())) return value;
+        return parsed.toLocaleString('lt-LT', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
+      }
+
+      function updateHiddenMetaStamp(){
+        if (!hiddenMetaStamp) return;
+        const chunks = [];
+        if (hiddenMeta.generatedAt) {
+          chunks.push(`Atnaujinta ${formatTimestamp(hiddenMeta.generatedAt)}`);
+        }
+        if (hiddenMeta.notes) {
+          chunks.push(hiddenMeta.notes);
+        }
+        if (!chunks.length) {
+          hiddenMetaStamp.textContent = '';
+          hiddenMetaStamp.classList.add('hidden');
+          return;
+        }
+        hiddenMetaStamp.textContent = chunks.join(' · ');
+        hiddenMetaStamp.classList.remove('hidden');
+      }
+
+      function buildHiddenClusterFilter(){
+        if (!hiddenClusterFilter) return;
+        const previous = hiddenClusterFilter.value || 'all';
+        const clusters = Array.from(new Set(hiddenSpotFocus
+          .map(item => item?.cluster)
+          .filter(Boolean)));
+        const options = ['<option value="all">Visi klasteriai</option>']
+          .concat(clusters.map(cluster => `<option value="${cluster}">${cluster}</option>`));
+        hiddenClusterFilter.innerHTML = options.join('');
+        if (clusters.includes(previous)) {
+          hiddenClusterFilter.value = previous;
+        } else {
+          hiddenClusterFilter.value = 'all';
+        }
+      }
+
+      function loadHiddenSpotFocus(){
+        return fetch(`./data/hidden_spot_focus.json?v=${assetVersion}`)
+          .then(resp => resp.json())
+          .then(data => {
+            let list = [];
+            if (Array.isArray(data)) {
+              list = data;
+            } else if (data && Array.isArray(data.items)) {
+              list = data.items;
+            }
+            if (data && typeof data === 'object' && !Array.isArray(data)) {
+              if (data.generated_at || data.generatedAt) {
+                hiddenMeta.generatedAt = data.generated_at || data.generatedAt;
+              }
+              if (data.notes) {
+                hiddenMeta.notes = data.notes;
+              }
+              updateHiddenMetaStamp();
+            }
+            hiddenSpotFocus = list.filter(item => item && item.slug);
+            hiddenFocusReady = true;
+            buildHiddenClusterFilter();
+            renderHiddenShowcase();
+          })
+          .catch(err => {
+            console.warn('Nepavyko užkrauti hidden spot JSON', err);
+            hiddenSpotFocus = [];
+            hiddenFocusReady = true;
+            renderHiddenShowcase();
+          });
+      }
+      loadHiddenSpotFocus();
+
+      function buildHiddenCard(item){
+        if (!item) return null;
+        const override = (item.slug && placeOverrides[item.slug]) || {};
+        const hero = override.image || item.image || fallbackHiddenImage;
+        const desc = override.long_desc || override.desc || item.desc || 'Aprašymas ruošiama.';
+        const duration = override.duration || item.duration || item.window || '—';
+        const pricingValue = (override.pricing && override.pricing.badge) || item.pricing || '';
+        const quickSource = Array.isArray(item.quick) ? item.quick : (Array.isArray(override.quick) ? override.quick : []);
+        const quickFacts = quickSource.map(f => `<li>${f}</li>`).join('');
+        const booking = override.booking || item.booking;
+        const bookingLink = (booking && booking.url) ? `<a href="${booking.url}" target="_blank" rel="noopener">${booking.label || 'Rezervacija ↗'}</a>` : '';
+        const mapsUrl = override.maps || item.maps || override.source || item.source;
+        let mapsLabel = 'Šaltinis ↗';
+        if (item.maps_label) {
+          mapsLabel = item.maps_label;
+        } else if (mapsUrl && mapsUrl.includes('maps.google')) {
+          mapsLabel = 'Google Maps ↗';
+        }
+        const mapsLink = mapsUrl ? `<a href="${mapsUrl}" target="_blank" rel="noopener">${mapsLabel}</a>` : '';
+        return `
+        <article class="hidden-card">
+          <div class="hidden-card__media" style="background-image:url('${hero}')"></div>
+          <div class="hidden-card__body">
+            <div class="flex items-center justify-between gap-3 flex-wrap">
+              <span class="hidden-label">${item.cluster || 'Hidden spot'}</span>
+              <span class="text-[11px] uppercase tracking-[0.2em] text-amber-600 font-semibold">${item.window || duration}</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-display text-slate-900">${item.label || item.slug}</h3>
+              <p class="text-sm text-slate-600">${desc}</p>
+            </div>
+            <div class="hidden-card__stats">
+              <span>⭐ ${item.score || override.score || '—'}</span>
+              <span>⏱️ ${duration}</span>
+              ${pricingValue ? `<span>💰 ${pricingValue}</span>` : ''}
+            </div>
+            ${quickFacts ? `<ul class="hidden-card__facts">${quickFacts}</ul>` : ''}
+            <div class="hidden-card__actions">
+              ${bookingLink}
+              ${mapsLink}
+            </div>
+          </div>
+        </article>`;
+      }
+      function renderHiddenShowcase(){
+        if (!hiddenGrid) return;
+        if (!hiddenFocusReady){
+          hiddenGrid.innerHTML = '<p class="text-sm text-slate-500">Hidden grandinė kraunama...</p>';
+          hiddenBox?.classList.add('hidden');
+          return;
+        }
+        if (!hiddenSpotFocus.length){
+          hiddenGrid.innerHTML = '<p class="text-sm text-slate-500">Hidden grandinės kortelės dar ruošiamos.</p>';
+          hiddenBox?.classList.add('hidden');
+          return;
+        }
+        let dataset = hiddenSpotFocus;
+        const filterValue = hiddenClusterFilter?.value || 'all';
+        if (filterValue && filterValue !== 'all'){
+          dataset = hiddenSpotFocus.filter(item => (item?.cluster || '—') === filterValue);
+        }
+        if (!dataset.length){
+          hiddenGrid.innerHTML = '<p class="text-sm text-slate-500">Pasirinktame klasteryje kortelių nėra – pakeisk filtrą.</p>';
+          hiddenBox?.classList.remove('hidden');
+          return;
+        }
+        const cards = dataset.map(item => buildHiddenCard(item)).filter(Boolean);
+        if (!cards.length){
+          hiddenGrid.innerHTML = '<p class="text-sm text-slate-500">Hidden grandinės duomenys nepasiekiami (trūksta overrides?).</p>';
+          hiddenBox?.classList.add('hidden');
+          return;
+        }
+        hiddenGrid.innerHTML = cards.join('');
+        hiddenBox?.classList.remove('hidden');
+      }
+      renderHiddenShowcase();
     const overridesReady = fetch(`./data/places_overrides.json?v=${assetVersion}`)
       .then(r => r.json())
-      .then(data => { placeOverrides = data; })
-      .catch(() => { placeOverrides = {}; });
+      .then(data => { placeOverrides = data || {}; renderHiddenShowcase(); })
+      .catch(() => { placeOverrides = {}; renderHiddenShowcase(); });
 
     const stageSequence = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','4 ETAPAS','4 ETAPAS (Alternatyva)','5 ETAPAS','Finalas','Slapta vieta','Papildomos idėjos','Kita'];
+      const dataSourceBadge = document.getElementById('dataSourceBadge');
+      function setDataSourceBadge(text, variant = 'default'){
+        if (!dataSourceBadge) return;
+        dataSourceBadge.textContent = text;
+        dataSourceBadge.classList.remove('bg-slate-100','text-slate-600','border-slate-200','bg-emerald-50','text-emerald-700','border-emerald-200','bg-amber-50','text-amber-700','border-amber-200','bg-rose-50','text-rose-700','border-rose-200');
+        if (variant === 'live') {
+          dataSourceBadge.classList.add('bg-emerald-50','text-emerald-700','border-emerald-200');
+        } else if (variant === 'fallback') {
+          dataSourceBadge.classList.add('bg-amber-50','text-amber-700','border-amber-200');
+        } else if (variant === 'error') {
+          dataSourceBadge.classList.add('bg-rose-50','text-rose-700','border-rose-200');
+        } else {
+          dataSourceBadge.classList.add('bg-slate-100','text-slate-600','border-slate-200');
+        }
+      }
       function slugify(text = ''){
         return text.toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
       }
@@ -607,9 +907,11 @@
           renderPreview(data);
           initOfflineCatalog(data);
           syncPreviewToMain();
+          setDataSourceBadge('Duomenys: data/places_catalog.json', 'fallback');
         } catch (err){
           console.error('catalog preview error', err);
           if (offlineList) offlineList.innerHTML = '<p class="text-sm text-rose-500">Nepavyko įkelti vietų katalogo.</p>';
+          setDataSourceBadge('Duomenys: nepavyko įkelti katalogo', 'error');
         }
         previewBox?.classList.remove('hidden');
         document.getElementById('configBox')?.classList.add('hidden');
@@ -767,7 +1069,11 @@
           currentClient.from('places').select('*').order('created_at',{ascending:false}),
           currentClient.from('votes').select('place_id,user_id')
         ]);
-        if (pErr || vErr){ setAlert('Nepavyko gauti duomenų: ' + (pErr?.message || vErr?.message)); return; }
+        if (pErr || vErr){
+          setAlert('Nepavyko gauti duomenų: ' + (pErr?.message || vErr?.message));
+          setDataSourceBadge('Duomenys: nepavyko pasiekti Supabase', 'error');
+          return;
+        }
         placesCache = (places || []).map(place => decoratePlace(place));
         cachedVotes = votes || [];
         voteMapCache = {};
@@ -776,6 +1082,7 @@
         userVotes = new Set((cachedVotes||[]).filter(v => v.user_id === user?.id).map(v => v.place_id));
         if (!placesCache.length){
           setAlert('Supabase `places` lentelė tuščia – rodome demo katalogą.');
+          setDataSourceBadge('Duomenys: data/places_catalog.json', 'fallback');
           Promise.all([
             fetch(`./data/routes-tree.json?v=${assetVersion}`).then(r => r.json()),
             fetch(`./data/places_catalog.json?v=${assetVersion}`).then(r => r.json()).catch(() => null)
@@ -792,9 +1099,13 @@
               renderOfflineList();
               syncPreviewToMain();
             })
-            .catch(() => { setAlert('Nepavyko įkrauti demo katalogo.'); });
+            .catch(() => {
+              setAlert('Nepavyko įkrauti demo katalogo.');
+              setDataSourceBadge('Duomenys: nepavyko įkelti katalogo', 'error');
+            });
           return;
         }
+        setDataSourceBadge('Duomenys: Supabase · places/votes', 'live');
         previewBox?.classList.add('hidden');
         offlineBox?.classList.add('hidden');
         setAlert('');
@@ -841,6 +1152,7 @@
           document.getElementById('planBoard').innerHTML = '';
           previewBox?.classList.remove('hidden');
           offlineBox?.classList.remove('hidden');
+          setDataSourceBadge('Duomenys: data/places_catalog.json', 'fallback');
         }
       });
 

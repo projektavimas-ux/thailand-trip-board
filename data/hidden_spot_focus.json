@@ -1,0 +1,116 @@
+{
+  "generated_at": "2026-03-26T08:05:00+02:00",
+  "notes": "Hidden Chain top 10 – cluster filter ir meta žyma apie paskutinį atnaujinimą.",
+  "items": [
+    {
+      "slug": "koh-phayam",
+      "label": "Koh Phayam · Ranongo sala",
+      "cluster": "Sala be automobilių",
+      "window": "Sausis–kovas · 3–4 naktys",
+      "score": "4.6 / 5",
+      "quick": [
+        "Greitaeigiai 07:30 / 13:30 iš Ranongo (€9.47–€12.17)",
+        "Bungalow'ai €21.64–€40.58 · motoroleris €3.25/d."
+      ]
+    },
+    {
+      "slug": "koh-mak",
+      "label": "Koh Mak · Trat",
+      "cluster": "Trat archipelagas",
+      "window": "Lapkritis–kovas · 2–3 naktys",
+      "score": "4.5 / 5",
+      "quick": [
+        "Seatran Discovery 09:30 / 14:30 iš Laem Ngop",
+        "Speedboat €12–€16 · 27 km dviračių takai"
+      ]
+    },
+    {
+      "slug": "koh-kood",
+      "label": "Koh Kood · Trat",
+      "cluster": "Trat archipelagas",
+      "window": "Lapkritis–kovas · 3–4 naktys",
+      "score": "4.7 / 5",
+      "quick": [
+        "Boonsiri 10:45 ir 14:20 iš Laem Sok (€16–€20)",
+        "Nėra bankomatų · 4x4 taksi €4–€5/asm."
+      ]
+    },
+    {
+      "slug": "koh-jum",
+      "label": "Koh Jum · Krabi",
+      "cluster": "Andamano vidurys",
+      "window": "Gruodis–kovas · 2–3 naktys",
+      "score": "4.4 / 5",
+      "quick": [
+        "Longtail €10.82–€16.23 iš Laem Kruat (~45 min)",
+        "Generatoriai 18:00–23:00 – reik power bank"
+      ]
+    },
+    {
+      "slug": "koh-libong",
+      "label": "Koh Libong · Trang",
+      "cluster": "Trang salos",
+      "window": "Sausis–kovas · 1–2 naktys",
+      "score": "4.6 / 5",
+      "quick": [
+        "Dugong turai €24.35–€32.46",
+        "Geriausias potvynis 08:00–10:30"
+      ]
+    },
+    {
+      "slug": "koh-kradan",
+      "label": "Koh Kradan · Trang",
+      "cluster": "Trang salos",
+      "window": "Gruodis–balandis · dienos turas / 1 naktis",
+      "score": "4.6 / 5",
+      "quick": [
+        "Hat Chao Mai mokestis €5.41 + greitaeigiai €12–€15",
+        "Snorkelinimas tarp Ko Waen ir Paradise paplūdimių"
+      ]
+    },
+    {
+      "slug": "koh-yao-noi",
+      "label": "Koh Yao Noi · Phang Nga",
+      "cluster": "Phang Nga įlanka",
+      "window": "Lapkritis–balandis · 2–3 naktys",
+      "score": "4.5 / 5",
+      "quick": [
+        "Privati longtail į Hong salas €32–€40/valtis",
+        "Sala turi tik 1 minimarketą – produktus atsivežti"
+      ]
+    },
+    {
+      "slug": "koh-phra-thong",
+      "label": "Koh Phra Thong · Phang Nga",
+      "cluster": "Andamano šiaurė",
+      "window": "Gruodis–kovas · 2–3 naktys",
+      "score": "4.5 / 5",
+      "quick": [
+        "Khura Buri → sala valtis €40–€48",
+        "4x4 transferas €4–€5/asm. · smėlio muselės"
+      ]
+    },
+    {
+      "slug": "nan",
+      "label": "Nan · Šiaurės Tailandas",
+      "cluster": "Kalnų maršrutas",
+      "window": "Spalis–kovas · 2+ dienos",
+      "score": "4.7 / 5",
+      "quick": [
+        "BKK → NAN skrydžiai €43–€59 (90 min)",
+        "Loop 1148 serpantinai – degalus pildyti mieste"
+      ]
+    },
+    {
+      "slug": "khao-sok",
+      "label": "Khao Sok · Cheow Lan",
+      "cluster": "Avatar peizažai",
+      "window": "Metai visus · 2D/1N",
+      "score": "4.8 / 5",
+      "quick": [
+        "Cheow Lan 2D1N paketai €102–€121/asm.",
+        "Lagaminus palik miestelyje · vakare 18–20 °C"
+      ]
+    }
+  ]
+}

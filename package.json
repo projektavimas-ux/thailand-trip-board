@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/projektavimas-ux/thailand-trip-board#readme",
   "dependencies": {
+    "@supabase/supabase-js": "^2.100.0",
     "pg": "^8.20.0"
   }
 }
