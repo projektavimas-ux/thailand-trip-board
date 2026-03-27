@@ -33,3 +33,8 @@
 - `signal_radar.json`: pridėtas signalas **cheow-lan-boat-surcharge-2026** su ThaiNationalParks (Laguna Cheow Lan, 2026-03-26) paskelbtu +2 500 THB (mažos valtys) / +4 000 THB (8+ svečių) antkainiu visoms rezervacijoms nuo 2026-07-01. Summary + veiksmai nukreipia rezervuoti iki 06-30 arba padidinti biudžetą.
 - `places_catalog.json`: „Cheow Lan „deep jungle“ planas“ kortelėje pridėta pastaba apie tą patį kuro priedą, kad planuojant 2026-12 modulį matytųsi reali kaina.
 - Šaltiniai tikrinti ir be naujienų: TAT News (TTM+ 2026, Thailand Tourism Festival), Experience Travel Group blog (hidden islands) – nė vienas neturi konkrečių mūsų laikotarpiui aktualių pokyčių.
+
+## 2026-03-27 12:10 EET
+- Patikrinti nauji šaltiniai: TAT Newsroom ("Songkran festival 2026 to proceed nationwide" - renginys balandį, neaktualus 2026-12), TravelPulse (Healing Journey Thailand) ir kiti. 
+- Apie pasirinktas Hidden Chain salas (Koh Mak, Koh Kood, Koh Libong) ar Khao Sok papildomų naujų ribojimų (po vakar dienos pranešimo apie antkainius) ar įspėjimų nepublikuota.
+- `places_catalog.json` / `signal_radar.json`: **no update** – paliekame esamas versijas ir laukiame kitų aktualijų.
