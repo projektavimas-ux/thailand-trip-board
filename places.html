@@ -139,6 +139,11 @@
     .place-card__vote:hover {
       background: #e2e8f0;
     }
+    .plan-stage__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
     .hidden-pill {
       display: inline-flex;
       align-items: center;
@@ -1148,7 +1153,9 @@
           }).join('');
           return `<div class="plan-stage">
             <h3 class="text-sm uppercase tracking-[0.3em] text-slate-400 mb-2">${stage}</h3>
-            ${cards}
+            <div class="plan-stage__grid">
+              ${cards}
+            </div>
           </div>`;
         })
         .join('');
