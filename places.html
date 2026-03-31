@@ -44,33 +44,100 @@
     }
     .plan-line strong { font-weight: 600; color: #0f172a; }
     .place-card {
-      display: flex;
-      border: 1px solid rgba(148, 163, 184, 0.3);
-      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 24px;
       overflow: hidden;
       background: #fff;
-      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
-      margin-bottom: 16px;
+      box-shadow: 0 18px 30px rgba(15, 23, 42, 0.09);
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
     }
-    .place-card img {
-      width: 160px;
-      object-fit: cover;
-      display: block;
+    .place-card__media {
+      position: relative;
+      padding-bottom: 52%;
+      background-size: cover;
+      background-position: center;
     }
-    .place-card .body {
-      padding: 16px 18px;
+    .place-card__media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15,23,42,0.05) 0%, rgba(15,23,42,0.75) 100%);
+    }
+    .place-card__labels {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      z-index: 2;
+    }
+    .place-card__label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #0f766e;
+      background: rgba(240, 253, 244, 0.85);
+      border-radius: 999px;
+      padding: 4px 12px;
+    }
+    .place-card__window {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      z-index: 2;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+    .place-card__body {
+      padding: 20px 22px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
       flex: 1;
     }
-    .place-card .tag {
-      display: inline-flex;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #2563eb;
-      background: rgba(37, 99, 235, 0.12);
-      padding: 4px 12px;
-      border-radius: 999px;
+    .place-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .place-card__stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: #475569;
+    }
+    .place-card__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.85rem;
+    }
+    .place-card__links a {
       font-weight: 600;
+      color: #2563eb;
+    }
+    .place-card__vote {
+      align-self: flex-end;
+      padding: 10px 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #0f172a;
+      background: #f8fafc;
+      transition: all 0.2s ease;
+    }
+    .place-card__vote:hover {
+      background: #e2e8f0;
     }
     .hidden-pill {
       display: inline-flex;
@@ -228,8 +295,9 @@
 
   <!-- Content -->
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
-    <div class="flex justify-end">
+    <div class="flex flex-col items-end gap-1">
       <span id="dataSourceBadge" class="inline-flex items-center text-xs font-semibold px-3 py-1 rounded-full border border-slate-200 bg-slate-100 text-slate-600">Duomenys: tikrinama...</span>
+      <p id="dataSourceMeta" class="text-[11px] uppercase tracking-[0.2em] text-slate-400">Būsena: tikrinama...</p>
     </div>
     <div id="previewBox" class="bg-white rounded-2xl shadow-sm border border-slate-100">
       <div class="px-5 sm:px-6 pt-6 pb-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -416,6 +484,7 @@
       const hiddenClusterFilter = document.getElementById('hiddenClusterFilter');
       const hiddenMetaStamp = document.getElementById('hiddenMetaStamp');
       const hiddenMeta = { generatedAt: null, notes: '' };
+      const fallbackPlaceImage = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80';
       if (hiddenBox) hiddenBox.classList.add('hidden');
       if (hiddenClusterFilter) hiddenClusterFilter.addEventListener('change', renderHiddenShowcase);
       const fallbackHiddenImage = 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=80';
@@ -577,6 +646,18 @@
 
     const stageSequence = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','4 ETAPAS','4 ETAPAS (Alternatyva)','5 ETAPAS','Finalas','Slapta vieta','Papildomos idėjos','Kita'];
       const dataSourceBadge = document.getElementById('dataSourceBadge');
+      const dataSourceMeta = document.getElementById('dataSourceMeta');
+      function setDataSourceMeta(primary = '', secondary = ''){
+        if (!dataSourceMeta) return;
+        const parts = [primary, secondary].filter(Boolean);
+        if (!parts.length){
+          dataSourceMeta.textContent = 'Būsena: neapibrėžta';
+          dataSourceMeta.classList.add('opacity-50');
+          return;
+        }
+        dataSourceMeta.textContent = parts.join(' · ');
+        dataSourceMeta.classList.remove('opacity-50');
+      }
       function setDataSourceBadge(text, variant = 'default'){
         if (!dataSourceBadge) return;
         dataSourceBadge.textContent = text;
@@ -594,15 +675,39 @@
       function slugify(text = ''){
         return text.toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
       }
+      function buildOverrideKeys(name = ''){
+        const trimmed = (name || '').trim();
+        if (!trimmed) return [];
+        const variants = new Set([trimmed]);
+        const dotSplit = trimmed.split('·')[0]?.trim();
+        if (dotSplit) variants.add(dotSplit);
+        const parenSplit = trimmed.split('(')[0]?.trim();
+        if (parenSplit) variants.add(parenSplit);
+        const pipeSplit = trimmed.split('|')[0]?.trim();
+        if (pipeSplit) variants.add(pipeSplit);
+        const dashSplit = trimmed.split(' – ')[0]?.trim();
+        if (dashSplit) variants.add(dashSplit);
+        return Array.from(variants)
+          .map(slugify)
+          .filter(Boolean);
+      }
       function getOverride(name){
         if (!name) return null;
-        const key = slugify(name);
-        return placeOverrides[key] || null;
+        const keys = buildOverrideKeys(name);
+        for (const key of keys){
+          if (placeOverrides[key]){
+            return placeOverrides[key];
+          }
+        }
+        return null;
       }
       function decoratePlace(place){
         if (!place) return place;
         const override = getOverride(place.name);
         const base = { ...place };
+        if (typeof base.is_hidden === 'boolean') {
+          base.hidden = base.is_hidden;
+        }
         if (override){
           base.description = override.desc || base.description || '';
           base.image_url = override.image || base.image_url || '';
@@ -849,22 +954,37 @@
           const queryOk = !query || `${item.name} ${item.desc}`.toLowerCase().includes(query);
           return stageOk && queryOk;
         });
-        offlineList.innerHTML = filtered.length ? filtered.map(item => `
+        offlineList.innerHTML = filtered.length ? filtered.map(item => {
+          const hero = item.image || fallbackPlaceImage;
+          const windowLabel = item.duration || 'Demo katalogas';
+          const stats = [];
+          if (item.duration) stats.push(`<span>⏱️ ${item.duration}</span>`);
+          if (item.pricing?.badge) stats.push(`<span>💰 ${item.pricing.badge}</span>`);
+          const links = [];
+          if (item.source) links.push(`<a href="${item.source}" target="_blank" rel="noopener">Šaltinis ↗</a>`);
+          if (item.maps) links.push(`<a href="${item.maps}" target="_blank" rel="noopener">Google Maps ↗</a>`);
+          return `
           <div class="place-card">
-            ${item.image ? `<img src="${item.image}" alt="${item.name}" />` : ''}
-            <div class="body">
-              <div class="tag">${item.stage || 'Etapas nenurodytas'}</div>
-              ${item.hidden ? '<span class=\"hidden-pill\">🔒 Hidden</span>' : ''}
-              ${item.avatar ? '<span class=\"avatar-pill\">💠 Avatar</span>' : ''}
-              <h3 class="text-lg font-display text-slate-900 mt-2 mb-2">${item.name}</h3>
-              <p class="text-sm text-slate-600">${item.desc || ''}</p>
-              <div class="mt-2 flex flex-wrap gap-4">
-                ${item.source ? `<a class="text-sm font-semibold text-brand-600" href="${item.source}" target="_blank" rel="noopener">Šaltinis →</a>` : ''}
-                ${item.maps ? `<a class="text-sm font-semibold text-brand-600" href="${item.maps}" target="_blank" rel="noopener">Google Maps →</a>` : ''}
+            <div class="place-card__media" style="background-image:url('${hero}')">
+              <div class="place-card__labels">
+                <span class="place-card__label">${item.stage || 'Etapas nenurodytas'}</span>
               </div>
+              <div class="place-card__window">${windowLabel}</div>
+            </div>
+            <div class="place-card__body">
+              <div class="place-card__tags">
+                ${item.hidden ? '<span class=\"hidden-pill\">🔒 Hidden</span>' : ''}
+                ${item.avatar ? '<span class=\"avatar-pill\">💠 Avatar</span>' : ''}
+                <span class="text-[11px] uppercase tracking-[0.3em] text-slate-400">DEMO</span>
+              </div>
+              <h3 class="text-lg font-display text-slate-900">${item.name}</h3>
+              <p class="text-sm text-slate-600 leading-relaxed">${item.desc || ''}</p>
+              ${stats.length ? `<div class="place-card__stats">${stats.join('')}</div>` : ''}
+              ${links.length ? `<div class="place-card__links">${links.join('')}</div>` : ''}
               ${buildDetailBlock(item, 'offline', 'toggle-offline-extra')}
             </div>
-          </div>`).join('') : '<p class="text-sm text-slate-500">Atitinkančių vietų nėra.</p>';
+          </div>`;
+        }).join('') : '<p class="text-sm text-slate-500">Atitinkančių vietų nėra.</p>';
           
         offlineList.querySelectorAll('.toggle-offline-extra').forEach(btn => {
           btn.addEventListener('click', (e) => {
@@ -908,10 +1028,12 @@
           initOfflineCatalog(data);
           syncPreviewToMain();
           setDataSourceBadge('Duomenys: data/places_catalog.json', 'fallback');
+          setDataSourceMeta('Fallback: data/places_catalog.json', 'Atnaujinta ' + formatTimestamp(new Date()));
         } catch (err){
           console.error('catalog preview error', err);
           if (offlineList) offlineList.innerHTML = '<p class="text-sm text-rose-500">Nepavyko įkelti vietų katalogo.</p>';
           setDataSourceBadge('Duomenys: nepavyko įkelti katalogo', 'error');
+          setDataSourceMeta('Nepavyko įkelti data/places_catalog.json', err?.message || 'Nežinoma klaida');
         }
         previewBox?.classList.remove('hidden');
         document.getElementById('configBox')?.classList.add('hidden');
@@ -990,26 +1112,36 @@
           const cards = grouped[stage].map(p => {
             const statusLabel = p.status === 'plan' ? 'PLANAS' : 'IDĖJA';
             const statusColor = p.status === 'plan' ? 'text-emerald-600' : 'text-slate-400';
+            const hero = p.image_url || fallbackPlaceImage;
+            const windowLabel = p.duration || (stage.includes('ETAPAS') ? 'Etapo balsavimas' : 'Idėja / balsai');
+            const stats = [];
+            if (p.duration) stats.push(`<span>⏱️ ${p.duration}</span>`);
+            if (p.pricing?.badge) stats.push(`<span>💰 ${p.pricing.badge}</span>`);
+            const links = [];
+            if (p.source) links.push(`<a href="${p.source}" target="_blank" rel="noopener">Šaltinis ↗</a>`);
+            if (p.maps) links.push(`<a href="${p.maps}" target="_blank" rel="noopener">Google Maps ↗</a>`);
             return `
             <div class="place-card">
-              ${p.image_url ? `<img src="${p.image_url}" alt="${p.name}" />` : ''}
-              <div class="body">
-                <div class="flex items-center gap-2 flex-wrap">
-                  <div class="tag">${stage}</div>
+              <div class="place-card__media" style="background-image:url('${hero}')">
+                <div class="place-card__labels">
+                  <span class="place-card__label">${stage}</span>
+                </div>
+                <div class="place-card__window">${windowLabel}</div>
+              </div>
+              <div class="place-card__body">
+                <div class="place-card__tags">
                   ${p.hidden ? '<span class=\"hidden-pill\">🔒 Hidden</span>' : ''}
                   ${p.avatar ? '<span class=\"avatar-pill\">💠 Avatar</span>' : ''}
                   <span class="text-[11px] uppercase tracking-[0.3em] ${statusColor}">${statusLabel}</span>
                 </div>
-                <h3 class="text-lg font-display text-slate-900 mt-2 mb-2">${p.name}</h3>
-                <p class="text-sm text-slate-600">${p.description || ''}</p>
-                <div class="mt-2 flex flex-wrap gap-4">
-                  ${p.source ? `<a class="text-sm font-semibold text-brand-600" href="${p.source}" target="_blank" rel="noopener">Šaltinis →</a>` : ''}
-                  ${p.maps ? `<a class="text-sm font-semibold text-brand-600" href="${p.maps}" target="_blank" rel="noopener">Google Maps →</a>` : ''}
-                </div>
+                <h3 class="text-lg font-display text-slate-900">${p.name}</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">${p.description || ''}</p>
+                ${stats.length ? `<div class="place-card__stats">${stats.join('')}</div>` : ''}
+                ${links.length ? `<div class="place-card__links">${links.join('')}</div>` : ''}
                 ${buildDetailBlock(p, 'main', 'toggle-extra')}
-                <div class="footer">
-                  <span class="text-xs uppercase tracking-wide text-slate-500">${voteMapCache[p.id]||0} bals.</span>
-                  <button class="px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors" data-place="${p.id}">${userVotes.has(p.id)?'Atimti':'Balsuoti'}</button>
+                <div class="flex items-center justify-between pt-2">
+                  <span class="text-xs uppercase tracking-wide text-slate-500">🔥 ${voteMapCache[p.id]||0} bals.</span>
+                  <button class="place-card__vote" data-place="${p.id}">${userVotes.has(p.id)?'Atimti balsą':'Balsuoti'}</button>
                 </div>
               </div>
             </div>`;
@@ -1070,8 +1202,10 @@
           currentClient.from('votes').select('place_id,user_id')
         ]);
         if (pErr || vErr){
-          setAlert('Nepavyko gauti duomenų: ' + (pErr?.message || vErr?.message));
+          const reason = pErr?.message || vErr?.message || 'Nežinoma klaida';
+          setAlert('Nepavyko gauti duomenų: ' + reason);
           setDataSourceBadge('Duomenys: nepavyko pasiekti Supabase', 'error');
+          setDataSourceMeta('Supabase klaida', reason);
           return;
         }
         placesCache = (places || []).map(place => decoratePlace(place));
@@ -1083,6 +1217,7 @@
         if (!placesCache.length){
           setAlert('Supabase `places` lentelė tuščia – rodome demo katalogą.');
           setDataSourceBadge('Duomenys: data/places_catalog.json', 'fallback');
+          setDataSourceMeta('Fallback: data/places_catalog.json', 'Priežastis: Supabase `places` sugeneravo 0 įrašų');
           Promise.all([
             fetch(`./data/routes-tree.json?v=${assetVersion}`).then(r => r.json()),
             fetch(`./data/places_catalog.json?v=${assetVersion}`).then(r => r.json()).catch(() => null)
@@ -1098,14 +1233,19 @@
               offlineBox?.classList.remove('hidden');
               renderOfflineList();
               syncPreviewToMain();
+              const catalogStamp = catalog?.updated_at || catalog?.updatedAt || catalog?.generated_at || catalog?.generatedAt || catalog?.meta?.updated_at || catalog?.meta?.generated_at || null;
+              const stampText = catalogStamp ? ('Atnaujinta ' + formatTimestamp(catalogStamp)) : ('Atnaujinta ' + formatTimestamp(new Date()));
+              setDataSourceMeta('Fallback: data/places_catalog.json', stampText);
             })
-            .catch(() => {
+            .catch((err) => {
               setAlert('Nepavyko įkrauti demo katalogo.');
               setDataSourceBadge('Duomenys: nepavyko įkelti katalogo', 'error');
+              setDataSourceMeta('Nepavyko įkelti data/places_catalog.json', err?.message || 'Nežinoma klaida');
             });
           return;
         }
         setDataSourceBadge('Duomenys: Supabase · places/votes', 'live');
+        setDataSourceMeta('Live: Supabase · places/votes', 'Atnaujinta ' + formatTimestamp(new Date()));
         previewBox?.classList.add('hidden');
         offlineBox?.classList.add('hidden');
         setAlert('');
@@ -1153,6 +1293,7 @@
           previewBox?.classList.remove('hidden');
           offlineBox?.classList.remove('hidden');
           setDataSourceBadge('Duomenys: data/places_catalog.json', 'fallback');
+          setDataSourceMeta('Demo režimas', 'Prisijunk, kad skaitytum Supabase duomenis');
         }
       });
 
