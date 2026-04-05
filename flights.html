@@ -91,6 +91,10 @@
 
   <!-- Content wrap -->
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
+    <div class=\"flex flex-col items-end gap-1\">
+      <span id=\"dataSourceBadge\" class=\"inline-flex items-center text-xs font-semibold px-3 py-1 rounded-full border border-slate-200 bg-slate-100 text-slate-600\">Duomenys: tikrinama...</span>
+      <p id=\"dataSourceMeta\" class=\"text-[11px] uppercase tracking-[0.2em] text-slate-400\">Būsena: tikrinama...</p>
+    </div>
     <div id="configBox" class="hidden bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-xl shadow-sm">
       <p class="text-sm text-yellow-700"><strong>Supabase konfigūracija būtina.</strong> Kadangi ši suvestinė privati, ji rodoma tik prisijungus.</p>
     </div>
@@ -163,25 +167,126 @@
     </div>
   </div>
 
+  <script src="./scripts/status-indicator.js?v=2026-04-03"></script>
   <script src="./supabase-config.v2.js?v=2026-03-12-c"></script>
   <script src="./scripts/supabase-page.js"></script>
   <script>
     window.addEventListener('DOMContentLoaded', () => {
+      const dataSourceBadge = document.getElementById('dataSourceBadge');
+      const dataSourceMeta = document.getElementById('dataSourceMeta');
+      const dataIndicator = window.StatusIndicator
+        ? window.StatusIndicator.create({
+            badge: dataSourceBadge,
+            meta: dataSourceMeta,
+            defaultBadge: 'Duomenys: tikrinama...',
+            defaultMeta: 'Būsena: tikrinama...'
+          })
+        : null;
+      const flightListEl = document.getElementById('flightList');
+      const bestBox = document.getElementById('bestOpenJaw');
+      const charterBox = document.getElementById('charterSnapshot');
       let latestData = null;
 
+      function formatTimestamp(value){
+        if (!value){
+          return new Date().toLocaleString('lt-LT', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())){
+          return new Date().toLocaleString('lt-LT', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+        return date.toLocaleString('lt-LT', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+      }
+
+      function setDataSourceMeta(primary = '', secondary = ''){
+        if (dataIndicator){
+          dataIndicator.setMeta(primary, secondary);
+          return;
+        }
+        if (!dataSourceMeta) return;
+        const parts = [primary, secondary].filter(Boolean);
+        if (!parts.length){
+          dataSourceMeta.textContent = 'Būsena: neapibrėžta';
+          dataSourceMeta.classList.add('opacity-60');
+          return;
+        }
+        dataSourceMeta.textContent = parts.join(' · ');
+        dataSourceMeta.classList.remove('opacity-60');
+      }
+
+      function setDataSourceBadge(text, variant = 'default'){
+        if (dataIndicator){
+          dataIndicator.setBadge(text, variant);
+          return;
+        }
+        if (!dataSourceBadge) return;
+        dataSourceBadge.textContent = text;
+        dataSourceBadge.classList.remove('bg-slate-100','text-slate-600','border-slate-200','bg-emerald-50','text-emerald-700','border-emerald-200','bg-amber-50','text-amber-700','border-amber-200','bg-rose-50','text-rose-700','border-rose-200');
+        if (variant === 'live') {
+          dataSourceBadge.classList.add('bg-emerald-50','text-emerald-700','border-emerald-200');
+        } else if (variant === 'fallback') {
+          dataSourceBadge.classList.add('bg-amber-50','text-amber-700','border-amber-200');
+        } else if (variant === 'error') {
+          dataSourceBadge.classList.add('bg-rose-50','text-rose-700','border-rose-200');
+        } else {
+          dataSourceBadge.classList.add('bg-slate-100','text-slate-600','border-slate-200');
+        }
+      }
+
+      function markAwaitingAuth(){
+        if (dataIndicator){
+          dataIndicator.markAwaitingAuth('Prisijunk, kad matytum skrydžių suvestinę');
+          return;
+        }
+        setDataSourceBadge('Duomenys: Supabase (prisijunk)', 'fallback');
+        setDataSourceMeta('Režimas: laukia prisijungimo', 'Prisijunk, kad matytum skrydžių suvestinę');
+      }
+
+      function markConfigMissing(){
+        if (dataIndicator){
+          dataIndicator.markConfigMissing('Papildyk supabase-config.v2.js');
+          return;
+        }
+        setDataSourceBadge('Duomenys: Supabase konfigūracija nerasta', 'error');
+        setDataSourceMeta('Trūksta window.SUPABASE_URL / ANON_KEY', 'Papildyk supabase-config.v2.js');
+      }
+
+      function markFlightDataState(payload){
+        if (payload?.items?.length){
+          const stamp = payload?.updated_at || payload?.generated_at || payload?.generatedAt || payload?.meta?.updated_at || payload?.meta?.generated_at || null;
+          const stampText = stamp ? `Atnaujinta ${formatTimestamp(stamp)}` : `Atnaujinta ${formatTimestamp(new Date())}`;
+          setDataSourceBadge('Duomenys: data/flights.json', 'live');
+          setDataSourceMeta('Live: data/flights.json', stampText);
+          return;
+        }
+        setDataSourceBadge('Duomenys: data/flights.json (tuščia)', 'fallback');
+        setDataSourceMeta('Failas negrąžino įrašų', 'Patikrink cron ar importo skriptą');
+      }
+
+      function markFlightDataError(reason){
+        if (dataIndicator){
+          dataIndicator.markError('Duomenys: nepavyko įkelti data/flights.json', reason || 'Nežinoma klaida');
+          return;
+        }
+        setDataSourceBadge('Duomenys: nepavyko įkelti data/flights.json', 'error');
+        setDataSourceMeta('Klaida skaitant failą', reason || 'Nežinoma klaida');
+      }
+
+      markAwaitingAuth();
+
       function renderLists(){
-        const list = document.getElementById('flightList');
-        const bestBox = document.getElementById('bestOpenJaw');
-        const charterBox = document.getElementById('charterSnapshot');
+        if (!flightListEl || !bestBox || !charterBox){
+          return;
+        }
         if (!latestData || !latestData.items || !latestData.items.length){
-          list.innerHTML = '<p class="text-sm text-slate-500">Šiandien naujų įrašų nėra.</p>';
+          flightListEl.innerHTML = '<p class="text-sm text-slate-500">Šiandien naujų įrašų nėra.</p>';
           bestBox.innerHTML = '<p class="text-sm text-slate-500">Laukiame naujų OPEN-JAW rezultatų.</p>';
           charterBox.innerHTML = '<p class="text-sm text-slate-500">Naujų charter pasiūlymų nenustatyta.</p>';
           return;
         }
 
         const items = latestData.items;
-        list.innerHTML = items.map(item => `
+        flightListEl.innerHTML = items.map(item => `
           <div class="plan-line">
             <strong>${item.title || ''}</strong>
             ${item.price || ''}<br>
@@ -220,22 +325,53 @@
         }
       }
 
-      function loadFlights(){
-        return fetch('./data/flights.json').then(r => r.json()).catch(() => ({ items: [] }));
+      async function loadFlights(){
+        const response = await fetch('./data/flights.json');
+        if (!response.ok){
+          throw new Error(`HTTP ${response.status}`);
+        }
+        return response.json();
       }
 
       async function refreshFlights(){
-        latestData = await loadFlights();
-        renderLists();
+        try {
+          latestData = await loadFlights();
+          renderLists();
+          markFlightDataState(latestData);
+        } catch (err){
+          latestData = { items: [] };
+          markFlightDataError(err?.message || 'Nežinoma klaida');
+          if (flightListEl){
+            flightListEl.innerHTML = '<p class="text-sm text-rose-500">Nepavyko įkrauti data/flights.json.</p>';
+          }
+          if (bestBox){
+            bestBox.innerHTML = '<p class="text-sm text-rose-500">Nepavyko įkrauti duomenų.</p>';
+          }
+          if (charterBox){
+            charterBox.innerHTML = '<p class="text-sm text-rose-500">Nepavyko įkrauti duomenų.</p>';
+          }
+        }
       }
 
-      document.getElementById('refreshBtn').addEventListener('click', refreshFlights);
+      const refreshBtn = document.getElementById('refreshBtn');
+      if (refreshBtn){
+        refreshBtn.addEventListener('click', refreshFlights);
+      }
 
-      initSupabasePage({
+      const supabaseCtx = initSupabasePage({
         onReady: () => {
+          setDataSourceBadge('Duomenys: data/flights.json', 'default');
+          setDataSourceMeta('Live: data/flights.json', 'Kraunama...');
           refreshFlights();
+        },
+        onSignedOut: () => {
+          markAwaitingAuth();
         }
       });
+
+      if (!supabaseCtx){
+        markConfigMissing();
+      }
     });
   </script>
 </body>

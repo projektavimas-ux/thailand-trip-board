@@ -373,10 +373,15 @@
             <option value="all">Visi klasteriai</option>
           </select>
         </div>
-        <div class="flex flex-col justify-end">
+        <div class="flex flex-col justify-end gap-2">
+          <label class="inline-flex items-center text-sm text-slate-600">
+            <input type="checkbox" id="hiddenWinterFilter" class="w-4 h-4 text-brand-600 border-slate-300 rounded focus:ring-brand-500 cursor-pointer" />
+            <span class="ml-2 cursor-pointer select-none">Tik Gruodis–Sausis langai</span>
+          </label>
           <p id="hiddenMetaStamp" class="text-xs text-slate-500 hidden"></p>
         </div>
       </div>
+      <div id="hiddenFocusSummary" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-2 hidden"></div>
       <div id="hiddenGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
     </div>
 
@@ -488,10 +493,13 @@
       const hiddenBox = document.getElementById('hiddenBox');
       const hiddenClusterFilter = document.getElementById('hiddenClusterFilter');
       const hiddenMetaStamp = document.getElementById('hiddenMetaStamp');
+      const hiddenFocusSummary = document.getElementById('hiddenFocusSummary');
+      const hiddenWinterFilter = document.getElementById('hiddenWinterFilter');
       const hiddenMeta = { generatedAt: null, notes: '' };
       const fallbackPlaceImage = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80';
       if (hiddenBox) hiddenBox.classList.add('hidden');
       if (hiddenClusterFilter) hiddenClusterFilter.addEventListener('change', renderHiddenShowcase);
+      if (hiddenWinterFilter) hiddenWinterFilter.addEventListener('change', renderHiddenShowcase);
       const fallbackHiddenImage = 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=80';
 
       function formatTimestamp(value){
@@ -557,12 +565,14 @@
             hiddenSpotFocus = list.filter(item => item && item.slug);
             hiddenFocusReady = true;
             buildHiddenClusterFilter();
+            renderHiddenFocusSummary();
             renderHiddenShowcase();
           })
           .catch(err => {
             console.warn('Nepavyko užkrauti hidden spot JSON', err);
             hiddenSpotFocus = [];
             hiddenFocusReady = true;
+            renderHiddenFocusSummary();
             renderHiddenShowcase();
           });
       }
@@ -629,6 +639,10 @@
         if (filterValue && filterValue !== 'all'){
           dataset = hiddenSpotFocus.filter(item => (item?.cluster || '—') === filterValue);
         }
+        const winterOnly = hiddenWinterFilter?.checked;
+        if (winterOnly){
+          dataset = dataset.filter(item => matchesWinterWindow(item?.window || ''));
+        }
         if (!dataset.length){
           hiddenGrid.innerHTML = '<p class="text-sm text-slate-500">Pasirinktame klasteryje kortelių nėra – pakeisk filtrą.</p>';
           hiddenBox?.classList.remove('hidden');
@@ -643,6 +657,45 @@
         hiddenGrid.innerHTML = cards.join('');
         hiddenBox?.classList.remove('hidden');
       }
+
+      function renderHiddenFocusSummary(){
+        if (!hiddenFocusSummary) return;
+        if (!hiddenSpotFocus.length){
+          hiddenFocusSummary.innerHTML = '';
+          hiddenFocusSummary.classList.add('hidden');
+          return;
+        }
+        const clusterStats = hiddenSpotFocus.reduce((acc, item) => {
+          const key = item.cluster || 'Kiti klasteriai';
+          acc[key] = (acc[key] || 0) + 1;
+          return acc;
+        }, {});
+        const topCluster = Object.entries(clusterStats).sort((a,b)=>b[1]-a[1])[0];
+        const avgScore = hiddenSpotFocus.reduce((sum, item) => {
+          const raw = typeof item.score === 'number' ? item.score : parseFloat(String(item.score || '').replace(',', '.'));
+          return sum + (Number.isFinite(raw) ? raw : 0);
+        }, 0) / hiddenSpotFocus.length;
+        const winterWindows = hiddenSpotFocus.filter(item => matchesWinterWindow(item.window || '')).length;
+        const summaryItems = [
+          { label: 'Fokusų', value: hiddenSpotFocus.length },
+          { label: 'Dominuojantis klasteris', value: topCluster ? `${topCluster[0]} (${topCluster[1]})` : '–' },
+          { label: 'Gruodis–Sausis langai', value: winterWindows },
+          { label: 'Vid. score', value: Number.isFinite(avgScore) && avgScore > 0 ? avgScore.toFixed(1) : '–' }
+        ];
+        hiddenFocusSummary.innerHTML = summaryItems.map(item => `
+          <div class="p-4 bg-slate-50 border border-slate-100 rounded-xl">
+            <span class="block text-2xl font-display font-bold text-slate-900">${item.value}</span>
+            <span class="text-[11px] uppercase tracking-wide text-slate-500">${item.label}</span>
+          </div>
+        `).join('');
+        hiddenFocusSummary.classList.remove('hidden');
+      }
+
+      function matchesWinterWindow(label = ''){
+        const text = label.toLowerCase();
+        return text.includes('gruod') || text.includes('saus') || text.includes('dec') || text.includes('jan');
+      }
+
       renderHiddenShowcase();
     const overridesReady = fetch(`./data/places_overrides.json?v=${assetVersion}`)
       .then(r => r.json())

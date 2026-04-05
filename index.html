@@ -81,6 +81,11 @@
   <!-- Main Content Wrap -->
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
 
+    <div class=\"flex flex-col items-end gap-1 mb-6\">
+      <span id=\"dataSourceBadge\" class=\"inline-flex items-center text-xs font-semibold px-3 py-1 rounded-full border border-gray-200 bg-gray-100 text-gray-600\">Duomenys: tikrinama...</span>
+      <p id=\"dataSourceMeta\" class=\"text-[11px] uppercase tracking-[0.2em] text-gray-400\">Būsena: tikrinama...</p>
+    </div>
+
     <!-- Config Alert -->
     <div id="configBox" class="hidden mb-6 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-md shadow-sm">
       <div class="flex">
@@ -275,6 +280,21 @@
         <div id="hiddenGemList" class="p-5 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
       </div>
 
+      <!-- Hidden Spot Focus -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-5 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center">
+          <div>
+            <h2 class="text-lg font-display font-semibold text-gray-900">Hidden spot logistika</h2>
+            <p class="text-xs text-gray-500 mt-1">`data/hidden_spot_focus.json` – klasterių langai ir greitos pastabos.</p>
+          </div>
+          <span id="hiddenFocusStamp" class="text-xs text-gray-400 font-medium"></span>
+        </div>
+        <div class="p-5 border-b border-gray-100 bg-white">
+          <div id="hiddenFocusSummary" class="grid grid-cols-1 md:grid-cols-4 gap-3"></div>
+        </div>
+        <div id="hiddenFocusList" class="p-5 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </div>
+
       <!-- Two Col Grid 4 -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
         <!-- Budget -->
@@ -303,10 +323,86 @@
   </div>
 
   <!-- Scripts -->
+  <script src="./scripts/status-indicator.js?v=2026-04-03"></script>
   <script src="./supabase-config.v2.js?v=2026-03-12-c"></script>
   <script src="./scripts/supabase-page.js"></script>
   <script>
     window.addEventListener('DOMContentLoaded', () => {
+      const dataSourceBadge = document.getElementById('dataSourceBadge');
+      const dataSourceMeta = document.getElementById('dataSourceMeta');
+      const dataIndicator = window.StatusIndicator
+        ? window.StatusIndicator.create({
+            badge: dataSourceBadge,
+            meta: dataSourceMeta,
+            defaultBadge: 'Duomenys: tikrinama...',
+            defaultMeta: 'Būsena: tikrinama...'
+          })
+        : null;
+
+      function setDataSourceMeta(primary = '', secondary = ''){
+        if (dataIndicator){
+          dataIndicator.setMeta(primary, secondary);
+          return;
+        }
+        if (!dataSourceMeta) return;
+        const parts = [primary, secondary].filter(Boolean);
+        if (!parts.length){
+          dataSourceMeta.textContent = 'Būsena: neapibrėžta';
+          dataSourceMeta.classList.add('opacity-60');
+          return;
+        }
+        dataSourceMeta.textContent = parts.join(' · ');
+        dataSourceMeta.classList.remove('opacity-60');
+      }
+
+      function setDataSourceBadge(text, variant = 'default'){
+        if (dataIndicator){
+          dataIndicator.setBadge(text, variant);
+          return;
+        }
+        if (!dataSourceBadge) return;
+        dataSourceBadge.textContent = text;
+        dataSourceBadge.classList.remove('bg-gray-100','text-gray-600','border-gray-200','bg-emerald-50','text-emerald-700','border-emerald-200','bg-amber-50','text-amber-700','border-amber-200','bg-rose-50','text-rose-700','border-rose-200');
+        if (variant === 'live') {
+          dataSourceBadge.classList.add('bg-emerald-50','text-emerald-700','border-emerald-200');
+        } else if (variant === 'fallback') {
+          dataSourceBadge.classList.add('bg-amber-50','text-amber-700','border-amber-200');
+        } else if (variant === 'error') {
+          dataSourceBadge.classList.add('bg-rose-50','text-rose-700','border-rose-200');
+        } else {
+          dataSourceBadge.classList.add('bg-gray-100','text-gray-600','border-gray-200');
+        }
+      }
+
+      function markAwaitingAuth(){
+        if (dataIndicator){
+          dataIndicator.markAwaitingAuth('Prisijunk, kad matytum live lentą');
+          return;
+        }
+        setDataSourceBadge('Duomenys: Supabase (prisijunk)', 'fallback');
+        setDataSourceMeta('Režimas: laukia prisijungimo', 'Prisijunk, kad matytum live lentą');
+      }
+
+      function markConfigMissing(){
+        if (dataIndicator){
+          dataIndicator.markConfigMissing('Papildyk supabase-config.v2.js');
+          return;
+        }
+        setDataSourceBadge('Duomenys: Supabase konfigūracija nerasta', 'error');
+        setDataSourceMeta('Trūksta window.SUPABASE_URL / ANON_KEY', 'Papildyk supabase-config.v2.js');
+      }
+
+      function markSupabaseError(reason){
+        if (dataIndicator){
+          dataIndicator.markError('Duomenys: nepavyko pasiekti Supabase', reason || 'Nežinoma klaida');
+          return;
+        }
+        setDataSourceBadge('Duomenys: nepavyko pasiekti Supabase', 'error');
+        setDataSourceMeta('Supabase klaida', reason || 'Nežinoma klaida');
+      }
+
+      markAwaitingAuth();
+
       function truncate(text = '', limit = 120){
         if (!text) return '';
         return text.length > limit ? text.slice(0, limit).trim() + '…' : text;
@@ -573,7 +669,8 @@
           { label: 'Skrydžiai', value: meta.flightCount ?? '0' },
           { label: 'Šaltiniai', value: meta.sourceCount ?? '0' },
           { label: 'Etapų langai', value: meta.stageWindowCount ?? '0' },
-          { label: 'Hidden gems', value: meta.hiddenGemCount ?? '0' }
+          { label: 'Hidden gems', value: meta.hiddenGemCount ?? '0' },
+          { label: 'Hidden focus', value: meta.hiddenFocusCount ?? '0' }
         ];
         box.innerHTML = chips.map(chip => `
           <div class="bg-white border border-brand-100/50 px-4 py-2 rounded-lg shadow-sm flex flex-col items-center min-w-[90px]">
@@ -844,6 +941,67 @@
         }).join('');
       }
 
+      function renderHiddenFocus(payload){
+        const summaryBox = document.getElementById('hiddenFocusSummary');
+        const listBox = document.getElementById('hiddenFocusList');
+        const stampEl = document.getElementById('hiddenFocusStamp');
+        if (!summaryBox || !listBox) return;
+        if (stampEl){
+          stampEl.textContent = payload?.generated_at ? `Generuota ${formatTimestamp(payload.generated_at)}` : '';
+        }
+        const items = payload?.items || [];
+        if (!items.length){
+          summaryBox.innerHTML = '<p class="text-sm text-gray-500">hidden_spot_focus.json tuščias.</p>';
+          listBox.innerHTML = '<p class="text-sm text-gray-500">Nėra fokusų.</p>';
+          return;
+        }
+        const clusterStats = items.reduce((acc, item) => {
+          const key = item.cluster || 'Kiti klasteriai';
+          acc[key] = (acc[key] || 0) + 1;
+          return acc;
+        }, {});
+        const topCluster = Object.entries(clusterStats).sort((a,b)=>b[1]-a[1])[0];
+        const avgScore = items.reduce((sum, item) => {
+          const raw = typeof item.score === 'number' ? item.score : parseFloat(String(item.score || '').replace(',', '.'));
+          return sum + (Number.isFinite(raw) ? raw : 0);
+        }, 0) / items.length;
+        const winterWindows = items.filter(item => (item.window || '').toLowerCase().includes('gruod') || (item.window || '').toLowerCase().includes('saus')).length;
+        const summaryItems = [
+          { label: 'Fokusų', value: items.length },
+          { label: 'Dominuojantis klasteris', value: topCluster ? `${topCluster[0]} (${topCluster[1]})` : '–' },
+          { label: 'Langai (Gruodis–Sausis)', value: winterWindows },
+          { label: 'Vid. score', value: Number.isFinite(avgScore) && avgScore > 0 ? avgScore.toFixed(1) : '–' }
+        ];
+        summaryBox.innerHTML = summaryItems.map(item => `
+          <div class="p-4 bg-gray-50 border border-gray-100 rounded-lg">
+            <span class="block text-2xl font-display font-bold text-gray-900">${item.value}</span>
+            <span class="text-[11px] uppercase tracking-wide text-gray-500">${item.label}</span>
+          </div>
+        `).join('');
+        listBox.innerHTML = items.map(item => {
+          const score = typeof item.score === 'number' ? item.score.toFixed(1) : (item.score || '–');
+          const quickList = (item.quick || []).map(point => `
+            <li class="flex items-start gap-2 text-sm text-gray-700">
+              <span class="text-brand-500 font-semibold">•</span>
+              <span>${point}</span>
+            </li>
+          `).join('');
+          return `
+            <div class="p-5 border border-gray-100 rounded-xl bg-white shadow-sm flex flex-col gap-3">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-xs uppercase tracking-wide text-gray-500">${item.cluster || ''}</p>
+                  <h3 class="text-lg font-display font-semibold text-gray-900">${item.label || ''}</h3>
+                  <p class="text-xs text-gray-500 mt-1">${item.window || ''}</p>
+                </div>
+                <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-slate-900/90 text-white text-sm font-semibold">${score}</span>
+              </div>
+              ${quickList ? `<ul class="mt-2 space-y-1">${quickList}</ul>` : ''}
+            </div>
+          `;
+        }).join('');
+      }
+
       let staticLoaded = false;
       function loadStaticBlocks(){
         if (staticLoaded) return;
@@ -857,8 +1015,9 @@
           fetch('./data/signal_radar.json').then(r=>r.json()).catch(()=>null),
           fetch('./data/intel/thailand-sources.json').then(r=>r.json()).catch(()=>null),
           fetch('./data/stage_windows.json').then(r=>r.json()).catch(()=>null),
-          fetch('./data/hidden_gems.json').then(r=>r.json()).catch(()=>null)
-        ]).then(([route,todos,budget,flights,itinerary,signals,sources,stageWindows,hiddenGems])=>{
+          fetch('./data/hidden_gems.json').then(r=>r.json()).catch(()=>null),
+          fetch('./data/hidden_spot_focus.json').then(r=>r.json()).catch(()=>null)
+        ]).then(([route,todos,budget,flights,itinerary,signals,sources,stageWindows,hiddenGems,hiddenSpotFocus])=>{
           renderRoute(route);
           renderTodos(todos);
           renderBudget(budget);
@@ -866,6 +1025,7 @@
           renderItineraryPreview(itinerary);
           renderStageWindows(stageWindows);
           renderHiddenGems(hiddenGems);
+          renderHiddenFocus(hiddenSpotFocus);
           renderIntel({
             routeDays: route?.days?.length,
             todoCount: todos?.items?.length,
@@ -873,15 +1033,18 @@
             itineraryDays: itinerary?.days?.length,
             sourceCount: sources?.sources?.length,
             stageWindowCount: stageWindows?.items?.length,
-            hiddenGemCount: hiddenGems?.items?.length
+            hiddenGemCount: hiddenGems?.items?.length,
+            hiddenFocusCount: hiddenSpotFocus?.items?.length
           });
           setupSignalFilters(signals);
           renderSourceTracker(sources);
         });
       }
 
-      initSupabasePage({
+      const supabaseCtx = initSupabasePage({
         onReady: async ({ client }) => {
+          setDataSourceBadge('Duomenys: Supabase · places/votes', 'default');
+          setDataSourceMeta('Live: Supabase · places/votes', 'Kraunama...');
           loadStaticBlocks();
           const [{ data: places, error: pErr }, { data: votes, error: vErr }] = await Promise.all([
             client.from('places').select('*').order('created_at', { ascending: false }),
@@ -889,6 +1052,8 @@
           ]);
           if (pErr || vErr){
             document.getElementById('topPlaces').innerHTML = '<p class="text-sm text-red-500">Nepavyko gauti duomenų.</p>';
+            const reason = pErr?.message || vErr?.message || 'Nežinoma klaida';
+            markSupabaseError(reason);
             return;
           }
           const voteMap = {};
@@ -898,8 +1063,17 @@
           renderRecent(places || []);
           latestVoteSummary = renderVotePulse(places || [], votes || [], voteMap);
           toggleExportAvailability(Boolean(latestVoteSummary));
+          setDataSourceBadge('Duomenys: Supabase · places/votes', 'live');
+          setDataSourceMeta('Live: Supabase · places/votes', 'Atnaujinta ' + formatTimestamp(new Date()));
+        },
+        onSignedOut: () => {
+          markAwaitingAuth();
         }
       });
+
+      if (!supabaseCtx){
+        markConfigMissing();
+      }
     });
   </script>
 </body>

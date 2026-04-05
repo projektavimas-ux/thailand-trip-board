@@ -230,6 +230,27 @@
     .signal-actions li {
       margin-bottom: 4px;
     }
+    .signal-filter {
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: rgba(248, 250, 252, 0.95);
+      color: #0f172a;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .signal-filter.active {
+      background: #0f766e;
+      color: #ecfdf5;
+      border-color: #0f766e;
+      box-shadow: 0 10px 18px rgba(15, 118, 110, 0.22);
+    }
+    .signal-filter:focus-visible {
+      outline: 2px solid #0ea5e9;
+      outline-offset: 2px;
+    }
     .hidden-spot-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -321,6 +342,54 @@
       font-size: 0.75rem;
       color: #475569;
       text-align: right;
+    }
+    .hidden-spot-header {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    @media (min-width: 1024px) {
+      .hidden-spot-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+    .hidden-spot-meta-block {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    @media (min-width: 640px) {
+      .hidden-spot-meta-block {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+      }
+    }
+    .hidden-spot-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .hidden-spot-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #0f172a;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 23, 42, 0.16);
+      background: #f8fafc;
+      transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hidden-spot-cta a:hover {
+      color: #047857;
+      border-color: rgba(4, 120, 87, 0.4);
+      box-shadow: 0 10px 16px rgba(4, 120, 87, 0.18);
     }
     @media (max-width: 640px) {
       .hidden-spot-grid {
@@ -427,6 +496,12 @@
         </div>
         <a href="./data/signal_radar.json" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600" download>Parsisiųsti signalus →</a>
       </div>
+      <div class="flex flex-wrap gap-2 mt-4" id="signalFilters" role="group" aria-label="Filtruoti signalus pagal prioritetą">
+        <button type="button" class="signal-filter active" data-priority="all" aria-pressed="true">Visi</button>
+        <button type="button" class="signal-filter" data-priority="high" aria-pressed="false">Aukšti</button>
+        <button type="button" class="signal-filter" data-priority="medium" aria-pressed="false">Vidutiniai</button>
+        <button type="button" class="signal-filter" data-priority="low" aria-pressed="false">Žemi</button>
+      </div>
       <div id="signalList" class="grid gap-4 lg:grid-cols-2 mt-4">
         <p class="text-sm text-slate-500">Signalai kraunami...</p>
       </div>
@@ -435,13 +510,19 @@
 
 
     <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
-      <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+      <div class="hidden-spot-header">
         <div>
           <p class="text-xs uppercase tracking-[0.4em] text-brand-600 font-semibold">Hidden Chain</p>
           <h2 class="text-2xl font-display font-semibold text-slate-900">Slaptų spot'ų fokusas</h2>
           <p class="text-sm text-slate-500">Top 10 regionų (Koh Phayam → Nan) iš <code>data/hidden_spot_focus.json</code> – greiti langai, klasteriai ir greitos durys.</p>
         </div>
-        <div class="hidden-spot-meta" id="hiddenSpotMeta">Atnaujinimo data tikrinama...</div>
+        <div class="hidden-spot-meta-block">
+          <div class="hidden-spot-meta" id="hiddenSpotMeta">Atnaujinimo data tikrinama...</div>
+          <div class="hidden-spot-cta" role="group" aria-label="Hidden Chain duomenų eksportas">
+            <a href="./data/hidden_spot_focus.json" download>Hidden JSON ↗</a>
+            <a href="./data/places_overrides.json" download>Overrides JSON ↗</a>
+          </div>
+        </div>
       </div>
       <div class="hidden-spot-filters" id="hiddenSpotFilters"></div>
       <div id="hiddenSpotGrid" class="hidden-spot-grid" role="region" aria-live="polite" aria-busy="false" aria-label="Hidden Chain kortelės">
@@ -465,6 +546,7 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./scripts/status-indicator.js?v=2026-04-03"></script>
   <script src="./supabase-config.js?v=2026-03-23"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -478,9 +560,18 @@
       const stageSyncNote = document.getElementById('stageSyncNote');
       const signalListEl = document.getElementById('signalList');
       const signalSourceNote = document.getElementById('signalSourceNote');
+      const signalFiltersEl = document.getElementById('signalFilters');
       const hiddenSpotGrid = document.getElementById('hiddenSpotGrid');
       const hiddenSpotFilters = document.getElementById('hiddenSpotFilters');
       const hiddenSpotMeta = document.getElementById('hiddenSpotMeta');
+      const stageIndicator = window.StatusIndicator
+        ? window.StatusIndicator.create({
+            badge: stageSourceBadge,
+            meta: stageSyncNote,
+            defaultBadge: 'Duomenys: tikrinama...',
+            defaultMeta: 'Šaltinis: tikrinama...'
+          })
+        : null;
 
       let cachedSupabase = null;
       const hiddenSpotState = { items: [], clusters: [], filter: 'all', notes: '', generatedAt: null };
@@ -499,11 +590,17 @@
       };
 
       const setStageSourceBadge = (text, variant = 'default') => {
+        if (stageIndicator) {
+          stageIndicator.setBadge(text, variant);
+          return;
+        }
         if (!stageSourceBadge) return;
         stageSourceBadge.textContent = text;
-        stageSourceBadge.classList.remove('text-slate-600', 'text-brand-600', 'text-rose-600', 'bg-slate-100', 'bg-emerald-50', 'bg-rose-100');
-        if (variant === 'supabase') {
+        stageSourceBadge.classList.remove('text-slate-600', 'text-brand-600', 'text-rose-600', 'text-amber-700', 'bg-slate-100', 'bg-emerald-50', 'bg-rose-100', 'bg-amber-50');
+        if (variant === 'live') {
           stageSourceBadge.classList.add('text-brand-600', 'bg-emerald-50');
+        } else if (variant === 'fallback') {
+          stageSourceBadge.classList.add('text-amber-700', 'bg-amber-50');
         } else if (variant === 'error') {
           stageSourceBadge.classList.add('text-rose-600', 'bg-rose-100');
         } else {
@@ -526,12 +623,57 @@
         }
       };
 
-      const setStageSyncNote = (sourceLabel = 'Duomenys', isoString = null) => {
-        if (!stageSyncNote) return;
+      const setStageSyncNote = (sourceLabel = 'Duomenys', isoString = null, statsText = null) => {
         const formatted = formatDateTimeEet(isoString);
-        stageSyncNote.textContent = formatted
+        const primaryLine = formatted
           ? `${sourceLabel} · atnaujinta ${formatted}`
           : `${sourceLabel} · atnaujinimo laikas nežinomas`;
+        const secondaryLine = statsText || '';
+        if (stageIndicator) {
+          stageIndicator.setMeta(primaryLine, secondaryLine);
+          return;
+        }
+        if (!stageSyncNote) return;
+        stageSyncNote.textContent = primaryLine;
+      };
+
+      const describeStageStats = (items = []) => {
+        if (!Array.isArray(items) || !items.length) return null;
+        let minDay = null;
+        let maxDay = null;
+        items.forEach(item => {
+          const startValue = Number(item?.start_day);
+          const endValue = Number(item?.end_day);
+          if (!Number.isNaN(startValue) && startValue > 0) {
+            minDay = minDay === null ? startValue : Math.min(minDay, startValue);
+            maxDay = maxDay === null ? startValue : Math.max(maxDay, startValue);
+          }
+          if (!Number.isNaN(endValue) && endValue > 0) {
+            maxDay = maxDay === null ? endValue : Math.max(maxDay, endValue);
+            if (minDay === null) minDay = endValue;
+          }
+        });
+        const countLabel = `${items.length} ${items.length === 1 ? 'langas' : 'langai'}`;
+        if (minDay === null && maxDay === null) return countLabel;
+        const minLabel = minDay !== null ? `D${minDay}` : 'D?';
+        const maxLabel = maxDay !== null ? `D${maxDay}` : 'D?';
+        return `${countLabel} · ${minLabel} → ${maxLabel}`;
+      };
+
+      const sortStageWindows = (items = []) => {
+        if (!Array.isArray(items)) return [];
+        return items.slice().sort((a, b) => {
+          const orderA = Number.isFinite(Number(a?.order_index))
+            ? Number(a.order_index)
+            : (Number.isFinite(Number(a?.start_day)) ? Number(a.start_day) : 0);
+          const orderB = Number.isFinite(Number(b?.order_index))
+            ? Number(b.order_index)
+            : (Number.isFinite(Number(b?.start_day)) ? Number(b.start_day) : 0);
+          if (orderA === orderB) {
+            return (a?.stage || '').localeCompare(b?.stage || '');
+          }
+          return orderA - orderB;
+        });
       };
 
       const priorityMeta = {
@@ -546,6 +688,7 @@
         destination: { icon: '📍', label: 'Destinacija' }
       };
       const priorityOrder = { high: 0, medium: 1, low: 2 };
+      const signalState = { items: [], filter: 'all', generatedAt: null };
 
       const setSignalSourceMeta = (isoString = null) => {
         if (!signalSourceNote) return;
@@ -553,6 +696,17 @@
         signalSourceNote.textContent = formatted
           ? `Signalų JSON · atnaujinta ${formatted}`
           : 'Signalų JSON · atnaujinimo laikas nežinomas';
+      };
+
+      const updateSignalFilterButtons = () => {
+        if (!signalFiltersEl) return;
+        const buttons = signalFiltersEl.querySelectorAll('button[data-priority]');
+        buttons.forEach(button => {
+          const value = button.dataset.priority || 'all';
+          const isActive = value === (signalState.filter || 'all');
+          button.classList.toggle('active', isActive);
+          button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
       };
 
       const renderSignalCard = (signal) => {
@@ -585,12 +739,12 @@
         </article>`;
       };
 
-      const renderSignalRadar = (payload) => {
+      const renderSignalRadar = () => {
         if (!signalListEl) return;
-        const signals = Array.isArray(payload?.signals) ? payload.signals.slice() : [];
+        const signals = Array.isArray(signalState.items) ? signalState.items.slice() : [];
         if (!signals.length) {
           signalListEl.innerHTML = '<p class="text-sm text-slate-500">Signalų nėra.</p>';
-          setSignalSourceMeta(payload?.generated_at);
+          setSignalSourceMeta(signalState.generatedAt);
           return;
         }
         signals.sort((a, b) => {
@@ -601,18 +755,18 @@
           }
           return pa - pb;
         });
-        const subset = signals.slice(0, 6);
+        const filterKey = (signalState.filter || 'all').toLowerCase();
+        const filtered = filterKey === 'all'
+          ? signals
+          : signals.filter(signal => (String(signal?.priority || 'medium').toLowerCase()) === filterKey);
+        if (!filtered.length) {
+          signalListEl.innerHTML = '<p class="text-sm text-slate-500">Pasirinktai prioritetų kategorijai signalų nėra.</p>';
+          setSignalSourceMeta(signalState.generatedAt);
+          return;
+        }
+        const subset = filtered.slice(0, 6);
         signalListEl.innerHTML = subset.map(renderSignalCard).join('');
-        setSignalSourceMeta(payload?.generated_at || null);
-      };
-
-      const detectMode = (text = '') => {
-      const setStageSyncNote = (sourceLabel = 'Duomenys', isoString = null) => {
-        if (!stageSyncNote) return;
-        const formatted = formatDateTimeEet(isoString);
-        stageSyncNote.textContent = formatted
-          ? `${sourceLabel} · atnaujinta ${formatted}`
-          : `${sourceLabel} · atnaujinimo laikas nežinomas`;
+        setSignalSourceMeta(signalState.generatedAt);
       };
 
       const detectMode = (text = '') => {
@@ -749,23 +903,41 @@
 
       const renderStageWindows = (payload) => {
         if (!stageWindowsGrid) return;
-        const items = payload?.items || [];
-        if (!items.length) {
+        const rawItems = Array.isArray(payload?.items) ? payload.items : [];
+        if (!rawItems.length) {
           stageWindowsGrid.innerHTML = '<p class="text-sm text-rose-500">Nėra suvestų etapų langų.</p>';
           return;
         }
-        const totalDays = Math.max(...items.map(item => Number(item.end_day) || Number(item.start_day) || 1)) || 1;
+        const items = sortStageWindows(rawItems);
+        const extentCandidates = items
+          .map(item => {
+            const endValue = Number(item?.end_day);
+            if (!Number.isNaN(endValue) && endValue > 0) return endValue;
+            const startValue = Number(item?.start_day);
+            if (!Number.isNaN(startValue) && startValue > 0) return startValue;
+            return null;
+          })
+          .filter(value => value !== null);
+        const totalDays = extentCandidates.length ? Math.max(...extentCandidates) : 1;
         stageWindowsGrid.innerHTML = items.map(item => {
-          const start = Number(item.start_day) || 1;
-          const end = Number(item.end_day) || start;
-          const left = Math.max(0, ((start - 1) / totalDays) * 100);
-          const spanDays = Math.max(1, end - start + 1);
+          const startValue = Number(item?.start_day);
+          const endValue = Number(item?.end_day);
+          const hasStart = !Number.isNaN(startValue) && startValue > 0;
+          const hasEnd = !Number.isNaN(endValue) && endValue > 0;
+          const startDay = hasStart ? startValue : 1;
+          const endDay = hasEnd ? endValue : startDay;
+          const spanDays = Math.max(1, endDay - startDay + 1);
+          const left = Math.max(0, ((startDay - 1) / totalDays) * 100);
           const width = Math.max(6, (spanDays / totalDays) * 100);
+          const baseLabel = hasStart ? `D${startDay}` : 'D?';
+          const tailLabel = hasEnd && endDay !== startDay ? ` → D${endDay}` : '';
+          const rangeLabel = hasStart || hasEnd ? `${baseLabel}${tailLabel}` : 'Langas neapibrėžtas';
+          const windowLabel = item?.window || item?.window_label || '';
           return `
             <article class="stage-window-card">
-              <h4>${item.stage || ''} · ${item.window || ''}</h4>
-              <p>${start ? `D${start}` : ''}${end ? ` → D${end}` : ''}</p>
-              <p class="stage-window-focus">${item.focus || ''}</p>
+              <h4>${item?.stage || ''} · ${windowLabel}</h4>
+              <p>${rangeLabel}</p>
+              <p class="stage-window-focus">${item?.focus || ''}</p>
               <div class="stage-progress-track">
                 <div class="stage-progress-fill" style="--start:${left}%; --width:${width}%;"></div>
               </div>
@@ -897,6 +1069,18 @@
         }
       };
 
+      if (signalFiltersEl) {
+        signalFiltersEl.addEventListener('click', (event) => {
+          const button = event.target.closest('button[data-priority]');
+          if (!button) return;
+          const value = button.dataset.priority || 'all';
+          if (signalState.filter === value) return;
+          signalState.filter = value;
+          updateSignalFilterButtons();
+          renderSignalRadar();
+        });
+      }
+
       if (hiddenSpotFilters) {
         hiddenSpotFilters.addEventListener('click', (event) => {
           const button = event.target.closest('button[data-cluster]');
@@ -947,7 +1131,7 @@
                 }, null);
               }
               label = 'Supabase · stage_windows';
-              badgeVariant = 'supabase';
+              badgeVariant = 'live';
             }
           } catch (err) {
             console.warn('Supabase stage_windows klaida', err);
@@ -964,22 +1148,26 @@
             }
             syncTimestamp = (local && (local.updated_at || local.updatedAt)) || null;
             label = 'data/stage_windows.json';
-            badgeVariant = 'default';
+            badgeVariant = 'fallback';
           } catch (err) {
             console.error('Lokalus stage_windows klaida', err);
           }
         }
 
         if (items.length) {
-          renderStageWindows({ items });
+          const orderedItems = sortStageWindows(items);
+          renderStageWindows({ items: orderedItems });
+          const statsSummary = describeStageStats(orderedItems);
           setStageSourceBadge(`Duomenys: ${label}`, badgeVariant);
-          setStageSyncNote(`Šaltinis: ${label}`, syncTimestamp);
+          setStageSyncNote(`Šaltinis: ${label}`, syncTimestamp, statsSummary);
         } else {
           if (stageWindowsGrid) stageWindowsGrid.innerHTML = '<p class="text-sm text-rose-500">Nepavyko gauti etapų langų.</p>';
           setStageSourceBadge('Duomenys: nepavyko užkrauti', 'error');
           setStageSyncNote('Etapų langai', null);
         }
       };
+
+      updateSignalFilterButtons();
 
       fetch(`./data/itinerary.json?v=${Date.now()}`)
         .then(res => res.json())
@@ -995,9 +1183,14 @@
       fetch(`./data/signal_radar.json?v=${Date.now()}`)
         .then(res => res.json())
         .then(data => {
-          renderSignalRadar(data);
+          signalState.items = Array.isArray(data?.signals) ? data.signals.slice() : [];
+          signalState.generatedAt = data?.generated_at || null;
+          updateSignalFilterButtons();
+          renderSignalRadar();
         })
         .catch(() => {
+          signalState.items = [];
+          signalState.generatedAt = null;
           if (signalListEl) signalListEl.innerHTML = '<p class="text-sm text-rose-500">Nepavyko gauti signalų.</p>';
           setSignalSourceMeta(null);
         });

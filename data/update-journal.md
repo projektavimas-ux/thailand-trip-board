@@ -1,3 +1,39 @@
+## 2026-04-05 09:25 EEST
+- `routes-dashboard.html`: „Etapų langų“ statusas prijungtas prie `StatusIndicator`. Dabar tiek Supabase režimas, tiek fallback/error būsenos rodomos vienodai kaip kituose puslapiuose, o meta eilutė automatiškai rodo paskutinį atnaujinimą.
+
+## 2026-04-04 18:05 EEST
+- `flights.html`: prisijungimo badge/meta taip pat perkelti į `StatusIndicator` helperį, todėl skrydžių lenta turi tą pačią live/fallback/error semantiką (prisijunk → fallback, data/flights.json → live, klaidos → error). Pašalintas rankinis klasėmis paremtas kodas.
+
+## 2026-04-04 09:35 EEST
+- `index.html`: Duomenų statuso badge/meta perkelti į bendrą `scripts/status-indicator.js` helperį. Tai sulygina live/fallback/error semantiką su kitais puslapiais ir sumažina dubliuotą CSS klasėmis paremtą logiką.
+- JS: sukurtas `dataIndicator` (StatusIndicator.create), o `markAwaitingAuth` / `markConfigMissing` / `markSupabaseError` dabar naudoja helperio API. Tai pirmas žingsnis į bendrą statuso komponento naudojimą per visą UI.
+
+## 2026-04-03 09:40 EEST
+- `places.html`: Hidden grandinė gavo naują perjungiklį „Tik Gruodis–Sausis“. Jis leidžia greitai filtruoti 10 prioritetinių spotų pagal mūsų kelionės žiemos langą, kad matytume tik aktualias vietas be kitų sezonų triukšmo.
+- JS: išplėstas `renderHiddenShowcase()` filtras ir įdiegta `matchesWinterWindow()` pagalbinė funkcija, todėl naujasis filtravimo režimas veikia kartu su klasterių filtru ir meta žyma.
+
+## 2026-04-02 18:15 EEST
+- `places.html`: Hidden grandinės bloke atsirado naujas santraukos grid’as (4 kortelės su bendru spotų kiekiu, top klasteriu, Gruodis–Sausis langais ir vidutiniu score). Tai padeda greitai matyti prioritetų balansą prieš filtruojant korteles Supabase aplinkoje.
+- JS: pridėta `renderHiddenFocusSummary()` ir pakoreguota `loadHiddenSpotFocus()` pipeline, kad santrauka būtų rodoma tiek sėkmingai užkrovus JSON, tiek „no data“ atveju. Layout’ai derinasi prie `hiddenClusterFilter` ir `hiddenMetaStamp` būsenų.
+
+## 2026-04-01 11:50 EEST
+- `signal_radar.json`: pridėtas naujas signalas **tomorrowland-pattaya-2026** apie 2026-12-11 → 12-13 vyksiantį Tomorrowland festivalį Wisdom Valley (Pattaya). Įrašiau rekomendacijas vengti Pattajos srauto D0–D3 arba laiku rezervuoti nakvynę/bilietus, nes nėra camping zonos.
+- Šaltinis: sparkroam.com „Tomorrowland Thailand 2026 guide“ (publ. 2026-03-26, atnaujinta 6 d. prieš tikrinimą).
+- `places_catalog.json`: papildymų šiandien nėra – TAT News / ThaiNationalParks / Experience Travel Group nepaskelbė naujos info mūsų kelionės langui.
+
+## 2026-04-01 09:25 EET
+- `index.html`: pridėtas naujas UI blokas **Hidden spot logistika** (panaudojamas `data/hidden_spot_focus.json`) – rodo klasterių statistiką, langus ir „quick logistics“ sąrašus kiekvienam iš 10 prioritetinių spotų.
+- `hidden_spot_focus.json`: struktūra nepakeista, tik sujungta į pagrindinį valdymo skydą, kad nereikėtų atskiro failo naršymo.
+
+## 2026-03-31 12:05 EET
+- Naujienų šaltiniai (Chiang Rai Times, Travel And Tour World, thailand.go.th) pateikė tik jau dokumentuotą Thailand Travel Fair 2026 info, todėl naujų signalų ar vietų šiam langui neradau.
+- `places_catalog.json` / `signal_radar.json`: šiam ciklui **no update**.
+
+## 2026-03-31 08:55 EET
+- `places_catalog.json`: pridėjau bloką **Hidden Spots (2026 prioriteto langas)** su kortelėmis Koh Phayam, Koh Mak, Koh Kood, Koh Jum, Koh Phra Thong ir Nan – kiekvienai įrašyti naujausi šaltiniai, logistikos patarimai ir map nuorodos.
+- Šaltiniai: Thrive in Thailand (2026-01-29), Postcards by Hannah (2026-01-18 ir 2026-02-11), Noa Travels (2025-01-23), PSU Natural History Museum (2026-02-04), Travel + Leisure Asia (2026-03-05).
+- `signal_radar.json`: pakeitimų šiandien dar nėra.
+
 ## 2026-03-23 12:20 EET
 - `places_catalog.json`: 4 etape pridėjau „Nan Slow Coffee Ridge“ kortelę – remtasi Travel + Leisure Asia (2026-03-05) aprašytu Nan „slow travel“ keliu (Nan → Pua → Bo Kluea) su debesų linijos kavinėmis ir Bo Suak amatų kaimu.
 - `signal_radar.json`: atnaujintas `generated_at` ir įtrauktas naujas logistinis signalas „cheow-lan-longtail-crunch-2026“ apie toliau besitęsiantį Khao Sok longtail trūkumą (ThaiNationalParks.com, 2026-03), su veiksmais rezervuoti valtis iki rugsėjo.
@@ -38,3 +74,8 @@
 - Patikrinti nauji šaltiniai: TAT Newsroom ("Songkran festival 2026 to proceed nationwide" - renginys balandį, neaktualus 2026-12), TravelPulse (Healing Journey Thailand) ir kiti. 
 - Apie pasirinktas Hidden Chain salas (Koh Mak, Koh Kood, Koh Libong) ar Khao Sok papildomų naujų ribojimų (po vakar dienos pranešimo apie antkainius) ar įspėjimų nepublikuota.
 - `places_catalog.json` / `signal_radar.json`: **no update** – paliekame esamas versijas ir laukiame kitų aktualijų.
+
+## 2026-04-01 17:45 EET
+- Patikrinti šaltiniai: TAT Newsroom pranešimas „Songkran festival 2026 to proceed nationwide…“ (2026-03-26) ir Travel Economic Times apžvalga apie Songkran 2026 kampanijos tęstinumą; taip pat ThaiNationalParks "Cheow Lan Lake" / "Laguna Cheow Lan" puslapiai dėl naujų kvotų ar kainų pasikeitimų.
+- Nei TAT, nei ThaiNationalParks paskyrose nėra pranešimų, susijusių su 2026-12-11 → 2027-01-02 kelionės lango apribojimais, naujomis kvotomis ar kainų korekcijomis (naujausia informacija kartoja jau fiksuotas aukšto sezono rekomendacijas ir 2026-07-01 longtail antkainius).
+- `places_catalog.json` / `signal_radar.json`: **no update** – paliekame 2026-03-27 versiją ir laukiame konkretesnių šaltinių apie mūsų prioritetines salas / regionus.

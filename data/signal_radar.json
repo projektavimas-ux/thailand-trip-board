@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-26T12:05:00+02:00",
+  "generated_at": "2026-04-01T11:30:00+03:00",
   "signals": [
     {
       "id": "qsncc-travel-fair-2026",
@@ -14,6 +14,21 @@
         "Susitikimuose užblokuoti laikus (kovo 26–27) su viešbučiais / restoranų grandimis, siūlančiomis 2026 Q4 paketų nuolaidas Hidden Gems kryptims."
       ],
       "source": "https://www.travelandtourworld.com/news/article/thailand-travel-fair-2026-a-cultural-journey-through-five-thai-regions-everything-you-need-to-know/"
+    },
+    {
+      "id": "tomorrowland-pattaya-2026",
+      "type": "event",
+      "priority": "medium",
+      "title": "Tomorrowland Thailand 2026 · Wisdom Valley",
+      "location": "Pattaya · Wisdom Valley (Chon Buri)",
+      "window": "2026-12-11 → 2026-12-13",
+      "summary": "Pirmoji pilno masto Tomorrowland versija Azijoje vyks Pattajoje (Wisdom Valley) tuo pat metu, kai prasideda mūsų kelionė. Tikimasi >50 tūkst. lankytojų per dieną, nėra camping zonos, todėl visi dalyviai rezervuos Pattajos / Rayongo viešbučius ir stipriai apkraus kelių bei „Grab/Bolt" srautus.",
+      "actions": [
+        "Jei komandai nereikia Tomorrowland, vengti Pattajos maršruto tarp D0 ir D3 (grūstys į Highway 7) ir iš anksto informuoti vairuotojus dėl galimų 60–90 min. vėlavimų.",
+        "Jei norime dalyvauti, užsirašyti į oficialų bilietų sąrašą (2026 Q1/Q2) ir rezervuoti nakvynę/transportą iki liepos, nes festivalyje nėra camping ir kainos šoks.",
+        "Bangkok logistikoje (skrydžiai → Phuket) turėti planą B, jei užsikemša Suvarnabhumi ↔ Pattaya kryptis – pvz., nenaudoti BKK-Pattaya ruožo kaip tarpinių sustojimų Tomorrrowland savaitgalį."
+      ],
+      "source": "https://sparkroam.com/tomorrowland-thailand-2026-guide/"
     },
     {
       "id": "koh-libong-dugong-rescue-2026",
@@ -156,6 +171,22 @@
       ],
       "source": "https://thailandinsiderguide.com/en/travel-essentials/visas-and-entry-requirements/"
     },
+    {
+      "id": "bkk-transfer-d5-2026",
+      "type": "logistics",
+      "priority": "medium",
+      "title": "BKK D5 tranzito stalas ir SAT1 schemos",
+      "location": "Bangkok · Suvarnabhumi (BKK)",
+      "window": "nuo 2026-03-15",
+      "summary": "AOT įrengė naują tarptautinių perėjimų stalą Gate D5 atvykimo lygyje ir išleido SAT-1 / pagrindinio terminalo srautų schemą, kad keleiviai su atskirais bilietais galėtų gauti boarding pass prieš tranzito apsaugą.",
+      "actions": [
+        "Jei skrydžiai atskiruose PNR, iškart po nusileidimo eiti į Gate D5 transfer desk (Arrivals level) ir ten atsispausdinti kitą boarding pass – nereikės bandyti prasmukti pro saugą su PDF.",
+        "Išsisaugoti AOT publikacijos schemą (MTB ↔ SAT-1) ir pridėti ją į kelionės aplanką, kad komanda žinotų kur yra nauji stalai (Transfer Desk 3/4) ir kur praeiti tranzito saugą.",
+        "Jei bagažas nėra per-tagintas iki BKK→CEI ar atgal, planuoti, kad prireiks imigracijos ir re-check; kitaip galima likti tranzito zonoje."
+      ],
+      "source": "https://loyaltylobby.com/2026/03/15/new-transfer-counter-system-at-bangkoks-suvarnabhumi-airport-d-gates-satellite-terminal/"
+    },
+    
     {
       "id": "koh-yao-noi-infra-2026",
       "type": "destination",

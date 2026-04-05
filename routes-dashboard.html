@@ -125,6 +125,20 @@
       <div id="stageDetail" class="mt-6 space-y-6 text-sm text-gray-600"></div>
     </section>
 
+
+    <section class="bg-white rounded-2xl shadow-lg p-6">
+      <div class="flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <p class="text-xs uppercase tracking-[0.2em] text-brand-600">Hidden spot logistika</p>
+          <h2 class="text-2xl font-display font-semibold text-gray-900">Klasteriai ir greitos pastabos</h2>
+          <p class="text-sm text-gray-500">`data/hidden_spot_focus.json` – tie patys duomenys kaip apžvalgoje, bet čia rodomi šalia etapų.</p>
+        </div>
+        <span id="routesHiddenFocusStamp" class="text-xs text-gray-400 font-medium"></span>
+      </div>
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4" id="routesHiddenFocusSummary"></div>
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4" id="routesHiddenFocusList"></div>
+    </section>
+
     <section class="bg-white rounded-2xl shadow-lg p-6">
       <div class="flex items-center justify-between flex-wrap gap-3">
         <div>
@@ -139,6 +153,7 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./scripts/status-indicator.js?v=2026-04-03"></script>
   <script src="./supabase-config.js?v=2026-03-23"></script>
   <script>
     const stageStatus = { badge: null, note: null };
@@ -147,6 +162,14 @@
     document.addEventListener('DOMContentLoaded', () => {
       stageStatus.badge = document.querySelector('[data-windows-source]');
       stageStatus.note = document.querySelector('[data-windows-updated]');
+      stageStatus.indicator = window.StatusIndicator
+        ? window.StatusIndicator.create({
+            badge: stageStatus.badge,
+            meta: stageStatus.note,
+            defaultBadge: 'Duomenys: tikrinama...',
+            defaultMeta: 'Sinchronizacija tikrinama...'
+          })
+        : null;
       bootstrapDashboard();
     });
 
@@ -181,20 +204,30 @@
     };
 
     const setStageSourceBadge = (text, variant = 'default') => {
+      if (stageStatus.indicator){
+        stageStatus.indicator.setBadge(text, variant === 'supabase' ? 'live' : variant);
+        return;
+      }
       const badge = stageStatus.badge;
       if (!badge) return;
       badge.textContent = text;
       badge.classList.remove('text-gray-600', 'bg-gray-100', 'text-brand-600', 'bg-emerald-50', 'text-rose-600', 'bg-rose-100');
-      if (variant === 'supabase') {
+      if (variant === 'supabase' || variant === 'live') {
         badge.classList.add('text-brand-600', 'bg-emerald-50');
       } else if (variant === 'error') {
         badge.classList.add('text-rose-600', 'bg-rose-100');
+      } else if (variant === 'fallback') {
+        badge.classList.add('text-amber-700', 'bg-amber-50');
       } else {
         badge.classList.add('text-gray-600', 'bg-gray-100');
       }
     };
 
     const setStageSyncNote = (label = 'Etapų langai', isoString = null) => {
+      if (stageStatus.indicator){
+        stageStatus.indicator.setMeta(label, isoString ? `Atnaujinta ${formatDateTimeEet(isoString)}` : 'Atnaujinimo laikas nežinomas');
+        return;
+      }
       const note = stageStatus.note;
       if (!note) return;
       const formatted = formatDateTimeEet(isoString);
@@ -264,11 +297,12 @@
 
     async function bootstrapDashboard() {
       try {
-        const [tripRes, radarRes, placesRes, overridesRes] = await Promise.all([
+        const [tripRes, radarRes, placesRes, overridesRes, hiddenFocusRes] = await Promise.all([
           fetch('./data/routes-tree.json').then(r => r.json()),
           fetch('./data/signal_radar.json').then(r => r.json()).catch(() => null),
           fetch('./data/places_catalog.json').then(r => r.json()).catch(() => null),
-          fetch('./data/places_overrides.json').then(r => r.json()).catch(() => ({}))
+          fetch('./data/places_overrides.json').then(r => r.json()).catch(() => ({})),
+          fetch('./data/hidden_spot_focus.json').then(r => r.json()).catch(() => null)
         ]);
         setStageSourceBadge('Duomenys: tikrinama...');
         setStageSyncNote('Etapų langai', null);
@@ -287,6 +321,7 @@
         renderStages(stages);
         setupStageDetail(stages, placeIndex);
         renderSignals(radarRes);
+        renderHiddenFocusBoard(hiddenFocusRes);
       } catch (error) {
         console.error('Nepavyko užkrauti duomenų', error);
       }
@@ -693,6 +728,72 @@
         transport: 'bg-sky-50 text-sky-700 border-sky-100'
       };
       return `<span class="inline-flex items-center px-3 py-1 rounded-full border ${palette[tag.cat] || 'bg-gray-50 text-gray-600 border-gray-100'}">${tag.label}</span>`;
+    }
+
+    function renderHiddenFocusBoard(payload) {
+      const summaryBox = document.getElementById('routesHiddenFocusSummary');
+      const listBox = document.getElementById('routesHiddenFocusList');
+      const stampEl = document.getElementById('routesHiddenFocusStamp');
+      if (!summaryBox || !listBox) return;
+      if (stampEl) {
+        const stamp = payload?.generated_at ? formatDateTimeEet(payload.generated_at) : '';
+        stampEl.textContent = stamp ? `Generuota ${stamp}` : '';
+      }
+      const items = Array.isArray(payload?.items) ? payload.items : [];
+      if (!items.length) {
+        summaryBox.innerHTML = '<p class="text-sm text-gray-500">Nėra aktyvių fokusų.</p>';
+        listBox.innerHTML = '<p class="text-sm text-gray-500">`data/hidden_spot_focus.json` dar nepildytas.</p>';
+        return;
+      }
+      const clusterStats = items.reduce((acc, item) => {
+        const key = item.cluster || 'Kiti klasteriai';
+        acc[key] = (acc[key] || 0) + 1;
+        return acc;
+      }, {});
+      const topCluster = Object.entries(clusterStats).sort((a, b) => b[1] - a[1])[0];
+      const avgScore = items.reduce((sum, item) => {
+        const raw = typeof item.score === 'number' ? item.score : parseFloat(String(item.score || '').replace(',', '.'));
+        return sum + (Number.isFinite(raw) ? raw : 0);
+      }, 0) / items.length;
+      const winterWindows = items.filter(item => {
+        const win = (item.window || '').toLowerCase();
+        return win.includes('gruod') || win.includes('saus');
+      }).length;
+      const summaryItems = [
+        { label: 'Fokusų', value: items.length },
+        { label: 'Dominuojantis klasteris', value: topCluster ? `${topCluster[0]} (${topCluster[1]})` : '–' },
+        { label: 'Žiemos langai', value: winterWindows },
+        { label: 'Vid. score', value: Number.isFinite(avgScore) && avgScore > 0 ? avgScore.toFixed(1) : '–' }
+      ];
+      summaryBox.innerHTML = summaryItems.map(item => `
+        <div class="p-4 bg-gray-50 border border-gray-100 rounded-lg">
+          <span class="block text-2xl font-display font-bold text-gray-900">${item.value}</span>
+          <span class="text-[11px] uppercase tracking-wide text-gray-500">${item.label}</span>
+        </div>
+      `).join('');
+      listBox.innerHTML = items.map(item => {
+        const score = typeof item.score === 'number' ? item.score.toFixed(1) : (item.score || '–');
+        const quickList = (item.quick || []).map(point => `
+          <li class="flex items-start gap-2 text-sm text-gray-700">
+            <span class="text-brand-500 font-semibold">•</span>
+            <span>${point}</span>
+          </li>
+        `).join('');
+        return `
+          <article class="p-5 border border-gray-100 rounded-2xl bg-white shadow-sm flex flex-col gap-3">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="text-xs uppercase tracking-wide text-gray-500">${item.cluster || ''}</p>
+                <h3 class="text-lg font-display font-semibold text-gray-900">${item.label || ''}</h3>
+                <p class="text-xs text-gray-500 mt-1">${item.window || ''}</p>
+              </div>
+              <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-slate-900/90 text-white text-sm font-semibold">${score}</span>
+            </div>
+            ${quickList ? `<ul class="mt-2 space-y-1">${quickList}</ul>` : ''}
+            ${item.logistics ? `<p class="text-xs text-gray-500">${item.logistics}</p>` : ''}
+          </article>
+        `;
+      }).join('');
     }
 
     function renderSignals(radar) {
