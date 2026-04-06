@@ -1,3 +1,10 @@
+## 2026-04-06 15:45 EEST
+- `flights.json`: Duomenų rinkmena atnaujinta pagal Turkish Airlines išduotą bilietą (PNR: VNQSUK, 2026-04-04 21:57). Įkeltos bilieto sumos (viso EUR 6,142.22 už 3 suaugusius + 1 vaiką), mokėjimo detalės (Mastercard), ir skrydžių struktūra. Dabar `flights.html` rodys galutinę įvykdytą operaciją.
+- `places_overrides.json` ir `hidden_spot_focus.json`: Atnaujinta Khao Sok (Cheow Lan Lake) kaina ir operatyvi logistika pagal šiandien išgrynintus vietinių agentūrų pasiūlymus (GuilinLake, Chieolan Line grupių pasiūlymai ~1.7k–3.2k ฿/asm., bei vietinių longtail nuomos tarifai). Ši informacija padės tiksliau suplanuoti biudžetą.
+
+## 2026-04-06 09:20 EEST
+- `places.html`: vietų valdymo puslapis naudoja bendrą `StatusIndicator` helperį (Duomenys badge + meta), todėl demo/offline būsenos rodomos taip pat kaip kitur. Pašalintas rankinis klasėmis paremtas kodas.
+
 ## 2026-04-05 09:25 EEST
 - `routes-dashboard.html`: „Etapų langų“ statusas prijungtas prie `StatusIndicator`. Dabar tiek Supabase režimas, tiek fallback/error būsenos rodomos vienodai kaip kituose puslapiuose, o meta eilutė automatiškai rodo paskutinį atnaujinimą.
 

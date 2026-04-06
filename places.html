@@ -471,6 +471,7 @@
     </div>
   </div>
 
+  <script src="./scripts/status-indicator.js?v=2026-04-03"></script>
   <script src="./supabase-config.v2.js?v=2026-03-12-c"></script>
   <script src="./scripts/supabase-page.js"></script>
   <script>
@@ -705,7 +706,19 @@
     const stageSequence = ['1 ETAPAS','2 ETAPAS','3 ETAPAS','4 ETAPAS','4 ETAPAS (Alternatyva)','5 ETAPAS','Finalas','Slapta vieta','Papildomos idėjos','Kita'];
       const dataSourceBadge = document.getElementById('dataSourceBadge');
       const dataSourceMeta = document.getElementById('dataSourceMeta');
+      const dataIndicator = window.StatusIndicator
+        ? window.StatusIndicator.create({
+            badge: dataSourceBadge,
+            meta: dataSourceMeta,
+            defaultBadge: 'Duomenys: tikrinama...',
+            defaultMeta: 'Būsena: tikrinama...'
+          })
+        : null;
       function setDataSourceMeta(primary = '', secondary = ''){
+        if (dataIndicator){
+          dataIndicator.setMeta(primary, secondary);
+          return;
+        }
         if (!dataSourceMeta) return;
         const parts = [primary, secondary].filter(Boolean);
         if (!parts.length){
@@ -717,6 +730,10 @@
         dataSourceMeta.classList.remove('opacity-50');
       }
       function setDataSourceBadge(text, variant = 'default'){
+        if (dataIndicator){
+          dataIndicator.setBadge(text, variant);
+          return;
+        }
         if (!dataSourceBadge) return;
         dataSourceBadge.textContent = text;
         dataSourceBadge.classList.remove('bg-slate-100','text-slate-600','border-slate-200','bg-emerald-50','text-emerald-700','border-emerald-200','bg-amber-50','text-amber-700','border-amber-200','bg-rose-50','text-rose-700','border-rose-200');

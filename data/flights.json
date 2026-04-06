@@ -1,52 +1,84 @@
 {
-  "items": [
+  "generated_at": "2026-04-04T18:58:40Z",
+  "pnr": "VNQSUK",
+  "issue_date": "2026-04-04T21:57:00+03:00",
+  "ticket_total": {
+    "currency": "EUR",
+    "amount": 6142.22,
+    "formatted": "EUR 6.142,22"
+  },
+  "fare_breakdown": {
+    "adults": "EUR 2.900,00",
+    "child": "EUR 435,00",
+    "fuel_fee": "EUR 2.460,00",
+    "taxes": "EUR 347,22"
+  },
+  "payment": {
+    "method": "Mastercard",
+    "card_mask": "516**********332"
+  },
+  "baggage": {
+    "checked": "30 kg",
+    "carry_on": "1 × 8 kg"
+  },
+  "itineraries": [
     {
-      "title": "1-STOP VNO → HKT (2026-12-11) Turkish",
-      "price": "€548 / asm (4 asm: €2,192)",
-      "url": "https://www.skyscanner.net/transport/flights/vno/hkt/261211/?adultsv2=4",
-      "status": "WATCH"
+      "id": "outbound",
+      "label": "Vilnius → Phuket",
+      "date": "2026-12-11",
+      "weekday": "Friday",
+      "cabin": "Economy (Q)",
+      "duration": "14h 40m",
+      "departure": {
+        "airport": "Vilnius (VNO)",
+        "time_local": "11:55",
+        "date_local": "2026-12-11"
+      },
+      "arrival": {
+        "airport": "Phuket (HKT)",
+        "time_local": "07:35",
+        "date_local": "2026-12-12",
+        "note": "Next day"
+      },
+      "segments": [
+        { "flight": "TK1408", "from": "VNO", "to": "IST" },
+        { "flight": "TK166", "from": "IST", "to": "HKT" }
+      ]
     },
     {
-      "title": "1-STOP RIX → HKT (2026-12-11) Finnair",
-      "price": "€562 / asm (4 asm: €2,248)",
-      "url": "https://www.finnair.com/lt-en/flights?origin=RIX&destination=HKT&adults=4&depart=2026-12-11",
-      "status": "WATCH"
-    },
-    {
-      "title": "KBV → BKK → CEI (AirAsia + Thai VietJet)",
-      "price": "฿3,850 / asm (apie €100)",
-      "url": "https://12go.asia/en/travel/krabi-airport/chiang-rai-airport?date=2026-12-20&adults=4",
-      "status": "PLAN"
-    },
-    {
-      "title": "CEI → BKK (2026-12-30) Bangkok Airways",
-      "price": "฿2,990 / asm (apie €77)",
-      "url": "https://www.bangkokair.com/flight/booking?from=CEI&to=BKK&depart=2026-12-30&adults=4",
-      "status": "PLAN"
-    },
-    {
-      "title": "BKK → VNO (2027-01-02) Qatar",
-      "price": "€615 / asm (4 asm: €2,460)",
-      "url": "https://www.skyscanner.net/transport/flights/bkkt/vno/270102/?adultsv2=4",
-      "status": "WATCH"
-    },
-    {
-      "title": "BKK → RIX (2027-01-02) Turkish",
-      "price": "€598 / asm (4 asm: €2,392)",
-      "url": "https://www.skyscanner.net/transport/flights/bkkt/rix/270102/?adultsv2=4",
-      "status": "WATCH"
-    },
-    {
-      "title": "TEZ TOUR paketai (VNO → HKT, 7 n.)",
-      "price": "nuo €1,299 / asm",
-      "url": "https://www.teztour.lt/lt/viesbuciai/thailand/phuket/?date_from=2026-12-10&nights=7&adults=2",
-      "status": "INFO"
-    },
-    {
-      "title": "TUI LT charteris (RIX → HKT) 12-10",
-      "price": "€1,180 / asm (su viešbučiu)",
-      "url": "https://www.tui.lv/lv/celojumi/tailandes-fuketa/",
-      "status": "OPTION"
+      "id": "return",
+      "label": "Bangkok → Vilnius",
+      "date": "2027-01-01",
+      "weekday": "Friday",
+      "cabin": "Economy (E)",
+      "duration": "16h 45m",
+      "departure": {
+        "airport": "Bangkok (BKK)",
+        "time_local": "23:15",
+        "date_local": "2027-01-01"
+      },
+      "arrival": {
+        "airport": "Vilnius (VNO)",
+        "time_local": "11:00",
+        "date_local": "2027-01-02",
+        "note": "Next day"
+      },
+      "segments": [
+        { "flight": "TK69", "from": "BKK", "to": "IST" },
+        { "flight": "TK1407", "from": "IST", "to": "VNO" }
+      ]
     }
+  ],
+  "passengers": [
+    { "name": "Ernestas Gegeckas", "type": "Adult" },
+    { "name": "Romanas Ramanauskas", "type": "Adult" },
+    { "name": "Viktorija Gegeckienė", "type": "Adult" },
+    { "name": "Irena Ramanauskienė", "type": "Adult" },
+    { "name": "Agata Ramanauskaitė", "type": "Adult" },
+    { "name": "Edvinas Gegeckas", "type": "Child" }
+  ],
+  "notes": [
+    "Bilietas išduotas 2026-04-04, Turkish Airlines",
+    "Kiekvienam keleiviui leidžiama 30 kg registruoto bagažo + 1×8 kg rankinio bagažo"
   ]
 }

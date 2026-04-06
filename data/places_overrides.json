@@ -121,7 +121,26 @@
   "khao-sok-cheow-lan-lake": {
     "desc": "Cheow Lan ežere naktį apsistojama plūduriuojančiuose rafthouse nameliuose, o dieną organizuojami longtail safariai tarp kalkakmenio stulpų. Populiarios veiklos – naktinis žygis klausantis gibbonų ir plaukimas prie Nam Talu urvo (sausros metu).",
     "source": "https://www.thainationalparks.com/khao-sok-national-park",
-    "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop"
+    "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop",
+    "long_desc": "2026-04-06 surinkome realių pasiūlymų palyginimą: GuilinLake ir Chieolan Line lentos 8 žmonių grupei cituoja 1.7k–3.2k ฿/asm. už 2D1N (rafthouse + 3 maitinimai + longtail), iPhuketTravel patvirtina ~2.8k ฿/asm. kai grupė >4, o CheowLanLakeTravel Issara join-in startuoja nuo 8.5k ฿/asm. (premium kambariai, NP mokestis įskaičiuotas). TravelThai 47k paketui išeina 5 875 ฿/asm., todėl verta rinktis vietinius tiekėjus arba DIY longtail + rafthouse kombinaciją, jei nereikia 24/7 A/C kurorto.",
+    "pricing": {
+      "badge": "1.7k–3.2k ฿/asm. (8 asm. grupei)",
+      "level": "฿",
+      "details": "GuilinLake / Chieolan 2D1N rafthouse 20–24k ฿/grupei; Issara join-in 8.5k ฿/asm.",
+      "note": "Šaltiniai: GuilinLake & Chieolan (2026-04-06), iPhuketTravel, CheowLanLakeTravel"
+    },
+    "booking": {
+      "label": "GuilinLake 2D1N paketai",
+      "url": "https://www.guilinlake.com/2-days-1-night/",
+      "notes": "Tailando kalba; užsakymas per Line/Messenger. 8 asm. = ~20k ฿ už rafthouse + 3 maitinimus + longtail."
+    },
+    "essentials": [
+      "GuilinLake / Chieolan Line grupės – 1.7k–3.2k ฿/asm. (6–11 svečių) įskaičiuoja rafthouse, 3 maitinimus ir sunrise/sunset safarius; reikalingas QR/PromptPay depozitas.",
+      "iPhuketTravel (angliškas kontaktas) cituoja 3 150 ฿/asm. (2 pax) ir ~2 800 ฿/asm. kai >4 pax; NP mokestis 300 ฿/užsienietį + 20 ฿/valtį sumokamas prie prieplaukos.",
+      "CheowLanLakeTravel / Issara Floating Resort join-in – 8 500 ฿/asm., į kainą įtraukta NP rinkliava ir A/C kambariai; privatus longtail papildomai ~2 800 ฿/grupei.",
+      "DIY schema: Rajjaprapha prieplaukoje longtail 2 000 ฿/2 h arba 2 800 ฿/3 h (nepriklausomai nuo žmonių) + valstybės rafthouse (2 000–2 500 ฿ kambarys) → 2D1N išlaidos ~18–22k ฿.",
+      "ThaiNationalParks (2026-03) įspėja apie +2 500–4 000 ฿ kuro antkainį privatiems turams nuo 2026-07-01 – tarifus verta fiksuoti iki birželio."
+    ]
   },
   "emerald-pool": {
     "desc": "Thung Teao miško takas (1,4 km) veda į Emerald Pool; anksti ryte vanduo krištolo skaidrumo, o netoliese yra gilesnė Blue Pool (uždaryta 12:00–13:00 pauzei). Lankytojo mokestis €5.41, todėl verta atvykti 08:00.",
@@ -335,7 +354,20 @@
     "desc": "05:30 išvykstame iš Lantos į Khao Sok; laive gidas pasakoja apie nacionalinio parko istoriją. Į programą įeina bambukinių plaustų plaukimas, lunch rafthouse ir trumpas žygis į koralų urvą.",
     "source": "https://www.thainationalparks.com/khao-sok-national-park",
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Trees%20rising%20out%20of%20Cheow%20Lan%20Lake%2C%20blue%20sky%2C%20eternal%20summer%20in%20Surat%20Thani%20edited.jpg?width=1200",
-    "maps": "https://maps.google.com/?q=Khao+Sok+National+Park"
+    "maps": "https://maps.google.com/?q=Khao+Sok+National+Park",
+    "long_desc": "ThailandMagazine (2026-04-06) patvirtina, kad standartinis Khao Sok dienos turas su bamboo rafting ir urvu kainuoja apie 2 500 ฿/asm., o jei pasiliekame naktį, tie patys operatoriai (GuilinLake/Chieolan) 8 žmonių grupei siūlo 1.7k–3.2k ฿/asm. už 2D1N su rafthouse. Tai padeda objektyviai lyginti su TravelThai 47k pasiūlymu.",
+    "pricing": {
+      "badge": "2.5k ฿/asm. dienos turas · 1.7k–3.2k ฿/asm. 2D1N",
+      "level": "฿",
+      "details": "Seat-in-coach (ThailandMagazine) · GuilinLake/Chieolan Line paketai",
+      "note": "Atnaujinta 2026-04-06"
+    },
+    "essentials": [
+      "Seat-in-coach dienos programa (~2 500 ฿/asm.) apima bamboo raft, rafthouse lunch ir Diamond Cave; išvykimas 05:30, grįžimas ~21:00.",
+      "8 žmonių grupei apsimoka privati longtail (2 000–2 800 ฿) ir atskira rafthouse rezervacija – iš viso ~18–22k ฿ už 2D1N.",
+      "NP mokestis: 300 ฿ suaugusiam, 150 ฿ vaikui + 20 ฿/valtį, mokama grynais Rajjaprapha prieplaukoje.",
+      "Lagaminus paliekame Khao Sok kaime; į valtį imame tik sausus krepšius (parkas riboja 10 kg)."
+    ]
   },
   "wat-rong-khun-white-temple": {
     "desc": "Dubliuojamas balsavimo įrašas tiems, kas nori akcentuoti White Temple dienos turą – primenamos 08:00–17:00 valandos ir meno detalės. Balsuotojai gali pridėti pastabas apie papildomas sustojimo vietas, pvz., Singha Park.",
