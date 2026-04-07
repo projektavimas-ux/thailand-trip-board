@@ -15,12 +15,61 @@
     const loginBtn = $('loginBtn');
     const signupBtn = $('signupBtn');
     const logoutBtn = $('logoutBtn');
+    const indicator = (function setupIndicator(){
+      if (!window.StatusIndicator) return null;
+      const indicatorOpts = opts.indicator || {};
+      const badgeElement = indicatorOpts.badge
+        || (indicatorOpts.badgeSelector ? document.querySelector(indicatorOpts.badgeSelector) : null)
+        || document.querySelector('[data-supabase-badge]')
+        || $('supabaseStatusBadge');
+      const metaElement = indicatorOpts.meta
+        || (indicatorOpts.metaSelector ? document.querySelector(indicatorOpts.metaSelector) : null)
+        || document.querySelector('[data-supabase-meta]')
+        || $('supabaseStatusMeta');
+      return window.StatusIndicator.create({
+        badge: badgeElement,
+        meta: metaElement,
+        defaultBadge: indicatorOpts.defaultBadge || 'Duomenys: tikrinama...',
+        defaultMeta: indicatorOpts.defaultMeta || 'Supabase būsena tikrinama...'
+      });
+    })();
+
+    const setIndicatorConfigMissing = () => {
+      indicator?.markConfigMissing('Papildyk supabase-config.js');
+    };
+
+    const setIndicatorAwaitingAuth = () => {
+      indicator?.markAwaitingAuth('Prisijunk, kad matytum live lentą');
+    };
+
+    const setIndicatorSignedOut = () => {
+      indicator?.setStatus({
+        sourceLabel: 'Duomenys: Supabase',
+        variant: 'fallback',
+        primary: 'Režimas: atjungta',
+        secondary: 'Prisijunk, kad krautų duomenis'
+      });
+    };
+
+    const setIndicatorReady = (user) => {
+      indicator?.setStatus({
+        sourceLabel: 'Duomenys: Supabase',
+        variant: 'live',
+        primary: 'Režimas: prisijungta',
+        secondary: user?.email || user?.id || 'Live'
+      });
+    };
+
+    const setIndicatorError = (message) => {
+      indicator?.markError('Duomenys: Supabase klaida', message || 'Nežinoma klaida');
+    };
 
     if (!window.SUPABASE_URL || !window.SUPABASE_ANON_KEY || window.SUPABASE_URL.includes('YOUR_')) {
       show(configBox);
       hide(authBox);
       hide(appBox);
       if (status) status.textContent = '';
+      setIndicatorConfigMissing();
       return null;
     }
 
@@ -35,11 +84,13 @@
         show(authBox);
         hide(appBox);
         if (who) who.textContent = '';
+        setIndicatorSignedOut();
         if (typeof opts.onSignedOut === 'function') opts.onSignedOut({ client });
       } else {
         hide(authBox);
         show(appBox);
         if (who) who.textContent = 'Prisijungęs: ' + (user.email || user.id);
+        setIndicatorReady(user);
         if (typeof opts.onReady === 'function') opts.onReady({ client, user });
       }
     }
@@ -50,6 +101,7 @@
       const password = passInput.value;
       if (!email || !password){
         if (status) status.textContent = 'Įvesk el. paštą ir slaptažodį';
+        setIndicatorAwaitingAuth();
         return;
       }
       try {
@@ -63,6 +115,7 @@
         await refresh();
       } catch (err) {
         if (status) status.textContent = err.message || 'Nepavyko';
+        setIndicatorError(err?.message);
       }
     }
 
@@ -70,6 +123,7 @@
     signupBtn && signupBtn.addEventListener('click', () => handleAuth('signup'));
     logoutBtn && logoutBtn.addEventListener('click', async () => {
       await client.auth.signOut();
+      setIndicatorSignedOut();
       await refresh();
     });
     passInput && passInput.addEventListener('keydown', (e) => {
