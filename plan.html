@@ -547,6 +547,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="./scripts/status-indicator.js?v=2026-04-03"></script>
+  <script src="./scripts/stage-windows-source.js?v=2026-04-08"></script>
   <script src="./supabase-config.js?v=2026-03-23"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -1099,71 +1100,41 @@
         }
         setStageSourceBadge('Duomenys: tikrinama...');
         setStageSyncNote('Duomenys: tikrinama...');
-        let items = [];
-        let badgeVariant = 'default';
-        let label = 'data/stage_windows.json';
-        let syncTimestamp = null;
+
         const client = getSupabaseClient();
+        let result = null;
+        if (window.StageWindowsSource && typeof window.StageWindowsSource.fetch === 'function') {
+          result = await window.StageWindowsSource.fetch({
+            client,
+            fallbackUrl: './data/stage_windows.json'
+          });
+        }
 
-        if (client) {
+        if (!result) {
+          result = { items: [], sourceLabel: 'data/stage_windows.json', variant: 'fallback', updatedAt: null, error: new Error('StageWindowsSource helper nepasiekiamas') };
           try {
-            const { data, error } = await client
-              .from('stage_windows')
-              .select('stage, window_label, start_day, end_day, focus, order_index, inserted_at, updated_at')
-              .order('order_index', { ascending: true })
-              .order('start_day', { ascending: true });
-            if (error) throw error;
-            if (Array.isArray(data) && data.length) {
-              items = data.map(row => ({
-                stage: row.stage || '',
-                window: row.window_label || row.window || '',
-                start_day: row.start_day,
-                end_day: row.end_day,
-                focus: row.focus || ''
-              }));
-              const timestamps = data
-                .map(row => row.updated_at || row.inserted_at)
-                .filter(Boolean);
-              if (timestamps.length) {
-                syncTimestamp = timestamps.reduce((latest, current) => {
-                  if (!latest) return current;
-                  return new Date(current) > new Date(latest) ? current : latest;
-                }, null);
-              }
-              label = 'Supabase · stage_windows';
-              badgeVariant = 'live';
-            }
-          } catch (err) {
-            console.warn('Supabase stage_windows klaida', err);
+            const fallback = await fetch(`./data/stage_windows.json?v=${Date.now()}`).then(res => res.json());
+            const items = Array.isArray(fallback)
+              ? fallback
+              : (fallback && Array.isArray(fallback.items) ? fallback.items : []);
+            result.items = items;
+            result.updatedAt = fallback?.updated_at || fallback?.updatedAt || null;
+          } catch (error) {
+            result.error = error;
           }
         }
 
-        if (!items.length) {
-          try {
-            const local = await fetch(`./data/stage_windows.json?v=${Date.now()}`).then(res => res.json());
-            if (Array.isArray(local)) {
-              items = local;
-            } else if (local && Array.isArray(local.items)) {
-              items = local.items;
-            }
-            syncTimestamp = (local && (local.updated_at || local.updatedAt)) || null;
-            label = 'data/stage_windows.json';
-            badgeVariant = 'fallback';
-          } catch (err) {
-            console.error('Lokalus stage_windows klaida', err);
-          }
-        }
-
-        if (items.length) {
-          const orderedItems = sortStageWindows(items);
+        const orderedItems = Array.isArray(result.items) ? sortStageWindows(result.items) : [];
+        if (orderedItems.length) {
           renderStageWindows({ items: orderedItems });
           const statsSummary = describeStageStats(orderedItems);
-          setStageSourceBadge(`Duomenys: ${label}`, badgeVariant);
-          setStageSyncNote(`Šaltinis: ${label}`, syncTimestamp, statsSummary);
+          setStageSourceBadge(`Duomenys: ${result.sourceLabel || 'stage_windows'}`, result.variant || 'default');
+          setStageSyncNote(result.sourceLabel || 'Etapų langai', result.updatedAt || null, statsSummary);
         } else {
           if (stageWindowsGrid) stageWindowsGrid.innerHTML = '<p class="text-sm text-rose-500">Nepavyko gauti etapų langų.</p>';
           setStageSourceBadge('Duomenys: nepavyko užkrauti', 'error');
-          setStageSyncNote('Etapų langai', null);
+          const failureLabel = result?.error ? 'Klaida: ' + (result.error.message || 'nežinoma') : 'Etapų langai';
+          setStageSyncNote(failureLabel, null);
         }
       };
 
