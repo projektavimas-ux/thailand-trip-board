@@ -306,6 +306,61 @@
           "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
           "desc": "Boutique chalets su baseinu ir paplūdimio baru; Kayak rodo nuo $34 (~31 EUR) už naktį.",
           "source": "https://www.kayak.com/Ko-Lanta-Hotels-Long-Beach-Chalet.400197.ksp"
+        },
+        {
+          "name": "Longtail safari + kalkakmenių bokštai",
+          "image": "https://images.unsplash.com/photo-1544498308-4d5ed7f44d85?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Privatus pasiplaukiojimas tradicine \"longtail\" valtimi per smaragdinį Cheow Lan ežerą. Pamatysite dramatiškas iš vandens kylančias kalkakmenio uolas (Khao Sam Glur) – tai kraštovaizdis, dažnai lyginamas su Avatar filmu ar Halongo įlanka."
+        },
+        {
+          "name": "Plūduriuojantys rafthouse (Panvaree, Sai Chon)",
+          "image": "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Išskirtinė patirtis miegant nameliuose ant vandens viduryje džiunglių ežero. Rytą atsibusite nuo gibonų dainų ir tiesiai iš terasos galėsite šokti į šiltą ežero vandenį. Siūlomas komfortas laukinės gamtos apsuptyje."
+        },
+        {
+          "name": "Naktinis džiunglių žygis",
+          "image": "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Ekspedicija su vietiniu reindžeriu po saulei nusileidusios džiungles. Girdėsite neatpažįstamus garsus ir ieškosite naktinių gyvūnų: tarantulų, šikšnosparnių, varliagyvių. Tai intensyvus susitikimas su laukine Tailando gamta tamsos gaubte."
+        },
+        {
+          "name": "Morning wildlife safari",
+          "image": "https://images.unsplash.com/photo-1596484552834-6a58f850e0a1?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Pusę šešių ryto, kol ežerą dar gaubia mistiškas rūkas, valtimi plauksite ieškoti gyvūnų. Tai geriausias laikas pamatyti krante vandenį geriančius dramblius, medžiuose šokinėjančius langūrus ar įspūdingus ragasnapio (hornbill) paukščius."
+        },
+        {
+          "name": "Nam Taloo / Pakarang urvo turas",
+          "image": "https://images.unsplash.com/photo-1499244571948-7cc80540ed09?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Turas po įspūdingus Khao Sok urvus. Nam Taloo urvu teka požeminė upė (teks bristi), o Pakarang (Coral Cave) stebins savo koralus primenančiais stalagmitais ir stalaktitais. Tai adrenalino ir tamsos kupina ekspedicija."
+        },
+        {
+          "name": "Panvaree The Greenery dinner",
+          "image": "https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Vakarienė prabangesniame rafthouse restorane. Skanus tailandietiškas meniu: šviežia ežero žuvis, Massaman karis ir egzotiniai vaisiai, mėgaujantis vandens ramybe ir temstančiomis džiunglėmis, esant toli nuo civilizacijos ir interneto ryšio."
+        },
+        {
+          "name": "Sai Chon Jungle grill",
+          "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Tradicinis džiunglių grilis: ant grotelių kepta žuvis, vištienos iešmeliai bei ant žarijų paruoštos daržovės. Viskas tiekiama autentiškoje aplinkoje su vaizdu į mėnulio apšviestą ramų Cheow Lan ežero paviršių."
+        },
+        {
+          "name": "Ratchaprapha pier lunch stop",
+          "image": "https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Pietūs ties Ratchaprapha prieplauka esančiuose restoranėliuose prieš kelionę laivu į ežerą. Paragausite autentiškų ir šiek tiek aštresnių pietų Tailando patiekalų, kurie puikiai nuteiks prieš laukiantį safarį."
+        },
+        {
+          "name": "Panvaree The Greenery",
+          "image": "https://images.unsplash.com/photo-1601058497548-f247dfe349d6?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Premium lygio nameliai ant vandens su langais nuo grindų iki lubų. Patogiausias būdas patirti Cheow Lan ežerą su visais patogumais, oro kondicionieriais, kajakais prie terasos ir pasakišku vaizdu rytams ir saulėlydžiams."
+        },
+        {
+          "name": "Sai Chon Floating Resort",
+          "image": "https://images.unsplash.com/photo-1582719478250-c894099f7078?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Klasikinis plūduriuojantis kurortas Cheow Lan ežere. Mediniai nameliai, patogios lovos, ir tiesioginis išėjimas maudytis šiltame vandenyje. Puiki bazė aktyvioms dienoms ir ramiems vakarams džiunglių širdyje."
+        },
+        {
+          "name": "Our Jungle Camp (Khao Sok Town)",
+          "image": "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Ekologinis viešbutis prie pat Khao Sok nacionalinio parko vartų ir upės. Siūlo unikalią patirtį gyventi nameliuose medžiuose. Tai ideali stotelė su naktiniais safariais dar prieš išplaukiant į ilgąją ežero ekspediciją."
         }
       ]
     },
