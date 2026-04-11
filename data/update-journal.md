@@ -87,3 +87,4 @@
 - Nei TAT, nei ThaiNationalParks paskyrose nėra pranešimų, susijusių su 2026-12-11 → 2027-01-02 kelionės lango apribojimais, naujomis kvotomis ar kainų korekcijomis (naujausia informacija kartoja jau fiksuotas aukšto sezono rekomendacijas ir 2026-07-01 longtail antkainius).
 - `places_catalog.json` / `signal_radar.json`: **no update** – paliekame 2026-03-27 versiją ir laukiame konkretesnių šaltinių apie mūsų prioritetines salas / regionus.
 - 2026-04-11 12:00: Data feed check (signal_radar/places_catalog): no update.
+- 2026-04-11 18:00: Data feed check (signal_radar/places_catalog): no update.
