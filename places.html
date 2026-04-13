@@ -103,6 +103,12 @@
       gap: 12px;
       flex: 1;
     }
+    .place-card__desc {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
     .place-card__tags {
       display: flex;
       flex-wrap: wrap;
@@ -1053,7 +1059,7 @@
                 <span class="text-[11px] uppercase tracking-[0.3em] text-slate-400">DEMO</span>
               </div>
               <h3 class="text-lg font-display text-slate-900">${item.name}</h3>
-              <p class="text-sm text-slate-600 leading-relaxed">${item.desc || ''}</p>
+              <p class="text-sm text-slate-600 leading-relaxed place-card__desc">${item.desc || ''}</p>
               ${stats.length ? `<div class="place-card__stats">${stats.join('')}</div>` : ''}
               ${links.length ? `<div class="place-card__links">${links.join('')}</div>` : ''}
               ${buildDetailBlock(item, 'offline', 'toggle-offline-extra')}
@@ -1175,7 +1181,18 @@
         return;
       }
       const grouped = {};
+      
+      const uniqueList = [];
+      const seenNames = new Set();
       list.forEach(p => {
+        const normName = (p.name || '').toLowerCase().trim();
+        if (!seenNames.has(normName)) {
+          seenNames.add(normName);
+          uniqueList.push(p);
+        }
+      });
+
+      uniqueList.forEach(p => {
         const key = p.stage || 'Kita';
         if (!grouped[key]) grouped[key] = [];
         grouped[key].push(p);
@@ -1210,7 +1227,7 @@
                   <span class="text-[11px] uppercase tracking-[0.3em] ${statusColor}">${statusLabel}</span>
                 </div>
                 <h3 class="text-lg font-display text-slate-900">${p.name}</h3>
-                <p class="text-sm text-slate-600 leading-relaxed">${p.description || ''}</p>
+                <p class="text-sm text-slate-600 leading-relaxed place-card__desc">${p.description || ''}</p>
                 ${stats.length ? `<div class="place-card__stats">${stats.join('')}</div>` : ''}
                 ${links.length ? `<div class="place-card__links">${links.join('')}</div>` : ''}
                 ${buildDetailBlock(p, 'main', 'toggle-extra')}
@@ -1307,7 +1324,7 @@
               const stageKeys = [...new Set(offlineCatalog.map(item => item.stage).filter(Boolean))];
               buildOfflineFilters(stageKeys);
               previewBox?.classList.remove('hidden');
-              offlineBox?.classList.remove('hidden');
+              offlineBox?.classList.add('hidden');
               renderOfflineList();
               syncPreviewToMain();
               const catalogStamp = catalog?.updated_at || catalog?.updatedAt || catalog?.generated_at || catalog?.generatedAt || catalog?.meta?.updated_at || catalog?.meta?.generated_at || null;
