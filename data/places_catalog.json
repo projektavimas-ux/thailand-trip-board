@@ -464,6 +464,31 @@
           "image": "https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&w=1200&q=80",
           "desc": "Lagūnos baseinas ir tropiniai bungalow'ai 5 min. nuo Night Bazaar; Kayak kainos nuo $39 (~35 EUR).",
           "source": "https://www.kayak.com/Chiang-Rai-Hotels-Laluna-Hotel-Resort.177964.ksp"
+        },
+        {
+          "name": "Chiang Rai Night Bazaar",
+          "image": "https://images.unsplash.com/photo-1505993597083-3bd19fd75e25?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Miesto centre esantis turgus."
+        },
+        {
+          "name": "Thanalai Walking Street",
+          "image": "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Šeštadieniais šurmuliuojanti pėsčiųjų gatvė Chiang Rai."
+        },
+        {
+          "name": "Doi Tung Lodge",
+          "image": "https://images.unsplash.com/photo-1518182170546-076616fd40ba?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Jaukus kalnų viešbutis Doi Tung kalne."
+        },
+        {
+          "name": "Wat Rong Khun (White Temple)",
+          "image": "https://images.unsplash.com/photo-1533161314352-706f9d2b8b94?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Baltas ir stiklo šukėmis inkrustuotas šedevras."
+        },
+        {
+          "name": "Wat Rong Suea Ten (Blue Temple)",
+          "image": "https://images.unsplash.com/photo-1610027732483-3c990ee422db?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Neįtikėtinai ryškus, safyro mėlynumo šventykla."
         }
       ]
     },
@@ -488,6 +513,51 @@
           "image": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Wat_Plai_Laem_02.jpg",
           "desc": "Spalvinga šventykla su 18 rankų Guanyin (Gailestingumo deivės) statula, apsupta ežero, kuriame plaukioja šimtai žuvų ir vėžlių.",
           "source": "https://www.kosamui.com/attractions/wat-plai-laem.htm"
+        },
+        {
+          "name": "Samui Elephant Sanctuary (morning program)",
+          "image": "https://images.unsplash.com/photo-1585124673629-166297379ba9?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Etiškas dramblių prieglobstis džiunglėse."
+        },
+        {
+          "name": "Koh Phangan day trip",
+          "image": "https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Dienos išvyka į kaimyninę Koh Phangan salą."
+        },
+        {
+          "name": "Fisherman's Village Night Market",
+          "image": "https://images.unsplash.com/photo-1526662095598-a5170f3f2694?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Populiarus Bophut miestelio naktinis turgus."
+        },
+        {
+          "name": "Coco Tam's",
+          "image": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Vienas geriausių paplūdimio barų Bophute."
+        },
+        {
+          "name": "Jahn (Conrad Koh Samui)",
+          "image": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Aukščiausio lygio fine-dining patirtis."
+        },
+        {
+          "name": "Seaside more (Seafood by 4 Monkeys)",
+          "image": "https://images.unsplash.com/photo-1534080564583-6be75777b70a?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Puikus jūros gėrybių restoranas ant jūros kranto."
+        },
+        {
+          "name": "Avani+ Samui Resort",
+          "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Modernus ir ramus viešbutis Phangka įlankoje."
+        },
+        {
+          "name": "SALA Samui Chaweng Beach",
+          "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Išskirtinės minimalistinės architektūros kurortas."
+        },
+        {
+          "name": "Buri Rasa Village Samui",
+          "image": "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Boutique viešbutis Chaweng centre."
         }
       ]
     },
@@ -599,6 +669,86 @@
           "image": "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=1200&q=80",
           "desc": "Riverside baseinas su vaizdu į ICONSIAM; Kayak startuoja nuo $44 (~40 EUR) už naktį.",
           "source": "https://www.kayak.com/Bangkok-Hotels-The-Quarter-Chaophraya-By-Uhg.9074548.ksp"
+        },
+        {
+          "name": "Lard Yai sekmadienio turgus",
+          "image": "https://images.unsplash.com/photo-1542640244-7e672d6cb466?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Kiekvieną sekmadienį Thalang gatvė tampa pėsčiųjų zona. Puiki vieta ragauti gatvės maistą, klausytis gyvos muzikos ir pirkti vietinių amatininkų dirbinius."
+        },
+        {
+          "name": "Koh Poda picnic lunch",
+          "image": "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Pietūs ant balto smėlio fone stūksančių kalkakmenio uolų."
+        },
+        {
+          "name": "Pig Island / Koh Madsum",
+          "image": "https://images.unsplash.com/photo-1587595431973-160d0d94add1?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Maža sala į pietus nuo Koh Samui."
+        },
+        {
+          "name": "Lamai Viewpoints + Overlap Stone",
+          "image": "https://images.unsplash.com/photo-1621516001099-0a6d09e3a6fa?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Įspūdingi apžvalgos taškai pietinėje Samui dalyje."
+        },
+        {
+          "name": "Talat Noi kavinės",
+          "image": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Istorinis Bankoko kinų kvartalo pakraštys."
+        },
+        {
+          "name": "Tropic City / TEP Bar",
+          "image": "https://images.unsplash.com/photo-1470337458703-415120a41738?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Tropic City / TEP Bar - kokteilių barai."
+        },
+        {
+          "name": "Hidden rooftop bar (TEP / Tropic City)",
+          "image": "https://images.unsplash.com/photo-1572115383321-71fb3b2f567b?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Paslėptas stogo baras."
+        },
+        {
+          "name": "Riverside viešbutis (Avani+ ar kt.)",
+          "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Viešbučiai prie Chao Phraya upės."
+        },
+        {
+          "name": "Novotel Suvarnabhumi (skrydžiui)",
+          "image": "https://images.unsplash.com/photo-1551882547-ff40c0d1398c?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Viešbutis, sujungtas tiesiogiai su Suvarnabhumi oro uostu."
+        },
+        {
+          "name": "Novotel Suvarnabhumi (ankstiems skrydžiams)",
+          "image": "https://images.unsplash.com/photo-1551882547-ff40c0d1398c?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Viešbutis prie pat oro uosto."
+        },
+        {
+          "name": "Turkish TK1870 + TK172",
+          "image": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Skrydžiai per Stambulą."
+        },
+        {
+          "name": "Finnair AY1332 + AY141",
+          "image": "https://images.unsplash.com/photo-1517400508447-f8dd518b86db?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Persėdimas Helsinkyje."
+        },
+        {
+          "name": "Finnair AY144 + AY1339",
+          "image": "https://images.unsplash.com/photo-1517400508447-f8dd518b86db?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Grįžimo skrydis per Helsinkį."
+        },
+        {
+          "name": "Qatar QR272 + QR842",
+          "image": "https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Skrydis per Dohą."
+        },
+        {
+          "name": "Qatar QR837 + QR273",
+          "image": "https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Grįžtamasis skrydis iš Bankoko per Dohą."
+        },
+        {
+          "name": "LOT LO66 + LO779",
+          "image": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80",
+          "desc": "Skrydis su persėdimu Varšuvoje."
         }
       ]
     },
