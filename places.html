@@ -454,7 +454,7 @@
         <div id="placesList"></div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="max-w-2xl">
         <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
           <h3 class="text-xl font-display font-semibold text-slate-900 mb-4">Pridėti vietą</h3>
           <div class="space-y-4">
@@ -465,13 +465,6 @@
             <button id="addPlace" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-medium py-3 rounded-lg transition-colors">Pridėti</button>
             <p id="formStatus" class="text-sm text-slate-500"></p>
           </div>
-        </div>
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-xl font-display font-semibold text-slate-900">Balsų lenta</h3>
-            <span class="text-xs uppercase tracking-[0.35em] text-slate-400">pagal filtrą</span>
-          </div>
-          <div id="planBoard"></div>
         </div>
       </div>
     </div>
@@ -1131,7 +1124,6 @@
           return matchesStage && matchesQuery && matchesHidden;
         });
         renderPlaces(filtered);
-        renderBoard(filtered);
       }
 
       function buildDetailBlock(entry, scope, toggleClass){
@@ -1264,17 +1256,6 @@
       });
     }
 
-      function renderBoard(list){
-        const box = document.getElementById('planBoard');
-        if (!list.length){
-          box.innerHTML = '<p class="text-sm text-slate-500">Nėra duomenų.</p>';
-          return;
-        }
-        const sorted = [...list].sort((a,b)=>(voteMapCache[b.id]||0)-(voteMapCache[a.id]||0));
-        box.innerHTML = sorted.map((p,i)=>`
-          <div class="plan-line"><strong>${i+1}.</strong> ${p.name}<br><span class="text-xs uppercase tracking-wide text-slate-500">${voteMapCache[p.id]||0} bals.</span></div>`).join('');
-      }
-
       async function toggleVote(placeId, remove){
         if (!currentClient) return;
         const { data: { user } } = await currentClient.auth.getUser();
@@ -1383,7 +1364,6 @@
           placesCache = [];
           voteMapCache = {};
           document.getElementById('placesList').innerHTML = '';
-          document.getElementById('planBoard').innerHTML = '';
           previewBox?.classList.remove('hidden');
           offlineBox?.classList.remove('hidden');
           setDataSourceBadge('Duomenys: data/places_catalog.json', 'fallback');
