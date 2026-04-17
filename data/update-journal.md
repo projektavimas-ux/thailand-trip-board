@@ -101,3 +101,4 @@
 - 2026-04-16 12:00: Data feed check: no update.
 - 2026-04-16 18:00: Data feed check: no update.
 - 2026-04-17 12:00: Data feed check: no update. Tik užfiksuotas naujas žinynų įrašas apie papildomus muzikos festivalius (Bankokas/Pattaya/Phuket) gruodžio mėnesį. Kadangi Phuket liečia gruodžio 18-20 d., tai gali kiek padidinti apkrovimą Andamanų jūros kryptimi, tačiau „Hidden Chain“ saloms (Libong, Kradan ir t.t.) tiesioginės žalos nėra.
+- 2026-04-17 12:00: Data feed check: no update. Tik užfiksuotas naujas žinynų įrašas apie papildomus muzikos festivalius (Bankokas/Pattaya/Phuket) gruodžio mėnesį. Kadangi Phuket liečia gruodžio 18-20 d., tai gali kiek padidinti apkrovimą Andamanų jūros kryptimi, tačiau „Hidden Chain“ saloms (Libong, Kradan ir t.t.) tiesioginės žalos nėra.
