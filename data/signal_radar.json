@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-01T11:30:00+03:00",
+  "generated_at": "2026-04-20T12:00:00+03:00",
   "signals": [
     {
       "id": "qsncc-travel-fair-2026",
@@ -22,7 +22,7 @@
       "title": "Tomorrowland Thailand 2026 · Wisdom Valley",
       "location": "Pattaya · Wisdom Valley (Chon Buri)",
       "window": "2026-12-11 → 2026-12-13",
-      "summary": "Pirmoji pilno masto Tomorrowland versija Azijoje vyks Pattajoje (Wisdom Valley) tuo pat metu, kai prasideda mūsų kelionė. Tikimasi >50 tūkst. lankytojų per dieną, nėra camping zonos, todėl visi dalyviai rezervuos Pattajos / Rayongo viešbučius ir stipriai apkraus kelių bei „Grab/Bolt" srautus.",
+      "summary": "Pirmoji pilno masto Tomorrowland versija Azijoje vyks Pattajoje (Wisdom Valley) tuo pat metu, kai prasideda mūsų kelionė. Tikimasi >50 tūkst. lankytojų per dieną, nėra camping zonos, todėl visi dalyviai rezervuos Pattajos / Rayongo viešbučius ir stipriai apkraus kelių bei „Grab/Bolt“ srautus.",
       "actions": [
         "Jei komandai nereikia Tomorrowland, vengti Pattajos maršruto tarp D0 ir D3 (grūstys į Highway 7) ir iš anksto informuoti vairuotojus dėl galimų 60–90 min. vėlavimų.",
         "Jei norime dalyvauti, užsirašyti į oficialų bilietų sąrašą (2026 Q1/Q2) ir rezervuoti nakvynę/transportą iki liepos, nes festivalyje nėra camping ir kainos šoks.",
@@ -228,6 +228,34 @@
         "Vietų kataloge (chiang-rai-loop) pažymėti, kad Nan modulį galima aktyvuoti, jei komanda prasitęsia kelionę iki sausio 2 d."
       ],
       "source": "https://www.travelandleisureasia.com/sea/destinations/southeast-asia/nan-province-thailand-slow-travel/"
+    },
+    {
+      "id": "edc-phuket-2nd-edition-2026",
+      "type": "event",
+      "priority": "medium",
+      "title": "EDC Thailand 2nd edition (Phuket)",
+      "location": "Phuket · Rhythm Park",
+      "window": "2026-12-18 → 2026-12-20",
+      "summary": "Bandwagon (2026-01-22) praneša, kad EDC Thailand 2026 gaus papildomą gruodžio leidimą Phuket'e su pre/after vakarėliais visoje saloje. Tai sutampa su mūsų pietinio etapo logistika ir gali pakelti viešbučių, shuttle bei taxi kainas 12-18→12-20 lange.",
+      "actions": [
+        "Iki spalio rezervuoti Phuket nakvynę ir oro uosto transferius D7-D9 langui, kad nepakliūtume į paskutinės minutės kainų šuolį.",
+        "`plan.html` pridėti pastabą vengti didžiųjų vakarinių pervažiavimų Patong/Kathu kryptyse 12-18→12-20, jei EDC grafikas patvirtinamas oficialiai."
+      ],
+      "source": "https://www.bandwagon.asia/articles/edc-thailand-announces-surprise-second-edition-in-december-2026"
+    },
+    {
+      "id": "trat-ferry-fuel-linked-fares-2026",
+      "type": "logistics",
+      "priority": "medium",
+      "title": "Trat krypties keltai perėjo į kuro indeksuotą kainodarą",
+      "location": "Trat · Ao Thammachat ↔ Koh Chang (vartai į Koh Mak/Koh Kood)",
+      "window": "nuo 2026-04-10",
+      "summary": "KohChangFerries (atnaujinta 2026-04) nurodo, kad po 10 metų pirmą kartą pakeltos bilietų kainos ir jos dabar susietos su dyzelino kaina. Tai reiškia, kad pervažiavimo į rytinę salų grandinę biudžetas (Koh Chang/Koh Mak/Koh Kood) gali keistis iki pat kelionės datos.",
+      "actions": [
+        "Prieš galutinį maršruto tvirtinimą 2026 Q4 lentelėje pakelti transporto rezervą bent +15–25% rytinei salų grandinei.",
+        "Likusius 7–10 d. iki pervažiavimo pakartotinai patikrinti naujausią Ao Thammachat keltų tarifą ir peržiūrėti vairuotojo/transfers kainą kartu."
+      ],
+      "source": "https://kohchangferries.com/ferry-koh-chang/"
     }
   ]
 }

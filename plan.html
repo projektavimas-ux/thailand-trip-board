@@ -102,6 +102,37 @@
       color: #94a3b8;
       margin-top: 6px;
     }
+    .todo-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .todo-summary-card {
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: linear-gradient(180deg, rgba(248, 250, 252, 0.96), #fff);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+    .todo-summary-card .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: #64748b;
+      font-weight: 700;
+    }
+    .todo-summary-card .value {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      color: #0f172a;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+    .todo-summary-card .meta {
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: #64748b;
+    }
     .macro-chip {
       display: inline-flex;
       align-items: center;
@@ -485,6 +516,7 @@
       <div id="stageWindowsGrid" class="stage-windows-grid">
         <p class="text-sm text-slate-500">Kraunama...</p>
       </div>
+      <div id="todoSummaryGrid" class="todo-summary-grid" aria-live="polite"></div>
     </section>
 
     <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 sm:p-6">
@@ -557,6 +589,7 @@
       const macroInboundEl = document.getElementById('macroInboundText');
       const timelineEl = document.getElementById('macroTimeline');
       const stageWindowsGrid = document.getElementById('stageWindowsGrid');
+      const todoSummaryGrid = document.getElementById('todoSummaryGrid');
       const stageSourceBadge = document.getElementById('stageSourceBadge');
       const stageSyncNote = document.getElementById('stageSyncNote');
       const signalListEl = document.getElementById('signalList');
@@ -697,6 +730,59 @@
         signalSourceNote.textContent = formatted
           ? `Signalų JSON · atnaujinta ${formatted}`
           : 'Signalų JSON · atnaujinimo laikas nežinomas';
+      };
+
+      const formatYmdForVilnius = (date = new Date()) => {
+        try {
+          return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Vilnius' }).format(date);
+        } catch (err) {
+          return date.toISOString().slice(0, 10);
+        }
+      };
+
+      const extractTodoDate = (text = '') => {
+        const match = String(text).match(/(\d{4}-\d{2}-\d{2})/);
+        return match ? match[1] : null;
+      };
+
+      const renderTodoSummary = (items = []) => {
+        if (!todoSummaryGrid) return;
+        const parsed = Array.isArray(items)
+          ? items.map((item, index) => ({
+              raw: item,
+              index,
+              date: extractTodoDate(item),
+              label: String(item || '').trim(),
+            }))
+          : [];
+        if (!parsed.length) {
+          todoSummaryGrid.innerHTML = '<p class="text-sm text-slate-500">Darbotvarkės įrašų nėra.</p>';
+          return;
+        }
+        const today = formatYmdForVilnius();
+        const upcoming = parsed
+          .filter(entry => entry.date && entry.date >= today)
+          .sort((a, b) => String(a.date).localeCompare(String(b.date)) || a.index - b.index);
+        const next = upcoming[0] || parsed.filter(entry => entry.date).sort((a, b) => String(a.date).localeCompare(String(b.date)) || a.index - b.index)[0] || parsed[0];
+        const soonCount = upcoming.slice(0, 3).length;
+        const totalCount = parsed.length;
+        todoSummaryGrid.innerHTML = `
+          <article class="todo-summary-card">
+            <div class="label">Kitas terminas</div>
+            <div class="value">${next?.label || 'Nėra artimiausio termino'}</div>
+            <div class="meta">${next?.date ? `Data: ${next.date}` : 'Data neaptikta'}</div>
+          </article>
+          <article class="todo-summary-card">
+            <div class="label">Artimiausi darbai</div>
+            <div class="value">${soonCount} įrašai per artimiausią langą</div>
+            <div class="meta">Iš viso: ${totalCount} užduočių</div>
+          </article>
+          <article class="todo-summary-card">
+            <div class="label">Dabartinis akcentas</div>
+            <div class="value">Suvesti etapų langai ir sekti kito termino blokavimą</div>
+            <div class="meta">Šis blokas skaičiuoja tik datas iš <code>data/todos.json</code>.</div>
+          </article>
+        `;
       };
 
       const updateSignalFilterButtons = () => {
@@ -1070,6 +1156,19 @@
         }
       };
 
+      const loadTodoSummary = async () => {
+        if (!todoSummaryGrid) return;
+        todoSummaryGrid.innerHTML = '<p class="text-sm text-slate-500">Kraunama...</p>';
+        try {
+          const payload = await fetch(`./data/todos.json?v=${Date.now()}`).then(res => res.json());
+          const items = Array.isArray(payload?.items) ? payload.items : [];
+          renderTodoSummary(items);
+        } catch (err) {
+          console.error('todos klaida', err);
+          todoSummaryGrid.innerHTML = '<p class="text-sm text-rose-500">Nepavyko užkrauti darbotvarkės suvestinės.</p>';
+        }
+      };
+
       if (signalFiltersEl) {
         signalFiltersEl.addEventListener('click', (event) => {
           const button = event.target.closest('button[data-priority]');
@@ -1168,6 +1267,7 @@
 
       loadHiddenSpotFocus();
       loadStageWindows();
+      loadTodoSummary();
     });
   </script>
 </body>

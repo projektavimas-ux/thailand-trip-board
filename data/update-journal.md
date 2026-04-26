@@ -104,3 +104,10 @@
 - 2026-04-17 12:00: Data feed check: no update. Tik užfiksuotas naujas žinynų įrašas apie papildomus muzikos festivalius (Bankokas/Pattaya/Phuket) gruodžio mėnesį. Kadangi Phuket liečia gruodžio 18-20 d., tai gali kiek padidinti apkrovimą Andamanų jūros kryptimi, tačiau „Hidden Chain“ saloms (Libong, Kradan ir t.t.) tiesioginės žalos nėra.
 - 2026-04-17 18:00: Data feed check: no update.
 - 2026-04-18 12:00: Data feed check: no update. Įsitvirtino vakarykštė naujiena apie muzikos festivalius Phukete ir Tomorrowland Pattayoje, tačiau „Hidden Chain“ regiono padėtis lieka stabili.
+- 2026-04-20 12:00: `signal_radar.json` papildytas 2 naujais signalais:
+  - `edc-phuket-2nd-edition-2026` (EDC papildomas etapas Phuket 12-18→12-20, galimas kainų/srautų šuolis).
+  - `trat-ferry-fuel-linked-fares-2026` (Ao Thammachat ↔ Koh Chang kainodara susieta su kuru nuo 2026-04-10, todėl reikia didesnio transfer biudžeto į Koh Mak/Koh Kood grandinę).
+- 2026-04-20 12:00: `places_catalog.json` šiame cikle be pokyčių.
+- 2026-04-21 12:00: Data feed check: no update. Patikrinti nauji šaltiniai (Koh Mak/Koh Kood, Cheow Lan, Libong/Kradan) nepateikė naujų kritinių signalų mūsų maršrutui; ferry kainų augimo tema jau užfiksuota ankstesniame cikle.
+- 2026-04-22 12:00: Data feed check: no update. Pakartotinė šaltinių peržiūra (Koh Mak/Koh Kood, Cheow Lan, Libong/Kradan) nerodė naujų maršrutui aktualių ribojimų ar įspėjimų; rastos publikacijos daugiausia bendrinės/marketinginės.
+- 2026-04-25 12:00: Data feed check: no update. Patikrinti nauji TAT / kelionių šaltiniai nepateikė naujų signalų mūsų maršrutui.
